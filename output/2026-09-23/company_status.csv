@@ -1,0 +1,9 @@
+company,tier,ats,slug,status,open,new,closed,careers_url
+AppFolio,A,jobvite,appfolio-internal,ok,30,0,1,https://www.appfolio.com/company/careers
+Kiavi,A,,,unmapped,0,0,0,https://www.kiavi.com/careers
+Rhino,A,,,unmapped,0,0,0,https://careers.sayrhino.com
+SmartRent,A,greenhouse,smartrent,ok,9,1,0,https://smartrent.com/careers
+Entrata,A,lever,entrata,ok,1,0,0,https://www.entrata.com/careers
+Second Nature,A,,,unmapped,0,0,0,https://www.secondnature.com/careers
+Belong,A,workable,belong-6,failed:no fixture,0,0,0,https://belonghome.com/careers
+Mynd,A,,,unmapped,0,0,0,https://www.mynd.co/careers

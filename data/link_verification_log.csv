@@ -1,0 +1,11 @@
+company,what_was_checked,result,verified_on,verified_by
+Entrata,jobs.lever.co/entrata/f84a7c01-2585-422b-babe-0ef84603fae4,LIVE - Customer Success Manager Affordable Housing; confirms Lever slug entrata,2026-09-23,Claude (manual fetch)
+AppFolio,jobs.jobvite.com/appfolio-internal/jobs,LIVE - 30 roles listed with direct links; sheet's Greenhouse classification was wrong,2026-09-23,Claude (manual fetch)
+AppFolio,jobs.jobvite.com/appfolio-internal/job/oo2uAfwe,GONE - "The job listing no longer exists" (indexed by search engine earlier) -> real closed-role example,2026-09-23,Claude (manual fetch)
+SmartRent,smartrent.com/careers/apply/,LIVE - 9 roles with gh_jid links (Greenhouse behind own-domain page),2026-09-23,Claude (manual fetch)
+Kiavi,kiavi.com/careers,PAGE LIVE but openings JS-rendered; footer: Kiavi Funding LLC is a subsidiary of Figure Technology Solutions,2026-09-23,Claude (manual fetch)
+Second Nature,secondnature.applytojob.com/apply,LIVE but "There are no open positions at this time" (JazzHR legacy board),2026-09-23,Claude (manual fetch)
+Second Nature,secondnature.com/careers,PAGE LIVE; Current Openings section is a JS embed (ATS not visible in text),2026-09-23,Claude (manual fetch)
+Rhino,search only,careers.sayrhino.com is the careers domain; aggregators show ~1 open role; not fetched,2026-09-23,Claude (search)
+Mynd,search only,"Mynd, a Roofstock company" - roles appear under Roofstock; not fetched,2026-09-23,Claude (search)
+Belong,prior session,Workable slug belong-6 from existing F&F adapter config; not re-fetched today,2026-09,Evan / prior session

@@ -1,0 +1,5 @@
+company,careers_url,reason
+Kiavi,https://www.kiavi.com/careers,not in ats_map.json (run with --detect or map by hand)
+Rhino,https://careers.sayrhino.com,not in ats_map.json (run with --detect or map by hand)
+Second Nature,https://www.secondnature.com/careers,not in ats_map.json (run with --detect or map by hand)
+Mynd,https://www.mynd.co/careers,not in ats_map.json (run with --detect or map by hand)

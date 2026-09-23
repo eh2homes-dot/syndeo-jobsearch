@@ -1,0 +1,62 @@
+{
+  "AppFolio": {
+    "ats": "jobvite",
+    "confidence": "manual",
+    "evidence": "jobs.jobvite.com/appfolio-internal/jobs fetched live, 31 roles; sheet said Greenhouse (wrong)",
+    "slug": "appfolio-internal",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  },
+  "Belong": {
+    "ats": "workable",
+    "confidence": "manual",
+    "evidence": "from existing F&F adapter config",
+    "slug": "belong-6",
+    "verified_by": "Evan (prior session)",
+    "verified_on": "2026-09"
+  },
+  "Entrata": {
+    "ats": "lever",
+    "confidence": "manual",
+    "evidence": "jobs.lever.co/entrata posting fetched live",
+    "slug": "entrata",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  },
+  "Kiavi": {
+    "ats": "",
+    "confidence": "none",
+    "evidence": "kiavi.com/careers openings are JS-embedded; NOTE Kiavi is now a Figure Technology Solutions subsidiary - roles may post under Figure",
+    "slug": "",
+    "verified_on": "2026-09-23"
+  },
+  "Mynd": {
+    "ats": "",
+    "confidence": "merged",
+    "evidence": "Mynd is now 'a Roofstock company'; roles post under Roofstock -> merge into Roofstock lead",
+    "slug": "",
+    "verified_on": "2026-09-23"
+  },
+  "Rhino": {
+    "ats": "",
+    "confidence": "none",
+    "evidence": "careers page is careers.sayrhino.com (sheet URL 403s); aggregators show ~1 open role",
+    "slug": "",
+    "verified_on": "2026-09-23"
+  },
+  "Second Nature": {
+    "ats": "",
+    "confidence": "none",
+    "evidence": "secondnature.applytojob.com (JazzHR) is live but shows 0 roles; secondnature.com/careers embed is JS-rendered; aggregators show 9-19 roles -> ATS moved, needs raw-HTML detect",
+    "slug": "",
+    "verified_on": "2026-09-23"
+  },
+  "SmartRent": {
+    "ats": "greenhouse",
+    "confidence": "manual-slug-unconfirmed",
+    "evidence": "smartrent.com/careers/apply renders Greenhouse (gh_jid=) on own domain; 9 roles; API slug 'smartrent' to be confirmed on first Actions run",
+    "slug": "smartrent",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  }
+}

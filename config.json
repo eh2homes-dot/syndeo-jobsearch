@@ -1,0 +1,11 @@
+{
+  "focus_keywords": {
+    "sales": ["account executive", "sales", "business development", "sdr", "bdr", "revenue"],
+    "customer": ["customer success", "account manager", "implementation", "onboarding", "support"],
+    "product": ["product manager", "product owner", "product lead", "head of product"],
+    "leadership": ["vp ", "vice president", "director", "head of", "chief", "general manager"],
+    "ops": ["operations", "property manager", "leasing", "maintenance", "portfolio", "asset manager"],
+    "eng": ["engineer", "developer", "data scientist", "architect", "devops", "sdet"]
+  },
+  "notes": "focus tags are labels only; nothing is filtered out."
+}
