@@ -28,16 +28,25 @@ UA = {"User-Agent": "Mozilla/5.0 (compatible; SyndeoJobSearch/0.1; +https://prop
 TIMEOUT = 25
 
 
+def _retry(fn, url, tries=4):
+    import time
+    for i in range(tries):
+        r = fn()
+        if r.status_code in (429, 500, 502, 503, 504) and i < tries - 1:
+            wait = int(r.headers.get("Retry-After", "0") or 0) or (5 * (i + 1))
+            time.sleep(min(wait, 60))
+            continue
+        r.raise_for_status()
+        return r
+
+
 def _get(url: str, **kw) -> requests.Response:
-    r = requests.get(url, headers=UA, timeout=TIMEOUT, **kw)
-    r.raise_for_status()
-    return r
+    return _retry(lambda: requests.get(url, headers=UA, timeout=TIMEOUT, **kw), url)
 
 
 def _post(url: str, payload: dict, **kw) -> requests.Response:
-    r = requests.post(url, headers={**UA, "Content-Type": "application/json"}, json=payload, timeout=TIMEOUT, **kw)
-    r.raise_for_status()
-    return r
+    return _retry(lambda: requests.post(url, headers={**UA, "Content-Type": "application/json"},
+                                        json=payload, timeout=TIMEOUT, **kw), url)
 
 
 def _ms_to_date(ms) -> str:
@@ -208,14 +217,21 @@ def recruitee(slug: str, **_) -> list[dict]:
 # ------------------------------------------------------------------ Rippling
 def rippling(slug: str, **_) -> list[dict]:
     data = _get(f"https://api.rippling.com/platform/api/ats/v1/board/{slug}/jobs").json()
+    if isinstance(data, dict):  # some boards wrap the list
+        data = data.get("items") or data.get("jobs") or data.get("results") or []
     out = []
     for j in data:
+        jid = j.get("uuid") or j.get("id") or j.get("jobId") or j.get("url", "")
+        if not jid:
+            continue
         loc = j.get("workLocation") or {}
+        if isinstance(loc, list):
+            loc = loc[0] if loc else {}
         out.append({
-            "job_key": f"rippling:{slug}:{j['id']}",
-            "title": j.get("name", "").strip(),
-            "location": loc.get("label", ""),
-            "url": j.get("url", ""),
+            "job_key": f"rippling:{slug}:{jid}",
+            "title": (j.get("name") or j.get("title") or "").strip(),
+            "location": loc.get("label", "") if isinstance(loc, dict) else str(loc),
+            "url": j.get("url") or f"https://ats.rippling.com/{slug}/jobs/{jid}",
             "posted_at": "",
             "ats": "rippling",
         })
@@ -228,7 +244,7 @@ def workday(slug: str, wd: str = "wd1", site: str = "", **_) -> list[dict]:
     if not site:
         raise ValueError("workday adapter needs `site` in ats_map (e.g. 'External')")
     base = f"https://{slug}.{wd}.myworkdayjobs.com"
-    out, offset = [], 0
+    out, offset, total = [], 0, None
     while True:
         data = _post(f"{base}/wday/cxs/{slug}/{site}/jobs",
                      {"appliedFacets": {}, "limit": 20, "offset": offset, "searchText": ""}).json()
@@ -243,8 +259,10 @@ def workday(slug: str, wd: str = "wd1", site: str = "", **_) -> list[dict]:
                 "ats": "workday",
                 "_posted_rel": j.get("postedOn", ""),
             })
+        if total is None:  # Workday only reports total on the first page (later pages say 0)
+            total = int(data.get("total", 0) or 0)
         offset += 20
-        if offset >= int(data.get("total", 0)) or offset > 2000:
+        if not data.get("jobPostings") or offset >= total or offset > 2000:
             break
     return out
 

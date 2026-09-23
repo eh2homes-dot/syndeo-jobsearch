@@ -82,7 +82,7 @@
     "ats": "rippling",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "ats.rippling.com/bowery-valuation",
+    "evidence": "ats.rippling.com/bowery-valuation | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "bowery-valuation"
   },
   "Bright MLS": {
@@ -147,7 +147,7 @@
     "ats": "rippling",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "ats.rippling.com/closinglock",
+    "evidence": "ats.rippling.com/closinglock | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "closinglock"
   },
   "CoStar Group": {
@@ -186,11 +186,10 @@
     "slug": "crexi"
   },
   "Density": {
-    "ats": "greenhouse",
-    "confidence": "html",
-    "detected_on": "2026-09-23",
-    "evidence": "greenhouse.io/embed/job_board/js?for=density",
-    "slug": "density"
+    "ats": "",
+    "confidence": "none",
+    "evidence": "greenhouse:density 404 on 2026-09-23 - re-detect",
+    "slug": ""
   },
   "Digible": {
     "ats": "greenhouse",
@@ -200,11 +199,10 @@
     "slug": "digible"
   },
   "Divvy Homes": {
-    "ats": "greenhouse",
-    "confidence": "html",
-    "detected_on": "2026-09-23",
-    "evidence": "boards.greenhouse.io/divvyhomes",
-    "slug": "divvyhomes"
+    "ats": "",
+    "confidence": "none",
+    "evidence": "greenhouse:divvyhomes 404 on 2026-09-23 - board removed; re-detect",
+    "slug": ""
   },
   "Doma": {
     "ats": "greenhouse",
@@ -231,7 +229,7 @@
     "ats": "rippling",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "ats.rippling.com/enertiv-jobs",
+    "evidence": "ats.rippling.com/enertiv-jobs | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "enertiv-jobs"
   },
   "Entrata": {
@@ -257,11 +255,10 @@
     "slug": ""
   },
   "Evernest": {
-    "ats": "greenhouse",
-    "confidence": "probe",
-    "detected_on": "2026-09-23",
-    "evidence": "greenhouse:evernest returned 106 jobs",
-    "slug": "evernest"
+    "ats": "",
+    "confidence": "none",
+    "evidence": "2026-09-23 probe matched greenhouse:evernest = Evernest GmbH (Germany, evernest.com), NOT evernest.co; 106 wrong roles removed. Re-detect with domain guard.",
+    "slug": ""
   },
   "Flock Homes": {
     "ats": "greenhouse",
@@ -285,11 +282,10 @@
     "slug": ""
   },
   "GreenLite": {
-    "ats": "ashby",
-    "confidence": "html",
-    "detected_on": "2026-09-23",
-    "evidence": "jobs.ashbyhq.com/brettonai",
-    "slug": "brettonai"
+    "ats": "",
+    "confidence": "excluded",
+    "evidence": "greenlite.ai careers page links jobs.ashbyhq.com/brettonai = Greenlite AI / Bretton AI, an AML/financial-crime compliance startup, not an AI permitting company. Sheet lead points at the wrong company. Excluded until Evan confirms the intended company.",
+    "slug": ""
   },
   "Greystar": {
     "ats": "workday",
@@ -350,11 +346,10 @@
     "slug": ""
   },
   "HqO": {
-    "ats": "ashby",
-    "confidence": "html",
-    "detected_on": "2026-09-23",
-    "evidence": "jobs.ashbyhq.com/hqo",
-    "slug": "hqo"
+    "ats": "",
+    "confidence": "none",
+    "evidence": "ashby:hqo 404 on 2026-09-23 - re-detect",
+    "slug": ""
   },
   "Kiavi": {
     "ats": "",
@@ -441,17 +436,16 @@
     "slug": ""
   },
   "Notarize (Proof)": {
-    "ats": "greenhouse",
-    "confidence": "probe",
-    "detected_on": "2026-09-23",
-    "evidence": "greenhouse:proof returned 126 jobs",
-    "slug": "proof"
+    "ats": "",
+    "confidence": "none",
+    "evidence": "2026-09-23 probe matched greenhouse:proof = ProofServe (process servers, proofserve.com), NOT proof.com; 126 wrong roles removed. Re-detect with domain guard.",
+    "slug": ""
   },
   "Obie": {
     "ats": "rippling",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "ats.rippling.com/obie",
+    "evidence": "ats.rippling.com/obie | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "obie"
   },
   "Obligo": {
@@ -612,7 +606,7 @@
     "ats": "bamboohr",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "https://rhinolabs.bamboohr.com/careers",
+    "evidence": "https://rhinolabs.bamboohr.com/careers | slug rhinolabs came from Rhino's own careers page HTML; titles (counsel, data eng) consistent with Rhino - keep, spot-check",
     "slug": "rhinolabs"
   },
   "Robin": {
@@ -683,7 +677,7 @@
     "ats": "rippling",
     "confidence": "html",
     "detected_on": "2026-09-23",
-    "evidence": "ats.rippling.com/theguarantors-open-positions",
+    "evidence": "ats.rippling.com/theguarantors-open-positions | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "theguarantors-open-positions"
   },
   "TurboTenant": {

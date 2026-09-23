@@ -29,7 +29,7 @@ Steadily,https://www.steadily.com,Texas,https://www.steadily.com/careers,Landlor
 Closinglock,https://www.closinglock.com,Texas,https://www.closinglock.com/careers,Wire Fraud Prevention for RE Closings,B,FALSE,
 CertifID,https://www.certifid.com,Texas,https://www.certifid.com/careers,Wire Fraud Prevention / Identity Verification,B,FALSE,
 Luxury Presence,https://www.luxurypresence.com,Texas,https://www.luxurypresence.com/careers,Real Estate Agent Marketing Platform,B,FALSE,
-GreenLite,https://www.greenlite.ai,Texas,https://www.greenlite.ai/careers,AI Permitting & Compliance,B,FALSE,
+GreenLite,https://www.greenlite.ai,Texas,https://www.greenlite.ai/careers,AI Permitting & Compliance,B,FALSE,WRONG COMPANY: greenlite.ai is an AML/fincrime startup (Bretton AI). Excluded - confirm intended permitting company
 Worksmith,https://www.worksmith.com,Texas,https://www.worksmith.com/careers,Retail/CRE Facilities Marketplace,B,FALSE,
 Ownwell,https://www.ownwell.com,Texas,https://www.ownwell.com/careers,Property Tax Appeal Platform,B,FALSE,
 Ojo Labs,https://www.ojolabs.com,Texas,https://www.ojolabs.com/careers,AI Real Estate Assistant,B,FALSE,
@@ -79,7 +79,7 @@ Home365,https://www.home365.co,Nevada,https://www.home365.co/careers,SFR Full-Se
 Cecilian Partners,https://www.cecilianpartners.com,Pennsylvania,https://www.cecilianpartners.com/careers,New Home Community Development Software,B,FALSE,
 CoStar Group,https://www.costargroup.com,Virginia,https://www.costargroup.com/careers,Real Estate Data & Analytics,B,TRUE,
 Alarm.com,https://www.alarm.com,Virginia,https://www.alarm.com/careers,Smart Property / Security Platform,B,TRUE,
-Notarize (Proof),https://www.proof.com,Virginia,https://www.proof.com/careers,Remote Online Notarization,B,TRUE,
+Notarize (Proof),https://www.proof.com,Virginia,https://www.proof.com/careers,Remote Online Notarization,B,TRUE,name collision with ProofServe on Greenhouse
 Zillow Group,https://www.zillow.com,Washington,https://www.zillow.com/careers,Real Estate Marketplace,B,TRUE,
 Redfin,https://www.redfin.com,Washington,https://www.redfin.com/careers,Real Estate Brokerage Tech,B,TRUE,
 Knock CRM,https://www.knockrentals.com,Washington,https://www.knockrentals.com/careers,Multifamily Leasing CRM,A,FALSE,
@@ -98,7 +98,7 @@ Doorstead,https://www.doorstead.com,California,https://www.doorstead.com/careers
 Belong,https://belonghome.com,California,https://belonghome.com/careers,SFR Property Management,A,FALSE,OpCo sheet
 Mynd,https://www.mynd.co,California,https://www.mynd.co/careers,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
 Renters Warehouse,https://www.renterswarehouse.com,Minnesota,https://www.renterswarehouse.com/careers,SFR Property Management Franchise,A,FALSE,OpCo sheet
-Evernest,https://www.evernest.co,Alabama,https://www.evernest.co/careers,SFR Property Management,A,FALSE,OpCo sheet
+Evernest,https://www.evernest.co,Alabama,https://www.evernest.co/careers,SFR Property Management,A,FALSE,OpCo sheet; name collision with Evernest GmbH (Germany) on Greenhouse
 Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/,SFR Property Management,A,FALSE,OpCo sheet
 PURE HomeRiver Group,https://purehomeriver.com,Idaho,https://purehomeriver.com/company/careers/,SFR Property Management,A,FALSE,OpCo sheet
 Northpoint Asset Management,https://northpointam.com,Utah,https://northpointam.com/careers,SFR Property Management,A,FALSE,OpCo sheet

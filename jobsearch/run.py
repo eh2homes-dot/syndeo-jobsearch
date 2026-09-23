@@ -33,6 +33,7 @@ from pathlib import Path
 
 from .adapters import ADAPTERS
 from . import detect as detect_mod
+from . import verify as verify_mod
 
 ROOT = Path(__file__).resolve().parent.parent
 LEADS = ROOT / "leads" / "master_leads.csv"
@@ -92,6 +93,8 @@ def focus_tag(title: str, cfg: dict) -> str:
 def scrape_company(lead: dict, mapping: dict, fixtures: Path | None) -> tuple[list[dict], str]:
     """Returns (jobs, status). status in: ok | unmapped | unsupported | failed:<reason>"""
     ats = mapping.get("ats", "")
+    if mapping.get("confidence") == "excluded":
+        return [], "excluded"
     if not ats:
         return [], "unmapped"
     if ats in UNSUPPORTED:
@@ -125,6 +128,7 @@ def main(argv=None):
     ap.add_argument("--fixtures", default="", help="dir of recorded JSON; no network")
     ap.add_argument("--date", default="", help="override run date (YYYY-MM-DD)")
     ap.add_argument("--sleep", type=float, default=0.5)
+    ap.add_argument("--no-verify", action="store_true", help="skip link verification")
     args = ap.parse_args(argv)
 
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
@@ -144,7 +148,7 @@ def main(argv=None):
     needs_manual = []
     for lead in leads:
         m = ats_map.get(lead["company"])
-        if m and m.get("ats"):
+        if m and (m.get("ats") or m.get("confidence") in ("excluded", "manual")):
             continue
         if args.detect and not fixtures:
             hit = detect_mod.detect(lead)
@@ -211,11 +215,38 @@ def main(argv=None):
                 by_company[h["company"]]["closed"] += 1
     for j in all_jobs:
         j["days_open"] = (today - dt.date.fromisoformat(j["first_seen"])).days
+
+    # ---- 3b. verify every link; reopen "closed" roles whose posting is still live
+    scraper_misses = []
+    if not fixtures and not args.no_verify:
+        results = verify_mod.check_many([j["url"] for j in all_jobs] + [c["url"] for c in closed_jobs])
+        for j in all_jobs:
+            j["link_status"], j["link_http"] = results.get(j["url"], ("error", 0))
+        still_closed = []
+        for c in closed_jobs:
+            st, code = results.get(c["url"], ("error", 0))
+            c["link_status"], c["link_http"] = st, code
+            if st == "live":
+                h = history[c["job_key"]]
+                h["status"] = "open"; h.pop("closed_on", None); h.pop("days_open", None)
+                h["last_seen"] = today.isoformat()
+                scraper_misses.append(c)
+                by_company[c["company"]]["closed"] -= 1
+            else:
+                still_closed.append(c)
+        closed_jobs = still_closed
+        vc = {}
+        for j in all_jobs:
+            vc[j["link_status"]] = vc.get(j["link_status"], 0) + 1
+        print("link check (open roles):", vc, "| closed reopened as scraper misses:", len(scraper_misses))
+    else:
+        for j in all_jobs + closed_jobs:
+            j.setdefault("link_status", "unchecked")
     save_json(HISTORY, history)
 
     # ---- 4. outputs
     out_dir = OUT / today.isoformat()
-    job_cols = ["company", "title", "location", "url", "posted_at", "first_seen", "days_open", "focus",
+    job_cols = ["company", "title", "location", "url", "link_status", "posted_at", "first_seen", "days_open", "focus",
                 "ats", "segment", "state", "tier", "job_key"]
     all_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     new_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
@@ -223,7 +254,9 @@ def main(argv=None):
     write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)
     write_csv(out_dir / "new_this_week.csv", new_jobs, job_cols)
     write_csv(out_dir / "closed_this_week.csv", closed_jobs,
-              ["company", "title", "location", "url", "first_seen", "closed_on", "days_open", "focus", "ats", "job_key"])
+              ["company", "title", "location", "url", "link_status", "first_seen", "closed_on", "days_open", "focus", "ats", "job_key"])
+    write_csv(out_dir / "scraper_misses.csv", scraper_misses,
+              ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
               ["company", "tier", "ats", "slug", "status", "open", "new", "closed", "careers_url"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg)
@@ -249,9 +282,10 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
 
     md += ["## Closed since last run — likely filled (\"recently hired\" signal)", ""]
     if closed_jobs:
-        md += ["| Company | Role | Location | Days open | Was at |", "|---|---|---|---|---|"]
+        md += ["Each posting below was re-checked this run and is confirmed gone (or blocked from checking).", "",
+               "| Company | Role | Location | Days open | Link check | Was at |", "|---|---|---|---|---|---|"]
         for j in closed_jobs:
-            md.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('days_open','')} | [posting]({j['url']}) |")
+            md.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('days_open','')} | {j.get('link_status','')} | [posting]({j['url']}) |")
     else:
         md.append("_No history yet — closures appear from the second run onward._")
     md.append("")
@@ -270,9 +304,9 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
         md.append(f"| {c['company']} | {c['tier']} | {c['ats']} | {c['open']} | {c['new']} | {c['closed']} |")
     md.append("")
 
-    md += ["## All open roles", "", "| Company | Role | Location | Posted | Link |", "|---|---|---|---|---|"]
+    md += ["## All open roles", "", "| Company | Role | Location | Posted | Link check | Link |", "|---|---|---|---|---|---|"]
     for j in all_jobs:
-        md.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('posted_at','')} | [apply]({j['url']}) |")
+        md.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('posted_at','')} | {j.get('link_status','')} | [apply]({j['url']}) |")
     md.append("")
 
     md += ["## Companies needing attention", "", "| Company | Status | Careers page |", "|---|---|---|"]
@@ -296,10 +330,10 @@ table{{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:2rem}}th
 th{{background:#f6f6f6;position:sticky;top:0}}h2{{margin-top:2.5rem}}.kpi{{display:flex;gap:2rem;margin:1rem 0}}.kpi div{{background:#f6f6f6;padding:1rem;border-radius:8px}}.kpi b{{font-size:1.6rem;display:block}}</style></head><body>
 <h1>Syndeo weekly hiring signal — {today}</h1>
 <div class="kpi"><div><b>{len(all_jobs)}</b>open roles</div><div><b>{len(new_jobs)}</b>new this week</div><div><b>{len(closed_jobs)}</b>closed / likely filled</div><div><b>{len(ok)}/{len(company_rows)}</b>companies scraped</div></div>
-<h2>Closed since last run — likely filled</h2>{table(["Company","Role","Location","Days open","Was at"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('days_open',''),link(j['url'],'posting')] for j in closed_jobs]) if closed_jobs else '<p><i>No history yet — closures appear from the second run onward.</i></p>'}
+<h2>Closed since last run — likely filled</h2>{table(["Company","Role","Location","Days open","Link check","Was at"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('days_open',''),j.get('link_status',''),link(j['url'],'posting')] for j in closed_jobs]) if closed_jobs else '<p><i>No history yet — closures appear from the second run onward.</i></p>'}
 <h2>New roles this week</h2>{table(["Company","Role","Location","Focus","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),H.escape(j.get('focus','')),link(j['url'])] for j in new_jobs])}
 <h2>Most active companies</h2>{table(["Company","Tier","ATS","Open","New","Closed"], [[H.escape(c['company']),c['tier'],c['ats'],c['open'],c['new'],c['closed']] for c in top])}
-<h2>All open roles</h2>{table(["Company","Role","Location","Posted","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('posted_at',''),link(j['url'])] for j in all_jobs])}
+<h2>All open roles</h2>{table(["Company","Role","Location","Posted","Link check","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('posted_at',''),j.get('link_status',''),link(j['url'])] for j in all_jobs])}
 <h2>Companies needing attention</h2>{table(["Company","Status","Careers page"], [[H.escape(c['company']),H.escape(c['status']),link(c['careers_url'],'careers')] for c in bad])}
 </body></html>"""
     (out_dir / "report.html").write_text(page)

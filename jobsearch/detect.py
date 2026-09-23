@@ -77,17 +77,50 @@ def fetch_page(url: str) -> tuple[str, str]:
     return r.text, r.url
 
 
+ATS_HOSTS = ("greenhouse.io", "lever.co", "ashbyhq.com", "workable.com", "smartrecruiters.com",
+             "bamboohr.com", "breezy.hr", "recruitee.com", "rippling.com", "myworkdayjobs.com", "jobvite.com")
+
+
+def _root(host: str) -> str:
+    parts = host.lower().replace("www.", "").split(".")
+    return ".".join(parts[-2:]) if len(parts) >= 2 else host
+
+
+def probe_is_same_company(jobs: list[dict], website: str) -> tuple[bool, str]:
+    """A slug guess like 'evernest' or 'proof' can belong to a different company with the same name.
+    Reject if any posting links to a non-ATS domain that isn't the lead's own domain."""
+    own = _root(urlparse(website).netloc)
+    foreign = set()
+    for j in jobs:
+        host = urlparse(j.get("url", "")).netloc
+        if not host or any(h in host for h in ATS_HOSTS):
+            continue
+        if _root(host) != own:
+            foreign.add(_root(host))
+    if foreign:
+        return False, f"postings link to {', '.join(sorted(foreign))}, not {own}"
+    return True, ""
+
+
 def probe(website: str) -> dict | None:
     """Try slug guesses against APIs that fail fast (Greenhouse, Lever, Ashby, Workable)."""
+    rejected = []
     for slug in _domain_slugs(website):
         for ats in ("greenhouse", "lever", "ashby", "workable"):
             try:
                 jobs = ADAPTERS[ats](slug)
-                if jobs:
-                    return {"ats": ats, "slug": slug, "confidence": "probe",
-                            "evidence": f"{ats}:{slug} returned {len(jobs)} jobs"}
             except Exception:
                 continue
+            if not jobs:
+                continue
+            ok, why = probe_is_same_company(jobs, website)
+            if not ok:
+                rejected.append(f"{ats}:{slug} rejected ({why})")
+                continue
+            return {"ats": ats, "slug": slug, "confidence": "probe",
+                    "evidence": f"{ats}:{slug} returned {len(jobs)} jobs" + (f"; {'; '.join(rejected)}" if rejected else "")}
+    if rejected:
+        return {"ats": "", "slug": "", "confidence": "none", "evidence": "; ".join(rejected)}
     return None
 
 
