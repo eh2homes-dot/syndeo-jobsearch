@@ -1,0 +1,42 @@
+name: Weekly job search
+on:
+  schedule:
+    - cron: "0 12 * * 1"      # Mondays 12:00 UTC (8am ET)
+  workflow_dispatch:
+    inputs:
+      tier:
+        description: "Tier filter (A, B, or blank for all)"
+        default: ""
+      detect:
+        description: "Auto-detect ATS for unmapped companies"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Run job search
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.tier }}" ]; then ARGS="$ARGS --tier ${{ github.event.inputs.tier }}"; fi
+          if [ "${{ github.event.inputs.detect || 'true' }}" = "true" ]; then ARGS="$ARGS --detect"; fi
+          python -m jobsearch.run $ARGS
+      - name: Commit results
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data output
+          git commit -m "weekly run $(date -u +%F)" || echo "nothing to commit"
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weekly-report
+          path: output/
