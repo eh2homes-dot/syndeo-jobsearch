@@ -1,5 +1,53 @@
 company,careers_url,reason
-Kiavi,https://www.kiavi.com/careers,not in ats_map.json (run with --detect or map by hand)
-Rhino,https://careers.sayrhino.com,not in ats_map.json (run with --detect or map by hand)
-Second Nature,https://www.secondnature.com/careers,not in ats_map.json (run with --detect or map by hand)
-Mynd,https://www.mynd.co/careers,not in ats_map.json (run with --detect or map by hand)
+Yardi Systems,https://www.yardi.com/careers,no ATS pattern in HTML
+Procore Technologies,https://www.procore.com/careers,no ATS pattern in HTML
+Matterport,https://matterport.com/careers,no ATS pattern in HTML
+Measurabl,https://measurabl.com/careers,no ATS pattern in HTML
+Placer.ai,https://www.placer.ai/careers,no ATS pattern in HTML
+Point,https://www.point.com/careers,no ATS pattern in HTML
+Zumper,https://www.zumper.com/careers,no ATS pattern in HTML
+Apartment List,https://www.apartmentlist.com/careers,no ATS pattern in HTML
+Hemlane,https://www.hemlane.com/careers,no ATS pattern in HTML
+Kiavi,https://www.kiavi.com/careers,no ATS pattern in HTML
+HouseCanary,https://www.housecanary.com/careers,no ATS pattern in HTML
+RentSpree,https://www.rentspree.com/careers,no ATS pattern in HTML
+Realtor.com (Move Inc.),https://www.move.com/careers,no ATS pattern in HTML
+Auction.com,https://www.auction.com/careers,no ATS pattern in HTML
+ResMan,https://myresman.com/careers,no ATS pattern in HTML
+Worksmith,https://www.worksmith.com/careers,no ATS pattern in HTML
+Ojo Labs,https://www.ojolabs.com/careers,no ATS pattern in HTML
+Opcity (Realtor.com),https://www.move.com/careers,no ATS pattern in HTML
+Compass,https://www.compass.com/careers,no ATS pattern in HTML
+Guesty,https://www.guesty.com/careers,no ATS pattern in HTML
+Bilt Rewards,https://www.biltrewards.com/careers,no ATS pattern in HTML
+Cadre,https://www.cadre.com/careers,no ATS pattern in HTML
+SquareFoot,https://www.squarefoot.com/careers,no ATS pattern in HTML
+Agora,https://www.agorareal.com/careers,no ATS pattern in HTML
+Funnel Leasing,https://www.funnelleasing.com/careers,no ATS pattern in HTML
+Better.com,https://better.com/careers,no ATS pattern in HTML
+Avail (Realtor.com),https://www.avail.co/careers,no ATS pattern in HTML
+Buildium (RealPage),https://www.buildium.com/careers,no ATS pattern in HTML
+Placester,https://placester.com/careers,no ATS pattern in HTML
+Robin,https://www.robinpowered.com/careers,no ATS pattern in HTML
+GetCovered,https://getcovered.io/careers,no ATS pattern in HTML
+Offerpad,https://www.offerpad.com/careers,no ATS pattern in HTML
+Opendoor,https://www.opendoor.com/careers,no ATS pattern in HTML
+Rentec Direct,https://www.rentecdirect.com/careers,no ATS pattern in HTML
+Cecilian Partners,https://www.cecilianpartners.com/careers,no ATS pattern in HTML
+CoStar Group,https://www.costargroup.com/careers,no ATS pattern in HTML
+Alarm.com,https://www.alarm.com/careers,no ATS pattern in HTML
+Redfin,https://www.redfin.com/careers,no ATS pattern in HTML
+Knock CRM,https://www.knockrentals.com/careers,no ATS pattern in HTML
+Rocket Companies,https://www.rocketcompanies.com/careers,no ATS pattern in HTML
+Rent Manager (LCS),https://www.rentmanager.com/careers,no ATS pattern in HTML
+MRI Software,https://www.mrisoftware.com/careers,no ATS pattern in HTML
+Bright MLS,https://www.brightmls.com/careers,no ATS pattern in HTML
+DoorLoop,https://www.doorloop.com/careers,no ATS pattern in HTML
+LeaseLock,https://www.leaselock.com/careers,no ATS pattern in HTML
+Doorstead,https://www.doorstead.com/careers,no ATS pattern in HTML
+Mynd,https://www.mynd.co/careers,no ATS pattern in HTML
+Renters Warehouse,https://www.renterswarehouse.com/careers,no ATS pattern in HTML
+Atlas Real Estate,https://realatlas.com/careers/,no ATS pattern in HTML
+PURE HomeRiver Group,https://purehomeriver.com/company/careers/,no ATS pattern in HTML
+Northpoint Asset Management,https://northpointam.com/careers,no ATS pattern in HTML
+Evergreen Residential,https://evergreenresi.com/careers/,no ATS pattern in HTML

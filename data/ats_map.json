@@ -1,4 +1,25 @@
 {
+  "Agora": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Alarm.com": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Apartment List": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
   "AppFolio": {
     "ats": "jobvite",
     "confidence": "manual",
@@ -6,6 +27,27 @@
     "slug": "appfolio-internal",
     "verified_by": "Claude",
     "verified_on": "2026-09-23"
+  },
+  "Atlas Real Estate": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Auction.com": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Avail (Realtor.com)": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
   },
   "Belong": {
     "ats": "workable",
@@ -15,6 +57,183 @@
     "verified_by": "Evan (prior session)",
     "verified_on": "2026-09"
   },
+  "Better.com": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Bilt Rewards": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Blend Labs": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:blend returned 13 jobs",
+    "slug": "blend"
+  },
+  "Bowery Valuation": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/bowery-valuation",
+    "slug": "bowery-valuation"
+  },
+  "Bright MLS": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Buildium (RealPage)": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "ButterflyMX": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/butterflymx",
+    "slug": "butterflymx"
+  },
+  "Cadre": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Cecilian Partners": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "CertifID": {
+    "ats": "lever",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.lever.co/certifid",
+    "slug": "certifid"
+  },
+  "Chamberlain Group": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://chamberlain.wd1.myworkdayjobs.com/Chamberlain_Group",
+    "site": "Chamberlain_Group",
+    "slug": "chamberlain",
+    "wd": "wd1"
+  },
+  "Cherre": {
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:cherre returned 1 jobs",
+    "slug": "cherre"
+  },
+  "Closinglock": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/closinglock",
+    "slug": "closinglock"
+  },
+  "CoStar Group": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "CompStak": {
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:compstak returned 4 jobs",
+    "slug": "compstak"
+  },
+  "Compass": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Convene": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/convene",
+    "slug": "convene"
+  },
+  "Crexi": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:crexi returned 16 jobs",
+    "slug": "crexi"
+  },
+  "Density": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse.io/embed/job_board/js?for=density",
+    "slug": "density"
+  },
+  "Digible": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse.io/embed/job_board/js?for=digible",
+    "slug": "digible"
+  },
+  "Divvy Homes": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/divvyhomes",
+    "slug": "divvyhomes"
+  },
+  "Doma": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:doma returned 5 jobs",
+    "slug": "doma"
+  },
+  "DoorLoop": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Doorstead": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Enertiv": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/enertiv-jobs",
+    "slug": "enertiv-jobs"
+  },
   "Entrata": {
     "ats": "lever",
     "confidence": "manual",
@@ -23,33 +242,413 @@
     "verified_by": "Claude",
     "verified_on": "2026-09-23"
   },
+  "Envoy": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/envoy",
+    "slug": "envoy"
+  },
+  "Evergreen Residential": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Evernest": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:evernest returned 106 jobs",
+    "slug": "evernest"
+  },
+  "Flock Homes": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/flockhomes",
+    "slug": "flockhomes"
+  },
+  "Funnel Leasing": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "GetCovered": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "GreenLite": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/brettonai",
+    "slug": "brettonai"
+  },
+  "Greystar": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://greystar.wd1.myworkdayjobs.com/en-US/External",
+    "site": "External",
+    "slug": "greystar",
+    "wd": "wd1"
+  },
+  "Guesty": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Hemlane": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Home365": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://home365.bamboohr.com/careers",
+    "slug": "home365"
+  },
+  "HomeLight": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/homelight",
+    "slug": "homelight"
+  },
+  "Homebot": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/homebot",
+    "slug": "homebot"
+  },
+  "Homeward": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse.io/embed/job_board/js?for=homeward",
+    "slug": "homeward"
+  },
+  "HouseCanary": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "HqO": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/hqo",
+    "slug": "hqo"
+  },
   "Kiavi": {
     "ats": "",
     "confidence": "none",
-    "evidence": "kiavi.com/careers openings are JS-embedded; NOTE Kiavi is now a Figure Technology Solutions subsidiary - roles may post under Figure",
-    "slug": "",
-    "verified_on": "2026-09-23"
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Knock CRM": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Latch": {
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:latch returned 2 jobs",
+    "slug": "latch"
+  },
+  "LeaseLock": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Livly": {
+    "ats": "paylocity",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "recruiting.paylocity.com/recruiting/jobs/All/65717b9a-7d08-4867-8ae9-5f3553eff988",
+    "slug": "65717b9a-7d08-4867-8ae9-5f3553eff988"
+  },
+  "Luxury Presence": {
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:luxurypresence returned 32 jobs",
+    "slug": "luxurypresence"
+  },
+  "MRI Software": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Matterport": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Measurabl": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
   },
   "Mynd": {
     "ats": "",
-    "confidence": "merged",
-    "evidence": "Mynd is now 'a Roofstock company'; roles post under Roofstock -> merge into Roofstock lead",
-    "slug": "",
-    "verified_on": "2026-09-23"
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "NetVendor": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://netvendor.bamboohr.com/careers",
+    "slug": "netvendor"
+  },
+  "Northpoint Asset Management": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Notarize (Proof)": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:proof returned 126 jobs",
+    "slug": "proof"
+  },
+  "Obie": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/obie",
+    "slug": "obie"
+  },
+  "Obligo": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/obligo",
+    "slug": "obligo"
+  },
+  "Offerpad": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Ojo Labs": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Opcity (Realtor.com)": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Opendoor": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Orchard": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/orchard",
+    "slug": "orchard"
+  },
+  "Ownwell": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/ownwell",
+    "slug": "ownwell"
+  },
+  "PURE HomeRiver Group": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Pacaso": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/pacaso",
+    "slug": "pacaso"
+  },
+  "Placer.ai": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Placester": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Point": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "PointCentral": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:pointcentral returned 1 jobs",
+    "slug": "pointcentral"
+  },
+  "Procore Technologies": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "RealPage": {
+    "ats": "icims",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://careers-realpagepms.icims.com",
+    "slug": "careers-realpagepms"
+  },
+  "Realtor.com (Move Inc.)": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Redfin": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Rent Manager (LCS)": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "RentSpree": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Rentec Direct": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Renters Warehouse": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "ResMan": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
   },
   "Rhino": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://rhinolabs.bamboohr.com/careers",
+    "slug": "rhinolabs"
+  },
+  "Robin": {
     "ats": "",
     "confidence": "none",
-    "evidence": "careers page is careers.sayrhino.com (sheet URL 403s); aggregators show ~1 open role",
-    "slug": "",
-    "verified_on": "2026-09-23"
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Rocket Companies": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Roofstock": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/roofstock",
+    "slug": "roofstock"
   },
   "Second Nature": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "secondnature.applytojob.com (JazzHR) is live but shows 0 roles; secondnature.com/careers embed is JS-rendered; aggregators show 9-19 roles -> ATS moved, needs raw-HTML detect",
-    "slug": "",
-    "verified_on": "2026-09-23"
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/second-nature",
+    "slug": "second-nature"
+  },
+  "Side": {
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:sideinc returned 5 jobs",
+    "slug": "sideinc"
   },
   "SmartRent": {
     "ats": "greenhouse",
@@ -58,5 +657,84 @@
     "slug": "smartrent",
     "verified_by": "Claude",
     "verified_on": "2026-09-23"
+  },
+  "Snapdocs": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/snapdocs",
+    "slug": "snapdocs"
+  },
+  "SquareFoot": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Steadily": {
+    "ats": "ashby",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "ashby:steadily returned 34 jobs",
+    "slug": "steadily"
+  },
+  "TheGuarantors": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/theguarantors-open-positions",
+    "slug": "theguarantors-open-positions"
+  },
+  "TurboTenant": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/turbotenant",
+    "slug": "turbotenant"
+  },
+  "Updater": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:updater returned 1 jobs",
+    "slug": "updater"
+  },
+  "VTS": {
+    "ats": "greenhouse",
+    "confidence": "probe",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:vts returned 17 jobs",
+    "slug": "vts"
+  },
+  "Worksmith": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Yardi Systems": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Zillow Group": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External",
+    "site": "Zillow_Group_External",
+    "slug": "zillow",
+    "wd": "wd5"
+  },
+  "Zumper": {
+    "ats": "",
+    "confidence": "none",
+    "detected_on": "2026-09-23",
+    "evidence": "no ATS pattern in HTML",
+    "slug": ""
   }
 }

@@ -1,9 +1,105 @@
 company,tier,ats,slug,status,open,new,closed,careers_url
-AppFolio,A,jobvite,appfolio-internal,ok,30,0,1,https://www.appfolio.com/company/careers
+AppFolio,A,jobvite,appfolio-internal,ok,28,0,2,https://www.appfolio.com/company/careers
+Yardi Systems,A,,,unmapped,0,0,0,https://www.yardi.com/careers
+Procore Technologies,B,,,unmapped,0,0,0,https://www.procore.com/careers
+Matterport,B,,,unmapped,0,0,0,https://matterport.com/careers
+Measurabl,B,,,unmapped,0,0,0,https://measurabl.com/careers
+Placer.ai,B,,,unmapped,0,0,0,https://www.placer.ai/careers
+Roofstock,A,greenhouse,roofstock,ok,12,12,0,https://www.roofstock.com/careers
+Doma,B,greenhouse,doma,ok,5,5,0,https://www.doma.com/careers
+Blend Labs,B,greenhouse,blend,ok,13,13,0,https://blend.com/careers
+Point,B,,,unmapped,0,0,0,https://www.point.com/careers
+Zumper,A,,,unmapped,0,0,0,https://www.zumper.com/careers
+Apartment List,A,,,unmapped,0,0,0,https://www.apartmentlist.com/careers
+Hemlane,A,,,unmapped,0,0,0,https://www.hemlane.com/careers
+Pacaso,B,greenhouse,pacaso,ok,5,5,0,https://www.pacaso.com/careers
+Crexi,B,greenhouse,crexi,ok,16,16,0,https://www.crexi.com/careers
 Kiavi,A,,,unmapped,0,0,0,https://www.kiavi.com/careers
-Rhino,A,,,unmapped,0,0,0,https://careers.sayrhino.com
-SmartRent,A,greenhouse,smartrent,ok,9,1,0,https://smartrent.com/careers
-Entrata,A,lever,entrata,ok,1,0,0,https://www.entrata.com/careers
-Second Nature,A,,,unmapped,0,0,0,https://www.secondnature.com/careers
-Belong,A,workable,belong-6,failed:no fixture,0,0,0,https://belonghome.com/careers
+Side,B,lever,sideinc,ok,5,5,0,https://www.side.com/careers
+HouseCanary,A,,,unmapped,0,0,0,https://www.housecanary.com/careers
+HomeLight,B,greenhouse,homelight,ok,18,18,0,https://www.homelight.com/careers
+Snapdocs,B,ashby,snapdocs,ok,4,4,0,https://www.snapdocs.com/careers
+RentSpree,A,,,unmapped,0,0,0,https://www.rentspree.com/careers
+Realtor.com (Move Inc.),B,,,unmapped,0,0,0,https://www.move.com/careers
+Auction.com,B,,,unmapped,0,0,0,https://www.auction.com/careers
+RealPage,A,icims,careers-realpagepms,unsupported:icims,0,0,0,https://www.realpage.com/careers
+ResMan,A,,,unmapped,0,0,0,https://myresman.com/careers
+Homeward,B,greenhouse,homeward,ok,5,5,0,https://www.homeward.com/careers
+Steadily,A,ashby,steadily,ok,34,34,0,https://www.steadily.com/careers
+Closinglock,B,rippling,closinglock,failed:KeyError: 'id',0,0,0,https://www.closinglock.com/careers
+CertifID,B,lever,certifid,ok,0,0,0,https://www.certifid.com/careers
+Luxury Presence,B,lever,luxurypresence,ok,32,32,0,https://www.luxurypresence.com/careers
+GreenLite,B,ashby,brettonai,ok,7,7,0,https://www.greenlite.ai/careers
+Worksmith,B,,,unmapped,0,0,0,https://www.worksmith.com/careers
+Ownwell,B,greenhouse,ownwell,ok,14,14,0,https://www.ownwell.com/careers
+Ojo Labs,B,,,unmapped,0,0,0,https://www.ojolabs.com/careers
+Opcity (Realtor.com),B,,,unmapped,0,0,0,https://www.move.com/careers
+Compass,B,,,unmapped,0,0,0,https://www.compass.com/careers
+VTS,B,greenhouse,vts,ok,17,17,0,https://www.vts.com/careers
+ButterflyMX,A,ashby,butterflymx,ok,23,23,0,https://www.butterflymx.com/careers
+Guesty,A,,,unmapped,0,0,0,https://www.guesty.com/careers
+Rhino,A,bamboohr,rhinolabs,ok,4,4,0,https://careers.sayrhino.com
+Bilt Rewards,A,,,unmapped,0,0,0,https://www.biltrewards.com/careers
+CompStak,B,lever,compstak,ok,4,4,0,https://www.compstak.com/careers
+Cadre,B,,,unmapped,0,0,0,https://www.cadre.com/careers
+SquareFoot,B,,,unmapped,0,0,0,https://www.squarefoot.com/careers
+Latch,A,lever,latch,ok,2,2,0,https://www.latch.com/careers
+Agora,B,,,unmapped,0,0,0,https://www.agorareal.com/careers
+Cherre,A,lever,cherre,ok,1,1,0,https://www.cherre.com/careers
+Enertiv,B,rippling,enertiv-jobs,failed:KeyError: 'id',0,0,0,https://www.enertiv.com/careers
+Bowery Valuation,B,rippling,bowery-valuation,failed:KeyError: 'id',0,0,0,https://www.boweryvaluation.com/careers
+Obligo,A,greenhouse,obligo,ok,3,3,0,https://www.myobligo.com/careers
+TheGuarantors,A,rippling,theguarantors-open-positions,failed:KeyError: 'id',0,0,0,https://www.theguarantors.com/careers
+Funnel Leasing,A,,,unmapped,0,0,0,https://www.funnelleasing.com/careers
+Convene,B,greenhouse,convene,ok,42,42,0,https://convene.com/careers
+Orchard,B,greenhouse,orchard,ok,30,30,0,https://www.orchard.com/careers
+Better.com,B,,,unmapped,0,0,0,https://better.com/careers
+Updater,A,greenhouse,updater,ok,1,1,0,https://www.updater.com/careers
+Livly,A,paylocity,65717b9a-7d08-4867-8ae9-5f3553eff988,unsupported:paylocity,0,0,0,https://www.livly.io/careers
+Chamberlain Group,B,workday,chamberlain,ok,40,40,0,https://www.chamberlaingroup.com/careers
+Obie,A,rippling,obie,failed:KeyError: 'id',0,0,0,https://www.obieinsurance.com/careers
+Avail (Realtor.com),A,,,unmapped,0,0,0,https://www.avail.co/careers
+HqO,B,ashby,hqo,failed:HTTPError: 404 Client Error: Not Found for url: https://api.ashbyhq.com/posting-api/job-board/hqo?includeCompensation=false,0,0,0,https://www.hqo.com/careers
+Buildium (RealPage),A,,,unmapped,0,0,0,https://www.buildium.com/careers
+Placester,B,,,unmapped,0,0,0,https://placester.com/careers
+Robin,B,,,unmapped,0,0,0,https://www.robinpowered.com/careers
+GetCovered,A,,,unmapped,0,0,0,https://getcovered.io/careers
+TurboTenant,A,greenhouse,turbotenant,ok,3,3,0,https://www.turbotenant.com/careers
+Homebot,B,ashby,homebot,ok,1,1,0,https://www.homebot.ai/careers
+Digible,A,greenhouse,digible,ok,6,6,0,https://www.digible.com/careers
+NetVendor,A,bamboohr,netvendor,ok,5,5,0,https://www.netvendor.com/careers
+SmartRent,A,greenhouse,smartrent,ok,9,0,0,https://smartrent.com/careers
+Offerpad,B,,,unmapped,0,0,0,https://www.offerpad.com/careers
+Opendoor,B,,,unmapped,0,0,0,https://www.opendoor.com/careers
+PointCentral,A,greenhouse,pointcentral,ok,1,1,0,https://www.pointcentral.com/careers
+Entrata,A,lever,entrata,ok,21,21,1,https://www.entrata.com/careers
+Rentec Direct,A,,,unmapped,0,0,0,https://www.rentecdirect.com/careers
+Second Nature,A,ashby,second-nature,ok,8,8,0,https://www.secondnature.com/careers
+Home365,A,bamboohr,home365,ok,12,12,0,https://www.home365.co/careers
+Cecilian Partners,B,,,unmapped,0,0,0,https://www.cecilianpartners.com/careers
+CoStar Group,B,,,unmapped,0,0,0,https://www.costargroup.com/careers
+Alarm.com,B,,,unmapped,0,0,0,https://www.alarm.com/careers
+Notarize (Proof),B,greenhouse,proof,ok,126,126,0,https://www.proof.com/careers
+Zillow Group,B,workday,zillow,ok,40,40,0,https://www.zillow.com/careers
+Redfin,B,,,unmapped,0,0,0,https://www.redfin.com/careers
+Knock CRM,A,,,unmapped,0,0,0,https://www.knockrentals.com/careers
+Rocket Companies,B,,,unmapped,0,0,0,https://www.rocketcompanies.com/careers
+Rent Manager (LCS),A,,,unmapped,0,0,0,https://www.rentmanager.com/careers
+MRI Software,A,,,unmapped,0,0,0,https://www.mrisoftware.com/careers
+Density,B,greenhouse,density,failed:HTTPError: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/density/jobs?content=false,0,0,0,https://www.density.io/careers
+Bright MLS,B,,,unmapped,0,0,0,https://www.brightmls.com/careers
+DoorLoop,A,,,unmapped,0,0,0,https://www.doorloop.com/careers
+Envoy,B,ashby,envoy,ok,18,18,0,https://envoy.com/careers
+LeaseLock,A,,,unmapped,0,0,0,https://www.leaselock.com/careers
+Flock Homes,A,greenhouse,flockhomes,ok,3,3,0,https://www.flockhomes.com/careers
+Divvy Homes,A,greenhouse,divvyhomes,failed:HTTPError: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/divvyhomes/jobs?content=false,0,0,0,https://www.divvyhomes.com/careers
+Greystar,A,workday,greystar,ok,40,40,0,https://www.greystar.com/careers
+Doorstead,A,,,unmapped,0,0,0,https://www.doorstead.com/careers
+Belong,A,workable,belong-6,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://apply.workable.com/api/v3/accounts/belong-6/jobs,0,0,0,https://belonghome.com/careers
 Mynd,A,,,unmapped,0,0,0,https://www.mynd.co/careers
+Renters Warehouse,A,,,unmapped,0,0,0,https://www.renterswarehouse.com/careers
+Evernest,A,greenhouse,evernest,ok,106,106,0,https://www.evernest.co/careers
+Atlas Real Estate,A,,,unmapped,0,0,0,https://realatlas.com/careers/
+PURE HomeRiver Group,A,,,unmapped,0,0,0,https://purehomeriver.com/company/careers/
+Northpoint Asset Management,A,,,unmapped,0,0,0,https://northpointam.com/careers
+Evergreen Residential,A,,,unmapped,0,0,0,https://evergreenresi.com/careers/
