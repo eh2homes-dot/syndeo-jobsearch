@@ -15,7 +15,10 @@ from urllib.parse import urlparse
 
 import requests
 
+from . import adapters as _ad
 from .adapters import ADAPTERS, UA, TIMEOUT
+
+_RATE_LIMITED: set[str] = set()  # ATS APIs that returned 429 this run -> skip in later probes
 
 # Order matters: more specific first.
 PATTERNS = [
@@ -73,7 +76,7 @@ def detect_from_html(html: str, final_url: str = "") -> dict | None:
 
 
 def fetch_page(url: str) -> tuple[str, str]:
-    r = requests.get(url, headers=UA, timeout=TIMEOUT, allow_redirects=True)
+    r = requests.get(url, headers=UA, timeout=15, allow_redirects=True)
     return r.text, r.url
 
 
@@ -105,11 +108,23 @@ def probe_is_same_company(jobs: list[dict], website: str) -> tuple[bool, str]:
 def probe(website: str) -> dict | None:
     """Try slug guesses against APIs that fail fast (Greenhouse, Lever, Ashby, Workable)."""
     rejected = []
+    saved, _ad.MAX_TRIES = _ad.MAX_TRIES, 1
+    try:
+        return _probe(website, rejected)
+    finally:
+        _ad.MAX_TRIES = saved
+
+
+def _probe(website: str, rejected: list) -> dict | None:
     for slug in _domain_slugs(website):
         for ats in ("greenhouse", "lever", "ashby", "workable"):
+            if ats in _RATE_LIMITED:
+                continue
             try:
                 jobs = ADAPTERS[ats](slug)
-            except Exception:
+            except Exception as e:
+                if "429" in str(e):
+                    _RATE_LIMITED.add(ats)
                 continue
             if not jobs:
                 continue

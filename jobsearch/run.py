@@ -129,9 +129,12 @@ def main(argv=None):
     ap.add_argument("--date", default="", help="override run date (YYYY-MM-DD)")
     ap.add_argument("--sleep", type=float, default=0.5)
     ap.add_argument("--no-verify", action="store_true", help="skip link verification")
+    ap.add_argument("--detect-minutes", type=float, default=15, help="time budget for ATS detection")
+    ap.add_argument("--budget-minutes", type=float, default=40, help="skip link verification if run is past this")
     args = ap.parse_args(argv)
 
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
+    run_start = time.time()
     cfg = load_json(CONFIG, {})
     leads = load_leads()
     if args.tier:
@@ -150,8 +153,15 @@ def main(argv=None):
         m = ats_map.get(lead["company"])
         if m and (m.get("ats") or m.get("confidence") in ("excluded", "manual")):
             continue
+        if args.detect and not fixtures and (time.time() - run_start) > args.detect_minutes * 60:
+            needs_manual.append({"company": lead["company"], "careers_url": lead["careers_url"],
+                                 "reason": "detection time budget used up this run; will retry next run"})
+            continue
         if args.detect and not fixtures:
+            t0 = time.time()
             hit = detect_mod.detect(lead)
+            print(f"  detect  {lead['company']:32} -> {hit.get('ats') or '-':15} {hit.get('slug',''):22} "
+                  f"({hit['confidence']}, {time.time()-t0:.0f}s)", flush=True)
             hit["detected_on"] = today.isoformat()
             ats_map[lead["company"]] = hit
             time.sleep(args.sleep)
@@ -168,7 +178,10 @@ def main(argv=None):
     all_jobs, company_rows = [], []
     for lead in leads:
         mapping = ats_map.get(lead["company"], {})
+        t0 = time.time()
         jobs, status = scrape_company(lead, mapping, fixtures)
+        if mapping.get("ats") and not fixtures:
+            print(f"  scrape  {lead['company']:32} {len(jobs):5} jobs  {status[:60]}  ({time.time()-t0:.0f}s)", flush=True)
         for j in jobs:
             j["company"] = lead["company"]
             j["segment"] = lead["segment"]
@@ -218,8 +231,15 @@ def main(argv=None):
 
     # ---- 3b. verify every link; reopen "closed" roles whose posting is still live
     scraper_misses = []
-    if not fixtures and not args.no_verify:
+    over_budget = (time.time() - run_start) > args.budget_minutes * 60
+    if over_budget and not fixtures:
+        print("  verify  SKIPPED - run is over its time budget; closed roles kept unverified", flush=True)
+    if not fixtures and not args.no_verify and not over_budget:
+        n = len(all_jobs) + len(closed_jobs)
+        print(f"  verify  checking {n} posting links...", flush=True)
+        t0 = time.time()
         results = verify_mod.check_many([j["url"] for j in all_jobs] + [c["url"] for c in closed_jobs])
+        print(f"  verify  done in {time.time()-t0:.0f}s", flush=True)
         for j in all_jobs:
             j["link_status"], j["link_http"] = results.get(j["url"], ("error", 0))
         still_closed = []

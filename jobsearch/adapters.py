@@ -24,12 +24,14 @@ from typing import Callable
 
 import requests
 
+MAX_TRIES = 4  # set to 1 during detection probes so wrong guesses fail fast
 UA = {"User-Agent": "Mozilla/5.0 (compatible; SyndeoJobSearch/0.1; +https://propertyandtechnologyjobs.com)"}
 TIMEOUT = 25
 
 
-def _retry(fn, url, tries=4):
+def _retry(fn, url, tries=None):
     import time
+    tries = tries or MAX_TRIES
     for i in range(tries):
         r = fn()
         if r.status_code in (429, 500, 502, 503, 504) and i < tries - 1:

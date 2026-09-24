@@ -41,7 +41,7 @@ def check(url: str) -> tuple[str, int]:
     if not url:
         return "error", 0
     try:
-        r = requests.get(url, headers=UA, timeout=20, allow_redirects=True)
+        r = requests.get(url, headers=UA, timeout=10, allow_redirects=True)
     except Exception:
         return "error", 0
     code = r.status_code
@@ -62,7 +62,7 @@ def check(url: str) -> tuple[str, int]:
     return "live", code
 
 
-def check_many(urls: list[str], workers: int = 12) -> dict[str, tuple[str, int]]:
+def check_many(urls: list[str], workers: int = 24) -> dict[str, tuple[str, int]]:
     urls = list(dict.fromkeys(u for u in urls if u))
     with ThreadPoolExecutor(max_workers=workers) as ex:
         return dict(zip(urls, ex.map(check, urls)))
