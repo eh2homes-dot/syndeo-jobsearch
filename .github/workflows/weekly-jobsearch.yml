@@ -18,12 +18,15 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 50        # hard stop - never another 6-hour run
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
       - run: pip install -r requirements.txt
       - name: Run job search
+        env:
+          PYTHONUNBUFFERED: "1"
         run: |
           ARGS=""
           if [ -n "${{ github.event.inputs.tier }}" ]; then ARGS="$ARGS --tier ${{ github.event.inputs.tier }}"; fi
