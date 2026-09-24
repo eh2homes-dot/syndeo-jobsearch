@@ -2,21 +2,21 @@
   "Agora": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Alarm.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Apartment List": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -31,21 +31,21 @@
   "Atlas Real Estate": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Auction.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Avail (Realtor.com)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -60,14 +60,14 @@
   "Better.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Bilt Rewards": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -88,14 +88,14 @@
   "Bright MLS": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Buildium (RealPage)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -109,14 +109,14 @@
   "Cadre": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Cecilian Partners": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -153,7 +153,7 @@
   "CoStar Group": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -167,7 +167,7 @@
   "Compass": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -186,10 +186,11 @@
     "slug": "crexi"
   },
   "Density": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "greenhouse:density 404 on 2026-09-23 - re-detect",
-    "slug": ""
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "greenhouse.io/embed/job_board/js?for=density",
+    "slug": "density"
   },
   "Digible": {
     "ats": "greenhouse",
@@ -199,10 +200,11 @@
     "slug": "digible"
   },
   "Divvy Homes": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "greenhouse:divvyhomes 404 on 2026-09-23 - board removed; re-detect",
-    "slug": ""
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "boards.greenhouse.io/divvyhomes",
+    "slug": "divvyhomes"
   },
   "Doma": {
     "ats": "greenhouse",
@@ -214,14 +216,14 @@
   "DoorLoop": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Doorstead": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -250,15 +252,16 @@
   "Evergreen Residential": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Evernest": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "2026-09-23 probe matched greenhouse:evernest = Evernest GmbH (Germany, evernest.com), NOT evernest.co; 106 wrong roles removed. Re-detect with domain guard.",
-    "slug": ""
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-24",
+    "evidence": "lever:evernest returned 17 jobs; greenhouse:evernest rejected (postings link to evernest.com, not evernest.co)",
+    "slug": "evernest"
   },
   "Flock Homes": {
     "ats": "greenhouse",
@@ -270,14 +273,14 @@
   "Funnel Leasing": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "GetCovered": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -299,14 +302,14 @@
   "Guesty": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Hemlane": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -341,27 +344,28 @@
   "HouseCanary": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "HqO": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "ashby:hqo 404 on 2026-09-23 - re-detect",
-    "slug": ""
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "jobs.ashbyhq.com/hqo",
+    "slug": "hqo"
   },
   "Kiavi": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Knock CRM": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -375,7 +379,7 @@
   "LeaseLock": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -396,28 +400,28 @@
   "MRI Software": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Matterport": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Measurabl": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Mynd": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -431,15 +435,16 @@
   "Northpoint Asset Management": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Notarize (Proof)": {
-    "ats": "",
-    "confidence": "none",
-    "evidence": "2026-09-23 probe matched greenhouse:proof = ProofServe (process servers, proofserve.com), NOT proof.com; 126 wrong roles removed. Re-detect with domain guard.",
-    "slug": ""
+    "ats": "lever",
+    "confidence": "probe",
+    "detected_on": "2026-09-24",
+    "evidence": "lever:proof returned 2 jobs; greenhouse:proof rejected (postings link to proofserve.com, not proof.com)",
+    "slug": "proof"
   },
   "Obie": {
     "ats": "rippling",
@@ -458,28 +463,28 @@
   "Offerpad": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Ojo Labs": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Opcity (Realtor.com)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Opendoor": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -500,7 +505,7 @@
   "PURE HomeRiver Group": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -514,21 +519,21 @@
   "Placer.ai": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Placester": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Point": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -542,7 +547,7 @@
   "Procore Technologies": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -556,49 +561,49 @@
   "Realtor.com (Move Inc.)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Redfin": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Rent Manager (LCS)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "RentSpree": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Rentec Direct": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Renters Warehouse": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "ResMan": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -612,14 +617,14 @@
   "Robin": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Rocket Companies": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -662,7 +667,7 @@
   "SquareFoot": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -704,14 +709,14 @@
   "Worksmith": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Yardi Systems": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -727,7 +732,7 @@
   "Zumper": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-23",
+    "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   }
