@@ -478,11 +478,57 @@ def main(argv=None):
         print(f"  draft   newsletter section -> {draft.relative_to(ROOT)}", flush=True)
         if os.environ.get("GITHUB_STEP_SUMMARY"):
             with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
-                f.write(f"# Now hiring - newsletter draft\n\nCopy-paste file in the repo: `{draft.relative_to(ROOT)}`\n\n---\n\n"
+                f.write(f"# Now hiring - newsletter draft\n\nPaste-ready version: open `{draft.with_suffix('.html').relative_to(ROOT)}` "
+                        f"in a browser, select all, copy, paste into beehiiv.\n\n---\n\n"
                         + draft.read_text() + "\n---\n")
     print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open_in_scope={len(all_jobs)} open_all={len(all_open)} "
           f"new={len(new_jobs)} closed={len(closed_jobs)} -> {out_dir}")
     return 0
+
+
+# ------------------------------------------------------- paste-ready HTML version of a draft
+def draft_html(md_text: str, title: str) -> str:
+    """Convert our draft Markdown (##, **bold**, _italic_, [links](url), '- ' bullets, ---) to plain,
+    email-friendly HTML. Open it in a browser, select all, copy, paste into the newsletter editor."""
+    import html as H
+
+    def inline(t: str) -> str:
+        t = H.escape(t, quote=False)
+        t = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>', t)
+        t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+        t = re.sub(r"(?<![\w/])_(.+?)_(?![\w/])", r"<em>\1</em>", t)
+        return t
+
+    out, in_list = [], False
+    for line in md_text.splitlines():
+        l = line.rstrip()
+        if l.startswith("- "):
+            if not in_list:
+                out.append("<ul>"); in_list = True
+            out.append(f"<li>{inline(l[2:])}</li>")
+            continue
+        if in_list:
+            out.append("</ul>"); in_list = False
+        if not l:
+            continue
+        if l.startswith("## "):
+            out.append(f"<h2>{inline(l[3:])}</h2>")
+        elif l.startswith("# "):
+            out.append(f"<h1>{inline(l[2:])}</h1>")
+        elif l == "---":
+            out.append("<hr>")
+        elif re.fullmatch(r"\*\*[^*]+\*\*", l):
+            out.append(f"<h3>{inline(l[2:-2])}</h3>")
+        else:
+            out.append(f"<p>{inline(l)}</p>")
+    if in_list:
+        out.append("</ul>")
+    body = "\n".join(out)
+    return (f"<!doctype html><html><head><meta charset=\"utf-8\"><title>{H.escape(title)}</title>"
+            "<style>body{font-family:Georgia,serif;max-width:680px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}"
+            "h1{font-size:1.5rem}h2{font-size:1.35rem;margin-top:2rem}h3{font-size:1.05rem;margin:1.4rem 0 .4rem}"
+            "a{color:#1a4d8f}li{margin:.35rem 0}hr{border:0;border-top:1px solid #ddd;margin:2rem 0}em{color:#555}</style>"
+            f"</head><body>\n{body}\n</body></html>")
 
 
 # ------------------------------------------------------- newsletter draft: Now hiring
@@ -588,14 +634,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         for c in order[:max_companies]:
             roles = [j for j, _, _ in _collapse(sorted(by_co[c], key=lambda j: _seniority(j["title"])), by_base=False)]
             shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:3])
-            more = len(by_co[c]) - min(3, len(roles)) - (len(by_co[c]) - len(roles))  # distinct roles not shown
-            tail = ""
-            if more > 0:
-                tail = f", and [{more} more]({careers.get(c) or roles[0]['url']})"
-            md.append(f"- **{c}**: {shown}{tail}")
-        if len(order) > max_companies:
-            rest = len(order) - max_companies
-            md.append(f"- _...and {rest} more {'company' if rest == 1 else 'companies'} hiring for {label}._")
+            md.append(f"- **{c}**: {shown}")
         md.append("")
 
     filled = sorted([c for c in closed if _seniority(c.get("title", "")) <= 4 and c.get("role_group")],
@@ -612,6 +651,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     nl.mkdir(parents=True, exist_ok=True)
     path = nl / f"now-hiring-{today.isoformat()}.md"
     path.write_text("\n".join(md))
+    path.with_suffix(".html").write_text(draft_html("\n".join(md), f"Now hiring - {today.isoformat()}"))
     return path
 
 

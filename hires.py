@@ -444,6 +444,8 @@ def write_newsletter(out_dir: Path, rows: list[dict], today: dt.date, days: int)
     nl_dir.mkdir(parents=True, exist_ok=True)
     path = nl_dir / f"people-moves-{today.isoformat()}.md"
     path.write_text("\n".join(md))
+    from .run import draft_html
+    path.with_suffix(".html").write_text(draft_html("\n".join(md), f"People on the move - {today.isoformat()}"))
     (out_dir / "newsletter_people_moves.md").write_text("\n".join(md))
     return path
 
@@ -454,7 +456,8 @@ def write_run_summary(draft: Path, rows: list[dict], notes: dict):
     target = os.environ.get("GITHUB_STEP_SUMMARY")
     sec = [m for m in rows if m["source"] == "sec"]
     text = [f"# Recently hired - newsletter draft", "",
-            f"Copy-paste file in the repo: `{draft.relative_to(ROOT)}`", "", "---", "", draft.read_text(), "---", ""]
+            f"Paste-ready version: open `{draft.with_suffix('.html').relative_to(ROOT)}` in a browser, select all, copy, "
+            f"paste into beehiiv.", "", "---", "", draft.read_text(), "---", ""]
     if sec:
         text += ["### SEC officer/director filings (for your review, not in the draft)", ""]
         text += [f"- **{_display(m['company'])}** - {m['date']} - [8-K filing]({m['url']})" for m in sec]
