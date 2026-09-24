@@ -1,0 +1,9 @@
+company,tier,ats,slug,status,focus_open,open,new,closed,careers_url
+Second Nature,A,ashby,second-nature,ok,5,8,0,0,https://www.secondnature.com/careers
+Footprint,A,ashby,onefootprint,failed:HTTPError: 404 Client Error: Not Found for url: https://api.ashbyhq.com/posting-api/job-board/onefootprint?includeCompensation=false,0,0,0,0,https://jobs.ashbyhq.com/onefootprint
+Haven,A,generic,haven-yc,ok,1,1,1,0,https://www.ycombinator.com/companies/haven-2/jobs
+Two Dots,A,lever,twodots,ok,3,4,4,0,https://jobs.lever.co/twodots
+Reffie,A,generic,reffie,ok,1,1,1,0,https://careers.reffie.me/
+Property Meld,A,breezy,property-meld,ok,0,0,0,0,https://property-meld.breezy.hr/
+Super,A,generic,hiresuper,ok,0,0,0,0,https://www.hiresuper.com/careers
+Lineage,A,generic,lineage-finance,ok,0,0,0,0,https://lineage.finance/careers
