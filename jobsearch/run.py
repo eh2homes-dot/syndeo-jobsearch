@@ -81,6 +81,60 @@ def rel_to_date(rel: str, today: dt.date) -> str:
     return (today - dt.timedelta(days=days)).isoformat()
 
 
+def _norm(s: str) -> str:
+    """'Super (Voice Ai)' -> 'super', 'Hired Helpr' -> 'hiredhelpr', 'Lineage.finance' -> 'lineagefinance'."""
+    s = re.sub(r"\(.*?\)", " ", (s or "").lower())
+    return re.sub(r"[^a-z0-9]+", "", s)
+
+
+def _domain_keys(website: str) -> set:
+    host = re.sub(r"^https?://", "", (website or "").lower()).split("/")[0].replace("www.", "")
+    return {k for k in (_norm(host), _norm(host.split(".")[0])) if k}
+
+
+def match_companies(typed: str, leads: list[dict]) -> list[dict]:
+    """Match a typed name to leads, most exact first: name, then web address, then partial name."""
+    w = _norm(typed)
+    if not w:
+        return []
+    exact = [l for l in leads if _norm(l["company"]) == w]
+    if exact:
+        return exact
+    dom = [l for l in leads if w in _domain_keys(l.get("website", ""))]
+    if dom:
+        return dom
+    return [l for l in leads if len(w) >= 4 and w in _norm(l["company"])]
+
+
+def parse_company_list(text: str, leads: list[dict]) -> tuple[list[dict], list[str]]:
+    """Accepts 'a, b, c', one-per-line, semicolons, or a pasted list whose separators got lost
+    ('Nutiliti Second Nature Hired Helpr ...'). Returns (matched leads, names that matched nothing)."""
+    picked, unmatched = [], []
+    chunks = [c.strip() for c in re.split(r"[,;\n\r]+", text or "") if c.strip()]
+    for chunk in chunks:
+        hits = match_companies(chunk, leads)
+        if hits:
+            picked += [h for h in hits if h not in picked]
+            continue
+        # Separators lost: read left to right, taking the longest run of words (up to 4) that is a company
+        words = re.sub(r"\(.*?\)", " ", chunk).split()
+        i, leftover = 0, []
+        while i < len(words):
+            for n in range(min(4, len(words) - i), 0, -1):
+                span = " ".join(words[i:i + n])
+                w = _norm(span)
+                hit = [l for l in leads if _norm(l["company"]) == w or w in _domain_keys(l.get("website", ""))]
+                if hit:
+                    picked += [h for h in hit if h not in picked]
+                    i += n
+                    break
+            else:
+                leftover.append(words[i]); i += 1
+        if leftover:
+            unmatched.append(" ".join(leftover))
+    return picked, unmatched
+
+
 def passes_company_filter(company: str, title: str, location: str, cfg: dict) -> bool:
     """Per-company include rules from config.json -> company_filters. Companies without a rule keep everything.
     A role is kept if its title OR location looks corporate/leadership, unless the title is an on-site role."""
@@ -174,15 +228,7 @@ def main(argv=None):
         leads = [l for l in leads if l["tier"] == args.tier]
     adhoc = bool(args.only.strip())
     if adhoc:
-        wanted = [x.strip().lower() for x in args.only.split(",") if x.strip()]
-        picked, unmatched = [], []
-        for w in wanted:
-            hits = [l for l in leads if w == l["company"].lower()] or \
-                   [l for l in leads if w in l["company"].lower() or w in l["website"].lower()]
-            if hits:
-                picked += [h for h in hits if h not in picked]
-            else:
-                unmatched.append(w)
+        picked, unmatched = parse_company_list(args.only, leads)
         leads = picked
         if unmatched:
             print(f"  WARNING: not in the master leads list: {', '.join(unmatched)}", flush=True)

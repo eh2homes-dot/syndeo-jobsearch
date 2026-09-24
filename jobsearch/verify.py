@@ -56,8 +56,13 @@ def check(url: str) -> tuple[str, int]:
     if "error=true" in r.url.lower():
         return "gone", code
     visible = re.sub(r"(?is)<(script|style|noscript|template)[^>]*>.*?</\1>", " ", r.text[:600_000])
-    visible = re.sub(r"<[^>]+>", " ", visible)
-    if GONE_MARKERS.search(visible):
+    visible = " ".join(re.sub(r"<[^>]+>", " ", visible).split())
+    title = re.search(r"(?is)<title[^>]*>(.*?)</title>", r.text[:50_000])
+    if title and GONE_MARKERS.search(title.group(1)):
+        return "gone", code
+    # A "this job is closed" page is short. A live posting is a long description that can innocently
+    # contain phrases like "no longer accepting..." in the company blurb - don't treat those as closed.
+    if len(visible) < 4000 and GONE_MARKERS.search(visible):
         return "gone", code
     return "live", code
 

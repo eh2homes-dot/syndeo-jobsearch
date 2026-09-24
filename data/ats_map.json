@@ -607,6 +607,12 @@
     "evidence": "property-meld.breezy.hr fetched live (no open positions); verified by Claude 2026-09-24",
     "slug": "property-meld"
   },
+  "PropertyManagement.com": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "company identity unconfirmed 2026-09-24 - waiting on Evan",
+    "slug": ""
+  },
   "RealPage": {
     "ats": "icims",
     "confidence": "html",
@@ -705,6 +711,12 @@
     "detected_on": "2026-09-23",
     "evidence": "jobs.ashbyhq.com/second-nature",
     "slug": "second-nature"
+  },
+  "Series Homes": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "serieshomes.com fetched 2026-09-24: no careers link, no ATS; contact via founders email only",
+    "slug": ""
   },
   "Side": {
     "ats": "lever",

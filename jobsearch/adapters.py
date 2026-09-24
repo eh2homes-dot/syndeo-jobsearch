@@ -96,8 +96,28 @@ def lever(slug: str, **_) -> list[dict]:
 
 
 # --------------------------------------------------------------------- Ashby
+def _ashby_graphql(slug: str) -> list[dict]:
+    """Same feed jobs.ashbyhq.com/<slug> uses to render its page. Used when the posting API 404s
+    (seen for Footprint / onefootprint on 2026-09-24 while its job pages were live)."""
+    q = ("query ApiJobBoardWithTeams($organizationHostedJobsPageName: String!) { jobBoard: "
+         "jobBoardWithTeams(organizationHostedJobsPageName: $organizationHostedJobsPageName) "
+         "{ jobPostings { id title locationName } } }")
+    data = _post("https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams",
+                 {"operationName": "ApiJobBoardWithTeams",
+                  "variables": {"organizationHostedJobsPageName": slug}, "query": q}).json()
+    board = ((data or {}).get("data") or {}).get("jobBoard") or {}
+    return [{"id": j["id"], "title": j.get("title", ""), "location": j.get("locationName", ""),
+             "jobUrl": f"https://jobs.ashbyhq.com/{slug}/{j['id']}", "publishedAt": ""}
+            for j in board.get("jobPostings", []) or []]
+
+
 def ashby(slug: str, **_) -> list[dict]:
-    data = _get(f"https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=false").json()
+    try:
+        data = _get(f"https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=false").json()
+    except requests.HTTPError as e:
+        if e.response is None or e.response.status_code != 404:
+            raise
+        data = {"jobs": _ashby_graphql(slug)}
     out = []
     for j in data.get("jobs", []):
         if j.get("isListed") is False:
