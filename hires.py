@@ -432,7 +432,7 @@ def write_newsletter(out_dir: Path, rows: list[dict], today: dt.date, days: int)
         buckets[sec].append(line)
     start = today - dt.timedelta(days=days)
     md = [f"## People on the move", "",
-          f"_New executive hires and departures at the proptech and single-family rental companies we track "
+          f"_New executive hires and departures across proptech and scattered site rental operations "
           f"(week of {today.strftime('%B %-d, %Y')})._", ""]
     md += buckets["moves"] or ["_No named executive moves this week._"]
     if buckets["departures"]:

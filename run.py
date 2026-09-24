@@ -608,8 +608,9 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
              dt.date.fromisoformat(j["first_seen"]) >= week_ago]
     cos = {j["company"] for j in fresh}
     md = ["## Now hiring", "",
-          f"_{len(fresh)} new Sales, GTM, Engineering and leadership roles this week at {len(cos)} of the "
-          f"proptech and single-family rental companies we track._", ""]
+          f"_{len(fresh)} new Sales, GTM, Engineering and leadership {'role' if len(fresh) == 1 else 'roles'} this week at "
+          f"{len(cos)} {'company' if len(cos) == 1 else 'companies'} "
+          f"across proptech and scattered site rental operations._", ""]
 
     lead = sorted([j for j in fresh if j["role_group"] == "executive"], key=lambda j: (_seniority(j["title"]), j["company"]))
     if lead:
