@@ -255,6 +255,36 @@
       "Doma": "DOMA"
     },
     "leadership_pages": {},
-    "sec_contact": "read from the SEC_USER_AGENT GitHub secret - not stored here"
+    "sec_contact": "read from the SEC_USER_AGENT GitHub secret - not stored here",
+    "news_aliases": {
+      "Convene": [
+        "Convene Hospitality Group"
+      ],
+      "Zillow Group": [
+        "Zillow"
+      ],
+      "Realtor.com (Move Inc.)": [
+        "Realtor.com"
+      ],
+      "Notarize (Proof)": [
+        "Proof.com",
+        "Notarize"
+      ],
+      "Rocket Companies": [
+        "Rocket"
+      ],
+      "Procore Technologies": [
+        "Procore"
+      ],
+      "Yardi Systems": [
+        "Yardi"
+      ],
+      "CoStar Group": [
+        "CoStar"
+      ],
+      "Alarm.com": [
+        "Alarm.com"
+      ]
+    }
   }
 }

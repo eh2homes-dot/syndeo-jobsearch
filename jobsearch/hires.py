@@ -60,7 +60,48 @@ def _clean(s: str) -> str:
     return " ".join(H.unescape(re.sub(r"<[^>]+>", " ", s or "")).split())
 
 
+SUFFIX = r"(?:\s+(?:Group|Inc\.?|Labs|Companies|Company|Technologies|Homes|Software|Systems|Rewards|Hospitality(?:\s+Group)?|Holdings|Corp\.?|LLC))?"
+VERB = r"(?:names?|named|appoints?|appointed|hires?|hired|promotes?|promoted|taps?|tapped|welcomes?|adds?|elevates?|announces?|expands|bolsters|strengthens)"
+EXEC = r"(?:ceo|cfo|coo|cto|cro|cmo|cpo|president|chief|head|vp|svp|evp|general\s+manager|chair)"
+
+
+def company_is_hirer(name: str, headline: str) -> bool:
+    """True only if the company is the one hiring / being joined - not a word that happens to appear.
+    'Sound Point Capital appoints...', 'Indian Super League appoints...', 'ENGWE names Robin van Persie'
+    all fail; 'Greystar appoints...', 'joins Zillow as', 'CEO of Redfin', 'named Redfin CEO' pass."""
+    n = re.escape(name)
+    h = re.sub(r"\s+", " ", headline.strip())
+    pats = [
+        rf"^(?:[^:|]{{0,60}}[:|]\s*)?{n}{SUFFIX}(?:'s|’s)?\s+(?:board\s+)?{VERB}\b",   # Greystar appoints / Acme: Zillow names
+        rf"^(?:[\w.-]+\s+){{0,4}}(?:giant|leader|firm|operator|developer|platform|startup|company|owner|manager|landlord|lender|brokerage|reit|proptech)\s+{n}{SUFFIX}\s+{VERB}\b",  # US Multifamily Giant Greystar Names
+        rf"\b(?:joins?|joined|rejoins|returns to|to lead|leaves|exits|departs)\s+{n}\b",     # X joins Entrata as ...
+        rf"\b{EXEC}[\w\s&,-]{{0,40}}?\s+(?:of|at|for)\s+{n}\b",                              # CEO of Redfin
+        rf"\b(?:named|names|appointed|appoints|as|new|taps)\s+{n}{SUFFIX}\s+{EXEC}\b",       # named Redfin CEO
+        rf"^{n}{SUFFIX}\s+{EXEC}\b[^|]*?\b(?:steps down|to step down|resigns|retires|departs|exits|leaves)\b",  # Entrata CTO steps down
+    ]
+    return any(re.search(p, h, re.I) for p in pats)
+
+
+TRAIL = {"chief", "head", "senior", "president", "vice", "marketing", "sales", "product", "technology", "revenue",
+         "operating", "financial", "executive", "global", "new", "former", "ceo", "cfo", "coo", "cto", "cro", "cmo",
+         "as", "to", "its", "the", "a", "an", "and"}
+
+
 def _person_from_headline(t: str) -> str:
+    letters = [c for c in t if c.isalpha()]
+    if letters and sum(c.isupper() for c in letters) / len(letters) > 0.7:
+        t = t.title()  # ALL-CAPS HEADLINE -> Title Case so names can be recognised
+    m = re.search(rf"(?i:{VERB})\s+{NAME}", t)
+    if m:
+        words = m.group(1).split()
+        while words and words[-1].lower().strip(",") in TRAIL:
+            words.pop()
+        if len(words) >= 2 and not TITLE_WORDS.search(" ".join(words)) and words[0].lower() not in TRAIL:
+            return " ".join(words)
+    return _person_from_headline_old(t)
+
+
+def _person_from_headline_old(t: str) -> str:
     """'Acme Appoints Jane Doe as Chief Revenue Officer' -> 'Jane Doe'. Best effort; blank if unsure."""
     for pat in (rf"(?i:appoints?|names?|hires?|welcomes?|taps?|promotes?|elevates?|adds?)\s+{NAME}\s+(?i:as|to)\b",
                 rf"^{NAME}\s+(?i:joins|named|appointed|promoted|tapped|steps down|to lead|retires|resigns)",
@@ -83,14 +124,15 @@ def news_moves(lead: dict, cfg: dict, today: dt.date) -> list[dict]:
     r = _get(url)
     r.raise_for_status()
     root = ET.fromstring(r.content)
-    out, key = [], _norm(name)
+    out = []
+    names = [name] + list(pm.get("news_aliases", {}).get(lead["company"], []))
     for it in root.iter("item"):
         title = _clean(it.findtext("title"))
         link = (it.findtext("link") or "").strip()
         src = _clean(it.findtext("source") or "")
         # Google appends " - Source" to titles; drop it before matching
         headline = re.sub(r"\s+-\s+[^-]{2,60}$", "", title)
-        if key not in _norm(headline) or not HIRE_VERBS.search(headline):
+        if not any(company_is_hirer(n, headline) for n in names) or not HIRE_VERBS.search(headline):
             continue
         grp = classify_role(headline, cfg)
         if not grp:
@@ -246,6 +288,54 @@ def leadership_moves(lead, snap: dict, cfg, today) -> tuple[list[dict], dict, st
     return moves, entry, f"{len(people)} people, {len(moves)} changes"
 
 
+def _exec_key(text: str) -> str:
+    t = text.lower().replace("&", "and")
+    m = re.search(r"chief ([a-z ]+?) officer", t)
+    if m:
+        short = {"executive": "ceo", "financial": "cfo", "operating": "coo", "technology": "cto",
+                 "revenue": "cro", "marketing": "cmo"}
+        return short.get(m.group(1).strip(), "chief " + m.group(1).strip())
+    for k in ("ceo", "cfo", "coo", "cto", "cro", "cmo", "cpo", "president", "head of [a-z ]+", "general manager"):
+        m = re.search(rf"\b{k}\b", t)
+        if m:
+            return m.group(0)
+    return ""
+
+
+def merge_duplicate_stories(moves: list[dict]) -> list[dict]:
+    """News outlets repeat the same appointment. Same company + same person (or same exec title)
+    within 10 days = one story; keep the earliest, note how many other articles covered it."""
+    out = []
+    for m in sorted(moves, key=lambda x: (x["company"], x["date"])):
+        if m["source"] != "news":
+            out.append(m)
+            continue
+        p, k = m["person"].lower(), _exec_key(m["title_or_headline"])
+        for o in out:
+            if o["source"] != "news" or o["company"] != m["company"]:
+                continue
+            if abs((dt.date.fromisoformat(o["date"]) - dt.date.fromisoformat(m["date"])).days) > 10:
+                continue
+            op, ok = o["person"].lower(), _exec_key(o["title_or_headline"])
+            generic = {"names", "appoints", "named", "appointed", "hires", "new", "head", "chief", "officer", "president",
+                       "director", "executive", "vp", "vice", "senior", "lead", "growth", "role", "as", "of", "to", "the",
+                       "and", "for", "joins", "promotes", "global"} | set(re.findall(r"[a-z]+", m["company"].lower()))
+            shared = (set(re.findall(r"[a-z]{3,}", m["title_or_headline"].lower())) - generic) & \
+                     (set(re.findall(r"[a-z]{3,}", o["title_or_headline"].lower())) - generic)
+            if (p and op and p == op) or (k and ok and k == ok) or (p and p in o["title_or_headline"].lower()) \
+                    or (not (p and op) and len(shared) >= 2):
+                o["_dupes"] = o.get("_dupes", 0) + 1
+                o["person"] = o["person"] or m["person"]
+                o.setdefault("_dupe_keys", []).append(m["key"])
+                break
+        else:
+            out.append(m)
+    for o in out:
+        if o.get("_dupes"):
+            o["detail"] = (o["detail"] + "; " if o["detail"] else "") + f"+{o['_dupes']} more articles"
+    return out
+
+
 # ------------------------------------------------------------------ matching
 def _tokens(s: str) -> set:
     stop = {"of", "the", "and", "a", "to", "as", "at", "for", "senior", "sr", "new", "names", "appoints"}
@@ -396,12 +486,16 @@ def main(argv=None):
         print(f"  pages   {tracked} of {len(todo)} companies have a readable leadership page", flush=True)
         save_json(SNAPSHOTS, snaps)
 
+    found = merge_duplicate_stories(found)
     # keep only moves not reported before, link to recently closed roles
     new = []
     for m in found:
         if m["key"] in seen:
             continue
         seen[m["key"]] = {"first_seen": today.isoformat(), "company": m["company"], "url": m["url"]}
+        for k in m.pop("_dupe_keys", []):
+            seen[k] = {"first_seen": today.isoformat(), "company": m["company"], "url": m["url"], "duplicate_of": m["key"]}
+        m.pop("_dupes", None)
         m["matched_closed_role"] = match_closed_roles(m, history, today)
         new.append(m)
     new.sort(key=lambda m: (m["company"], m["date"]))
