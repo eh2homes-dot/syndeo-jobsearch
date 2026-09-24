@@ -95,6 +95,25 @@ def passes_company_filter(company: str, title: str, location: str, cfg: dict) ->
     return any(w in t for w in f.get("keep_if_title_has", [])) or any(w in loc for w in f.get("keep_if_location_has", []))
 
 
+def classify_role(title: str, cfg: dict) -> str:
+    """Role group from config.json -> role_filter: executive | sales | gtm | engineering | "" (out of scope).
+    Seniority wins first (a 'VP of Maintenance' is still an executive); then the exclude list;
+    then sales, gtm, engineering in that order."""
+    rf = cfg.get("role_filter") or {}
+    if not rf.get("enabled"):
+        return "all"
+    t = (title or "").lower()
+    groups = rf.get("groups", {})
+    if any(re.search(p, t) for p in groups.get("executive", [])):
+        return "executive"
+    if any(re.search(p, t) for p in rf.get("exclude", [])):
+        return ""
+    for g in ("sales", "gtm", "engineering"):
+        if any(re.search(p, t) for p in groups.get(g, [])):
+            return g
+    return ""
+
+
 def focus_tag(title: str, cfg: dict) -> str:
     t = title.lower()
     for tag, words in cfg.get("focus_keywords", {}).items():
@@ -263,6 +282,11 @@ def main(argv=None):
                 by_company[h["company"]]["closed"] += 1
     for j in all_jobs:
         j["days_open"] = (today - dt.date.fromisoformat(j["first_seen"])).days
+        j["role_group"] = classify_role(j["title"], cfg)
+    for c in closed_jobs:
+        c["role_group"] = classify_role(c.get("title", ""), cfg)
+    for r in company_rows:
+        r["focus_open"] = sum(1 for j in all_jobs if j["company"] == r["company"] and j["role_group"])
 
     # ---- 3b. verify every link; reopen "closed" roles whose posting is still live
     scraper_misses = []
@@ -276,16 +300,17 @@ def main(argv=None):
         import random
         rng = random.Random(today.isoformat())
         sample = []
-        for co in {j["company"] for j in all_jobs}:
-            rows = [j for j in all_jobs if j["company"] == co]
+        in_scope = [j for j in all_jobs if j["role_group"]]
+        for co in {j["company"] for j in in_scope}:
+            rows = [j for j in in_scope if j["company"] == co]
             sample += rows if len(rows) <= per_co else rng.sample(rows, per_co)
         n = len(sample) + len(closed_jobs)
-        print(f"  verify  checking {n} posting links" + ("" if adhoc else f" ({len(all_jobs)} open, sampled {per_co}/company; all closed)") + "...", flush=True)
+        print(f"  verify  checking {n} posting links" + ("" if adhoc else f" ({len(in_scope)} in-scope open, sampled {per_co}/company; all closed)") + "...", flush=True)
         t0 = time.time()
         results = verify_mod.check_many([j["url"] for j in sample] + [c["url"] for c in closed_jobs])
         print(f"  verify  done in {time.time()-t0:.0f}s", flush=True)
         for j in all_jobs:
-            j["link_status"], j["link_http"] = results.get(j["url"], ("listed in ATS, not rechecked", 0))
+            j["link_status"], j["link_http"] = results.get(j["url"], ("listed in ATS, not rechecked" if j["role_group"] else "not checked (out of scope)", 0))
         still_closed = []
         for c in closed_jobs:
             st, code = results.get(c["url"], ("error", 0))
@@ -315,22 +340,28 @@ def main(argv=None):
     all_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     new_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     closed_jobs.sort(key=lambda j: (j["company"], j["title"]))
-    write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)
+    job_cols.insert(job_cols.index("focus"), "role_group")
+    all_open = all_jobs
+    all_jobs = [j for j in all_open if j.get("role_group")]
+    new_jobs = [j for j in new_jobs if j.get("role_group")]
+    closed_jobs = [j for j in closed_jobs if j.get("role_group")]
+    write_csv(out_dir / "all_open_roles.csv", all_open, job_cols)   # unfiltered, for data/analysis
+    write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)       # Sales / GTM / Engineering / VP+
     write_csv(out_dir / "new_this_week.csv", new_jobs, job_cols)
     write_csv(out_dir / "closed_this_week.csv", closed_jobs,
-              ["company", "title", "location", "url", "link_status", "first_seen", "closed_on", "days_open", "focus", "ats", "job_key"])
+              ["company", "title", "location", "url", "link_status", "first_seen", "closed_on", "days_open", "role_group", "ats", "job_key"])
     write_csv(out_dir / "scraper_misses.csv", scraper_misses,
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
-              ["company", "tier", "ats", "slug", "status", "open", "new", "closed", "careers_url"])
+              ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg)
     if not adhoc:
       save_json(ROOT / "data" / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
-                                                 "ok": len(ok_companies), "open": len(all_jobs),
+                                                 "ok": len(ok_companies), "open_in_scope": len(all_jobs), "open_all": len(all_open),
                                                  "new": len(new_jobs), "closed": len(closed_jobs)})
     if adhoc:
         write_step_summary(all_jobs, company_rows, unmatched, out_dir)
-    print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open={len(all_jobs)} "
+    print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open_in_scope={len(all_jobs)} open_all={len(all_open)} "
           f"new={len(new_jobs)} closed={len(closed_jobs)} -> {out_dir}")
     return 0
 
@@ -342,13 +373,13 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
     lines = ["## On-demand job pull", ""]
     for c in company_rows:
         note = {"unmapped": "not mapped to a job board yet", "excluded": "excluded (see ats_map.json)"}.get(
-            c["status"], c["status"] if c["status"] != "ok" else f"{c['open']} open role" + ("" if c["open"] == 1 else "s"))
+            c["status"], c["status"] if c["status"] != "ok" else f"{c.get('focus_open', c['open'])} Sales/GTM/Engineering/VP+ roles (of {c['open']} open)")
         lines.append(f"- **{c['company']}**: {note}")
     if unmatched:
         lines.append(f"- Not in the master leads list: {', '.join(unmatched)}")
-    lines += ["", "| Company | Role | Location | Link check | Link |", "|---|---|---|---|---|"]
+    lines += ["", "| Company | Role | Type | Location | Link check | Link |", "|---|---|---|---|---|---|"]
     for j in all_jobs[:500]:
-        lines.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
+        lines.append(f"| {j['company']} | {j['title']} | {j.get('role_group','')} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
     if len(all_jobs) > 500:
         lines.append(f"\n_First 500 of {len(all_jobs)} shown. Full list: `{out_dir.relative_to(ROOT)}/open_roles.csv`_")
     text = "\n".join(lines) + "\n"
@@ -367,7 +398,9 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
     focus_new = [j for j in new_jobs if j.get("focus")]
 
     md = [f"# Syndeo weekly hiring signal — week of {today.isoformat()}", ""]
-    md += [f"**{len(all_jobs)} open roles** across **{len(ok)} companies** scraped successfully "
+    md += ["_Showing Sales, GTM, Engineering, and VP-level+ roles only (rules in config.json → role_filter). "
+           "Every role is still tracked; the full list is in all_open_roles.csv._", ""]
+    md += [f"**{len(all_jobs)} open roles in scope** across **{len(ok)} companies** scraped successfully "
            f"({len(bad)} companies need attention). **{len(new_jobs)} new this week**, "
            f"**{len(closed_jobs)} closed / likely filled**.", ""]
 
@@ -420,11 +453,12 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
 table{{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:2rem}}th,td{{border-bottom:1px solid #e5e5e5;padding:6px 8px;text-align:left;vertical-align:top}}
 th{{background:#f6f6f6;position:sticky;top:0}}h2{{margin-top:2.5rem}}.kpi{{display:flex;gap:2rem;margin:1rem 0}}.kpi div{{background:#f6f6f6;padding:1rem;border-radius:8px}}.kpi b{{font-size:1.6rem;display:block}}</style></head><body>
 <h1>Syndeo weekly hiring signal — {today}</h1>
-<div class="kpi"><div><b>{len(all_jobs)}</b>open roles</div><div><b>{len(new_jobs)}</b>new this week</div><div><b>{len(closed_jobs)}</b>closed / likely filled</div><div><b>{len(ok)}/{len(company_rows)}</b>companies scraped</div></div>
+<p><i>Sales, GTM, Engineering and VP-level+ roles only. Full list: all_open_roles.csv.</i></p>
+<div class="kpi"><div><b>{len(all_jobs)}</b>open roles in scope</div><div><b>{len(new_jobs)}</b>new this week</div><div><b>{len(closed_jobs)}</b>closed / likely filled</div><div><b>{len(ok)}/{len(company_rows)}</b>companies scraped</div></div>
 <h2>Closed since last run — likely filled</h2>{table(["Company","Role","Location","Days open","Link check","Was at"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('days_open',''),j.get('link_status',''),link(j['url'],'posting')] for j in closed_jobs]) if closed_jobs else '<p><i>No history yet — closures appear from the second run onward.</i></p>'}
 <h2>New roles this week</h2>{table(["Company","Role","Location","Focus","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),H.escape(j.get('focus','')),link(j['url'])] for j in new_jobs])}
 <h2>Most active companies</h2>{table(["Company","Tier","ATS","Open","New","Closed"], [[H.escape(c['company']),c['tier'],c['ats'],c['open'],c['new'],c['closed']] for c in top])}
-<h2>All open roles</h2>{table(["Company","Role","Location","Posted","Link check","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('posted_at',''),j.get('link_status',''),link(j['url'])] for j in all_jobs])}
+<h2>All open roles in scope</h2>{table(["Company","Role","Type","Location","Posted","Link check","Link"], [[H.escape(j['company']),H.escape(j['title']),j.get('role_group',''),H.escape(j['location']),j.get('posted_at',''),j.get('link_status',''),link(j['url'])] for j in all_jobs])}
 <h2>Companies needing attention</h2>{table(["Company","Status","Careers page"], [[H.escape(c['company']),H.escape(c['status']),link(c['careers_url'],'careers')] for c in bad])}
 </body></html>"""
     (out_dir / "report.html").write_text(page)

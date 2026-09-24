@@ -292,22 +292,32 @@ def jobvite(slug: str, **_) -> list[dict]:
 
 
 # ----------------------------------------------------------- Generic fallback
-def generic(slug: str, careers_url: str = "", **_) -> list[dict]:
-    """Last-resort HTML link scrape. Only catches server-rendered boards.
-    Keep companies here flagged for manual ATS mapping."""
+def generic(slug: str, careers_url: str = "", link_regex: str = "", title_from_slug: bool = False, **_) -> list[dict]:
+    r"""HTML link scrape for companies with no ATS (custom careers pages, YC job pages).
+    link_regex (from ats_map.json) pins exactly which links are job postings, e.g.
+      Reffie: r"https://careers\.reffie\.me/[a-z0-9-]+-[a-z0-9-]+$"
+      Haven (YC): r"/companies/haven-2/jobs/[A-Za-z0-9]+-[a-z0-9-]+"
+    Without link_regex it falls back to common /job(s)/ /career(s)/ URL shapes."""
     import re
-    from urllib.parse import urljoin
+    from urllib.parse import urljoin, urlparse
     html = _get(careers_url).text
     out, seen = [], set()
     for m in re.finditer(r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>', html, re.I | re.S):
-        href, text = m.group(1), re.sub(r"<[^>]+>", " ", m.group(2))
-        text = " ".join(text.split())
-        if not text or len(text) < 6 or len(text) > 90:
+        href, inner = m.group(1), m.group(2)
+        url = urljoin(careers_url, href).split("#")[0]
+        if link_regex:
+            if not re.search(link_regex, url):
+                continue
+        elif not re.search(r"/(job|jobs|career|careers|position|opening|posting)s?/", href, re.I):
             continue
-        if not re.search(r"/(job|jobs|career|careers|position|opening|posting)s?/", href, re.I):
+        if url in seen or url.rstrip("/") == careers_url.rstrip("/"):
             continue
-        url = urljoin(careers_url, href)
-        if url in seen:
+        if title_from_slug:
+            last = urlparse(url).path.rstrip("/").rsplit("/", 1)[-1]
+            text = " ".join(w.capitalize() for w in last.split("-"))
+        else:
+            text = " ".join(re.sub(r"<[^>]+>", " ", inner).split())
+        if not text or len(text) < 4 or len(text) > 120:
             continue
         seen.add(url)
         out.append({"job_key": f"generic:{slug}:{url}", "title": text, "location": "",

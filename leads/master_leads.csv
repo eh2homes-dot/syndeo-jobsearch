@@ -74,7 +74,7 @@ Opendoor,https://www.opendoor.com,Arizona,https://www.opendoor.com/careers,iBuyi
 PointCentral,https://www.pointcentral.com,Arizona,https://www.pointcentral.com/careers,Smart Home for SFR (Alarm.com subsidiary),A,FALSE,
 Entrata,https://www.entrata.com,Utah,https://www.entrata.com/careers,Property Management Software (AI leasing/payments),A,TRUE,18-22 open roles; ATS Lever (entrata); verified 2026-09-23
 Rentec Direct,https://www.rentecdirect.com,Oregon,https://www.rentecdirect.com/careers,Property Management Software,A,FALSE,
-Second Nature,https://www.secondnature.com,Tennessee,https://www.secondnature.com/careers,Resident Benefits / Property Management SaaS,A,FALSE,Evan's former company; JazzHR board (secondnature.applytojob.com) live but empty; real roles elsewhere - JS embed
+Second Nature,https://www.secondnature.com,Tennessee,https://www.secondnature.com/careers,Resident Benefits / Property Management SaaS,A,FALSE,Evan's former company; JazzHR board (secondnature.applytojob.com) live but empty; real roles elsewhere - JS embed; also on Evan's list 2026-09-24
 Home365,https://www.home365.co,Nevada,https://www.home365.co/careers,SFR Full-Service Property Management,A,FALSE,
 Cecilian Partners,https://www.cecilianpartners.com,Pennsylvania,https://www.cecilianpartners.com/careers,New Home Community Development Software,B,FALSE,
 CoStar Group,https://www.costargroup.com,Virginia,https://www.costargroup.com/careers,Real Estate Data & Analytics,B,TRUE,
@@ -103,3 +103,15 @@ Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/,
 PURE HomeRiver Group,https://purehomeriver.com,Idaho,https://purehomeriver.com/company/careers/,SFR Property Management,A,FALSE,OpCo sheet
 Northpoint Asset Management,https://northpointam.com,Utah,https://northpointam.com/careers,SFR Property Management,A,FALSE,OpCo sheet
 Evergreen Residential,https://evergreenresi.com,Texas,https://evergreenresi.com/careers/,SFR Operator,A,FALSE,OpCo sheet
+Property Meld,https://propertymeld.com,South Dakota,https://property-meld.breezy.hr/,Maintenance Coordination Software,A,FALSE,"Evan's list 2026-09-24; Breezy board live, 0 roles on 2026-09-24"
+Footprint,https://www.onefootprint.com,New York,https://jobs.ashbyhq.com/onefootprint,Identity Verification / KYC,A,FALSE,Evan's list 2026-09-24; Ashby slug onefootprint (not 'footprint')
+Reffie,https://reffie.com,Texas,https://careers.reffie.me/,AI Leasing Workflow,A,FALSE,Evan's list 2026-09-24; custom careers site; 1 role on 2026-09-24
+Two Dots,https://www.twodots.com,California,https://jobs.lever.co/twodots,AI Tenant Screening / Underwriting,A,FALSE,Evan's list 2026-09-24; Lever twodots
+Haven,https://www.usehaven.ai,New York,https://www.ycombinator.com/companies/haven-2/jobs,AI Workforce for Property Management,A,FALSE,Evan's list 2026-09-24; ASSUMED usehaven.ai (YC W23) - confirm; jobs on YC Work at a Startup
+Nutiliti,https://www.nutiliti.com,Texas,https://builtin.com/company/nutiliti/jobs,Utility Management for Property Managers,A,FALSE,Evan's list 2026-09-24; no careers page/ATS; Built In shows 0 jobs
+HiredHelpr,https://www.hiredhelpr.com,,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm,SFR Maintenance Services Platform,A,FALSE,Evan's list 2026-09-24; no careers page/ATS; roles surface on Glassdoor/LinkedIn only
+Mason,https://www.thisismason.com,California,https://www.thisismason.com,AI Maintenance Coordinator (SFR),A,FALSE,"Evan's list 2026-09-24; thisismason.com (Enduring Labs); no ATS, hires by email; ~12k homes"
+Super,https://www.hiresuper.com,New York,https://www.hiresuper.com/careers,Voice AI for Property Management,A,FALSE,Evan's list 2026-09-24; hiresuper.com; posts roles at /careers/<slug>; SDR page 404 on 2026-09-24
+Boom,https://www.boompay.app,Texas,https://wellfound.com/company/boom-app/jobs,Rent Reporting / Screening / Leasing CRM,A,FALSE,Evan's list 2026-09-24; no careers page/ATS found
+AbodeMine,https://www.abodemine.com,Colorado,https://wellfound.com/company/abodemine/jobs,SFR Property Intelligence Data,A,FALSE,Evan's list 2026-09-24; Wellfound shows 0 jobs
+Lineage,https://lineage.finance,,https://lineage.finance/careers,Rental Property Investing Platform,A,FALSE,Evan's list 2026-09-24; careers page says no open positions 2026-09-24

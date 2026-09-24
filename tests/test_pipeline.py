@@ -13,7 +13,13 @@ def test_new_and_closed_detection(tmp_path):
         d = sorted((ROOT / "output/on-demand").glob("2026-09-23_*"))[-1]   # --only runs are on-demand runs
         closed = list(csv.DictReader(open(d / "closed_this_week.csv")))
         new = list(csv.DictReader(open(d / "new_this_week.csv")))
-        assert [c["job_key"] for c in closed] == ["jobvite:appfolio-internal:oo2uAfwe"]
+        h0 = json.loads((ROOT / "data/history.json").read_text())
+        # closure is always recorded in history...
+        assert h0["jobvite:appfolio-internal:oo2uAfwe"]["status"] == "closed"
+        # ...but this support role is outside Sales/GTM/Engineering/VP+, so it's not in the report
+        assert closed == []
+        allopen = list(csv.DictReader(open(d / "all_open_roles.csv")))
+        assert len(allopen) >= len(list(csv.DictReader(open(d / "open_roles.csv"))))
         assert [n["job_key"] for n in new] == ["greenhouse:smartrent:6192943004"]
         status = {r["company"]: r["status"] for r in csv.DictReader(open(d / "company_status.csv"))}
         assert status["Belong"].startswith("failed")  # and Belong's roles must NOT be closed

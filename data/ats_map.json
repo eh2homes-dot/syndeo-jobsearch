@@ -1,4 +1,10 @@
 {
+  "AbodeMine": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
+    "slug": ""
+  },
   "Agora": {
     "ats": "",
     "confidence": "none",
@@ -77,6 +83,12 @@
     "detected_on": "2026-09-23",
     "evidence": "greenhouse:blend returned 13 jobs | 2026-09-24 reviewed: titles/locations match the company",
     "slug": "blend"
+  },
+  "Boom": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
+    "slug": ""
   },
   "Bowery Valuation": {
     "ats": "rippling",
@@ -270,6 +282,12 @@
     "evidence": "job-boards.greenhouse.io/flockhomes",
     "slug": "flockhomes"
   },
+  "Footprint": {
+    "ats": "ashby",
+    "confidence": "manual",
+    "evidence": "live posting jobs.ashbyhq.com/onefootprint/... (Sales Engineer); jobs.ashbyhq.com/footprint is a different board; verified by Claude 2026-09-24",
+    "slug": "onefootprint"
+  },
   "Funnel Leasing": {
     "ats": "",
     "confidence": "none",
@@ -306,11 +324,24 @@
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
+  "Haven": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "YC jobs page fetched live, 1 role (Founding Engineer); company identity assumed (usehaven.ai) - confirm with Evan; verified by Claude 2026-09-24",
+    "link_regex": "/companies/haven-2/jobs/[A-Za-z0-9]+-[a-z0-9-]+",
+    "slug": "haven-yc"
+  },
   "Hemlane": {
     "ats": "",
     "confidence": "none",
     "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "HiredHelpr": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
     "slug": ""
   },
   "Home365": {
@@ -383,6 +414,13 @@
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
+  "Lineage": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "lineage.finance/careers says no open positions 2026-09-24; watching for role links; verified by Claude 2026-09-24",
+    "link_regex": "lineage\\.finance/careers/[a-z0-9-]+",
+    "slug": "lineage-finance"
+  },
   "Livly": {
     "ats": "paylocity",
     "confidence": "html",
@@ -402,6 +440,12 @@
     "confidence": "none",
     "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
+    "slug": ""
+  },
+  "Mason": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
     "slug": ""
   },
   "Matterport": {
@@ -445,6 +489,12 @@
     "detected_on": "2026-09-24",
     "evidence": "lever:proof returned 2 jobs; greenhouse:proof rejected (postings link to proofserve.com, not proof.com) | 2026-09-24: 2 remote roles (IT eng, enterprise AE) - plausible for proof.com; confirm",
     "slug": "proof"
+  },
+  "Nutiliti": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
+    "slug": ""
   },
   "Obie": {
     "ats": "rippling",
@@ -551,6 +601,12 @@
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
+  "Property Meld": {
+    "ats": "breezy",
+    "confidence": "manual",
+    "evidence": "property-meld.breezy.hr fetched live (no open positions); verified by Claude 2026-09-24",
+    "slug": "property-meld"
+  },
   "RealPage": {
     "ats": "icims",
     "confidence": "html",
@@ -571,6 +627,14 @@
     "detected_on": "2026-09-24",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
+  },
+  "Reffie": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "careers.reffie.me fetched live, 1 role; verified by Claude 2026-09-24",
+    "link_regex": "^https://careers\\.reffie\\.me/[a-z0-9]+(-[a-z0-9]+)+$",
+    "slug": "reffie",
+    "title_from_slug": true
   },
   "Rent Manager (LCS)": {
     "ats": "",
@@ -678,6 +742,13 @@
     "evidence": "ashby:steadily returned 34 jobs | 2026-09-24 reviewed: titles/locations match the company",
     "slug": "steadily"
   },
+  "Super": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "hiresuper.com posts roles at /careers/<slug>; SDR posting 404 on 2026-09-24; verified by Claude 2026-09-24",
+    "link_regex": "hiresuper\\.com/careers/[a-z0-9-]+",
+    "slug": "hiresuper"
+  },
   "TheGuarantors": {
     "ats": "rippling",
     "confidence": "html",
@@ -691,6 +762,12 @@
     "detected_on": "2026-09-23",
     "evidence": "job-boards.greenhouse.io/turbotenant",
     "slug": "turbotenant"
+  },
+  "Two Dots": {
+    "ats": "lever",
+    "confidence": "manual",
+    "evidence": "jobs.lever.co/twodots posting fetched live; verified by Claude 2026-09-24",
+    "slug": "twodots"
   },
   "Updater": {
     "ats": "greenhouse",

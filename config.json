@@ -115,5 +115,98 @@
         "director -"
       ]
     }
+  },
+  "role_filter": {
+    "enabled": true,
+    "note": "Evan 2026-09-24: report only Sales, GTM, Engineering, and VP-level+ roles. All roles are still stored in history and all_open_roles.csv; only reports are filtered. Patterns are regexes matched against the lowercased title; first matching group wins, exclude is checked before sales/gtm/engineering (but not before executive).",
+    "groups": {
+      "executive": [
+        "\\bvp\\b",
+        "\\bsvp\\b",
+        "\\bevp\\b",
+        "vice president",
+        "\\bchief\\b(?! engineer| of staff)",
+        "\\bc[teofrmp]o\\b",
+        "\\bpresident\\b",
+        "\\bhead of\\b",
+        "\\bgeneral manager\\b"
+      ],
+      "sales": [
+        "\\bsales\\b",
+        "account executive",
+        "\\bae\\b",
+        "\\bsdr\\b",
+        "\\bbdr\\b",
+        "business development",
+        "\\bpartnerships?\\b",
+        "\\brevenue\\b(?!.*accounting)",
+        "solutions? (consultant|engineer|architect)",
+        "\\bsales engineer",
+        "\\benterprise account"
+      ],
+      "gtm": [
+        "\\bmarketing\\b",
+        "\\bgrowth\\b",
+        "demand gen",
+        "\\bgo[- ]to[- ]market\\b",
+        "\\bgtm\\b",
+        "\\brev ?ops\\b",
+        "revenue operations",
+        "customer success",
+        "client success",
+        "partner success",
+        "account manager",
+        "\\balliances?\\b",
+        "\\bbrand\\b",
+        "\\bcontent\\b",
+        "\\blifecycle\\b",
+        "\\bcommunications?\\b(?!.*technician)"
+      ],
+      "engineering": [
+        "\\bengineer",
+        "\\bdeveloper\\b",
+        "\\bsdet\\b",
+        "\\bdevops\\b",
+        "\\bsre\\b",
+        "site reliability",
+        "machine learning",
+        "\\bml\\b",
+        "\\bai engineer",
+        "data engineer",
+        "technical staff",
+        "\\bengineering\\b",
+        "\\barchitect\\b(?!.*(landscape|interior))",
+        "\\bfull[- ]?stack\\b",
+        "\\bfrontend\\b|\\bfront[- ]end\\b|\\bbackend\\b|\\bback[- ]end\\b",
+        "software (development|developer)"
+      ]
+    },
+    "exclude": [
+      "\\bleasing\\b",
+      "\\bmaintenance\\b",
+      "loan officer",
+      "mortgage",
+      "insurance (sales )?agent",
+      "real estate agent",
+      "\\bagent development\\b",
+      "claims?\\b",
+      "\\badjuster\\b",
+      "\\btechnician\\b",
+      "project engineer",
+      "building engineer",
+      "stationary engineer",
+      "\\bfacilities\\b",
+      "\\bsuperintendent\\b",
+      "\\bintern\\b",
+      "home consultant",
+      "\\bnotary\\b",
+      "\\bunderwriter\\b",
+      "\\bcloser\\b",
+      "video engineer",
+      "\\baudio\\b",
+      "live events",
+      "support coordinator",
+      "tax consultant"
+    ]
   }
 }
