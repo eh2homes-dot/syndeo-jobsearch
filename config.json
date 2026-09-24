@@ -219,6 +219,42 @@
       "name": "Fifth Wall",
       "url": "https://jobs.fifthwall.com",
       "verified": "2026-09-24, Getro, 1,172 jobs"
+    },
+    {
+      "name": "RET Ventures",
+      "url": "https://jobs.ret.vc",
+      "verified": "2026-09-24, Getro, 470 jobs (Funnel, Get Covered, Kasa, SightPlan, Engrain...)"
+    },
+    {
+      "name": "Camber Creek",
+      "url": "https://careers.cambercreek.com",
+      "verified": "2026-09-24, Getro (per board footer), ~28 companies"
     }
-  ]
+  ],
+  "people_moves": {
+    "note": "People-moves step (jobsearch/hires.py). Free sources only. Scope = master list + role_filter.",
+    "news_days": 30,
+    "news_sleep": 1.0,
+    "sec_days": 30,
+    "news_context": "(real estate OR proptech OR property OR rental OR housing OR mortgage OR leasing OR homes)",
+    "public_companies": {
+      "AppFolio": "APPF",
+      "Procore Technologies": "PCOR",
+      "Blend Labs": "BLND",
+      "Compass": "COMP",
+      "SmartRent": "SMRT",
+      "Offerpad": "OPAD",
+      "Opendoor": "OPEN",
+      "CoStar Group": "CSGP",
+      "Alarm.com": "ALRM",
+      "Zillow Group": "Z",
+      "Rocket Companies": "RKT",
+      "Better.com": "BETR",
+      "Latch": "LTCH",
+      "Redfin": "RDFN",
+      "Doma": "DOMA"
+    },
+    "leadership_pages": {},
+    "sec_contact": "read from the SEC_USER_AGENT GitHub secret - not stored here"
+  }
 }

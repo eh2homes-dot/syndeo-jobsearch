@@ -28,6 +28,11 @@ GONE_MARKERS = re.compile(
     r"job you are looking for|no open positions", re.I)
 
 
+# Unambiguous "this posting is gone" notices that job sites show at the top of an otherwise full page.
+STRONG_GONE = re.compile(r"sorry, this job was removed|this job (post(ing)?|listing) (has been|was) removed|"
+                         r"no longer accepting applications", re.I)
+
+
 def _job_token(url: str) -> str:
     """The piece of the URL that identifies the specific job (id / gh_jid / last path segment)."""
     m = re.search(r"gh_jid=(\d+)", url)
@@ -62,6 +67,8 @@ def check(url: str) -> tuple[str, int]:
         return "gone", code
     # A "this job is closed" page is short. A live posting is a long description that can innocently
     # contain phrases like "no longer accepting..." in the company blurb - don't treat those as closed.
+    if STRONG_GONE.search(visible[:3000]):
+        return "gone", code
     if len(visible) < 4000 and GONE_MARKERS.search(visible):
         return "gone", code
     return "live", code

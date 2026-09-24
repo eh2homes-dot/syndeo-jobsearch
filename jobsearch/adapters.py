@@ -371,6 +371,43 @@ def generic(slug: str, careers_url: str = "", link_regex: str = "", title_from_s
     return out
 
 
+# ------------------------------------------------------------------ Built In
+def builtin(slug: str, website: str = "", **_) -> list[dict]:
+    """builtin.com/company/<slug>/jobs - server-rendered list of the company's recent postings.
+    Stops at 'Jobs at similar companies' so other companies' jobs never leak in."""
+    import re
+    html = _get(f"https://builtin.com/company/{slug}/jobs").text
+    cut = re.search(r"(?i)jobs at similar companies", html)
+    own = html[:cut.start()] if cut else html
+    out, seen = [], set()
+    for m in re.finditer(r'<a[^>]+href="(?:https://builtin\.com)?(/job/[^"/]+/(\d+))"[^>]*>(.*?)</a>', own, re.S):
+        path, jid, inner = m.groups()
+        title = " ".join(re.sub(r"<[^>]+>", " ", inner).split())
+        if not title or jid in seen:
+            continue
+        seen.add(jid)
+        # location sits in the card right after the title; take the first short text chunk mentioning a place
+        tail = re.sub(r"<[^>]+>", "|", own[m.end():m.end() + 1500])
+        bits = [b.strip() for b in tail.split("|") if b.strip()]
+        loc = ", ".join(b for b in bits[:8] if re.search(r"(?i)remote|hybrid|in-office|united states|usa|locations|, [A-Z]{2}\b", b))[:120]
+        out.append({"job_key": f"builtin:{slug}:{jid}", "title": title, "location": loc,
+                    "url": f"https://builtin.com{path}", "posted_at": "", "ats": "builtin"})
+    return out
+
+
+def builtin_page_matches(slug: str, website: str) -> bool:
+    """True if builtin.com/company/<slug> exists AND links to this company's own website domain."""
+    from urllib.parse import urlparse
+    try:
+        r = requests.get(f"https://builtin.com/company/{slug}/jobs", headers=UA, timeout=TIMEOUT)
+    except Exception:
+        return False
+    if r.status_code != 200:
+        return False
+    host = urlparse(website if "://" in website else "https://" + website).netloc.lower().replace("www.", "")
+    return bool(host) and host in r.text.lower()
+
+
 # ------------------------------------------------------------------ LinkedIn
 def linkedin(slug: str, company_name: str = "", linkedin_pages=None, **_) -> list[dict]:
     """For companies with no job board. Uses LinkedIn's public (no-login) job search, searching by
@@ -419,5 +456,6 @@ ADAPTERS: dict[str, Callable[..., list[dict]]] = {
     "workday": workday,
     "jobvite": jobvite,
     "linkedin": linkedin,
+    "builtin": builtin,
     "generic": generic,
 }

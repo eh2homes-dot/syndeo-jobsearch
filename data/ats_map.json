@@ -24,11 +24,10 @@
     "slug": ""
   },
   "Apartment List": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "manual",
+    "evidence": "2026-09-24 verified builtin.com page: 15 jobs, links to apartmentlist.com; own careers page is JS-only",
+    "slug": "apartment-list"
   },
   "AppFolio": {
     "ats": "jobvite",
@@ -236,11 +235,10 @@
     "slug": "doma"
   },
   "DoorLoop": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "manual",
+    "evidence": "2026-09-24 verified builtin.com page exists; own careers page is JS-only",
+    "slug": "doorloop"
   },
   "Doorstead": {
     "ats": "",
@@ -841,10 +839,9 @@
     "wd": "wd5"
   },
   "Zumper": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "manual",
+    "evidence": "2026-09-24 verified builtin.com page exists; own careers page is JS-only",
+    "slug": "zumper"
   }
 }

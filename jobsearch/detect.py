@@ -156,6 +156,11 @@ def detect(company: dict) -> dict:
     else:
         html_err = "no ATS pattern in HTML"
     hit = probe(company["website"])
-    if hit:
+    if hit and hit.get("ats"):
         return hit
-    return {"ats": "", "slug": "", "confidence": "none", "evidence": html_err}
+    base = re.sub(r"[^a-z0-9]+", "-", re.sub(r"\(.*?\)", "", company["company"].lower())).strip("-")
+    for slug in dict.fromkeys([base, base.replace("-", ""), base + "-1", base + "-2"]):
+        if _ad.builtin_page_matches(slug, company["website"]):
+            return {"ats": "builtin", "slug": slug, "confidence": "builtin-domain-match",
+                    "evidence": f"builtin.com/company/{slug} links to {company['website']}"}
+    return hit or {"ats": "", "slug": "", "confidence": "none", "evidence": html_err}
