@@ -105,10 +105,28 @@ def _ashby_graphql(slug: str) -> list[dict]:
     data = _post("https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams",
                  {"operationName": "ApiJobBoardWithTeams",
                   "variables": {"organizationHostedJobsPageName": slug}, "query": q}).json()
-    board = ((data or {}).get("data") or {}).get("jobBoard") or {}
+    if (data or {}).get("errors"):
+        raise RuntimeError(f"Ashby GraphQL error: {str(data['errors'])[:160]}")
+    board = ((data or {}).get("data") or {}).get("jobBoard")
+    if not board:
+        raise RuntimeError(f"Ashby has no job board named '{slug}' (GraphQL returned none)")
     return [{"id": j["id"], "title": j.get("title", ""), "location": j.get("locationName", ""),
              "jobUrl": f"https://jobs.ashbyhq.com/{slug}/{j['id']}", "publishedAt": ""}
             for j in board.get("jobPostings", []) or []]
+
+
+def _ashby_page(slug: str) -> list[dict]:
+    """Read the postings embedded in jobs.ashbyhq.com/<slug> (window.__appData)."""
+    import json as _json, re as _re
+    html = _get(f"https://jobs.ashbyhq.com/{slug}").text
+    m = _re.search(r"window\.__appData\s*=\s*(\{.*?\});\s*</script>", html, _re.S)
+    if not m:
+        raise RuntimeError(f"Ashby page for '{slug}' has no embedded job data")
+    app = _json.loads(m.group(1))
+    posts = ((app.get("jobBoard") or {}).get("jobPostings")) or []
+    return [{"id": j["id"], "title": j.get("title", ""), "location": j.get("locationName", ""),
+             "jobUrl": f"https://jobs.ashbyhq.com/{slug}/{j['id']}", "publishedAt": j.get("publishedDate", "") or ""}
+            for j in posts]
 
 
 def ashby(slug: str, **_) -> list[dict]:
@@ -117,7 +135,15 @@ def ashby(slug: str, **_) -> list[dict]:
     except requests.HTTPError as e:
         if e.response is None or e.response.status_code != 404:
             raise
-        data = {"jobs": _ashby_graphql(slug)}
+        errs = []
+        for fn in (_ashby_graphql, _ashby_page):
+            try:
+                data = {"jobs": fn(slug)}
+                break
+            except Exception as ex:  # try the next way in; report all reasons if every one fails
+                errs.append(f"{fn.__name__}: {ex}")
+        else:
+            raise RuntimeError("Ashby posting API 404; " + " | ".join(errs))
     out = []
     for j in data.get("jobs", []):
         if j.get("isListed") is False:
@@ -345,6 +371,41 @@ def generic(slug: str, careers_url: str = "", link_regex: str = "", title_from_s
     return out
 
 
+# ------------------------------------------------------------------ LinkedIn
+def linkedin(slug: str, company_name: str = "", linkedin_pages=None, **_) -> list[dict]:
+    """For companies with no job board. Uses LinkedIn's public (no-login) job search, searching by
+    company name, and keeps ONLY jobs posted by the exact LinkedIn company page(s) listed in ats_map.json.
+    Name collisions ('Boom', 'Mason') can't leak in: another company's page never matches."""
+    import re
+    from urllib.parse import quote
+    pages = {p.strip("/").lower() for p in (linkedin_pages or [slug]) if p}
+    out, seen = [], set()
+    for start in (0, 25):
+        url = ("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search"
+               f"?keywords={quote(company_name or slug)}&location=United%20States&start={start}")
+        html = _get(url).text
+        cards = re.split(r"<li[\s>]", html)[1:]
+        for c in cards:
+            co = re.search(r'linkedin\.com/company/([^/?"]+)', c)
+            if not co or co.group(1).lower() not in pages:
+                continue
+            jid = re.search(r"jobPosting:(\d+)", c) or re.search(r"/jobs/view/[^\"]*?-(\d+)\?", c)
+            if not jid or jid.group(1) in seen:
+                continue
+            seen.add(jid.group(1))
+            t = re.search(r'base-search-card__title[^>]*>(.*?)</h3>', c, re.S)
+            loc = re.search(r'job-search-card__location[^>]*>(.*?)</span>', c, re.S)
+            dt_ = re.search(r'<time[^>]+datetime="([\d-]+)"', c)
+            clean = lambda x: " ".join(re.sub(r"<[^>]+>", " ", x or "").split())
+            out.append({"job_key": f"linkedin:{slug}:{jid.group(1)}",
+                        "title": clean(t.group(1) if t else ""), "location": clean(loc.group(1) if loc else ""),
+                        "url": f"https://www.linkedin.com/jobs/view/{jid.group(1)}/",
+                        "posted_at": dt_.group(1) if dt_ else "", "ats": "linkedin"})
+        if len(cards) < 25:
+            break
+    return out
+
+
 ADAPTERS: dict[str, Callable[..., list[dict]]] = {
     "greenhouse": greenhouse,
     "lever": lever,
@@ -357,5 +418,6 @@ ADAPTERS: dict[str, Callable[..., list[dict]]] = {
     "rippling": rippling,
     "workday": workday,
     "jobvite": jobvite,
+    "linkedin": linkedin,
     "generic": generic,
 }

@@ -1,9 +1,13 @@
 {
   "AbodeMine": {
-    "ats": "",
-    "confidence": "manual",
-    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
-    "slug": ""
+    "ats": "linkedin",
+    "company_name": "AbodeMine",
+    "confidence": "guess",
+    "evidence": "LinkedIn page GUESSED as /company/abodemine - wrong guess returns nothing (strict page match); confirm with Evan",
+    "linkedin_pages": [
+      "abodemine"
+    ],
+    "slug": "abodemine"
   },
   "Agora": {
     "ats": "",
@@ -85,10 +89,16 @@
     "slug": "blend"
   },
   "Boom": {
-    "ats": "",
-    "confidence": "manual",
-    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
-    "slug": ""
+    "ats": "linkedin",
+    "company_name": "Boom Pay",
+    "confidence": "guess",
+    "evidence": "LinkedIn page GUESSED for Boom Pay (Austin rent reporting). NOT /company/boom-market (unrelated crypto co). Strict page match; confirm with Evan",
+    "linkedin_pages": [
+      "boompay",
+      "boom-pay",
+      "boompayapp"
+    ],
+    "slug": "boompay"
   },
   "Bowery Valuation": {
     "ats": "rippling",
@@ -339,10 +349,14 @@
     "slug": ""
   },
   "HiredHelpr": {
-    "ats": "",
+    "ats": "linkedin",
+    "company_name": "HiredHelpr",
     "confidence": "manual",
-    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
-    "slug": ""
+    "evidence": "linkedin.com/company/hiredhelpr confirmed via search 2026-09-24 (no careers page/ATS)",
+    "linkedin_pages": [
+      "hiredhelpr"
+    ],
+    "slug": "hiredhelpr"
   },
   "Home365": {
     "ats": "bamboohr",
@@ -445,7 +459,7 @@
   "Mason": {
     "ats": "",
     "confidence": "manual",
-    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
+    "evidence": "no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)",
     "slug": ""
   },
   "Matterport": {
@@ -491,10 +505,14 @@
     "slug": "proof"
   },
   "Nutiliti": {
-    "ats": "",
+    "ats": "linkedin",
+    "company_name": "Nutiliti",
     "confidence": "manual",
-    "evidence": "no careers page or ATS found 2026-09-24 - check aggregators manually; verified by Claude 2026-09-24",
-    "slug": ""
+    "evidence": "linkedin.com/company/nutiliti confirmed via search 2026-09-24 (no careers page/ATS)",
+    "linkedin_pages": [
+      "nutiliti"
+    ],
+    "slug": "nutiliti"
   },
   "Obie": {
     "ats": "rippling",
@@ -713,10 +731,14 @@
     "slug": "second-nature"
   },
   "Series Homes": {
-    "ats": "",
+    "ats": "linkedin",
+    "company_name": "Series Homes",
     "confidence": "manual",
-    "evidence": "serieshomes.com fetched 2026-09-24: no careers link, no ATS; contact via founders email only",
-    "slug": ""
+    "evidence": "linkedin.com/company/serieshomes linked from serieshomes.com footer 2026-09-24",
+    "linkedin_pages": [
+      "serieshomes"
+    ],
+    "slug": "serieshomes"
   },
   "Side": {
     "ats": "lever",

@@ -356,7 +356,12 @@ def main(argv=None):
         results = verify_mod.check_many([j["url"] for j in sample] + [c["url"] for c in closed_jobs])
         print(f"  verify  done in {time.time()-t0:.0f}s", flush=True)
         for j in all_jobs:
-            j["link_status"], j["link_http"] = results.get(j["url"], ("listed in ATS, not rechecked" if j["role_group"] else "not checked (out of scope)", 0))
+            st, code = results.get(j["url"], ("listed in ATS, not rechecked" if j["role_group"] else "not checked (out of scope)", 0))
+            if st in ("gone", "error"):
+                # The job board itself lists this role as open this run, so it IS open.
+                # The link check failing just means the page didn't load cleanly for our checker.
+                st = f"open per job board; link check failed (HTTP {code or 'n/a'})"
+            j["link_status"], j["link_http"] = st, code
         still_closed = []
         for c in closed_jobs:
             st, code = results.get(c["url"], ("error", 0))
@@ -381,7 +386,7 @@ def main(argv=None):
 
     # ---- 4. outputs
     out_dir = OUT / (f"on-demand/{today.isoformat()}_{time.strftime('%H%M')}" if adhoc else today.isoformat())
-    job_cols = ["company", "title", "location", "url", "link_status", "posted_at", "first_seen", "days_open", "focus",
+    job_cols = ["company", "title", "location", "url", "link_status", "link_http", "posted_at", "first_seen", "days_open", "focus",
                 "ats", "segment", "state", "tier", "job_key"]
     all_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     new_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
@@ -395,7 +400,7 @@ def main(argv=None):
     write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)       # Sales / GTM / Engineering / VP+
     write_csv(out_dir / "new_this_week.csv", new_jobs, job_cols)
     write_csv(out_dir / "closed_this_week.csv", closed_jobs,
-              ["company", "title", "location", "url", "link_status", "first_seen", "closed_on", "days_open", "role_group", "ats", "job_key"])
+              ["company", "title", "location", "url", "link_status", "link_http", "first_seen", "closed_on", "days_open", "role_group", "ats", "job_key"])
     write_csv(out_dir / "scraper_misses.csv", scraper_misses,
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
@@ -418,7 +423,7 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     lines = ["## On-demand job pull", ""]
     for c in company_rows:
-        note = {"unmapped": "not mapped to a job board yet", "excluded": "excluded (see ats_map.json)"}.get(
+        note = {"unmapped": "no job board or LinkedIn page mapped yet", "excluded": "excluded (see ats_map.json)"}.get(
             c["status"], c["status"] if c["status"] != "ok" else f"{c.get('focus_open', c['open'])} Sales/GTM/Engineering/VP+ roles (of {c['open']} open)")
         lines.append(f"- **{c['company']}**: {note}")
     if unmatched:
