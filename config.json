@@ -1,11 +1,119 @@
 {
   "focus_keywords": {
-    "sales": ["account executive", "sales", "business development", "sdr", "bdr", "revenue"],
-    "customer": ["customer success", "account manager", "implementation", "onboarding", "support"],
-    "product": ["product manager", "product owner", "product lead", "head of product"],
-    "leadership": ["vp ", "vice president", "director", "head of", "chief", "general manager"],
-    "ops": ["operations", "property manager", "leasing", "maintenance", "portfolio", "asset manager"],
-    "eng": ["engineer", "developer", "data scientist", "architect", "devops", "sdet"]
+    "sales": [
+      "account executive",
+      "sales",
+      "business development",
+      "sdr",
+      "bdr",
+      "revenue"
+    ],
+    "customer": [
+      "customer success",
+      "account manager",
+      "implementation",
+      "onboarding",
+      "support"
+    ],
+    "product": [
+      "product manager",
+      "product owner",
+      "product lead",
+      "head of product"
+    ],
+    "leadership": [
+      "vp ",
+      "vice president",
+      "director",
+      "head of",
+      "chief",
+      "general manager"
+    ],
+    "ops": [
+      "operations",
+      "property manager",
+      "leasing",
+      "maintenance",
+      "portfolio",
+      "asset manager"
+    ],
+    "eng": [
+      "engineer",
+      "developer",
+      "data scientist",
+      "architect",
+      "devops",
+      "sdet"
+    ]
   },
-  "notes": "focus tags are labels only; nothing is filtered out."
+  "notes": "focus tags are labels only; nothing is filtered out.",
+  "verify_per_company": 40,
+  "company_filters": {
+    "Greystar": {
+      "note": "Keep corporate + leadership roles only (Evan, 2026-09-24). On-site community roles are excluded.",
+      "keep_if_title_has": [
+        "director",
+        "vice president",
+        "vp ",
+        "vp,",
+        "head of",
+        "chief",
+        "president",
+        "regional manager",
+        "regional director",
+        "senior manager",
+        "sr. manager",
+        "sr manager",
+        "principal",
+        "managing director",
+        "general manager"
+      ],
+      "keep_if_location_has": [
+        "city office",
+        "corporate",
+        "remote",
+        "headquarters"
+      ],
+      "drop_if_title_has": [
+        "leasing",
+        "maintenance",
+        "technician",
+        "porter",
+        "housekeep",
+        "groundskeep",
+        "grounds keeper",
+        "community manager",
+        "community assistant",
+        "community support",
+        "community director",
+        "assistant property manager",
+        "assistant community",
+        "make ready",
+        "painter",
+        "custodian",
+        "lifeguard",
+        "concierge",
+        "resident services",
+        "floating",
+        "resident lifestyle",
+        "service supervisor",
+        "production associate"
+      ],
+      "always_keep_if_title_has": [
+        "vice president",
+        "vp ",
+        "vp,",
+        "head of",
+        "chief",
+        "president",
+        "regional",
+        "managing director",
+        "senior director",
+        "sr. director",
+        "director,",
+        "director of",
+        "director -"
+      ]
+    }
+  }
 }

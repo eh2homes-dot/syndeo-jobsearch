@@ -55,14 +55,25 @@ def check(url: str) -> tuple[str, int]:
         return "gone", code
     if "error=true" in r.url.lower():
         return "gone", code
-    if GONE_MARKERS.search(r.text[:200_000]):
-        # Board-level pages list many jobs; only trust the marker on small/job-specific pages
-        if len(r.text) < 400_000:
-            return "gone", code
+    visible = re.sub(r"(?is)<(script|style|noscript|template)[^>]*>.*?</\1>", " ", r.text[:600_000])
+    visible = re.sub(r"<[^>]+>", " ", visible)
+    if GONE_MARKERS.search(visible):
+        return "gone", code
     return "live", code
+
+
+_HOST_LOCKS: dict = {}
+
+
+def _check_throttled(url: str):
+    import threading
+    host = urlparse(url).netloc
+    sem = _HOST_LOCKS.setdefault(host, threading.Semaphore(4))  # max 4 in flight per site
+    with sem:
+        return check(url)
 
 
 def check_many(urls: list[str], workers: int = 24) -> dict[str, tuple[str, int]]:
     urls = list(dict.fromkeys(u for u in urls if u))
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        return dict(zip(urls, ex.map(check, urls)))
+        return dict(zip(urls, ex.map(_check_throttled, urls)))

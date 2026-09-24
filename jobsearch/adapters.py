@@ -252,6 +252,8 @@ def workday(slug: str, wd: str = "wd1", site: str = "", **_) -> list[dict]:
                      {"appliedFacets": {}, "limit": 20, "offset": offset, "searchText": ""}).json()
         for j in data.get("jobPostings", []):
             path = j.get("externalPath", "")
+            if not path or not (j.get("title") or "").strip():
+                continue  # Workday occasionally returns placeholder rows with no job behind them
             out.append({
                 "job_key": f"workday:{slug}:{path}",
                 "title": j.get("title", "").strip(),

@@ -81,6 +81,20 @@ def rel_to_date(rel: str, today: dt.date) -> str:
     return (today - dt.timedelta(days=days)).isoformat()
 
 
+def passes_company_filter(company: str, title: str, location: str, cfg: dict) -> bool:
+    """Per-company include rules from config.json -> company_filters. Companies without a rule keep everything.
+    A role is kept if its title OR location looks corporate/leadership, unless the title is an on-site role."""
+    f = cfg.get("company_filters", {}).get(company)
+    if not f:
+        return True
+    t, loc = (title or "").lower(), (location or "").lower()
+    if any(w in t for w in f.get("always_keep_if_title_has", [])):  # seniority wins over on-site words
+        return True
+    if any(w in t for w in f.get("drop_if_title_has", [])):
+        return False
+    return any(w in t for w in f.get("keep_if_title_has", [])) or any(w in loc for w in f.get("keep_if_location_has", []))
+
+
 def focus_tag(title: str, cfg: dict) -> str:
     t = title.lower()
     for tag, words in cfg.get("focus_keywords", {}).items():
@@ -139,12 +153,26 @@ def main(argv=None):
     leads = load_leads()
     if args.tier:
         leads = [l for l in leads if l["tier"] == args.tier]
-    if args.only:
-        wanted = {x.strip().lower() for x in args.only.split(",")}
-        leads = [l for l in leads if l["company"].lower() in wanted]
+    adhoc = bool(args.only.strip())
+    if adhoc:
+        wanted = [x.strip().lower() for x in args.only.split(",") if x.strip()]
+        picked, unmatched = [], []
+        for w in wanted:
+            hits = [l for l in leads if w == l["company"].lower()] or \
+                   [l for l in leads if w in l["company"].lower() or w in l["website"].lower()]
+            if hits:
+                picked += [h for h in hits if h not in picked]
+            else:
+                unmatched.append(w)
+        leads = picked
+        if unmatched:
+            print(f"  WARNING: not in the master leads list: {', '.join(unmatched)}", flush=True)
+        print(f"  on-demand run for: {', '.join(l['company'] for l in leads) or '(nothing matched)'}", flush=True)
 
     ats_map = load_json(ATS_MAP, {})
     history = load_json(HISTORY, {})
+    history = {k: v for k, v in history.items()
+               if passes_company_filter(v.get("company", ""), v.get("title", ""), v.get("location", ""), cfg)}
     fixtures = Path(args.fixtures) if args.fixtures else None
 
     # ---- 1. ATS mapping (manual/verified entries are never overwritten)
@@ -172,7 +200,8 @@ def main(argv=None):
             needs_manual.append({"company": lead["company"], "careers_url": lead["careers_url"],
                                  "reason": "not in ats_map.json (run with --detect or map by hand)"})
     save_json(ATS_MAP, ats_map)
-    write_csv(NEEDS_MAP, needs_manual, ["company", "careers_url", "reason"])
+    if not adhoc:
+        write_csv(NEEDS_MAP, needs_manual, ["company", "careers_url", "reason"])
 
     # ---- 2. scrape
     all_jobs, company_rows = [], []
@@ -182,6 +211,12 @@ def main(argv=None):
         jobs, status = scrape_company(lead, mapping, fixtures)
         if mapping.get("ats") and not fixtures:
             print(f"  scrape  {lead['company']:32} {len(jobs):5} jobs  {status[:60]}  ({time.time()-t0:.0f}s)", flush=True)
+        _seen = set()
+        jobs = [j for j in jobs if not (j["job_key"] in _seen or _seen.add(j["job_key"]))]
+        _before = len(jobs)
+        jobs = [j for j in jobs if passes_company_filter(lead["company"], j["title"], j.get("location", ""), cfg)]
+        if _before != len(jobs) and not fixtures:
+            print(f"  filter  {lead['company']:32} kept {len(jobs)} of {_before} (company_filters rule)", flush=True)
         for j in jobs:
             j["company"] = lead["company"]
             j["segment"] = lead["segment"]
@@ -235,13 +270,22 @@ def main(argv=None):
     if over_budget and not fixtures:
         print("  verify  SKIPPED - run is over its time budget; closed roles kept unverified", flush=True)
     if not fixtures and not args.no_verify and not over_budget:
-        n = len(all_jobs) + len(closed_jobs)
-        print(f"  verify  checking {n} posting links...", flush=True)
+        # Every closed role is checked. Open roles: a rotating sample of up to N per company per run,
+        # so big boards (Greystar) don't get the runner blocked; all roles get covered over a few weeks.
+        per_co = 10**6 if adhoc else int(cfg.get("verify_per_company", 40))
+        import random
+        rng = random.Random(today.isoformat())
+        sample = []
+        for co in {j["company"] for j in all_jobs}:
+            rows = [j for j in all_jobs if j["company"] == co]
+            sample += rows if len(rows) <= per_co else rng.sample(rows, per_co)
+        n = len(sample) + len(closed_jobs)
+        print(f"  verify  checking {n} posting links" + ("" if adhoc else f" ({len(all_jobs)} open, sampled {per_co}/company; all closed)") + "...", flush=True)
         t0 = time.time()
-        results = verify_mod.check_many([j["url"] for j in all_jobs] + [c["url"] for c in closed_jobs])
+        results = verify_mod.check_many([j["url"] for j in sample] + [c["url"] for c in closed_jobs])
         print(f"  verify  done in {time.time()-t0:.0f}s", flush=True)
         for j in all_jobs:
-            j["link_status"], j["link_http"] = results.get(j["url"], ("error", 0))
+            j["link_status"], j["link_http"] = results.get(j["url"], ("listed in ATS, not rechecked", 0))
         still_closed = []
         for c in closed_jobs:
             st, code = results.get(c["url"], ("error", 0))
@@ -265,7 +309,7 @@ def main(argv=None):
     save_json(HISTORY, history)
 
     # ---- 4. outputs
-    out_dir = OUT / today.isoformat()
+    out_dir = OUT / (f"on-demand/{today.isoformat()}_{time.strftime('%H%M')}" if adhoc else today.isoformat())
     job_cols = ["company", "title", "location", "url", "link_status", "posted_at", "first_seen", "days_open", "focus",
                 "ats", "segment", "state", "tier", "job_key"]
     all_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
@@ -280,12 +324,39 @@ def main(argv=None):
     write_csv(out_dir / "company_status.csv", company_rows,
               ["company", "tier", "ats", "slug", "status", "open", "new", "closed", "careers_url"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg)
-    save_json(ROOT / "data" / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
+    if not adhoc:
+      save_json(ROOT / "data" / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
                                                  "ok": len(ok_companies), "open": len(all_jobs),
                                                  "new": len(new_jobs), "closed": len(closed_jobs)})
+    if adhoc:
+        write_step_summary(all_jobs, company_rows, unmatched, out_dir)
     print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open={len(all_jobs)} "
           f"new={len(new_jobs)} closed={len(closed_jobs)} -> {out_dir}")
     return 0
+
+
+# ------------------------------------------------------- run-page summary
+def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
+    """On-demand runs: print results straight onto the GitHub Actions run page."""
+    path = os.environ.get("GITHUB_STEP_SUMMARY")
+    lines = ["## On-demand job pull", ""]
+    for c in company_rows:
+        note = {"unmapped": "not mapped to a job board yet", "excluded": "excluded (see ats_map.json)"}.get(
+            c["status"], c["status"] if c["status"] != "ok" else f"{c['open']} open role" + ("" if c["open"] == 1 else "s"))
+        lines.append(f"- **{c['company']}**: {note}")
+    if unmatched:
+        lines.append(f"- Not in the master leads list: {', '.join(unmatched)}")
+    lines += ["", "| Company | Role | Location | Link check | Link |", "|---|---|---|---|---|"]
+    for j in all_jobs[:500]:
+        lines.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
+    if len(all_jobs) > 500:
+        lines.append(f"\n_First 500 of {len(all_jobs)} shown. Full list: `{out_dir.relative_to(ROOT)}/open_roles.csv`_")
+    text = "\n".join(lines) + "\n"
+    if path:
+        with open(path, "a") as f:
+            f.write(text)
+    else:
+        print(text)
 
 
 # ------------------------------------------------------------------ report

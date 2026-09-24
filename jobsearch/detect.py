@@ -117,7 +117,7 @@ def probe(website: str) -> dict | None:
 
 def _probe(website: str, rejected: list) -> dict | None:
     for slug in _domain_slugs(website):
-        for ats in ("greenhouse", "lever", "ashby", "workable"):
+        for ats in ("greenhouse", "lever", "ashby"):  # Workable excluded: it rate-limits the runner IP
             if ats in _RATE_LIMITED:
                 continue
             try:
