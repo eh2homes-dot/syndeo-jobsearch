@@ -53,7 +53,7 @@ def _post(url: str, payload: dict, **kw) -> requests.Response:
 
 def _ms_to_date(ms) -> str:
     try:
-        return dt.datetime.utcfromtimestamp(int(ms) / 1000).date().isoformat()
+        return dt.datetime.fromtimestamp(int(ms) / 1000, dt.timezone.utc).date().isoformat()
     except Exception:
         return ""
 

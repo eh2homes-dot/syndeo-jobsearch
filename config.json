@@ -208,5 +208,17 @@
       "support coordinator",
       "tax consultant"
     ]
-  }
+  },
+  "vc_boards": [
+    {
+      "name": "MetaProp",
+      "url": "https://jobs.metaprop.com",
+      "verified": "2026-09-24, Getro, 158 jobs"
+    },
+    {
+      "name": "Fifth Wall",
+      "url": "https://jobs.fifthwall.com",
+      "verified": "2026-09-24, Getro, 1,172 jobs"
+    }
+  ]
 }

@@ -22,6 +22,7 @@ Outputs (output/YYYY-MM-DD/)
 from __future__ import annotations
 
 import argparse
+import collections
 import csv
 import datetime as dt
 import json
@@ -34,6 +35,7 @@ from pathlib import Path
 from .adapters import ADAPTERS
 from . import detect as detect_mod
 from . import verify as verify_mod
+from . import feeds as feeds_mod
 
 ROOT = Path(__file__).resolve().parent.parent
 LEADS = ROOT / "leads" / "master_leads.csv"
@@ -216,6 +218,7 @@ def main(argv=None):
     ap.add_argument("--date", default="", help="override run date (YYYY-MM-DD)")
     ap.add_argument("--sleep", type=float, default=0.5)
     ap.add_argument("--no-verify", action="store_true", help="skip link verification")
+    ap.add_argument("--no-vc", action="store_true", help="skip VC portfolio job boards")
     ap.add_argument("--detect-minutes", type=float, default=15, help="time budget for ATS detection")
     ap.add_argument("--budget-minutes", type=float, default=40, help="skip link verification if run is past this")
     args = ap.parse_args(argv)
@@ -299,6 +302,53 @@ def main(argv=None):
     ok_companies = {r["company"] for r in company_rows if r["status"] == "ok"}
     by_company = {r["company"]: r for r in company_rows}
 
+    # ---- 2b. VC portfolio job boards (Getro). Fill gaps for master-list companies with no working board;
+    #          everything else in scope goes to worth_adding.csv for review (never into the main report).
+    discovery, vc_ok_boards = [], set()
+    if cfg.get("vc_boards") and not fixtures and not args.no_vc:
+        all_leads = load_leads()
+        key_to_lead = {}
+        for l in all_leads:
+            for k in _domain_keys(l.get("website", "")) | {_norm(l["company"])}:
+                key_to_lead.setdefault(k, l)
+        in_run = {l["company"] for l in leads}
+        for b in cfg["vc_boards"]:
+            t0 = time.time()
+            try:
+                vjobs, note = feeds_mod.getro(b["url"], b["name"])
+                vc_ok_boards.add(b["name"])
+            except Exception as e:
+                print(f"  vc      {b['name']:32} FAILED: {type(e).__name__}: {str(e)[:120]}", flush=True)
+                continue
+            filled = collections.Counter()
+            for vj in vjobs:
+                keys = _domain_keys(vj["org_domain"]) | {_norm(vj["org_name"])}
+                lead = next((key_to_lead[k] for k in keys if k in key_to_lead), None)
+                if lead is None:
+                    if not adhoc:
+                        grp = classify_role(vj["title"], cfg)
+                        if grp:
+                            discovery.append({**vj, "role_group": grp})
+                    continue
+                co = lead["company"]
+                if co not in in_run or co in ok_companies:
+                    continue  # not requested this run, or its own job board is the (better) source
+                title_key = _norm(vj["title"]) + "|" + _norm(vj["location"])
+                if any(_norm(j["title"]) + "|" + _norm(j.get("location", "")) == title_key
+                       for j in all_jobs if j["company"] == co):
+                    continue  # already found via LinkedIn / another source
+                all_jobs.append({"job_key": f"getro:{b['name']}:{vj['id']}", "title": vj["title"],
+                                 "location": vj["location"], "url": vj["url"], "posted_at": vj["posted_at"],
+                                 "ats": f"vc:{b['name']}", "company": co, "segment": lead["segment"],
+                                 "state": lead["state"], "tier": lead["tier"], "focus": focus_tag(vj["title"], cfg)})
+                by_company[co]["open"] += 1
+                if not filled[co]:
+                    st = by_company[co]["status"]
+                    by_company[co]["status"] = f"via VC board ({b['name']})" + ("" if st == "unmapped" else f"; own board {st}")
+                filled[co] += 1
+            print(f"  vc      {b['name']:32} {len(vjobs):5} jobs  {note}  ({time.time()-t0:.0f}s)"
+                  + (f"  filled: {dict(filled)}" if filled else ""), flush=True)
+
     # ---- 3. diff against history
     seen_now = {j["job_key"] for j in all_jobs}
     new_jobs, closed_jobs = [], []
@@ -317,7 +367,13 @@ def main(argv=None):
             j["first_seen"] = h["first_seen"]
     for key, h in history.items():
         # Only close roles for companies we scraped successfully this run.
-        if h["status"] == "open" and key not in seen_now and h["company"] in ok_companies:
+        vc_src = key.split(":")[1] if key.startswith("getro:") else None
+        if vc_src and h["status"] == "open" and key not in seen_now and h["company"] in ok_companies:
+            h["status"] = "retired"  # company now has its own working board; VC copy no longer tracked
+            continue
+        can_close = (h["company"] in ok_companies) if not vc_src else \
+                    (vc_src in vc_ok_boards and h["company"] in {l["company"] for l in leads})
+        if h["status"] == "open" and key not in seen_now and can_close:
             h["status"] = "closed"
             h["closed_on"] = today.isoformat()
             first = dt.date.fromisoformat(h["first_seen"])
@@ -401,11 +457,15 @@ def main(argv=None):
     write_csv(out_dir / "new_this_week.csv", new_jobs, job_cols)
     write_csv(out_dir / "closed_this_week.csv", closed_jobs,
               ["company", "title", "location", "url", "link_status", "link_http", "first_seen", "closed_on", "days_open", "role_group", "ats", "job_key"])
+    if discovery:
+        discovery.sort(key=lambda d: (d["org_name"].lower(), d["title"]))
+        write_csv(out_dir / "worth_adding.csv", discovery,
+                  ["org_name", "org_domain", "title", "role_group", "location", "url", "apply_url", "posted_at", "board"])
     write_csv(out_dir / "scraper_misses.csv", scraper_misses,
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
               ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url"])
-    write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg)
+    write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery)
     if not adhoc:
       save_json(ROOT / "data" / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
                                                  "ok": len(ok_companies), "open_in_scope": len(all_jobs), "open_all": len(all_open),
@@ -423,8 +483,9 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     lines = ["## On-demand job pull", ""]
     for c in company_rows:
-        note = {"unmapped": "no job board or LinkedIn page mapped yet", "excluded": "excluded (see ats_map.json)"}.get(
-            c["status"], c["status"] if c["status"] != "ok" else f"{c.get('focus_open', c['open'])} Sales/GTM/Engineering/VP+ roles (of {c['open']} open)")
+        counts = f"{c.get('focus_open', c['open'])} Sales/GTM/Engineering/VP+ roles (of {c['open']} open)"
+        note = {"unmapped": "no job board, LinkedIn page, or VC board listing found", "excluded": "excluded (see ats_map.json)"}.get(
+            c["status"], counts if c["status"] == "ok" else (f"{counts} - {c['status']}" if c["status"].startswith("via VC") else c["status"]))
         lines.append(f"- **{c['company']}**: {note}")
     if unmatched:
         lines.append(f"- Not in the master leads list: {', '.join(unmatched)}")
@@ -442,7 +503,7 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
 
 
 # ------------------------------------------------------------------ report
-def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg):
+def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery=None):
     ok = [c for c in company_rows if c["status"] == "ok"]
     bad = [c for c in company_rows if c["status"] != "ok"]
     top = sorted(ok, key=lambda c: -c["open"])[:15]
@@ -484,6 +545,15 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
         md.append(f"| {j['company']} | {j['title']} | {j['location']} | {j.get('posted_at','')} | {j.get('link_status','')} | [apply]({j['url']}) |")
     md.append("")
 
+    if discovery:
+        cos = collections.Counter(d["org_name"] for d in discovery)
+        md += ["## Worth adding? Companies NOT on your list hiring Sales / GTM / Engineering / VP+ (from VC portfolio boards)", "",
+               f"_{len(discovery)} in-scope roles at {len(cos)} companies. Full list with links: worth_adding.csv. "
+               "Add a company to leads/master_leads.csv to start tracking it properly._", "",
+               "| Company | In-scope roles | Board |", "|---|---|---|"]
+        for name, n in cos.most_common(25):
+            md.append(f"| {name} | {n} | {next(d['board'] for d in discovery if d['org_name']==name)} |")
+        md.append("")
     md += ["## Companies needing attention", "", "| Company | Status | Careers page |", "|---|---|---|"]
     for c in bad:
         md.append(f"| {c['company']} | {c['status']} | {c['careers_url']} |")
