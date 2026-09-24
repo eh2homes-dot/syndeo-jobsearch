@@ -1,0 +1,16 @@
+company,tier,ats,slug,status,focus_open,open,new,closed,careers_url
+Nutiliti,A,linkedin,nutiliti,ok,0,0,0,0,https://builtin.com/company/nutiliti/jobs
+Second Nature,A,ashby,second-nature,ok,6,9,1,0,https://www.secondnature.com/careers
+HiredHelpr,A,linkedin,hiredhelpr,ok,0,0,0,0,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm
+Haven,A,generic,haven-yc,ok,1,1,0,0,https://www.ycombinator.com/companies/haven-2/jobs
+Mason,A,,,unmapped,0,0,0,0,https://www.thisismason.com
+Two Dots,A,lever,twodots,ok,3,4,0,0,https://jobs.lever.co/twodots
+Property Meld,A,breezy,property-meld,ok,0,0,0,0,https://property-meld.breezy.hr/
+Super,A,generic,hiresuper,ok,0,0,0,0,https://www.hiresuper.com/careers
+Boom,A,linkedin,boompay,ok,2,5,1,0,https://wellfound.com/company/boom-app/jobs
+AbodeMine,A,linkedin,abodemine,ok,0,0,0,0,https://wellfound.com/company/abodemine/jobs
+PropertyManagement.com,A,,,unmapped,0,0,0,0,https://www.propertymanagement.com/careers
+Lineage,A,generic,lineage-finance,ok,0,0,0,0,https://lineage.finance/careers
+Footprint,A,ashby,onefootprint,failed:RuntimeError: Ashby posting API 404; _ashby_graphql: Ashby has no job board named 'onefootprint' (GraphQL returned none) | _ashby_page: Ashby page for 'on,0,0,0,0,https://jobs.ashbyhq.com/onefootprint
+Series Homes,A,linkedin,serieshomes,ok,0,0,0,0,https://www.serieshomes.com
+Reffie,A,generic,reffie,ok,1,1,0,0,https://careers.reffie.me/
