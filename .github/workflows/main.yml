@@ -1,0 +1,44 @@
+name: Recently hired (people moves)
+on:
+  schedule:
+    - cron: "0 14 * * 1"      # Mondays 14:00 UTC (10am ET) - two hours after the job search
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: "Which sources to check (comma-separated): news, sec, leadership"
+        default: "news,sec,leadership"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: syndeo-jobsearch-repo   # waits for the job search if it is still running
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Find people moves
+        env:
+          PYTHONUNBUFFERED: "1"
+          SOURCES: ${{ github.event.inputs.sources || 'news,sec,leadership' }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}   # repo secret: "Evan Howard <email>"; never stored in the repo
+        run: python -m jobsearch.hires --only "$SOURCES" --minutes 20
+      - name: Commit results
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data output
+          git commit -m "recently hired $(date -u +%F)" || echo "nothing to commit"
+          git pull --rebase --autostash || true
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recently-hired-report
+          path: output/
