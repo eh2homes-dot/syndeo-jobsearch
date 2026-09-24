@@ -1,14 +1,17 @@
 name: Weekly job search
 on:
   schedule:
-    - cron: "0 12 * * 1"      # Mondays 12:00 UTC (8am ET)
+    - cron: "0 12 * * 1"      # Mondays 12:00 UTC (8am ET) - full run of all companies
   workflow_dispatch:
     inputs:
+      companies:
+        description: "On-demand: company names, comma-separated (e.g. zillow, entrata, greystar). Leave blank for a full run."
+        default: ""
       tier:
-        description: "Tier filter (A, B, or blank for all)"
+        description: "Full run only: tier filter (A, B, or blank for all)"
         default: ""
       detect:
-        description: "Auto-detect ATS for unmapped companies"
+        description: "Full run only: auto-detect job boards for unmapped companies"
         type: boolean
         default: true
 
@@ -27,19 +30,27 @@ jobs:
       - name: Run job search
         env:
           PYTHONUNBUFFERED: "1"
+          COMPANIES: ${{ github.event.inputs.companies }}
+          TIER: ${{ github.event.inputs.tier }}
+          DETECT: ${{ github.event.inputs.detect || 'true' }}
         run: |
-          ARGS=""
-          if [ -n "${{ github.event.inputs.tier }}" ]; then ARGS="$ARGS --tier ${{ github.event.inputs.tier }}"; fi
-          if [ "${{ github.event.inputs.detect || 'true' }}" = "true" ]; then ARGS="$ARGS --detect"; fi
-          python -m jobsearch.run $ARGS
+          if [ -n "$COMPANIES" ]; then
+            python -m jobsearch.run --only "$COMPANIES"
+          else
+            ARGS=""
+            if [ -n "$TIER" ]; then ARGS="$ARGS --tier $TIER"; fi
+            if [ "$DETECT" = "true" ]; then ARGS="$ARGS --detect"; fi
+            python -m jobsearch.run $ARGS
+          fi
       - name: Commit results
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data output
-          git commit -m "weekly run $(date -u +%F)" || echo "nothing to commit"
+          git commit -m "job search $(date -u +%F) ${{ github.event.inputs.companies && 'on-demand' || 'weekly run' }}" || echo "nothing to commit"
+          git pull --rebase --autostash || true
           git push
       - uses: actions/upload-artifact@v4
         with:
-          name: weekly-report
+          name: job-search-report
           path: output/
