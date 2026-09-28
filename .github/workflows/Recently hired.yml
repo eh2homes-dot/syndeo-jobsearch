@@ -1,7 +1,10 @@
 name: Recently hired (people moves)
 on:
   schedule:
-    - cron: "0 14 * * 1"      # Mondays 14:00 UTC (10am ET) - two hours after the job search
+    # Sundays 6:00am Eastern. GitHub schedules run in UTC with no daylight saving, so both UTC times are
+    # listed and the "Check it's 6am Eastern" step below lets only the correct one through:
+    - cron: "0 10 * * 0"      # 10:00 UTC = 6am EDT (roughly March to November)
+    - cron: "0 11 * * 0"      # 11:00 UTC = 6am EST (roughly November to March)
   workflow_dispatch:
     inputs:
       sources:
@@ -10,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  issues: write        # to post the weekly newsletter draft as an issue, which GitHub emails to you
 
 concurrency:
   group: syndeo-jobsearch-repo   # waits for the job search if it is still running
@@ -20,17 +24,41 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Check it's 6am Eastern
+        id: et
+        env:
+          EVENT: ${{ github.event_name }}
+          FIRED: ${{ github.event.schedule }}
+        run: |
+          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          if [ "$EVENT" != "schedule" ]; then run=true      # manual runs always go
+          elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          else run=false; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
       - uses: actions/checkout@v5
+        if: steps.et.outputs.run == 'true'
       - uses: actions/setup-python@v6
+        if: steps.et.outputs.run == 'true'
         with: { python-version: "3.12" }
       - run: pip install -r requirements.txt
+        if: steps.et.outputs.run == 'true'
       - name: Find people moves
+        if: steps.et.outputs.run == 'true'
         env:
           PYTHONUNBUFFERED: "1"
           SOURCES: ${{ github.event.inputs.sources || 'news,sec,leadership' }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}   # repo secret: "Evan Howard <email>"; never stored in the repo
         run: python -m jobsearch.hires --only "$SOURCES" --minutes 20
+      - name: Assemble newsletter draft
+        if: steps.et.outputs.run == 'true'
+        env:
+          PYTHONUNBUFFERED: "1"
+          NEWSLETTER_MENTION: ${{ github.repository_owner }}
+        run: python -m jobsearch.newsletter
       - name: Commit results
+        if: steps.et.outputs.run == 'true'
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
@@ -38,7 +66,15 @@ jobs:
           git commit -m "recently hired $(date -u +%F)" || echo "nothing to commit"
           git pull --rebase --autostash || true
           git push
+      - name: Email the draft (posted as a GitHub issue that mentions you)
+        if: steps.et.outputs.run == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f=$(ls -t output/newsletter/issue-*.github.md | head -1)
+          gh issue create --title "Newsletter draft: week of $(TZ=America/New_York date '+%B %-d, %Y')" --body-file "$f"
       - uses: actions/upload-artifact@v4
+        if: steps.et.outputs.run == 'true'
         with:
           name: recently-hired-report
           path: output/
