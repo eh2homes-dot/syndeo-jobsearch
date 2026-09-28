@@ -523,3 +523,14 @@ _15 in-scope roles at 12 companies. Full list with links: worth_adding.csv. Add 
 | Footprint | failed:RuntimeError: Ashby posting API 404; _ashby_graphql: Ashby has no job board named 'onefootprint' (GraphQL returned none) | _ashby_page: Ashby page for 'on | https://jobs.ashbyhq.com/onefootprint |
 | Mason | unmapped | https://www.thisismason.com |
 | PropertyManagement.com | unmapped | https://www.propertymanagement.com/careers |
+
+## People moves - who got hired (news, SEC filings, leadership pages)
+
+_Named hires, appointments and departures at your master-list companies. "Matches closed role" links a move to a posting that recently came down._
+
+| Company | Move | Person | Title / headline | Matches closed role | Source |
+|---|---|---|---|---|---|
+| CoStar Group | hire/appointment | Felix Kusch | CoStar names Felix Kusch president of Homes.com |  | [news](https://news.google.com/rss/articles/CBMiqwFBVV95cUxPM2gzRmRXa1pOaWM5NTc0eXFGek0xYnFfOE1UZmdLOFlzVXNEdm9XckI4Wldfa19kSEV2ZmxrOW9kaFRHSGozdkUwWlZDclBWUWpWZWoxNHJJVl9BNzE2Zld2X2x0bmZLbFlnRW5JVE1ibWY3YS1zOUpyWHg1dXRtYjcyQTRCOF9tYmhsT2hFSWxvbUNQYnNQVUZWWEVrcWRmNjVpUjl2MUMyMmc?oc=5) |
+| Greystar | hire/appointment | Tom Livelli | Greystar appoints Executive Director to lead Asia-Pacific growth |  | [news](https://news.google.com/rss/articles/CBMimgFBVV95cUxQMDlYS3I2dlg5Y1EycXpVSFFuUFJMeWhYdFk1Tmt5dVNCLVdXRGsxZHlvelItTVZ6c3IzNWRwVXdNVmZnTGxBYXQtQ1Q4bWR2VXdpbmNBc0xxRWxQQjZGZHdlc0xFNFI1cEttZFpWNk05RFVjQllxNmNUTy1OSFZvc2JONGNxcVZRTFpnZ28xSjhyaGZsQmZ1ekd3?oc=5) |
+
+_Coverage: news: 118 companies searched; sec: 15 public companies; leadership pages: 46 companies with a readable page_
