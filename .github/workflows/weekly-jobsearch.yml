@@ -1,7 +1,11 @@
 name: Weekly job search
 on:
   schedule:
-    - cron: "0 12 * * 1"      # Mondays 12:00 UTC (8am ET) - full run of all companies
+    # Sundays 4:00am Eastern (full run of all companies), finishing before "Recently hired" at 6am.
+    # GitHub schedules run in UTC with no daylight saving, so both UTC times are listed and the
+    # "Check it's 4am Eastern" step below lets only the correct one through:
+    - cron: "0 8 * * 0"       # 08:00 UTC = 4am EDT (roughly March to November)
+    - cron: "0 9 * * 0"       # 09:00 UTC = 4am EST (roughly November to March)
   workflow_dispatch:
     inputs:
       companies:
@@ -23,11 +27,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 50        # hard stop - never another 6-hour run
     steps:
+      - name: Check it's 4am Eastern
+        id: et
+        env:
+          EVENT: ${{ github.event_name }}
+          FIRED: ${{ github.event.schedule }}
+        run: |
+          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          if [ "$EVENT" != "schedule" ]; then run=true      # manual runs (full or on-demand) always go
+          elif [ "$FIRED" = "0 8 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 9 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          else run=false; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
       - uses: actions/checkout@v5
+        if: steps.et.outputs.run == 'true'
       - uses: actions/setup-python@v6
+        if: steps.et.outputs.run == 'true'
         with: { python-version: "3.12" }
       - run: pip install -r requirements.txt
+        if: steps.et.outputs.run == 'true'
       - name: Run job search
+        if: steps.et.outputs.run == 'true'
         env:
           PYTHONUNBUFFERED: "1"
           COMPANIES: ${{ github.event.inputs.companies }}
@@ -43,6 +64,7 @@ jobs:
             python -m jobsearch.run $ARGS
           fi
       - name: Commit results
+        if: steps.et.outputs.run == 'true'
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
@@ -51,6 +73,7 @@ jobs:
           git pull --rebase --autostash || true
           git push
       - uses: actions/upload-artifact@v4
+        if: steps.et.outputs.run == 'true'
         with:
           name: job-search-report
           path: output/
