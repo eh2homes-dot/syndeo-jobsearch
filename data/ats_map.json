@@ -12,15 +12,15 @@
   "Agora": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Alarm.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
+    "detected_on": "2026-09-28",
+    "evidence": "HTTPSConnectionPool(host='www.alarm.com', port=443): Max retries exceeded with url: /careers (Caused by NewConnectionErr",
     "slug": ""
   },
   "Apartment List": {
@@ -38,25 +38,25 @@
     "verified_on": "2026-09-23"
   },
   "Atlas Real Estate": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "paylocity",
+    "confidence": "html",
+    "detected_on": "2026-09-28",
+    "evidence": "recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081",
+    "slug": "5e5fc082-a90b-4d93-8b73-46f77d40e081"
   },
   "Auction.com": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/auction-com links to https://www.auction.com",
+    "slug": "auction-com"
   },
   "Avail (Realtor.com)": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/avail-1 links to https://www.avail.co",
+    "slug": "avail-1"
   },
   "Belong": {
     "ats": "workable",
@@ -69,14 +69,14 @@
   "Better.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Bilt Rewards": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -109,16 +109,16 @@
   "Bright MLS": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Buildium (RealPage)": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/buildium links to https://www.buildium.com",
+    "slug": "buildium"
   },
   "ButterflyMX": {
     "ats": "ashby",
@@ -128,16 +128,16 @@
     "slug": "butterflymx"
   },
   "Cadre": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/cadre links to https://www.cadre.com",
+    "slug": "cadre"
   },
   "Cecilian Partners": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -174,7 +174,7 @@
   "CoStar Group": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -186,11 +186,11 @@
     "slug": "compstak"
   },
   "Compass": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/compass links to https://www.compass.com",
+    "slug": "compass"
   },
   "Convene": {
     "ats": "greenhouse",
@@ -243,7 +243,7 @@
   "Doorstead": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -272,7 +272,7 @@
   "Evergreen Residential": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -297,16 +297,16 @@
     "slug": "onefootprint"
   },
   "Funnel Leasing": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/funnel-leasing links to https://www.funnelleasing.com",
+    "slug": "funnel-leasing"
   },
   "GetCovered": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -326,11 +326,11 @@
     "wd": "wd1"
   },
   "Guesty": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/guesty links to https://www.guesty.com",
+    "slug": "guesty"
   },
   "Haven": {
     "ats": "generic",
@@ -342,7 +342,7 @@
   "Hemlane": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -385,11 +385,11 @@
     "slug": "homeward"
   },
   "HouseCanary": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/housecanary links to https://www.housecanary.com",
+    "slug": "housecanary"
   },
   "HqO": {
     "ats": "ashby",
@@ -399,16 +399,16 @@
     "slug": "hqo"
   },
   "Kiavi": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/kiavi links to https://www.kiavi.com",
+    "slug": "kiavi"
   },
   "Knock CRM": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -422,7 +422,7 @@
   "LeaseLock": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -448,11 +448,11 @@
     "slug": "luxurypresence"
   },
   "MRI Software": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/mri-software links to https://www.mrisoftware.com",
+    "slug": "mri-software"
   },
   "Mason": {
     "ats": "",
@@ -461,23 +461,23 @@
     "slug": ""
   },
   "Matterport": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/matterport links to https://matterport.com",
+    "slug": "matterport"
   },
   "Measurabl": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/measurabl links to https://measurabl.com",
+    "slug": "measurabl"
   },
   "Mynd": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -491,7 +491,7 @@
   "Northpoint Asset Management": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -527,32 +527,32 @@
     "slug": "obligo"
   },
   "Offerpad": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/offerpad links to https://www.offerpad.com",
+    "slug": "offerpad"
   },
   "Ojo Labs": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Opcity (Realtor.com)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Opendoor": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/opendoor links to https://www.opendoor.com",
+    "slug": "opendoor"
   },
   "Orchard": {
     "ats": "greenhouse",
@@ -571,7 +571,7 @@
   "PURE HomeRiver Group": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -583,25 +583,25 @@
     "slug": "pacaso"
   },
   "Placer.ai": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/placerai links to https://www.placer.ai",
+    "slug": "placerai"
   },
   "Placester": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/placester links to https://placester.com",
+    "slug": "placester"
   },
   "Point": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/point links to https://www.point.com",
+    "slug": "point"
   },
   "PointCentral": {
     "ats": "greenhouse",
@@ -611,11 +611,11 @@
     "slug": "pointcentral"
   },
   "Procore Technologies": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/procore-technologies links to https://www.procore.com",
+    "slug": "procore-technologies"
   },
   "Property Meld": {
     "ats": "breezy",
@@ -637,16 +637,16 @@
     "slug": "careers-realpagepms"
   },
   "Realtor.com (Move Inc.)": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/realtorcom links to https://www.realtor.com",
+    "slug": "realtorcom"
   },
   "Redfin": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -661,37 +661,37 @@
   "Rent Manager (LCS)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "RentSpree": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Rentec Direct": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Renters Warehouse": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "ResMan": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/resman links to https://myresman.com",
+    "slug": "resman"
   },
   "Rhino": {
     "ats": "bamboohr",
@@ -701,16 +701,16 @@
     "slug": "rhinolabs"
   },
   "Robin": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/robin links to https://www.robinpowered.com",
+    "slug": "robin"
   },
   "Rocket Companies": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -761,11 +761,11 @@
     "slug": "snapdocs"
   },
   "SquareFoot": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/squarefoot links to https://www.squarefoot.com",
+    "slug": "squarefoot"
   },
   "Steadily": {
     "ats": "ashby",
@@ -816,16 +816,16 @@
     "slug": "vts"
   },
   "Worksmith": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-24",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-28",
+    "evidence": "builtin.com/company/worksmith links to https://www.worksmith.com",
+    "slug": "worksmith"
   },
   "Yardi Systems": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-24",
+    "detected_on": "2026-09-28",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },

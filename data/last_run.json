@@ -1,8 +1,9 @@
 {
-  "closed": 0,
-  "companies": 104,
-  "date": "2026-09-24",
-  "new": 2243,
-  "ok": 45,
-  "open": 2271
+  "closed": 6,
+  "companies": 118,
+  "date": "2026-09-28",
+  "new": 42,
+  "ok": 64,
+  "open_all": 788,
+  "open_in_scope": 357
 }
