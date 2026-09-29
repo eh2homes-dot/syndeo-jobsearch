@@ -1,0 +1,35 @@
+# WARN Act layoff notice dataset.
+#
+# There is no federal WARN database — the Act is administered state by state,
+# and the US DOL links out to ~50 state pages rather than hosting a combined
+# one. This points at a normalized 48-state dataset so we don't scrape 50
+# portals in 50 formats.
+#
+# Any CSV with company / state / date columns works; headers are matched
+# loosely. To use a state portal export or a different aggregator, change the
+# URL or set local_file and commit the CSV.
+
+url: https://raw.githubusercontent.com/APVentureEngine/warn-act-notices/main/data/warn_notices.csv
+
+# Credit line rendered into the brief. The default dataset is CC BY 4.0 and
+# asks for attribution to "WARN Feed" — if a notice from it goes in the
+# newsletter, credit it there too.
+attribution: WARN Feed (CC BY 4.0)
+
+# Optional: read from a committed file instead of fetching. Useful if the
+# upstream dataset ever disappears.
+# local_file: config/warn_notices.csv
+
+# Ignore notices below this headcount. 0 = report everything. Most proptech
+# and property management layoffs are small, so leave this at 0 unless the
+# brief gets noisy.
+min_employees: 0
+
+# Human-readable page linked from the brief, rather than the raw 9MB CSV.
+browse_url: https://approjects-warn-act-notices.static.hf.space/index.html
+
+# Never report a notice filed longer ago than this, however recently it landed
+# in the dataset. Without it, the first run reports the entire archive because
+# every row looks newly seen. 90 days keeps genuinely-new-to-us recent filings
+# while dropping history.
+max_notice_age_days: 90
