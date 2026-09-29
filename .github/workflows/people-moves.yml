@@ -2,11 +2,10 @@ name: People Moves
 
 # Sundays at 6:00am ET, same cadence as the job search.
 #
-# GitHub cron is UTC and does not observe daylight saving, so a single UTC
-# time drifts by an hour twice a year. Two schedules are declared (10:00 UTC =
-# 6am EDT, 11:00 UTC = 6am EST) and the guard step below exits on whichever one
-# is not actually 6am in New York. Net effect: exactly one real run per Sunday,
-# at 6am ET, all year.
+# GitHub cron is UTC and does not observe daylight saving, so a single UTC time
+# drifts by an hour twice a year. Two schedules are declared (10:00 UTC = 6am
+# EDT, 11:00 UTC = 6am EST) and the guard step exits on whichever one is not
+# actually 6am in New York. One real run per Sunday, all year.
 on:
   schedule:
     - cron: "0 10 * * 0"
@@ -51,24 +50,79 @@ jobs:
       - uses: actions/checkout@v4
         if: steps.guard.outputs.run == 'true'
 
+      # The module can sit at people-moves/, outputs/people-moves/, or loose at
+      # the repo root depending on how it was uploaded. Find it rather than
+      # assume. sources/edgar.py is the marker: it only exists inside this
+      # module, so its grandparent directory is the module root.
+      - name: Locate the module
+        if: steps.guard.outputs.run == 'true'
+        id: locate
+        run: |
+          MARKER=$(find . -type f -path '*/sources/edgar.py' -not -path './.git/*' | head -1)
+
+          if [ -z "$MARKER" ]; then
+            echo "::error::Could not find the people-moves module in this repo."
+            echo ""
+            echo "Looked for a file at <somewhere>/sources/edgar.py and found none."
+            echo "That means the module folder was never committed, or only some"
+            echo "of its files were."
+            echo ""
+            echo "Top level of the repo:"
+            ls -la
+            echo ""
+            echo "Every .py file currently committed:"
+            find . -name '*.py' -not -path './.git/*' | head -40
+            exit 1
+          fi
+
+          DIR=$(dirname "$(dirname "$MARKER")")
+          DIR=${DIR#./}
+          [ -z "$DIR" ] && DIR="."
+
+          echo "Found the module at: $DIR"
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+
+          # Fail early and clearly if the folder is there but incomplete.
+          MISSING=""
+          for f in run.py report.py requirements.txt config/feeds.yml \
+                   lib/http.py lib/companies.py lib/people.py lib/move.py \
+                   lib/state.py sources/leadership.py sources/news_rss.py \
+                   sources/trade_press.py sources/req_signals.py \
+                   sources/wayback.py; do
+            [ -f "$DIR/$f" ] || MISSING="$MISSING $f"
+          done
+
+          if [ -n "$MISSING" ]; then
+            echo "::error::The module is missing these files:$MISSING"
+            echo "Re-upload the people-moves folder; some files did not commit."
+            exit 1
+          fi
+
+          if [ ! -f "$DIR/config/companies.csv" ]; then
+            echo "::warning::No config/companies.csv. Export the master leads"
+            echo "sheet to CSV and save it there, or the run will find nothing."
+          fi
+
       - uses: actions/setup-python@v5
         if: steps.guard.outputs.run == 'true'
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: ${{ steps.locate.outputs.dir }}/requirements.txt
 
       - name: Install dependencies
         if: steps.guard.outputs.run == 'true'
-        run: pip install -r people-moves/requirements.txt
+        run: pip install -r "${{ steps.locate.outputs.dir }}/requirements.txt"
 
       - name: Run scan
         if: steps.guard.outputs.run == 'true'
-        working-directory: people-moves
+        working-directory: ${{ steps.locate.outputs.dir }}
         env:
           # SEC requires a descriptive User-Agent with contact info.
           PEOPLE_MOVES_UA: "Syndeo People-Moves Research (hello@syndeollc.com)"
+          # Absolute path, so it resolves the same wherever the module sits.
           # Point this at whatever the job-search workflow writes.
-          JOBS_RESULTS_PATH: "../out/jobs-latest.json"
+          JOBS_RESULTS_PATH: ${{ github.workspace }}/out/jobs-latest.json
         run: |
           if [ "${{ inputs.backfill }}" = "true" ]; then
             python run.py --backfill --backfill-days 120
@@ -80,10 +134,13 @@ jobs:
 
       - name: Commit state and output
         if: steps.guard.outputs.run == 'true'
+        env:
+          DIR: ${{ steps.locate.outputs.dir }}
         run: |
           git config user.name  "syndeo-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add people-moves/state people-moves/out
+          git add "$DIR/state" "$DIR/out" 2>/dev/null || true
+
           if git diff --staged --quiet; then
             echo "Nothing changed this week."
           else
@@ -99,6 +156,7 @@ jobs:
         with:
           name: people-moves-brief
           path: |
-            people-moves/out/people-moves-*.md
-            people-moves/out/people-moves-*.json
+            ${{ steps.locate.outputs.dir }}/out/people-moves-*.md
+            ${{ steps.locate.outputs.dir }}/out/people-moves-*.json
           retention-days: 90
+          if-no-files-found: warn
