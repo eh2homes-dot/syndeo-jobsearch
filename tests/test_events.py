@@ -114,6 +114,26 @@ def test_history_second_run():
     assert set(h1) == set(h2) and all(v["status"] == "upcoming" for v in h2.values())
 
 
+def test_sheet_csv_full_runs_only():
+    tmp = pathlib.Path(tempfile.mkdtemp())
+    _sandbox(tmp, [{"company": "Rently", "website": "https://www.rently.com"}])
+    fx = ["--fixtures", str(FX)]
+    E.main(fx + ["--date", "2026-09-21", "--only", "associations"])      # first-ever run, a week earlier
+    assert not (tmp / "output" / "events-latest.csv").exists()          # partial run leaves the sheet alone
+    E.main(fx + ["--date", TODAY.isoformat(), "--detect"])               # full run writes it
+    rows = list(csv.DictReader(open(tmp / "output" / "events-latest.csv")))
+    assert list(rows[0])[:4] == ["Start", "End", "Event", "Type"]
+    assert rows[0]["Start"] <= rows[1]["Start"] and rows[-1]["Start"] == "TBA"
+    types = {r["Type"] for r in rows}
+    assert types == {"Conference", "Company event"}                       # attending listings left out
+    assert any(r["Event"] == "Rently Happy Hour at NARPM" and r["Host"] == "Rently" for r in rows)
+    new = {r["Host"] for r in rows if r["New this week"] == "yes"}
+    assert "NRHC" not in new and "Bisnow" in new and "Rently" in new     # only what the first run hadn't seen
+    nl = (tmp / "output" / "newsletter" / f"events-{TODAY.isoformat()}.md").read_text()
+    just = nl.split("**Just announced**")[1] if "**Just announced**" in nl else ""
+    assert "Triangle" in just and "IMN Single Family Rental West" not in just   # Bisnow is new; IMN was seen last week
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

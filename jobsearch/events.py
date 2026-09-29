@@ -17,6 +17,9 @@ Outputs (output/YYYY-MM-DD/)
   events_report.md / .html    readable list
   debug/<source>.html         raw page for any source that loaded but gave zero events (to fix the parser)
   output/newsletter/events-YYYY-MM-DD.md / .html   paste-ready "Upcoming events" section
+  output/events-latest.csv    same address every week, for a Google Sheet:
+                              =IMPORTDATA("https://raw.githubusercontent.com/eh2homes-dot/syndeo-jobsearch/main/output/events-latest.csv")
+                              Only full runs (all sources) overwrite it, so a partial manual run never empties the sheet.
   data/events_needs_manual.csv   companies where no events page was found
 """
 from __future__ import annotations
@@ -37,7 +40,7 @@ from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 import requests
-from bs4 import BeautifulSoup, Comment, NavigableString
+from bs4 import BeautifulSoup, Comment
 
 from .adapters import UA
 from .run import LEADS, OUT, ROOT, draft_html, load_json, save_json
@@ -935,6 +938,32 @@ def write_csv(path: Path, rows: list[dict], fields: list[str]):
         w.writerows(rows)
 
 
+SHEET_FIELDS = ["Start", "End", "Event", "Type", "Host", "Where", "City", "State", "Format", "Access", "Time", "Link",
+                "New this week", "First seen", "Note", "Updated"]
+
+
+def is_recent(e: dict, today: dt.date, baseline: str) -> bool:
+    """First seen in the last 7 days, and not part of the very first run (when everything is 'new')."""
+    fs = e.get("first_seen", "")
+    return bool(fs) and fs > baseline and fs > (today - dt.timedelta(days=7)).isoformat()
+
+
+def write_sheet_csv(path: Path, events: list[dict], today: dt.date, baseline: str):
+    """One tidy table for the Google Sheet: conferences and company-hosted events, soonest first, TBA at the bottom.
+    Company listings for other people's conferences are left out (they're in the weekly report)."""
+    label = {"conference": "Conference", "company_hosted": "Company event"}
+    rows = []
+    for e in sorted(events, key=lambda e: (e["tba"], e["start"] or "9999", e["title"])):
+        if e["kind"] not in label:
+            continue
+        rows.append({"Start": e["start"] or "TBA", "End": e["end"], "Event": e["title"], "Type": label[e["kind"]],
+                     "Host": e["company"] or e["organizer"], "Where": e["location"], "City": e["city"], "State": e["state"],
+                     "Format": e["format"], "Access": e["access"], "Time": e["time"], "Link": e["url"],
+                     "New this week": "yes" if is_recent(e, today, baseline) else "",
+                     "First seen": e.get("first_seen", ""), "Note": e.get("note", ""), "Updated": today.isoformat()})
+    write_csv(path, rows, SHEET_FIELDS)
+
+
 def _line(e: dict, with_year: bool = False, show_org: bool = True) -> str:
     s, en = dt.date.fromisoformat(e["start"]), dt.date.fromisoformat(e["end"])
     org = e["company"] or e["organizer"]
@@ -946,8 +975,8 @@ def _line(e: dict, with_year: bool = False, show_org: bool = True) -> str:
     return f"- **{fmt_range(s, en, with_year)}**: [{e['title']}]({e['url']}){who}" + (f". {where}" if where else "") + extra
 
 
-def write_newsletter(events: list[dict], new: list[dict], today: dt.date, cfg: dict, out_root: Path,
-                     first_run: bool = False, priority: dict | None = None) -> Path:
+def write_newsletter(events: list[dict], today: dt.date, cfg: dict, out_root: Path, baseline: str,
+                     priority: dict | None = None) -> Path:
     ncfg = cfg.get("newsletter", {})
     until = (today + dt.timedelta(weeks=ncfg.get("weeks", 8))).isoformat()
     caps = ncfg.get("max_per_source", {})
@@ -959,9 +988,8 @@ def write_newsletter(events: list[dict], new: list[dict], today: dt.date, cfg: d
             shown.append(e)
     hosted = sorted([e for e in events if e["kind"] == "company_hosted" and not e["tba"] and e["start"] <= until],
                     key=lambda e: (e["start"], e["company"]))
-    # on the very first run everything is "new", so there is nothing meaningful to call just announced
-    later = [] if first_run else sorted([e for e in new if e["kind"] == "conference" and e["start"] > until],
-                                        key=lambda e: ((priority or {}).get(e["source"], 5), e["start"]))
+    later = sorted([e for e in events if e["kind"] == "conference" and not e["tba"] and e["start"] > until
+                    and is_recent(e, today, baseline)], key=lambda e: ((priority or {}).get(e["source"], 5), e["start"]))
     md = ["## Upcoming events", "",
           f"_Conferences and meetups across proptech and scattered site rental operations over the next "
           f"{ncfg.get('weeks', 8)} weeks._", ""]
@@ -1073,8 +1101,8 @@ def main(argv=None) -> int:
             by_src.setdefault(r["source"], []).append(healthy(r["status"]))
     ok_sources = {k for k, v in by_src.items() if v and all(v)} | \
                  {r["note"] for r in rows if r["source"] == "company" and r["status"] == "ok"}
-    first_run = not load_json(HISTORY, {})
     hist, new, moved = update_history(events, ok_sources, today)
+    baseline = min((h["first_seen"] for h in hist.values()), default=today.isoformat())   # date of the very first run
     removed = [h for h in hist.values() if h["status"] == "removed" and h.get("last_seen", "") >= (today - dt.timedelta(days=8)).isoformat()]
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1082,7 +1110,9 @@ def main(argv=None) -> int:
     write_csv(out_dir / "events.csv", events, FIELDS)
     write_csv(out_dir / "events_sources.csv", rows, ["source", "status", "events", "note", "url"])
     report = write_report(out_dir, events, new, moved, removed, rows, today)
-    nl = write_newsletter(events, new + moved, today, cfg, out_root, first_run=first_run, priority=priority)
+    nl = write_newsletter(events, today, cfg, out_root, baseline, priority=priority)
+    if only >= {"associations", "bisnow", "companies"}:
+        write_sheet_csv(out_root / "events-latest.csv", events, today, baseline)
     if save:
         save_json(HISTORY, hist)
 
