@@ -1,0 +1,104 @@
+name: People Moves
+
+# Sundays at 6:00am ET, same cadence as the job search.
+#
+# GitHub cron is UTC and does not observe daylight saving, so a single UTC
+# time drifts by an hour twice a year. Two schedules are declared (10:00 UTC =
+# 6am EDT, 11:00 UTC = 6am EST) and the guard step below exits on whichever one
+# is not actually 6am in New York. Net effect: exactly one real run per Sunday,
+# at 6am ET, all year.
+on:
+  schedule:
+    - cron: "0 10 * * 0"
+    - cron: "0 11 * * 0"
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: "Run the one-off Wayback baseline instead of a weekly scan"
+        type: boolean
+        default: false
+      lookback_days:
+        description: "How many days back to look for news and filings"
+        default: "8"
+      sources:
+        description: "Comma-separated: edgar,leadership,news,trade,reqs"
+        default: "edgar,leadership,news,trade,reqs"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: people-moves
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Skip if this is the wrong side of daylight saving
+        id: guard
+        run: |
+          HOUR=$(TZ=America/New_York date +%-H)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HOUR" != "6" ]; then
+            echo "It is ${HOUR}:00 in New York, not 6am. Skipping this trigger."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.run == 'true'
+
+      - uses: actions/setup-python@v5
+        if: steps.guard.outputs.run == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        if: steps.guard.outputs.run == 'true'
+        run: pip install -r people-moves/requirements.txt
+
+      - name: Run scan
+        if: steps.guard.outputs.run == 'true'
+        working-directory: people-moves
+        env:
+          # SEC requires a descriptive User-Agent with contact info.
+          PEOPLE_MOVES_UA: "Syndeo People-Moves Research (hello@syndeollc.com)"
+          # Point this at whatever the job-search workflow writes.
+          JOBS_RESULTS_PATH: "../out/jobs-latest.json"
+        run: |
+          if [ "${{ inputs.backfill }}" = "true" ]; then
+            python run.py --backfill --backfill-days 120
+          else
+            python run.py \
+              --sources "${{ inputs.sources || 'edgar,leadership,news,trade,reqs' }}" \
+              --lookback-days "${{ inputs.lookback_days || 8 }}"
+          fi
+
+      - name: Commit state and output
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          git config user.name  "syndeo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add people-moves/state people-moves/out
+          if git diff --staged --quiet; then
+            echo "Nothing changed this week."
+          else
+            git commit -m "People moves: $(date -u +%Y-%m-%d)"
+            # Another workflow may have pushed while we ran.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi
+
+      - name: Upload brief
+        if: steps.guard.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: people-moves-brief
+          path: |
+            people-moves/out/people-moves-*.md
+            people-moves/out/people-moves-*.json
+          retention-days: 90
