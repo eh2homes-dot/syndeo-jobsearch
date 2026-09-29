@@ -1,0 +1,75 @@
+name: Weekly events
+on:
+  schedule:
+    # Sundays 5:00am Eastern: after the job search (4am), before "Recently hired" (6am) assembles the newsletter.
+    # GitHub schedules run in UTC with no daylight saving, so both UTC times are listed and the
+    # "Check it's 5am Eastern" step below lets only the correct one through:
+    - cron: "0 9 * * 0"       # 09:00 UTC = 5am EDT (roughly March to November)
+    - cron: "0 10 * * 0"      # 10:00 UTC = 5am EST (roughly November to March)
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Which groups (comma-separated): associations, bisnow, companies. Blank = all."
+        default: ""
+      detect:
+        description: "Look for events pages at companies that aren't mapped yet"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: syndeo-jobsearch-repo   # takes turns with the job search and recently-hired runs
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check it's 5am Eastern
+        id: et
+        env:
+          EVENT: ${{ github.event_name }}
+          FIRED: ${{ github.event.schedule }}
+        run: |
+          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          if [ "$EVENT" != "schedule" ]; then run=true      # manual runs always go
+          elif [ "$FIRED" = "0 9 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          else run=false; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
+      - uses: actions/checkout@v5
+        if: steps.et.outputs.run == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.et.outputs.run == 'true'
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+        if: steps.et.outputs.run == 'true'
+      - name: Pull events
+        if: steps.et.outputs.run == 'true'
+        env:
+          PYTHONUNBUFFERED: "1"
+          ONLY: ${{ github.event.inputs.only }}
+          DETECT: ${{ github.event.inputs.detect || 'true' }}
+        run: |
+          FLAGS="--minutes 15"
+          if [ "$DETECT" = "true" ]; then FLAGS="$FLAGS --detect"; fi
+          if [ -n "$ONLY" ]; then python -m jobsearch.events --only "$ONLY" $FLAGS
+          else python -m jobsearch.events $FLAGS; fi
+      - name: Commit results
+        if: steps.et.outputs.run == 'true'
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data output
+          git commit -m "events $(date -u +%F)" || echo "nothing to commit"
+          git pull --rebase --autostash || true
+          git push
+      - uses: actions/upload-artifact@v4
+        if: steps.et.outputs.run == 'true'
+        with:
+          name: events-report
+          path: output/
