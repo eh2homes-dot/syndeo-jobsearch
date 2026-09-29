@@ -1,57 +1,128 @@
-# Syndeo weekly job search — prototype v0.1
+# People Moves
 
-Tracks hiring at the companies in **`leads/master_leads.csv` only** (the SYNDEO Real Estate
-Hiring Leads master list). Every week it pulls open roles straight from each company's ATS,
-diffs against last week, and reports:
+Weekly scan for hires, departures and promotions at the companies on the master
+leads list. Runs as its own GitHub Action alongside the job search, on the same
+Sunday 6am ET cadence. Output is a markdown brief for the newsletter plus JSON.
 
-- **open roles** with a direct link to every posting
-- **new this week**
-- **closed since last run** = the "recently hired / likely filled" signal
-- per-company scrape status, so a failed scrape never masquerades as "all roles filled"
+Free sources only. No paid feeds, no API keys, nothing to sign up for.
 
-No company discovery. No LLM classification. No HTML guessing where a JSON API exists.
+## Install
 
-## How it runs (you are browser-only, so this lives in GitHub Actions)
+```
+people-moves/           <- this folder, drop it at the repo root
+.github/workflows/people-moves.yml
+```
 
-1. Create a repo (or a folder in `FoundersandFriends`) and upload this whole directory.
-2. `.github/workflows/weekly-jobsearch.yml` runs every **Monday 08:00 ET** and on demand
-   (Actions tab → "Weekly job search" → Run workflow). It commits `data/` and `output/`
-   back to the repo and attaches the report as an artifact.
-3. Open `output/<date>/report.html` (or `report.md`, or the CSVs).
+Then:
 
-First real run: use **Run workflow** with `detect = true`. That fetches each careers page,
-identifies the ATS from the raw HTML, and writes `data/ats_map.json`. Anything it can't
-resolve lands in `data/needs_manual_mapping.csv` — fill those in by hand in `ats_map.json`
-(`{"ats": "greenhouse", "slug": "xyz"}`). Manual entries are never overwritten.
+1. Export the master sheet to CSV and save it as `people-moves/config/companies.csv`.
+   A starter file is committed with 13 companies so you can see the shape —
+   replace it with the real export.
+2. Commit. The workflow runs itself on Sunday.
+3. Run the one-off backfill once (see below) so week one has a baseline.
 
-## Files
+### The companies CSV
 
-| path | what |
-|---|---|
-| `leads/master_leads.csv` | the universe. company, careers_url, segment, tier (A = SFR/PM core, B = adjacent) |
-| `jobsearch/adapters.py` | 12 ATS adapters: greenhouse, lever, ashby, workable, smartrecruiters, bamboohr, breezy, recruitee, rippling, workday, jobvite, generic |
-| `jobsearch/detect.py` | finds ATS + slug from a careers page; probes APIs with domain-based slug guesses as fallback |
-| `jobsearch/run.py` | orchestrates scrape → diff → outputs |
-| `data/ats_map.json` | company → ATS/slug. Hand-verified entries marked `confidence: manual` |
-| `data/history.json` | every job ever seen (first_seen / last_seen / status). This is the "recently hired" engine |
-| `data/link_verification_log.csv` | what was checked by hand on 2026-09-23 and what was found |
-| `config.json` | focus-keyword tags (sales / customer / product / leadership / ops / eng). Labels only |
-| `tests/` | offline regression test with recorded fixtures: `python tests/test_pipeline.py` |
+Column headers are matched loosely, so a re-export with slightly different
+headers still works. Recognised columns:
 
-## Interpreting "closed / likely filled"
+| Column | Needed for | Notes |
+|---|---|---|
+| `Company Name` | everything | required |
+| `Leadership URL` | leadership diffing | the single highest-value column — see below |
+| `Ticker` or `CIK` | EDGAR | public companies only |
+| `Careers Page URL` | links in the brief | |
+| `Aliases` | news and trade press matching | semicolon-separated |
 
-A role is marked closed when it was open last run, is absent this run, **and** the company's
-scrape succeeded this run. `days_open` is the gap between first and last sighting. Roles that
-close in < 14 days are often pulled/reposted rather than filled — treat those with more scepticism.
-This is the best signal available without LinkedIn data; wiring PhantomBuster/Clay "new hire"
-signals in later would let the two be cross-checked.
+**The leadership URL is the column worth your time.** Most of the master list is
+private and will never file with the SEC or issue a press release. Their team
+page is the only place a new hire shows up. Every row you fill in is a company
+that starts producing signal; every row you leave blank is one that never will.
 
-## Known gaps in this prototype
+## Sources
 
-- ATS with no public JSON feed (iCIMS, Paylocity, UKG, ADP, Paradox) are detected but not scraped.
-  Big operators (Greystar, Invitation Homes-style) tend to sit here — needs a Playwright step or
-  a paid feed later.
-- Workday needs `wd` and `site` filled in `ats_map.json` (detector captures both when the careers
-  page links to myworkdayjobs.com directly).
-- No alerting/email yet — the report is a file in the repo. Easy add once the output shape is agreed.
-- No secrets, auth, or rate-limit backoff beyond a 0.5s sleep — fine for ~100 companies weekly.
+| Source | Covers | Confidence | Notes |
+|---|---|---|---|
+| `edgar` | ~25 public companies | Confirmed | 8-K Item 5.02. Officers and directors only — a new VP of Sales won't appear. |
+| `leadership` | any company with a team page | Probable | Weekly snapshot and diff. The workhorse. |
+| `news` | all companies | Confirmed / Probable | Google News RSS, one query per company, verb-filtered. |
+| `trade` | all companies | Confirmed / Probable | Publisher feeds in `config/feeds.yml`, filtered against the list. |
+| `reqs` | companies on the job board | Inferred | Derived from the job-search output. Describes companies, names nobody. |
+
+### Confidence tiers
+
+The brief is grouped by tier because that is the editorial decision:
+
+- **Confirmed** — filed or announced by the company. Name the person.
+- **Probable** — a team page changed, or a headline implies it. Verify on
+  LinkedIn first.
+- **Inferred** — a req closed or a cluster opened. Describe the company, name
+  nobody.
+
+Never promote a tier because an item looks convincing. These are people Evan
+knows and may place; a wrong name costs more than the item was worth.
+
+## Usage
+
+```bash
+cd people-moves
+pip install -r requirements.txt
+
+python run.py                             # weekly run, all sources
+python run.py --sources leadership -v     # one source, verbose
+python run.py --lookback-days 14          # wider news window
+python run.py --limit 10                  # first 10 companies, for testing
+python run.py --check-feeds               # validate trade press feed URLs
+python run.py --backfill                  # one-off Wayback baseline (slow)
+```
+
+### Run the backfill once, first
+
+Leadership diffing needs two snapshots before it produces anything, so a cold
+start reports nothing for a month. `--backfill` pulls an archived copy of each
+team page from ~120 days ago via the Wayback Machine, diffs it against today,
+and seeds the baseline in one pass.
+
+It is throttled to one request per second against archive.org, so budget 20-40
+minutes for the full list. Run it from the Actions tab (workflow_dispatch →
+backfill: true) and forget about it.
+
+## Two integration points to check
+
+**1. The job-search output path.** The `reqs` source reads whatever your job
+search writes. Set `JOBS_RESULTS_PATH` in the workflow to the real path. The
+loader accepts a list of role dicts or an object with a `roles` / `jobs` /
+`results` key, and looks for company and title fields under several common
+names. If your shapes differ, `_load_roles()` in `sources/req_signals.py` is the
+one function to edit. Until it is pointed somewhere real, that source quietly
+returns nothing and the other four still run.
+
+**2. State is committed back to the repo.** Runners are ephemeral, so snapshots
+live in `people-moves/state/` and the workflow pushes them after each run. That
+also gives you a free audit trail: `git log -p people-moves/state/leadership/evernest.json`
+shows every change to that company's team page over time. If your repo protects
+the default branch, the push will fail — either exempt the bot or switch the
+workflow to `actions/cache`.
+
+## Maintenance
+
+- **Feed URLs rot.** Run `python run.py --check-feeds` after any edit to
+  `config/feeds.yml`, and once a quarter regardless. Anything reported DEAD
+  should be found again or disabled rather than left to fail silently.
+- **JavaScript-rendered team pages parse as empty.** The leadership source skips
+  any page yielding fewer than 2 people and logs a warning. Those companies need
+  a different URL, or accept that news and trade press are their only coverage.
+- **Page redesigns look like mass turnover.** If more than 60% of a page's names
+  change at once, the run treats it as a redesign, re-baselines, and reports
+  nothing. Tune `MAX_CHURN_RATIO` in `sources/leadership.py` if that fires too
+  often or not often enough.
+
+## What this does not do
+
+It does not touch LinkedIn. Job-change alerts sit behind Sales Navigator, and
+scraping profiles violates their terms and gets addresses blocked. LinkedIn is
+the verification step at the end — confirm the move before it goes in the
+newsletter — not a discovery source.
+
+Nothing in the brief is publication-ready as written. Every item carries its
+source link precisely so the manual verification step has something to click.

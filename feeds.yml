@@ -1,0 +1,69 @@
+# Trade press feeds scanned for people moves.
+#
+# people_column: true  -> the whole feed is people moves, so every entry is
+#                         checked against the company list without a verb filter
+# people_column: false -> a general news feed; entries must contain a move verb
+#                         before we look at them
+#
+# Feed URLs rot. Run `python run.py --check-feeds` after any edit, and once a
+# quarter regardless. Anything reported DEAD should be found again or disabled
+# rather than left to fail silently every Sunday.
+
+feeds:
+  # --- dedicated people columns -------------------------------------------
+  - name: HousingWire People Movers
+    url: https://www.housingwire.com/category/people-movers/feed/
+    people_column: true
+    enabled: true
+    note: >
+      Publishes several times a week across housing, mortgage and proptech.
+      Has covered CoStar, Compass, Zillow Group, Amherst and Notarize.
+
+  - name: CPE People on the Move
+    url: https://www.commercialsearch.com/news/cre-people-on-the-move/feed/
+    people_column: true
+    enabled: true
+    note: >
+      Commercial Property Executive's weekly roundup. Heavy on multifamily and
+      scattered site rental operator appointments.
+
+  - name: Connect CRE
+    url: https://www.connectcre.com/feed/
+    people_column: false
+    enabled: true
+    note: >
+      Runs regional weekly "People and Company News" columns inside a general
+      feed, so the verb filter stays on.
+
+  # --- general trade feeds -------------------------------------------------
+  - name: Multi-Housing News
+    url: https://www.multihousingnews.com/feed/
+    people_column: false
+    enabled: true
+
+  - name: Inman
+    url: https://www.inman.com/feed/
+    people_column: false
+    enabled: true
+
+  - name: Propmodo
+    url: https://www.propmodo.com/feed/
+    people_column: false
+    enabled: true
+
+  - name: The Real Deal
+    url: https://therealdeal.com/feed/
+    people_column: false
+    enabled: true
+
+  - name: GlobeSt
+    url: https://www.globest.com/feed/
+    people_column: false
+    enabled: false
+    note: Verify before enabling; GlobeSt has moved its feed before.
+
+  - name: Rental Housing Journal
+    url: https://rentalhousingjournal.com/feed/
+    people_column: false
+    enabled: false
+    note: Operator-side coverage. Enable once validated.
