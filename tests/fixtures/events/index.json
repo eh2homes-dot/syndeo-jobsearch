@@ -1,0 +1,18 @@
+{
+ "https://rentalhomecouncil.org/events/": "nrhc.html",
+ "https://www.narpm.org/national-conferences/": "narpm_national.html",
+ "https://www.narpm.org/national-conferences/conferences/": "narpm_state.html",
+ "https://www.nmhc.org/meetings/calendar/upcoming-meetings/": "nmhc.html",
+ "https://naahq.org/events/upcoming": "naa.html",
+ "https://www.bisnow.com/events/multifamily": "bisnow.html",
+ "https://imn.org/": "imn_home.html",
+ "https://informaconnect.com/imn-sfr-west/": "imn_sfr_west.html",
+ "https://informaconnect.com/imn-sfr-east/": "imn_sfr_east.html",
+ "https://informaconnect.com/imn-sfr-pm/": "imn_sfr_pm.html",
+ "https://informaconnect.com/imn-bank-special-assets/": "imn_bank.html",
+ "https://informaconnect.com/imn-sfr-midwest/": "imn_midwest.html",
+ "https://www.rently.com": "co_home.html",
+ "https://www.rently.com/company/events": "co_events_ld.html",
+ "https://www.hiredhelpr.com": "co2_home.html",
+ "https://www.hiredhelpr.com/webinars": "co2_webinars.html"
+}

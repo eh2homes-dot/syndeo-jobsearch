@@ -326,6 +326,9 @@ def merge_duplicate_stories(moves: list[dict]) -> list[dict]:
                     or (not (p and op) and len(shared) >= 2):
                 o["_dupes"] = o.get("_dupes", 0) + 1
                 o["person"] = o["person"] or m["person"]
+                pn = (o["person"] or "").lower()
+                if pn and pn not in o["title_or_headline"].lower() and pn in m["title_or_headline"].lower():
+                    o["title_or_headline"], o["url"], o["detail"] = m["title_or_headline"], m["url"], m["detail"]
                 o.setdefault("_dupe_keys", []).append(m["key"])
                 break
         else:
@@ -356,6 +359,115 @@ def match_closed_roles(move: dict, history: dict, today: dt.date, window: int = 
         if overlap >= 0.5:
             best.append((overlap, f"{h['title']} (closed {h['closed_on']})"))
     return "; ".join(t for _, t in sorted(best, reverse=True)[:2])
+
+
+# ------------------------------------------------------------------ newsletter draft
+CUT = re.compile(r"(?i)\s+(?:to (?:expand|lead|drive|accelerate|help|support|oversee|grow|scale|strengthen|boost)|"
+                 r"with |ahead |amid |after |following |as (?:it|the company)|by investing|;|\s-\s|\|)")
+RANK = [r"\bceo\b|chief executive", r"\bpresident\b", r"\bchief\b|\bc[a-z]o\b", r"\bevp\b|\bsvp\b",
+        r"\bvp\b|vice president", r"\bhead of\b|general manager", r"director", r"."]
+
+
+def _display(company: str) -> str:
+    return re.sub(r"\s*\(.*?\)", "", company).strip()
+
+
+def role_from_headline(headline: str, person: str) -> str:
+    """'Zillow Group names Jun Choo as COO' -> 'COO'; 'CoStar Group Names Felix Kusch President of Homes.com'
+    -> 'President of Homes.com'. Blank when it can't be read cleanly."""
+    if not person:
+        return ""
+    h = headline.title() if sum(c.isupper() for c in headline) > 0.7 * max(1, sum(c.isalpha() for c in headline)) else headline
+    m = re.search(re.escape(person), h, re.I)
+    if not m:
+        return ""
+    rest = h[m.end():].strip(" ,:")
+    rest = re.sub(r"(?i)^(?:as|to|to be|to (?:the )?new role of|to serve as|in (?:the )?role of|named)\s+", "", rest)
+    rest = CUT.split(rest)[0].strip(" ,.;:")
+    rest = re.sub(r"(?i)^(?:its|the|a|an)\s+", "", rest)
+    if not rest or len(rest) > 70 or not re.search(r"(?i)chief|officer|president|head|vp|vice|director|manager|lead|ceo|cfo|coo|cto|cro|cmo|cpo|partner|chair", rest):
+        return ""
+    return rest[0].upper() + rest[1:]
+
+
+def newsletter_line(m: dict) -> tuple[str, str]:
+    """(section, markdown line) for one move. Sections: moves | departures | noted."""
+    co = _display(m["company"])
+    person = m["person"].title() if m["person"].isupper() else m["person"]
+    src = f"[Source]({m['url']})"
+    title = m["title_or_headline"]
+    if m["source"] == "leadership page":
+        if m["move"] == "new on page":
+            return "moves", f"- **{person}** joins **{co}** as {title} (company leadership page). {src}"
+        if m["move"] == "title changed":
+            return "moves", f"- **{person}** is now {title} at **{co}** (company leadership page). {src}"
+        return "departures", f"- **{person}** ({title}) is no longer listed on **{co}**'s leadership page. {src}"
+    role = role_from_headline(title, person)
+    if m["move"] == "departure":
+        if person and role:
+            return "departures", f"- **{person}** departs as {role} at **{co}**. {src}"
+        return "departures", f"- **{co}**: {title}. {src}"
+    if person and role:
+        hit = re.search(rf"\b{re.escape(co.split()[0])}\b", role, re.I)
+        if hit:  # company already in the role ("CEO of Redfin") - bold it there
+            role = role[:hit.start()] + f"**{role[hit.start():].split()[0]}**" + role[hit.start() + len(role[hit.start():].split()[0]):]
+            return "moves", f"- **{person}** named {role}. {src}"
+        return "moves", f"- **{person}** named {role} at **{co}**. {src}"
+    if person:
+        return "moves", f"- **{co}** names **{person}**: {title}. {src}"
+    return "noted", f"- **{co}**: {title}. {src}"
+
+
+def _rank(m: dict) -> int:
+    t = (role_from_headline(m["title_or_headline"], m["person"]) or m["title_or_headline"]).lower()
+    return next(i for i, p in enumerate(RANK) if re.search(p, t))
+
+
+def write_newsletter(out_dir: Path, rows: list[dict], today: dt.date, days: int) -> Path:
+    """Paste-ready 'People on the move' section. Unnamed SEC filings stay out (they're in people_moves.csv)."""
+    use = [m for m in rows if m["source"] != "sec"]
+    buckets = {"moves": [], "departures": [], "noted": []}
+    for m in sorted(use, key=lambda m: (_rank(m), _display(m["company"]).lower())):
+        sec, line = newsletter_line(m)
+        buckets[sec].append(line)
+    start = today - dt.timedelta(days=days)
+    md = [f"## People on the move", "",
+          f"_New executive hires and departures across proptech and scattered site rental operations "
+          f"(week of {today.strftime('%B %-d, %Y')})._", ""]
+    md += buckets["moves"] or ["_No named executive moves this week._"]
+    if buckets["departures"]:
+        md += ["", "**Departures**", ""] + buckets["departures"]
+    if buckets["noted"]:
+        md += ["", "**Also noted**", ""] + buckets["noted"]
+    md.append("")
+    nl_dir = OUT / "newsletter"
+    nl_dir.mkdir(parents=True, exist_ok=True)
+    path = nl_dir / f"people-moves-{today.isoformat()}.md"
+    path.write_text("\n".join(md))
+    from .run import draft_html
+    path.with_suffix(".html").write_text(draft_html("\n".join(md), f"People on the move - {today.isoformat()}"))
+    (out_dir / "newsletter_people_moves.md").write_text("\n".join(md))
+    return path
+
+
+def write_run_summary(draft: Path, rows: list[dict], notes: dict):
+    """Show the draft (and everything else found) on the GitHub run page."""
+    import os
+    target = os.environ.get("GITHUB_STEP_SUMMARY")
+    sec = [m for m in rows if m["source"] == "sec"]
+    text = [f"# Recently hired - newsletter draft", "",
+            f"Paste-ready version: open `{draft.with_suffix('.html').relative_to(ROOT)}` in a browser, select all, copy, "
+            f"paste into beehiiv.", "", "---", "", draft.read_text(), "---", ""]
+    if sec:
+        text += ["### SEC officer/director filings (for your review, not in the draft)", ""]
+        text += [f"- **{_display(m['company'])}** - {m['date']} - [8-K filing]({m['url']})" for m in sec]
+        text.append("")
+    text += ["_Coverage: " + "; ".join(f"{k}: {v}" for k, v in notes.items()) + "_", ""]
+    out = "\n".join(text)
+    if target:
+        with open(target, "a") as f:
+            f.write(out)
+    return out
 
 
 # ------------------------------------------------------------------ report
@@ -508,6 +620,9 @@ def main(argv=None):
               ["company", "move", "person", "title_or_headline", "role_group", "date", "source",
                "matched_closed_role", "url", "detail"])
     append_report(out_dir, new, notes)
+    draft = write_newsletter(out_dir, new, today, int(pm.get("news_days", 30)))
+    write_run_summary(draft, new, notes)
+    print(f"  draft   newsletter section -> {draft.relative_to(ROOT)}", flush=True)
     print(f"[{today}] people moves: {len(new)} new ({sum(1 for m in new if m.get('matched_closed_role'))} "
           f"matched to a closed role) -> {out_dir / 'people_moves.csv'}")
     return 0

@@ -472,9 +472,188 @@ def main(argv=None):
                                                  "new": len(new_jobs), "closed": len(closed_jobs)})
     if adhoc:
         write_step_summary(all_jobs, company_rows, unmatched, out_dir)
+    else:
+        careers = {l["company"]: l.get("careers_url", "") for l in leads}
+        draft = write_jobs_newsletter(all_jobs, closed_jobs, careers, today, cfg)
+        print(f"  draft   newsletter section -> {draft.relative_to(ROOT)}", flush=True)
+        if os.environ.get("GITHUB_STEP_SUMMARY"):
+            with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                f.write(f"# Now hiring - newsletter draft\n\nPaste-ready version: open `{draft.with_suffix('.html').relative_to(ROOT)}` "
+                        f"in a browser, select all, copy, paste into beehiiv.\n\n---\n\n"
+                        + draft.read_text() + "\n---\n")
     print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open_in_scope={len(all_jobs)} open_all={len(all_open)} "
           f"new={len(new_jobs)} closed={len(closed_jobs)} -> {out_dir}")
     return 0
+
+
+# ------------------------------------------------------- paste-ready HTML version of a draft
+def draft_html(md_text: str, title: str) -> str:
+    """Convert our draft Markdown (##, **bold**, _italic_, [links](url), '- ' bullets, ---) to plain,
+    email-friendly HTML. Open it in a browser, select all, copy, paste into the newsletter editor."""
+    import html as H
+
+    def inline(t: str) -> str:
+        t = H.escape(t, quote=False)
+        t = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>', t)
+        t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+        t = re.sub(r"(?<![\w/])_(.+?)_(?![\w/])", r"<em>\1</em>", t)
+        return t
+
+    out, in_list = [], False
+    for line in md_text.splitlines():
+        l = line.rstrip()
+        if l.startswith("- "):
+            if not in_list:
+                out.append("<ul>"); in_list = True
+            out.append(f"<li>{inline(l[2:])}</li>")
+            continue
+        if in_list:
+            out.append("</ul>"); in_list = False
+        if not l:
+            continue
+        if l.startswith("## "):
+            out.append(f"<h2>{inline(l[3:])}</h2>")
+        elif l.startswith("# "):
+            out.append(f"<h1>{inline(l[2:])}</h1>")
+        elif l == "---":
+            out.append("<hr>")
+        elif re.fullmatch(r"\*\*[^*]+\*\*", l):
+            out.append(f"<h3>{inline(l[2:-2])}</h3>")
+        else:
+            out.append(f"<p>{inline(l)}</p>")
+    if in_list:
+        out.append("</ul>")
+    body = "\n".join(out)
+    return (f"<!doctype html><html><head><meta charset=\"utf-8\"><title>{H.escape(title)}</title>"
+            "<style>body{font-family:Georgia,serif;max-width:680px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}"
+            "h1{font-size:1.5rem}h2{font-size:1.35rem;margin-top:2rem}h3{font-size:1.05rem;margin:1.4rem 0 .4rem}"
+            "a{color:#1a4d8f}li{margin:.35rem 0}hr{border:0;border-top:1px solid #ddd;margin:2rem 0}em{color:#555}</style>"
+            f"</head><body>\n{body}\n</body></html>")
+
+
+# ------------------------------------------------------- newsletter draft: Now hiring
+SENIOR = [r"\bchief\b|\bc[a-z]o\b|\bpresident\b", r"\bsvp\b|\bevp\b", r"\bvp\b|vice president", r"\bhead of\b|general manager",
+          r"\bdirector\b", r"\bprincipal\b|\bstaff\b", r"\bsenior\b|\bsr\.?\b|\blead\b|\bmanager\b", r"."]
+
+
+def _seniority(title: str) -> int:
+    t = (title or "").lower()
+    return next(i for i, p in enumerate(SENIOR) if re.search(p, t))
+
+
+SPLIT = r",|\s[-–—]\s|-\s|\("
+SENIORITY_ONLY = {"vp", "svp", "evp", "director", "principal", "head", "manager", "lead", "senior", "sr", "staff"}
+
+
+def _base_title(title: str) -> str:
+    """'Regional Vice President of Sales, Central Region (IC-Enterprise)' -> 'regional vice president of sales'."""
+    return " ".join(re.split(SPLIT, title or "")[0].lower().split())
+
+
+def _exact_title(title: str) -> str:
+    return " ".join(re.sub(r"\(.*?\)", "", title or "").lower().split())
+
+
+def _qualifier(title: str) -> str:
+    """The part after the base title, minus parentheticals: ', Central Region (IC-Enterprise)' -> 'Central Region'."""
+    rest = (title or "")[len(re.split(SPLIT, title or "")[0]):]
+    rest = re.sub(r"\(.*?\)|\(.*$", "", rest)
+    rest = re.sub(r"(?i)\bregion\b", "", rest)
+    return " ".join(rest.strip(" ,-–—").split())
+
+
+def _collapse(roles: list, by_base: bool) -> list:
+    """One line per role even when it's posted several times. by_base=True also merges variants of the same
+    role ('Regional VP of Sales, East' + ', West'); by_base=False only merges identical titles.
+    Returns list of (job_to_show, n_postings, places)."""
+    groups = collections.OrderedDict()
+    for j in roles:
+        base = _base_title(j["title"])
+        key = base if (by_base and len(base.split()) >= 2 and base not in SENIORITY_ONLY) else _exact_title(j["title"])
+        groups.setdefault((j["company"], key), []).append(j)
+    out = []
+    for (_, key), js in groups.items():
+        if len(js) == 1:
+            out.append((js[0], 1, [_loc(js[0]["location"])] if _loc(js[0]["location"]) else []))
+            continue
+        quals = [q for q in dict.fromkeys(_qualifier(j["title"]) for j in js) if q]
+        if len(quals) > 1:   # variants of one role: show the base title + the variants
+            shown = {**js[0], "title": re.split(SPLIT, js[0]["title"])[0].strip()}
+            places = quals
+        else:                # same role in several places: show the title + cities
+            shown = min(js, key=lambda j: len(j["title"]))
+            places = list(dict.fromkeys(c for c in (_city(j["location"]) for j in js) if c))
+        out.append((shown, len(js), places))
+    return out
+
+
+def _city(loc: str) -> str:
+    l = _loc(loc)
+    return l if l in ("Remote", "Multiple locations") else l.split(",")[0].strip()
+
+
+def _loc(loc: str) -> str:
+    loc = re.sub(r",?\s*(United States|USA|US)$", "", (loc or "").strip())
+    if re.search(r"(?i)remote", loc):
+        return "Remote"
+    if re.search(r"(?i)^\d+ locations$", loc) or ";" in loc:
+        return "Multiple locations"
+    return loc[:40]
+
+
+def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict, max_companies: int = 8) -> Path:
+    """Paste-ready 'Now hiring' section: roles first seen in the last 7 days, most senior first."""
+    week_ago = today - dt.timedelta(days=7)
+    fresh = [j for j in jobs if j.get("role_group") and j.get("first_seen") and
+             dt.date.fromisoformat(j["first_seen"]) >= week_ago]
+    cos = {j["company"] for j in fresh}
+    md = ["## Now hiring", "",
+          f"_{len(fresh)} new Sales, GTM, Engineering and leadership {'role' if len(fresh) == 1 else 'roles'} this week at "
+          f"{len(cos)} {'company' if len(cos) == 1 else 'companies'} "
+          f"across proptech and scattered site rental operations._", ""]
+
+    lead = sorted([j for j in fresh if j["role_group"] == "executive"], key=lambda j: (_seniority(j["title"]), j["company"]))
+    if lead:
+        md += ["**Leadership roles**", ""]
+        for j, n, places in _collapse(lead, by_base=True):
+            where = (f" ({', '.join(places[:4])}{', +' + str(len(places) - 4) + ' more' if len(places) > 4 else ''})"
+                     if places else "")
+            md.append(f"- **{j['title']}**, {j['company']}{where}" + (f", {n} openings" if n > 1 else "")
+                      + f". [Apply]({j['url']})")
+        md.append("")
+
+    for label, groups in (("Sales & GTM", ("sales", "gtm")), ("Engineering", ("engineering",))):
+        pool = [j for j in fresh if j["role_group"] in groups]
+        if not pool:
+            continue
+        by_co = collections.defaultdict(list)
+        for j in pool:
+            by_co[j["company"]].append(j)
+        # companies with the most senior openings first, then the most openings
+        order = sorted(by_co, key=lambda c: (min(_seniority(j["title"]) for j in by_co[c]), -len(by_co[c]), c))
+        md += [f"**{label}**", ""]
+        for c in order[:max_companies]:
+            roles = [j for j, _, _ in _collapse(sorted(by_co[c], key=lambda j: _seniority(j["title"])), by_base=False)]
+            shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:3])
+            md.append(f"- **{c}**: {shown}")
+        md.append("")
+
+    filled = sorted([c for c in closed if _seniority(c.get("title", "")) <= 4 and c.get("role_group")],
+                    key=lambda c: (_seniority(c["title"]), c["company"]))
+    if filled:
+        md += ["**Seats filled**", "",
+               "_Senior roles that came down this week - a likely sign of a hire._", ""]
+        md += [f"- **{c['title']}**, {c['company']}" for c in filled[:10]]
+        md.append("")
+    if not fresh and not filled:
+        md.append("_No new roles in scope this week._")
+
+    nl = OUT / "newsletter"
+    nl.mkdir(parents=True, exist_ok=True)
+    path = nl / f"now-hiring-{today.isoformat()}.md"
+    path.write_text("\n".join(md))
+    path.with_suffix(".html").write_text(draft_html("\n".join(md), f"Now hiring - {today.isoformat()}"))
+    return path
 
 
 # ------------------------------------------------------- run-page summary

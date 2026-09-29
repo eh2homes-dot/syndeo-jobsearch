@@ -1,0 +1,72 @@
+{
+  "_how_to_edit": "Each source is one page (or a few). 'priority' decides which listing wins when two sources show the same event (1 = best). Set \"disabled\": true to switch a source off without deleting it.",
+  "horizon_days": 183,
+  "exclude_title_patterns": ["committee", "board of directors", "board meeting", "assembly of delegates",
+                             "emerging leaders", "leadership symposium", "exhibitor summit"],
+  "newsletter": {
+    "weeks": 8,
+    "max_per_source": {"bisnow": 6},
+    "max_company_events": 10,
+    "max_just_announced": 5
+  },
+  "sources": [
+    {"id": "nrhc", "name": "NRHC", "group": "associations", "priority": 1, "parser": "date_title",
+     "url": "https://rentalhomecouncil.org/events/"},
+
+    {"id": "imn", "name": "IMN", "group": "associations", "priority": 1, "parser": "informa",
+     "index_url": "https://imn.org/",
+     "events": [
+       {"slug": "imn-sfr-west", "name": "IMN Single Family Rental West"},
+       {"slug": "imn-sfr-east", "name": "IMN Single Family Rental East"},
+       {"slug": "imn-sfr-pm", "name": "IMN SFR/BTR Property Management & Operations"},
+       {"slug": "imn-btr-spring", "name": "IMN Build-to-Rent Spring"},
+       {"slug": "imn-btr-fall", "name": "IMN Build-to-Rent Fall", "unverified": true}
+     ],
+     "discover_keywords": ["single family", "\\bsfr\\b", "build-to-rent", "\\bbtr\\b", "rental", "property management",
+                           "manufactured housing", "residential", "housing"]},
+
+    {"id": "narpm", "name": "NARPM", "group": "associations", "priority": 1, "parser": "title_date",
+     "url": "https://www.narpm.org/national-conferences/"},
+
+    {"id": "narpm-state", "name": "NARPM", "group": "associations", "priority": 2, "parser": "title_date",
+     "url": "https://www.narpm.org/national-conferences/conferences/"},
+
+    {"id": "nmhc", "name": "NMHC", "group": "associations", "priority": 2, "parser": "title_date",
+     "url": "https://www.nmhc.org/meetings/calendar/upcoming-meetings/"},
+
+    {"id": "naa", "name": "NAA", "group": "associations", "priority": 2, "parser": "naa",
+     "url": "https://naahq.org/events/upcoming"},
+
+    {"id": "bisnow", "name": "Bisnow", "group": "bisnow", "priority": 3, "parser": "bisnow",
+     "urls": ["https://www.bisnow.com/events/multifamily",
+              "https://www.bisnow.com/events/property-management",
+              "https://www.bisnow.com/events/technology"],
+     "unverified_urls": ["https://www.bisnow.com/events/property-management",
+                         "https://www.bisnow.com/events/technology"],
+     "topics": ["Multifamily", "Property Management", "Residential/HOA/Condos", "Technology"],
+     "topics_needing_keywords": ["Technology", "Residential/HOA/Condos"],
+     "keywords": ["multifamily", "residential", "rental", "housing", "single.family", "build.to.rent", "\\bbtr\\b",
+                  "proptech", "property management", "apartment"],
+     "non_us_markets": ["London", "Dublin", "Toronto", "The Netherlands", "UK", "Ireland", "Canada", "Amsterdam",
+                        "Vancouver", "Madrid", "Paris", "Berlin"]}
+  ],
+
+  "_apartment_associations_how_to": "NAA national is in 'sources' above. To add a state apartment association, add an entry here like {\"id\": \"taa\", \"name\": \"Texas Apartment Association\", \"group\": \"associations\", \"priority\": 3, \"parser\": \"generic\", \"url\": \"<their events calendar page>\"}. The generic reader tries structured event data, the WordPress events API, iCal links, then the page text.",
+  "apartment_associations": [],
+
+  "companies": {
+    "_note": "Events hosted by companies in leads/master_leads.csv. Events pages live in data/events_map.json.",
+    "recheck_none_after_days": 28,
+    "max_detail_pages": 8,
+    "hosted_markers": ["webinar", "happy hour", "reception", "dinner", "breakfast", "lunch", "party", "mixer", "meetup",
+                       "meet-up", "workshop", "office hours", "user conference", "customer conference", "roadshow",
+                       "road show", "masterclass", "fireside", "open house", "demo day", "live demo"],
+    "attending_markers": ["booth", "visit us", "meet us", "see us at", "join us at", "exhibiting", "we'll be at",
+                          "we will be at", "find us at", "stop by", "come see us", "catch us at"],
+    "known_conferences": ["narpm", "nmhc", "optech", "apartmentalize", "nrhc", "imn", "bisnow", "retcon", "blueprint",
+                          "cretech", "inman connect", "aim conference", "multifamily social", "pm systems", "icsc",
+                          "nahb", "international builders' show", "national apartment association", "naa",
+                          "sfr west", "sfr east", "single family rental forum", "build-to-rent spring",
+                          "build-to-rent fall", "t3 summit", "reitworld", "mba annual", "hbi"]
+  }
+}
