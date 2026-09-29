@@ -14,18 +14,18 @@ bisnow,ok,17,,https://www.bisnow.com/events/multifamily
 bisnow,ok,1,,https://www.bisnow.com/events/property-management
 bisnow,"loaded, 0 events (page saved to debug/)",0,,https://www.bisnow.com/events/technology
 company,ok,4,Blend Labs,https://blend.com/events/
-company,ok,6,ResMan,https://www.myresman.com/events/
-company,ok,2,Matterport,https://matterport.com/events-webinars
 company,ok,4,CertifID,https://www.certifid.com/resources/webinars
-company,ok,2,Homebot,https://homebot.ai/webinars
+company,ok,6,ResMan,https://www.myresman.com/events/
 company,ok,19,Guesty,https://www.guesty.com/events/
+company,ok,2,Homebot,https://homebot.ai/webinars
 company,ok,1,AppFolio,https://www.appfolio.com/resources/events
+company,ok,2,Matterport,https://matterport.com/events-webinars
 company,ok,0,Yardi Systems,https://www.yardi.com/company/industry-events/
-company,ok,12,MRI Software,https://www.mrisoftware.com/events/
 company,ok,18,Envoy,https://envoy.com/events-webinars
-company,ok,2,Notarize (Proof),https://www.proof.com/events
 company,ok,19,Rent Manager (LCS),https://www.rentmanager.com/events/
-company,ok,1,Digible,https://digible.com/multifamily-event-calendar/
 company,ok,2,Placester,https://placester.com/webinars
+company,ok,2,Notarize (Proof),https://www.proof.com/events
+company,ok,1,Digible,https://digible.com/multifamily-event-calendar/
 company,ok,0,Property Meld,https://propertymeld.com/events/
-company,ok,2,Zillow Group,https://www.zillow.com/homes/
+company,ok,25,Zillow Group,https://www.zillow.com/homes/
+company,ok,12,MRI Software,https://www.mrisoftware.com/events/
