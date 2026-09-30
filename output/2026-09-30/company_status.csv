@@ -1,0 +1,119 @@
+company,tier,ats,slug,status,focus_open,open,new,closed,careers_url
+AppFolio,A,jobvite,appfolio-internal,ok,23,29,1,0,https://www.appfolio.com/company/careers
+Yardi Systems,A,,,unmapped,0,0,0,0,https://www.yardi.com/careers
+Procore Technologies,B,builtin,procore-technologies,via VC board (Fifth Wall); own board failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/procore-technologies/jobs,7,10,10,0,https://www.procore.com/careers
+Matterport,B,builtin,matterport,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/matterport/jobs,0,0,0,0,https://matterport.com/careers
+Measurabl,B,builtin,measurabl,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/measurabl/jobs,0,0,0,0,https://measurabl.com/careers
+Placer.ai,B,builtin,placerai,via VC board (Fifth Wall); own board failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/placerai/jobs,1,2,2,0,https://www.placer.ai/careers
+Roofstock,A,greenhouse,roofstock,ok,0,10,1,1,https://www.roofstock.com/careers
+Doma,B,greenhouse,doma,ok,2,6,0,0,https://www.doma.com/careers
+Blend Labs,B,greenhouse,blend,ok,11,15,1,1,https://blend.com/careers
+Point,B,builtin,point,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/point/jobs,0,0,0,0,https://www.point.com/careers
+Zumper,A,builtin,zumper,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/zumper/jobs,0,0,0,0,https://www.zumper.com/careers
+Apartment List,A,builtin,apartment-list,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/apartment-list/jobs,0,0,0,0,https://www.apartmentlist.com/careers
+Hemlane,A,,,unmapped,0,0,0,0,https://www.hemlane.com/careers
+Pacaso,B,greenhouse,pacaso,ok,2,5,1,0,https://www.pacaso.com/careers
+Crexi,B,greenhouse,crexi,ok,14,16,0,0,https://www.crexi.com/careers
+Kiavi,A,builtin,kiavi,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/kiavi/jobs,0,0,0,0,https://www.kiavi.com/careers
+Side,B,lever,sideinc,ok,3,4,0,0,https://www.side.com/careers
+HouseCanary,A,builtin,housecanary,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/housecanary/jobs,0,0,0,0,https://www.housecanary.com/careers
+HomeLight,B,greenhouse,homelight,ok,12,15,0,2,https://www.homelight.com/careers
+Snapdocs,B,ashby,snapdocs,ok,3,4,0,0,https://www.snapdocs.com/careers
+RentSpree,A,,,unmapped,0,0,0,0,https://www.rentspree.com/careers
+Realtor.com (Move Inc.),B,builtin,realtorcom,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/realtorcom/jobs,0,0,0,0,https://www.move.com/careers
+Auction.com,B,builtin,auction-com,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/auction-com/jobs,0,0,0,0,https://www.auction.com/careers
+RealPage,A,icims,careers-realpagepms,unsupported:icims,0,0,0,0,https://www.realpage.com/careers
+ResMan,A,builtin,resman,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/resman/jobs,0,0,0,0,https://myresman.com/careers
+Homeward,B,greenhouse,homeward,ok,1,2,0,2,https://www.homeward.com/careers
+Steadily,A,ashby,steadily,ok,13,35,1,0,https://www.steadily.com/careers
+Closinglock,B,rippling,closinglock,ok,3,3,0,0,https://www.closinglock.com/careers
+CertifID,B,lever,certifid,ok,0,0,0,0,https://www.certifid.com/careers
+Luxury Presence,B,lever,luxurypresence,ok,20,31,0,1,https://www.luxurypresence.com/careers
+GreenLite,B,,,excluded,0,0,0,0,https://www.greenlite.ai/careers
+Worksmith,B,builtin,worksmith,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/worksmith/jobs,0,0,0,0,https://www.worksmith.com/careers
+Ownwell,B,greenhouse,ownwell,ok,6,14,0,0,https://www.ownwell.com/careers
+Ojo Labs,B,,,unmapped,0,0,0,0,https://www.ojolabs.com/careers
+Opcity (Realtor.com),B,,,unmapped,0,0,0,0,https://www.move.com/careers
+Compass,B,builtin,compass,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/compass/jobs,0,0,0,0,https://www.compass.com/careers
+VTS,B,greenhouse,vts,ok,9,16,0,0,https://www.vts.com/careers
+ButterflyMX,A,ashby,butterflymx,ok,17,22,0,0,https://www.butterflymx.com/careers
+Guesty,A,builtin,guesty,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/guesty/jobs,0,0,0,0,https://www.guesty.com/careers
+Rhino,A,bamboohr,rhinolabs,ok,1,3,0,0,https://careers.sayrhino.com
+Bilt Rewards,A,,,unmapped,0,0,0,0,https://www.biltrewards.com/careers
+CompStak,B,lever,compstak,ok,3,4,0,0,https://www.compstak.com/careers
+Cadre,B,builtin,cadre,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/cadre/jobs,0,0,0,0,https://www.cadre.com/careers
+SquareFoot,B,builtin,squarefoot,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/squarefoot/jobs,0,0,0,0,https://www.squarefoot.com/careers
+Latch,A,lever,latch,ok,1,2,0,0,https://www.latch.com/careers
+Agora,B,,,unmapped,0,0,0,0,https://www.agorareal.com/careers
+Cherre,A,lever,cherre,ok,0,1,0,0,https://www.cherre.com/careers
+Enertiv,B,rippling,enertiv-jobs,ok,0,0,0,0,https://www.enertiv.com/careers
+Bowery Valuation,B,rippling,bowery-valuation,ok,0,2,0,0,https://www.boweryvaluation.com/careers
+Obligo,A,greenhouse,obligo,ok,2,3,0,0,https://www.myobligo.com/careers
+TheGuarantors,A,rippling,theguarantors-open-positions,ok,15,22,1,0,https://www.theguarantors.com/careers
+Funnel Leasing,A,builtin,funnel-leasing,via VC board (RET Ventures); own board failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/funnel-leasing/jobs,0,1,1,0,https://www.funnelleasing.com/careers
+Convene,B,greenhouse,convene,ok,8,42,4,4,https://convene.com/careers
+Orchard,B,greenhouse,orchard,ok,2,28,2,0,https://www.orchard.com/careers
+Better.com,B,,,unmapped,0,0,0,0,https://better.com/careers
+Updater,A,greenhouse,updater,ok,0,1,0,0,https://www.updater.com/careers
+Livly,A,paylocity,65717b9a-7d08-4867-8ae9-5f3553eff988,unsupported:paylocity,0,0,0,0,https://www.livly.io/careers
+Chamberlain Group,B,workday,chamberlain,ok,31,65,4,0,https://www.chamberlaingroup.com/careers
+Obie,A,rippling,obie,ok,0,4,0,0,https://www.obieinsurance.com/careers
+Avail (Realtor.com),A,builtin,avail-1,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/avail-1/jobs,0,0,0,0,https://www.avail.co/careers
+HqO,B,ashby,hqo,failed:RuntimeError: Ashby posting API 404; _ashby_graphql: Ashby has no job board named 'hqo' (GraphQL returned none) | _ashby_page: Ashby page for 'hqo' has no,0,0,0,0,https://www.hqo.com/careers
+Buildium (RealPage),A,builtin,buildium,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/buildium/jobs,0,0,0,0,https://www.buildium.com/careers
+Placester,B,builtin,placester,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/placester/jobs,0,0,0,0,https://placester.com/careers
+Robin,B,builtin,robin,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/robin/jobs,0,0,0,0,https://www.robinpowered.com/careers
+GetCovered,A,,,via VC board (RET Ventures),0,1,1,0,https://getcovered.io/careers
+TurboTenant,A,greenhouse,turbotenant,ok,1,4,0,0,https://www.turbotenant.com/careers
+Homebot,B,ashby,homebot,ok,0,0,0,0,https://www.homebot.ai/careers
+Digible,A,greenhouse,digible,ok,4,7,0,0,https://www.digible.com/careers
+NetVendor,A,bamboohr,netvendor,ok,1,9,2,0,https://www.netvendor.com/careers
+SmartRent,A,greenhouse,smartrent,ok,4,8,1,1,https://smartrent.com/careers
+Offerpad,B,builtin,offerpad,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/offerpad/jobs,0,0,0,0,https://www.offerpad.com/careers
+Opendoor,B,builtin,opendoor,via VC board (Fifth Wall); own board failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/opendoor/jobs,2,2,2,0,https://www.opendoor.com/careers
+PointCentral,A,greenhouse,pointcentral,ok,1,1,0,0,https://www.pointcentral.com/careers
+Entrata,A,lever,entrata,ok,14,27,3,0,https://www.entrata.com/careers
+Rentec Direct,A,,,unmapped,0,0,0,0,https://www.rentecdirect.com/careers
+Second Nature,A,ashby,second-nature,ok,5,8,0,0,https://www.secondnature.com/careers
+Home365,A,bamboohr,home365,ok,0,12,0,0,https://www.home365.co/careers
+Cecilian Partners,B,builtin,cecilian-partners,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/cecilian-partners/jobs,0,0,0,0,https://www.cecilianpartners.com/careers
+CoStar Group,B,builtin,costar-group,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/costar-group/jobs,0,0,0,0,https://www.costargroup.com/careers
+Alarm.com,B,builtin,alarmcom,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/alarmcom/jobs,0,0,0,0,https://www.alarm.com/careers
+Notarize (Proof),B,lever,proof,ok,2,2,0,0,https://www.proof.com/careers
+Zillow Group,B,workday,zillow,ok,52,128,6,0,https://www.zillow.com/careers
+Redfin,B,builtin,redfin,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/redfin/jobs,0,0,0,0,https://www.redfin.com/careers
+Knock CRM,A,,,unmapped,0,0,0,0,https://www.knockrentals.com/careers
+Rocket Companies,B,builtin,rocket-companies,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/rocket-companies/jobs,0,0,0,0,https://www.rocketcompanies.com/careers
+Rent Manager (LCS),A,,,unmapped,0,0,0,0,https://www.rentmanager.com/careers
+MRI Software,A,builtin,mri-software,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/mri-software/jobs,0,0,0,0,https://www.mrisoftware.com/careers
+Density,B,greenhouse,density,failed:HTTPError: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/density/jobs?content=false,0,0,0,0,https://www.density.io/careers
+Bright MLS,B,,,unmapped,0,0,0,0,https://www.brightmls.com/careers
+DoorLoop,A,builtin,doorloop,failed:HTTPError: 429 Client Error: Too Many Requests for url: https://builtin.com/company/doorloop/jobs,0,0,0,0,https://www.doorloop.com/careers
+Envoy,B,ashby,envoy,ok,13,19,1,0,https://envoy.com/careers
+LeaseLock,A,,,unmapped,0,0,0,0,https://www.leaselock.com/careers
+Flock Homes,A,greenhouse,flockhomes,ok,1,2,0,0,https://www.flockhomes.com/careers
+Divvy Homes,A,greenhouse,divvyhomes,failed:HTTPError: 404 Client Error: Not Found for url: https://boards-api.greenhouse.io/v1/boards/divvyhomes/jobs?content=false,0,0,0,0,https://www.divvyhomes.com/careers
+Greystar,A,workday,greystar,ok,14,73,6,0,https://www.greystar.com/careers
+Doorstead,A,,,unmapped,0,0,0,0,https://www.doorstead.com/careers
+Belong,A,workable,belong-6,ok,0,6,0,0,https://belonghome.com/careers
+Mynd,A,,,unmapped,0,0,0,0,https://www.mynd.co/careers
+Renters Warehouse,A,,,unmapped,0,0,0,0,https://www.renterswarehouse.com/careers
+Evernest,A,lever,evernest,ok,0,15,0,0,https://www.evernest.co/careers
+Atlas Real Estate,A,paylocity,5e5fc082-a90b-4d93-8b73-46f77d40e081,unsupported:paylocity,0,0,0,0,https://realatlas.com/careers/
+PURE HomeRiver Group,A,,,unmapped,0,0,0,0,https://purehomeriver.com/company/careers/
+Northpoint Asset Management,A,,,unmapped,0,0,0,0,https://northpointam.com/careers
+Evergreen Residential,A,,,unmapped,0,0,0,0,https://evergreenresi.com/careers/
+Property Meld,A,breezy,property-meld,ok,0,0,0,0,https://property-meld.breezy.hr/
+Footprint,A,ashby,onefootprint,failed:RuntimeError: Ashby posting API 404; _ashby_graphql: Ashby has no job board named 'onefootprint' (GraphQL returned none) | _ashby_page: Ashby page for 'on,0,0,0,0,https://jobs.ashbyhq.com/onefootprint
+Reffie,A,generic,reffie,ok,1,1,0,0,https://careers.reffie.me/
+Two Dots,A,lever,twodots,ok,3,4,0,0,https://jobs.lever.co/twodots
+Haven,A,generic,haven-yc,ok,1,1,0,0,https://www.ycombinator.com/companies/haven-2/jobs
+Nutiliti,A,linkedin,nutiliti,ok,0,0,0,0,https://builtin.com/company/nutiliti/jobs
+HiredHelpr,A,linkedin,hiredhelpr,ok,0,0,0,0,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm
+Mason,A,,,unmapped,0,0,0,0,https://www.thisismason.com
+Super,A,generic,hiresuper,ok,0,0,0,0,https://www.hiresuper.com/careers
+Boom,A,linkedin,boompay,ok,2,5,0,0,https://wellfound.com/company/boom-app/jobs
+AbodeMine,A,linkedin,abodemine,ok,0,0,0,0,https://wellfound.com/company/abodemine/jobs
+Lineage,A,generic,lineage-finance,ok,0,0,0,0,https://lineage.finance/careers
+Series Homes,A,linkedin,serieshomes,ok,0,0,0,0,https://www.serieshomes.com
+PropertyManagement.com,A,,,unmapped,0,0,0,0,https://www.propertymanagement.com/careers

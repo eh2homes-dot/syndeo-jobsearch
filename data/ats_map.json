@@ -12,16 +12,16 @@
   "Agora": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Alarm.com": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-28",
-    "evidence": "HTTPSConnectionPool(host='www.alarm.com', port=443): Max retries exceeded with url: /careers (Caused by NewConnectionErr",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-30",
+    "evidence": "builtin.com/company/alarmcom links to https://www.alarm.com",
+    "slug": "alarmcom"
   },
   "Apartment List": {
     "ats": "builtin",
@@ -69,14 +69,14 @@
   "Better.com": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Bilt Rewards": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -109,7 +109,7 @@
   "Bright MLS": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -135,11 +135,11 @@
     "slug": "cadre"
   },
   "Cecilian Partners": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-28",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-30",
+    "evidence": "builtin.com/company/cecilian-partners links to https://www.cecilianpartners.com",
+    "slug": "cecilian-partners"
   },
   "CertifID": {
     "ats": "lever",
@@ -172,11 +172,11 @@
     "slug": "closinglock"
   },
   "CoStar Group": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-28",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-30",
+    "evidence": "builtin.com/company/costar-group links to https://www.costargroup.com",
+    "slug": "costar-group"
   },
   "CompStak": {
     "ats": "lever",
@@ -243,7 +243,7 @@
   "Doorstead": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -272,7 +272,7 @@
   "Evergreen Residential": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -306,7 +306,7 @@
   "GetCovered": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -342,7 +342,7 @@
   "Hemlane": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -408,7 +408,7 @@
   "Knock CRM": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -422,7 +422,7 @@
   "LeaseLock": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -477,7 +477,7 @@
   "Mynd": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -491,7 +491,7 @@
   "Northpoint Asset Management": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -536,14 +536,14 @@
   "Ojo Labs": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Opcity (Realtor.com)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -571,7 +571,7 @@
   "PURE HomeRiver Group": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -644,11 +644,11 @@
     "slug": "realtorcom"
   },
   "Redfin": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-28",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-30",
+    "evidence": "builtin.com/company/redfin links to https://www.redfin.com",
+    "slug": "redfin"
   },
   "Reffie": {
     "ats": "generic",
@@ -661,28 +661,28 @@
   "Rent Manager (LCS)": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "RentSpree": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Rentec Direct": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
   "Renters Warehouse": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
@@ -708,11 +708,11 @@
     "slug": "robin"
   },
   "Rocket Companies": {
-    "ats": "",
-    "confidence": "none",
-    "detected_on": "2026-09-28",
-    "evidence": "no ATS pattern in HTML",
-    "slug": ""
+    "ats": "builtin",
+    "confidence": "builtin-domain-match",
+    "detected_on": "2026-09-30",
+    "evidence": "builtin.com/company/rocket-companies links to https://www.rocketcompanies.com",
+    "slug": "rocket-companies"
   },
   "Roofstock": {
     "ats": "greenhouse",
@@ -825,7 +825,7 @@
   "Yardi Systems": {
     "ats": "",
     "confidence": "none",
-    "detected_on": "2026-09-28",
+    "detected_on": "2026-09-30",
     "evidence": "no ATS pattern in HTML",
     "slug": ""
   },
