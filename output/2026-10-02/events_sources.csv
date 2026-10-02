@@ -1,0 +1,31 @@
+source,status,events,note,url
+nrhc,ok,3,,https://rentalhomecouncil.org/events/
+imn,ok,0,9 other IMN event sites linked,https://imn.org/
+imn,ok,1,,https://informaconnect.com/imn-sfr-west/
+imn,ok,1,,https://informaconnect.com/imn-sfr-east/
+imn,ok,1,dates TBA,https://informaconnect.com/imn-sfr-pm/
+imn,ok,1,,https://informaconnect.com/imn-btr-spring/
+imn,ok,1,dates TBA,https://informaconnect.com/imn-btr-fall/
+narpm,ok,3,,https://www.narpm.org/national-conferences/
+narpm-state,ok,2,,https://www.narpm.org/national-conferences/conferences/
+nmhc,ok,16,,https://www.nmhc.org/meetings/calendar/upcoming-meetings/
+naa,http 403,0,,https://naahq.org/events/upcoming
+bisnow,ok,16,,https://www.bisnow.com/events/multifamily
+bisnow,ok,1,,https://www.bisnow.com/events/property-management
+bisnow,"loaded, 0 events (page saved to debug/)",0,,https://www.bisnow.com/events/technology
+company,ok,16,Guesty,https://www.guesty.com/events/
+company,ok,1,Yardi Systems,https://www.yardi.com/company/industry-events/
+company,ok,4,CertifID,https://www.certifid.com/resources/webinars
+company,ok,6,ResMan,https://www.myresman.com/events/
+company,ok,3,Matterport,https://matterport.com/events-webinars
+company,ok,1,AppFolio,https://www.appfolio.com/resources/events
+company,ok,2,Blend Labs,https://blend.com/events/
+company,ok,2,Notarize (Proof),https://www.proof.com/events
+company,ok,2,Homebot,https://homebot.ai/webinars
+company,ok,16,Envoy,https://envoy.com/events-webinars
+company,ok,19,Rent Manager (LCS),https://www.rentmanager.com/events/
+company,ok,1,Digible,https://digible.com/multifamily-event-calendar/
+company,ok,12,MRI Software,https://www.mrisoftware.com/events/
+company,ok,2,Placester,https://placester.com/webinars
+company,ok,37,Zillow Group,https://www.zillow.com/homes/
+company,ok,0,Property Meld,https://propertymeld.com/events/
