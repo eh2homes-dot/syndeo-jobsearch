@@ -1,0 +1,133 @@
+name: OpCo Job Search
+
+# Weekly, Sundays 6:00am ET, alongside the main job search.
+#
+# GitHub cron is UTC and ignores daylight saving, so two schedules are declared
+# (10:00 UTC = 6am EDT, 11:00 UTC = 6am EST) and the guard step exits on
+# whichever one is not 6am in New York. One real run per Sunday, all year.
+on:
+  schedule:
+    - cron: "0 10 * * 0"
+    - cron: "0 11 * * 0"
+  workflow_dispatch:
+    inputs:
+      discover:
+        description: "Only detect each company's ATS (no job fetch). Run this first."
+        type: boolean
+        default: false
+      refresh_ats:
+        description: "Ignore the ATS cache and re-detect every company"
+        type: boolean
+        default: false
+      only:
+        description: "Comma-separated company names (blank = all)"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opco-job-search
+  cancel-in-progress: false
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Skip if this is the wrong side of daylight saving
+        id: guard
+        run: |
+          HOUR=$(TZ=America/New_York date +%-H)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HOUR" != "6" ]; then
+            echo "It is ${HOUR}:00 in New York, not 6am. Skipping this trigger."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.run == 'true'
+
+      # Find the script wherever it was committed, and check its config sits
+      # beside it.
+      - name: Locate the script and the company list
+        if: steps.guard.outputs.run == 'true'
+        id: locate
+        run: |
+          SCRIPT=$(find . -type f -name 'opco_search.py' -not -path './.git/*' | head -1)
+          if [ -z "$SCRIPT" ]; then
+            echo "::error::opco_search.py not found. Create it in the repo and re-run."
+            ls -la
+            exit 1
+          fi
+          DIR=$(dirname "$SCRIPT"); DIR=${DIR#./}; [ -z "$DIR" ] && DIR="."
+          echo "Script: $SCRIPT"
+          if [ ! -f "$DIR/opco_config.yml" ]; then
+            echo "::error::opco_config.yml must sit in the same folder as opco_search.py ($DIR)."
+            exit 1
+          fi
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+
+          CSV=$(find . -type f -iname 'opco.csv' -not -path './.git/*' | head -1)
+          if [ -z "$CSV" ]; then
+            echo "::error::opco.csv not found. Export the OpCo tab and commit it."
+            exit 1
+          fi
+          echo "Company list: $CSV ($(wc -l < "$CSV") lines)"
+          echo "csv=$GITHUB_WORKSPACE/${CSV#./}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        if: steps.guard.outputs.run == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        if: steps.guard.outputs.run == 'true'
+        run: pip install "requests>=2.31" "beautifulsoup4>=4.12" "lxml>=5.0" "PyYAML>=6.0"
+
+      - name: Run search
+        if: steps.guard.outputs.run == 'true'
+        working-directory: ${{ steps.locate.outputs.dir }}
+        run: |
+          ARGS="--companies ${{ steps.locate.outputs.csv }}"
+          [ "${{ inputs.discover }}" = "true" ]    && ARGS="$ARGS --discover"
+          [ "${{ inputs.refresh_ats }}" = "true" ] && ARGS="$ARGS --refresh-ats"
+          [ -n "${{ inputs.only }}" ]              && ARGS="$ARGS --only \"${{ inputs.only }}\""
+          eval python opco_search.py $ARGS
+
+      # The people-moves workflow also commits at 6am, so retry the push.
+      # The two touch different files, so a rebase is always clean.
+      - name: Commit state and results
+        if: steps.guard.outputs.run == 'true'
+        env:
+          DIR: ${{ steps.locate.outputs.dir }}
+        run: |
+          git config user.name  "syndeo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$DIR/state" "$DIR/out" 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "OpCo job search: $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "Push attempt $attempt failed; retrying in 15s"
+            sleep 15
+          done
+          echo "::error::Could not push results after 3 attempts."
+          exit 1
+
+      - name: Upload brief
+        if: steps.guard.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: opco-job-search
+          path: |
+            ${{ steps.locate.outputs.dir }}/out/opco-jobs-*.md
+            ${{ steps.locate.outputs.dir }}/out/opco-jobs-*.csv
+            ${{ steps.locate.outputs.dir }}/out/opco-jobs-latest.json
+          retention-days: 90
+          if-no-files-found: warn
