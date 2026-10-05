@@ -1,0 +1,127 @@
+# OpCo job search configuration.
+#
+# Two things live here: which ATS a company uses when you already know it, and
+# which open roles make the weekly brief.
+
+# ---------------------------------------------------------------------------
+# Pinned ATS. Anything listed here skips detection entirely.
+#
+#   Company Name:            must match the sheet exactly
+#     ats:   workday | ukg | greenhouse | lever | ashby | workable |
+#            smartrecruiters | recruitee | breezy | bamboohr | adp | jsonld
+#     slug:  the company's id in that system (Workday: the tenant)
+#     host / site / board:   Workday and UKG only
+# ---------------------------------------------------------------------------
+ats_overrides:
+  Belong:
+    ats: workable
+    slug: belong-6
+    note: Confirmed slug from the job board's adapter work
+
+# Which open roles make the weekly brief.
+#
+# Current scope, as set for the job search: Sales, GTM, Engineering, and
+# VP-level executives. Each entry is a regex fragment matched against the job
+# title on word boundaries. Exclusions are checked first and always win.
+#
+# A NOTE FOR THIS LIST: OpCo is mostly REITs and property operators, not
+# software companies. Their core roles are asset management, investments,
+# acquisitions and portfolio management, which none of the categories below
+# catch. If the first brief looks thin, uncomment the `operators` block.
+
+include:
+  executive:
+    - vice president
+    - VP
+    - SVP
+    - EVP
+    - chief (?!engineer)\w*
+    - C[EFOTMRIS]O
+    - president
+    - head of
+    - managing director
+  sales:
+    - sales
+    - account executive
+    - account manager
+    - business development
+    - BDR
+    - SDR
+    - partnerships?
+    - revenue
+  gtm:
+    - market\w*
+    - growth
+    - go[- ]to[- ]market
+    - GTM
+    - demand gen\w*
+    - customer success
+    - revenue operations
+    - brand
+  engineering:
+    - engineer\w*
+    - software
+    - developer
+    - data scien\w*
+    - data engineer\w*
+    - machine learning
+    - devops
+    - SRE
+    - architect
+    - platform
+
+  # operators:
+  #   - asset manag\w*
+  #   - investments?
+  #   - acquisitions?
+  #   - portfolio manag\w*
+  #   - capital markets
+  #   - development manager
+
+# Site-level and building-operations roles. These match words like "engineer"
+# and "manager" but are not what the brief is for.
+exclude:
+  - maintenance
+  - building engineer
+  - chief engineer
+  - stationary engineer
+  - facilities engineer
+  - maintenance engineer
+  - HVAC
+  - porter
+  - groundskeeper
+  - housekeep\w*
+  - custodian
+  - janitor\w*
+  - leasing (consultant|agent|professional|specialist)
+  - community assistant
+  - concierge
+  - caregiver
+  - CNA
+  - nurs\w*
+  - dietary
+  - cook
+  - server
+  - driver
+  - intern
+
+# Per-company rules, applied on top of the above.
+company_overrides:
+  Greystar:
+    # Corporate and leadership only. Greystar posts thousands of site roles.
+    require:
+      - vice president
+      - VP
+      - SVP
+      - EVP
+      - chief
+      - director
+      - head of
+      - president
+      - managing director
+      - corporate
+    exclude:
+      - property manager
+      - community manager
+      - assistant manager
+      - leasing
