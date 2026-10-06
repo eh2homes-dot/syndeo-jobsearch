@@ -1189,8 +1189,12 @@ def read_company(company, role_filter, baseline) -> dict:
                 name, "dropped to 0 roles from 5+ last week; treated as a read failure", board.key)}
         else:
             result = {**base, "status": "ok", "roles": roles}
-            if board.system == "page" and baseline.is_first_read(name, board.key):
-                result["spot_check"] = [r["title"] for r in roles[:5]]
+            # First time this Column D is read: list it once so a person can
+            # confirm the jobs really belong to this company. A wrong link in
+            # Column D is the one way the wrong company's jobs can still appear.
+            if baseline.is_first_read(name, board.key) and roles:
+                result["spot_check"] = [f"{r['title']} ({r['location']})" if r.get("location")
+                                        else r["title"] for r in roles[:3]]
 
     result["filtered"] = []
     for r in result["roles"]:
@@ -1473,11 +1477,14 @@ def _attention(results: dict) -> list[str]:
             md.append(f"- **{n}** — {c.get('reason') or 'unknown error'}")
         md.append("")
     if spot:
-        md += [f"### Read from a page for the first time — spot-check once ({len(spot)})", "",
-               "*These have no job system, so their jobs were read from the page in Column D. "
-               "Published normally; glance at the titles once to confirm they're real jobs.*", ""]
+        md += [f"### Confirm these are the right companies — once ({len(spot)})", "",
+               "*First time each of these Column D links was read. Open the link and check the "
+               "jobs belong to this company. If one is wrong, fix its Column D; nothing else "
+               "is needed. Each is listed only once, and again only if its Column D changes.*", ""]
         for n, c in sorted(spot.items()):
-            md.append(f"- **{n}** — {'; '.join(c['spot_check'][:4])}")
+            d = c.get("column_d") or ""
+            md.append(f"- **{n}** — [{d.split('//')[-1][:50]}]({d}) · {c.get('total', 0)} jobs, "
+                      f"e.g. {'; '.join(c['spot_check'])}")
         md.append("")
     if moved:
         md += [f"### Works, but Column D has moved ({len(moved)})", ""]
@@ -1567,6 +1574,20 @@ def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
         "coverage": {n: {k: v for k, v in c.items() if k not in ("roles", "filtered")}
                      for n, c in results.items()},
     }, indent=2), encoding="utf-8")
+    # Every job read, matching or not, with its link: for checking the scraper
+    # read the right jobs from the right companies.
+    with (out_dir / f"opco-jobs-all-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=["company", "title", "location", "url", "posted",
+                                           "in_scope", "column_d"])
+        w.writeheader()
+        for n, c in sorted(results.items()):
+            in_scope = {r["id"] for r in c.get("filtered", [])}
+            for r in c.get("roles", []):
+                w.writerow({"company": n, "title": r.get("title", ""), "location": r.get("location", ""),
+                            "url": r.get("url", ""), "posted": r.get("posted", ""),
+                            "in_scope": "yes" if r.get("id") in in_scope else "no",
+                            "column_d": c.get("column_d", "")})
+
     with (out_dir / f"opco-jobs-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["company", "category", "title", "location", "url",
                                            "posted", "status"])
