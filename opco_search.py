@@ -1,27 +1,49 @@
 #!/usr/bin/env python3
-"""OpCo weekly job search — single-file edition.
+"""OpCo weekly job search — Column D edition.
 
-Scrapes the companies on the master sheet's OpCo tab straight from each
-company's own applicant tracking system. No Built In, no aggregator, no single
-host whose rate limit can sink the run.
+Column D of the master sheet's OpCo tab is the only input. If it holds a
+job-board link (Workday, UKG, Dayforce, ADP, Greenhouse, Lever, Ashby,
+Workable, SmartRecruiters, Recruitee, Breezy, BambooHR), that board is read.
+If it holds an ordinary web page, only the jobs listed on that page are read.
+Nothing is discovered or guessed, and nothing is cached between runs except
+last week's roles, which the new/closed comparison needs.
 
-Three files make up the whole thing:
-    opco_search.py                         this file
-    opco_config.yml                        which roles count, pinned ATS
-    .github/workflows/opco-job-search.yml  the Sunday schedule
+Anything that can't be read lands in the brief's "Needs your attention"
+section with the reason, so Column D can be fixed.
 
-    python opco_search.py                  # weekly run
-    python opco_search.py --discover       # resolve ATS only, no job fetch
-    python opco_search.py --refresh-ats    # ignore the ATS cache, re-detect
-    python opco_search.py --only "Greystar,Belong" -v
+    python opco_search.py                 # weekly run
+    python opco_search.py --discover      # check what each Column D is; read no jobs
+    python opco_search.py --only "Greystar,Lamar Advertising Company" -v
+
+Files: opco_search.py (this), opco_config.yml (role filter, live-sheet link),
+opco.csv (the OpCo tab, unless the live-sheet link is set).
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
+import hashlib
+import io
+import json
+import logging
 import os
+import re
 import sys
+import time
 import traceback
+from collections import defaultdict
+from dataclasses import asdict, dataclass, field
+from datetime import date, timedelta
+from pathlib import Path
+from typing import Optional
+from urllib.parse import parse_qs, urljoin, urlparse
+
+import requests
+import yaml
+from bs4 import BeautifulSoup
+
+log = logging.getLogger("opco")
 
 
 # ==========================================================================
@@ -126,35 +148,8 @@ def try_get(url: str, **kw) -> Optional[requests.Response]:
 
 
 # ==========================================================================
-# ADAPTERS
+# JOB-SYSTEM READERS (unchanged from the previous version)
 # ==========================================================================
-
-"""One fetcher per ATS. Each returns a list of Role dicts.
-
-Every adapter hits a public, keyless endpoint the ATS serves to its own careers
-widgets. Response shapes are verified against fixtures, not live calls — the
-first CI run is the real test. A failing adapter raises, gets caught per
-company, and shows up in the coverage report; it never sinks the run.
-
-CONFIDENCE
-  High:     Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee,
-            Breezy, Workday (CXS)
-  Moderate: UKG/UltiPro, ADP Workforce Now, BambooHR
-  Fallback: schema.org JobPosting JSON-LD scraped from the careers page
-"""
-
-
-import hashlib
-import json
-import logging
-import re
-from dataclasses import dataclass, asdict, field
-from urllib.parse import urljoin, urlparse
-
-from bs4 import BeautifulSoup
-
-
-log = logging.getLogger(__name__)
 
 MAX_PAGES = 30  # hard stop so a runaway paginator can't eat the run
 
@@ -219,7 +214,10 @@ def _loc(*parts) -> str:
     return ", ".join(p for p in parts if p and str(p).strip())
 
 
-# ---------------------------------------------------------------- high confidence
+class RoleList(list):
+    """A list of roles that can also say it was cut short."""
+    truncated: str = ""
+
 
 def greenhouse(slug: str, **_) -> list[Role]:
     d = get(f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs").json()
@@ -301,11 +299,6 @@ def breezy(slug: str, **_) -> list[Role]:
     ]
 
 
-class RoleList(list):
-    """A list of roles that can also say it was cut short."""
-    truncated: str = ""
-
-
 WORKDAY_MAX_PAGES = 60  # 1,200 postings per search
 
 
@@ -355,8 +348,6 @@ def workday(slug: str, host: str = "", site: str = "", search_terms=None, **_) -
         out.truncated = "; ".join(cut)
     return out
 
-
-# ---------------------------------------------------------------- moderate confidence
 
 UKG_PAGE = 50
 
@@ -432,6 +423,8 @@ def ukg(slug: str, board: str = "", host: str = "recruiting.ultipro.com", **_) -
 
 
 ADP_PAGE = 20
+
+
 ADP_LIST = ("https://workforcenow.adp.com/mascsr/default/careercenter/public/events/"
             "staffing/v1/job-requisitions")
 
@@ -509,6 +502,8 @@ def bamboohr(slug: str, **_) -> list[Role]:
 
 
 DAYFORCE = "https://jobs.dayforcehcm.com"
+
+
 DAYFORCE_PAGE = 25  # Dayforce returns 25 postings per request
 
 
@@ -565,8 +560,6 @@ def dayforce(slug: str, board: str = "CANDIDATEPORTAL", **_) -> list[Role]:
     return out
 
 
-# ---------------------------------------------------------------- fallback
-
 def _walk_jsonld(node):
     if isinstance(node, list):
         for n in node:
@@ -611,29 +604,41 @@ def jsonld(slug: str = "", url: str = "", **_) -> list[Role]:
     return out
 
 
-# ---------------------------------------------------------------- on-page listings
+# ==========================================================================
+# READING A PAGE'S OWN JOB LISTINGS (unchanged)
+# ==========================================================================
 
 # Paths that are unambiguously a single job's page.
 _JOB_PATH_STRONG = re.compile(
     r"/(job-listings?|jobs?|job-openings?|positions?|openings?|opportunit(?:y|ies)|"
     r"vacanc(?:y|ies)|postings?)/[^/?#]+/?$", re.I)
+
+
 # /careers/<slug> is a job page on many sites, but also a section page on many
 # others, so it only counts when several appear together, like a list.
 _JOB_PATH_WEAK = re.compile(r"/careers?/[^/?#]+/?$", re.I)
+
+
 _NOT_A_JOB = re.compile(
     r"^(benefits|culture|team|teams|life|life-at-.*|values|faqs?|students?|interns?|"
     r"internships?|early-careers|university|why-.*|about.*|perks|locations?|offices?|"
     r"search|apply|login|sign-?in|privacy.*|terms.*|our-.*|meet-.*|diversity.*|"
     r"inclusion.*|blog.*|news.*|events?|people|benefits-.*|how-we-hire|hiring-process|"
     r"open-positions|openings|all-jobs|jobs|positions)$", re.I)
+
+
 _GENERIC_LINK_TEXT = re.compile(
     r"^(learn more|read more|more info|view|view (job|details|role|position|posting)|"
     r"apply|apply now|details|see (more|details)|open|[›»→>]+)$", re.I)
+
+
 # Headings that introduce a list of jobs rather than naming one.
 _SECTION_HEADING = re.compile(
     r"^(open (positions|roles|jobs)|job (postings|openings|listings)|current (openings|"
     r"opportunities|positions)|careers?|join (us|our team)|we.?re hiring|"
     r"opportunities|available positions|now hiring)$", re.I)
+
+
 _LOCATION_HINT = re.compile(
     r"(,\s*[A-Z]{2}\b|\bremote\b|\bhybrid\b|\bon-?site\b|\bUSA\b|\bUnited States\b|"
     r"\b[A-Z]{2}\s+\d{5}\b|\b[A-Z][a-z]+,\s*[A-Z][a-z]+)", re.I)
@@ -647,6 +652,17 @@ def _join(base: str, href) -> str:
         return urljoin(base, href.strip())
     except ValueError:
         return ""
+
+
+def _site(url_or_host: str) -> str:
+    """Registrable domain, roughly: jobs.kiterealty.com -> kiterealty.com."""
+    try:
+        host = urlparse(url_or_host).netloc if "//" in url_or_host else url_or_host
+    except ValueError:
+        return ""
+    host = host.lower().split(":")[0]
+    parts = [p for p in host.split(".") if p]
+    return ".".join(parts[-2:]) if len(parts) >= 2 else host
 
 
 def _job_href(href: str) -> str:
@@ -775,10 +791,13 @@ def _job_card(link, page_url: str) -> tuple[str, str]:
 
 ONPAGE_MAX_PAGES = 15
 
+
 # A next-page link must look like another page of the same list: ?page=2,
 # /page/2/, ?start=20... This is what keeps "Next post" and other "next" links
 # elsewhere on a site from being followed.
 _PAGE_URL = re.compile(r"([?&](page|pg|p|paged|pagenum|pageno|start|offset|skip)=\d+)|/page/\d+/?($|[?#])", re.I)
+
+
 _NEXT_TEXT = re.compile(r"^(next|next page|next ›|next »|next >|more|›|»|>|→|>>)$", re.I)
 
 
@@ -874,190 +893,9 @@ def _read_listing_page(soup, page_url: str, found: dict) -> int:
     return untitled
 
 
-# ---------------------------------------------------------------- sitemap
-
-SITEMAP_MAX_NEW_PAGES = 250   # job pages read per company per run; the rest next run
-SITEMAP_MAX_FILES = 12
-
-
-def _sitemap_job_urls(page_url: str) -> list[str]:
-    """Every job page a site lists in its sitemap, from robots.txt onward.
-
-    JavaScript-built careers pages ship with an empty job list, but sites built
-    for search engines list every job page in a sitemap so Google can find
-    them. That file is plain XML and needs no browser.
-    """
-    root = f"{urlparse(page_url).scheme}://{urlparse(page_url).netloc}"
-    maps = []
-    robots = try_get(f"{root}/robots.txt", timeout=15)
-    if robots:
-        maps = [line.split(":", 1)[1].strip() for line in robots.text.splitlines()
-                if line.lower().startswith("sitemap:")]
-    if not maps:
-        maps = [f"{root}/sitemap.xml", f"{root}/sitemap_index.xml"]
-
-    found, read, queue = [], set(), list(maps)
-    while queue and len(read) < SITEMAP_MAX_FILES:
-        sm = queue.pop(0)
-        if sm in read or sm.endswith(".gz"):
-            continue
-        read.add(sm)
-        r = try_get(sm, timeout=20)
-        if not r:
-            continue
-        locs = re.findall(r"<loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)", r.text)
-        if "<sitemapindex" in r.text:
-            # Read job-looking sitemaps first: sitemap-jobs.xml, jobs-sitemap.xml...
-            queue.extend(sorted(locs, key=lambda u: 0 if re.search(r"job|career|position", u, re.I) else 1))
-        else:
-            found.extend(locs)
-
-    site = _site(page_url)
-    strong, weak = [], []
-    for u in dict.fromkeys(found):
-        if _site(u) != site:
-            continue
-        kind = _job_href(u)
-        (strong if kind == "strong" else weak if kind == "weak" else []).append(u)
-    # /careers/<x> pages only count in bulk, as with on-page listings.
-    return strong + (weak if len(weak) >= 3 else [])
-
-
-def _read_job_page(url: str) -> tuple[str, str, str]:
-    """Title, location and posted date from one job's own page."""
-    soup = BeautifulSoup(get(url, timeout=20).text, "lxml")
-
-    for tag in soup.find_all(attrs={"type": "application/ld+json"}):
-        try:
-            data = json.loads(tag.string or "")
-        except (json.JSONDecodeError, TypeError):
-            continue
-        for j in _walk_jsonld(data):
-            if j.get("title"):
-                locs = j.get("jobLocation") or {}
-                locs = locs[0] if isinstance(locs, list) and locs else locs
-                addr = (locs.get("address") or {}) if isinstance(locs, dict) else {}
-                return (str(j["title"]).strip(),
-                        _loc(addr.get("addressLocality"), addr.get("addressRegion")),
-                        (j.get("datePosted") or "")[:10])
-
-    title = ""
-    og = soup.find("meta", attrs={"property": "og:title"})
-    h1 = soup.find("h1")
-    if h1 and h1.get_text(strip=True):
-        title = h1.get_text(" ", strip=True)
-    elif og and og.get("content"):
-        title = og["content"]
-    elif soup.title and soup.title.string:
-        title = soup.title.string
-    title = re.split(r"\s+[|\u2013\u2014]\s+|\s+-\s+(?=[A-Z][\w&. ]+(Careers|Jobs)\b)", title.strip())[0].strip()
-    if not title or len(title) > 140:
-        return "", "", ""
-
-    location = ""
-    strings = list(soup.stripped_strings)
-    if title in strings:
-        for text in strings[strings.index(title) + 1: strings.index(title) + 12]:
-            if len(text) <= 60 and _LOCATION_HINT.search(text):
-                location = text
-                break
-    return title, location, ""
-
-
-def sitemap(slug: str = "", url: str = "", trusted: bool = False, **_) -> list[Role]:
-    """Jobs found through the site's sitemap, each read from its own page.
-
-    Pages already read on earlier runs are remembered, so after the first run
-    only new postings are fetched.
-    """
-    if not url:
-        raise FetchError("sitemap reading needs the careers URL")
-    job_urls = _sitemap_job_urls(url)
-    if not job_urls:
-        raise FetchError("no sitemap listing job pages")
-
-    cache_path = STATE / "job_pages.json"
-    cache = _read(cache_path, {})
-    today = date.today().isoformat()
-    out, fetched, skipped = RoleList(), 0, 0
-    for u in job_urls:
-        entry = cache.get(u)
-        if entry is None:
-            if fetched >= SITEMAP_MAX_NEW_PAGES:
-                skipped += 1
-                continue
-            fetched += 1
-            try:
-                title, location, posted = _read_job_page(u)
-            except FetchError:
-                continue
-            entry = {"title": title, "location": location, "posted": posted}
-        entry["seen"] = today
-        cache[u] = entry
-        if entry["title"]:
-            out.append(Role(id=f"sm-{urlparse(u).path.rstrip('/')}", title=entry["title"],
-                            url=u, location=entry.get("location", ""),
-                            posted=entry.get("posted", "")))
-    # Forget pages that dropped out of every sitemap more than 60 days ago.
-    cutoff = (date.today() - timedelta(days=60)).isoformat()
-    _write(cache_path, {k: v for k, v in cache.items() if v.get("seen", today) >= cutoff})
-
-    if skipped:
-        out.truncated = f"read {fetched} new job pages, {skipped} more next run"
-    if not out and job_urls:
-        raise FetchError(f"sitemap lists {len(job_urls)} job pages but no titles could be read")
-    if not trusted:
-        _plausible_jobs([r.title for r in out], "through the sitemap")
-    return out
-
-
-ADAPTERS = {
-    "greenhouse": greenhouse, "lever": lever, "ashby": ashby, "workable": workable,
-    "smartrecruiters": smartrecruiters, "recruitee": recruitee, "breezy": breezy,
-    "workday": workday, "ukg": ukg, "adp": adp, "bamboohr": bamboohr, "jsonld": jsonld,
-    "onpage": onpage, "sitemap": sitemap, "dayforce": dayforce,
-}
-
-# Recognised but no adapter yet. Named in the coverage report so you know
-# exactly which ones would need building, rather than seeing a vague failure.
-KNOWN_UNSUPPORTED = {"icims", "paylocity", "jobvite", "jazzhr", "rippling", "paradox",
-                     "taleo", "successfactors", "applicantpro", "indeed"}
-
-
 # ==========================================================================
-# RESOLVE
+# RECOGNISING JOB-BOARD LINKS (unchanged)
 # ==========================================================================
-
-"""Work out which ATS a company uses, and its identifiers.
-
-Order of preference, cheapest and most certain first:
-
-  1. Pinned override   opco_config/ats_overrides.csv — a human said so
-  2. Cache             state/ats_cache.json — resolved on a previous run
-  3. Careers page      read the page, find a link or embed into a known ATS
-                       (one hop: if the page only has a "View openings" button,
-                       follow it once and look again)
-  4. Slug probing      try candidate slugs against keyless JSON APIs
-  5. JSON-LD           schema.org JobPosting markup on the careers page
-
-Step 3 is what makes this list work. REITs and property managers mostly run
-Workday, UKG or ADP, whose URLs embed identifiers no slug guess can produce
-(acme.wd5.myworkdayjobs.com/External_Careers). The careers page links to them.
-"""
-
-
-import csv
-import logging
-import re
-from dataclasses import dataclass, field, asdict
-from datetime import date, timedelta
-from pathlib import Path
-from urllib.parse import urljoin, urlparse, parse_qs
-
-from bs4 import BeautifulSoup
-
-
-log = logging.getLogger(__name__)
 
 # (ats, compiled pattern). Named groups feed the adapter kwargs.
 PATTERNS = [
@@ -1101,58 +939,74 @@ PATTERNS = [
     ("applicantpro", re.compile(r"applicantpro\.com", re.I)),
 ]
 
+
 # Slugs that are ATS infrastructure words, never a real company board.
 _BAD_SLUGS = {"embed", "js", "v1", "jobs", "api", "www", "careers", "job_board", "mydayforce",
               "candidateportal", "en-us",
               "boards", "en-us", "recruiting", "app", "static", "assets"}
 
-PROBEABLE = ["greenhouse", "lever", "ashby", "workable", "smartrecruiters",
-             "recruitee", "breezy", "bamboohr"]
 
-UNRESOLVED_RETRY_DAYS = 28
+# ==========================================================================
+# COLUMN D
+# ==========================================================================
+#
+# The whole design in one place. Column D of the OpCo tab is the only input:
+#
+#   a job-board link      -> read that board with its system's reader
+#   any other web page    -> read only the jobs listed on that page itself
+#   empty, or not a link  -> "needs a job-board link"
+#
+# Nothing is discovered. No guessing boards from company names, no scanning
+# pages for links, no following links, no sitemaps, no cached detections. If
+# Column D is right, the result is right; if it isn't, the brief says so.
 
-_JOB_LINK = re.compile(r"(job|career|opening|position|opportunit|apply|join|hiring|work with us)", re.I)
+READERS = {
+    "greenhouse": greenhouse, "lever": lever, "ashby": ashby, "workable": workable,
+    "smartrecruiters": smartrecruiters, "recruitee": recruitee, "breezy": breezy,
+    "workday": workday, "ukg": ukg, "dayforce": dayforce, "adp": adp, "bamboohr": bamboohr,
+}
+
+# Recognised in Column D, but no reader yet. Listed by name in the brief so it's
+# clear which readers would be worth building, and for how many companies.
+EXTRA_UNSUPPORTED = [
+    ("paycom", re.compile(r"paycomonline\.(net|com)", re.I)),
+    ("paycor", re.compile(r"recruitingbypaycor\.com", re.I)),
+    ("isolved", re.compile(r"isolvedhire\.com", re.I)),
+    ("hireology", re.compile(r"hireology\.com", re.I)),
+    ("apploi", re.compile(r"apploi\.com", re.I)),
+]
+
+
+class NeedsLink(FetchError):
+    """Column D can't be read as it stands; the message says why."""
 
 
 @dataclass
-class Resolution:
-    ats: str = ""
+class Board:
+    system: str = ""          # a READERS key, "page", an unsupported system name, or ""
     slug: str = ""
     params: dict = field(default_factory=dict)
-    source: str = ""          # override / cache / careers-page / probe / jsonld
-    note: str = ""
-    resolved_on: str = ""
-    verified: bool = True     # False = guessed; never published until pinned
-    careers_check: str = ""   # what happened when the careers URL was fetched
-    careers_url: str = ""     # the Column D value this result was based on
-    version: int = 0
-    fresh: bool = False       # detected this run (never True in the cache)
+    problem: str = ""         # why Column D can't be used, when system is ""
 
     @property
-    def supported(self) -> bool:
-        return self.ats in ADAPTERS
+    def readable(self) -> bool:
+        return self.system in READERS or self.system == "page"
 
-    def to_dict(self) -> dict:
-        return asdict(self)
-
-
-def load_overrides(raw: dict | None) -> dict[str, Resolution]:
-    """`ats_overrides` block of opco_config.yml -> {company name: Resolution}."""
-    out = {}
-    for name, spec in (raw or {}).items():
-        spec = spec or {}
-        ats = str(spec.get("ats") or "").strip().lower()
-        if not ats:
-            continue
-        params = {k: str(spec[k]) for k in ("host", "site", "board") if spec.get(k)}
-        out[name.lower()] = Resolution(ats=ats, slug=str(spec.get("slug") or ""),
-                                       params=params, source="override",
-                                       note=str(spec.get("note") or ""))
-    return out
+    @property
+    def key(self) -> str:
+        """Identity of the board, so a changed Column D starts a fresh baseline."""
+        return f"{self.system}:{self.slug}:{json.dumps(self.params, sort_keys=True)}"
 
 
-def _match_url(url: str) -> Resolution | None:
-    for ats, pattern in PATTERNS:
+def classify(column_d: str) -> Board:
+    """Decide what a Column D value is. Pure: no network, no memory."""
+    url = (column_d or "").strip()
+    if not url:
+        return Board(problem="Column D is empty")
+    if not re.match(r"https?://", url, re.I):
+        return Board(problem=f"Column D isn't a link ({url[:60]!r})")
+
+    for system, pattern in PATTERNS:
         m = pattern.search(url)
         if not m:
             continue
@@ -1160,410 +1014,218 @@ def _match_url(url: str) -> Resolution | None:
         slug = (groups.pop("slug", "") or "").strip("/")
         if slug.lower() in _BAD_SLUGS:
             continue
-        if ats in ADAPTERS and ats not in ("jsonld", "onpage", "sitemap") and not slug:
+        if system in READERS and not slug:
             continue
         params = {k: v for k, v in groups.items() if v}
-        if ats == "adp":
+        if system == "adp":
             try:
                 cc = parse_qs(urlparse(url).query).get("ccId", [""])[0]
             except ValueError:
                 cc = ""
             if cc:
                 params["cc"] = cc
-        return Resolution(ats=ats, slug=slug, params=params)
-    return None
+        return Board(system=system, slug=slug, params=params)
+
+    for system, pattern in EXTRA_UNSUPPORTED:
+        if pattern.search(url):
+            return Board(system=system)
+
+    return Board(system="page", params={"url": url})
 
 
-CACHE_VERSION = 2   # bump to force every company to be re-detected
-
-# Hosts that belong to job systems, not to any one company.
-ATS_HOSTS = ("greenhouse.io", "lever.co", "ashbyhq.com", "workable.com",
-             "smartrecruiters.com", "recruitee.com", "breezy.hr", "bamboohr.com",
-             "myworkdayjobs.com", "myworkdaysite.com", "ultipro.com", "adp.com")
-
-BOARD_URL = {
-    "greenhouse": "https://job-boards.greenhouse.io/{slug}",
-    "lever": "https://jobs.lever.co/{slug}",
-    "ashby": "https://jobs.ashbyhq.com/{slug}",
-    "workable": "https://apply.workable.com/{slug}",
-    "smartrecruiters": "https://jobs.smartrecruiters.com/{slug}",
-    "recruitee": "https://{slug}.recruitee.com",
-    "breezy": "https://{slug}.breezy.hr",
-    "bamboohr": "https://{slug}.bamboohr.com/careers",
-}
+_CAREERS_HOST = re.compile(r"(careers?|jobs?|join|work|talent|hiring)\.", re.I)
+_LOOKS_LIKE_HTML = re.compile(
+    r"<\s*(html|head|body|div|a|p|h[1-6]|section|main|ul|span|meta|title|link|"
+    r"style|form|table|img|nav|header|footer|article|!doctype)\b", re.I)
 
 
-def _site(url_or_host: str) -> str:
-    """Registrable domain, roughly: jobs.kiterealty.com -> kiterealty.com."""
-    try:
-        host = urlparse(url_or_host).netloc if "//" in url_or_host else url_or_host
-    except ValueError:
-        return ""
-    host = host.lower().split(":")[0]
-    parts = [p for p in host.split(".") if p]
-    return ".".join(parts[-2:]) if len(parts) >= 2 else host
+def read_page(url: str, trusted: bool = False) -> tuple[list[Role], str]:
+    """Jobs listed on the Column D page itself. Returns (roles, how they were read).
 
-
-def _is_ats_host(url: str) -> bool:
-    try:
-        host = urlparse(url).netloc.lower()
-    except ValueError:
-        return False
-    return any(host == h or host.endswith("." + h) for h in ATS_HOSTS)
-
-
-def _scan_html(html: str, base: str) -> tuple[Resolution | None, list[str]]:
-    """Find an ATS reference in a page. Also return follow-up job links."""
-    soup = BeautifulSoup(html, "lxml")
-
-    candidates = []
-    for el in soup.find_all(True):
-        for attr in ("href", "src", "action", "data-src", "data-url"):
-            val = el.get(attr)
-            if isinstance(val, str) and val:
-                candidates.append(_join(base, val))
-    # Embedded config blobs sometimes carry the board URL in inline script.
-    candidates.extend(re.findall(r"https?://[^\s\"'<>]+", html))
-
-    supported_hit, unsupported_hit = None, None
-    for url in candidates:
-        res = _match_url(url)
-        if not res:
-            continue
-        if res.supported:
-            supported_hit = supported_hit or res
-        else:
-            unsupported_hit = unsupported_hit or res
-        if supported_hit:
-            break
-
-    follow = []
-    for a in soup.find_all("a", href=True):
-        href = _join(base, a["href"])
-        text = a.get_text(" ", strip=True)
-        if href == base or not _JOB_LINK.search(f"{text} {href}"):
-            continue
-        # Same site only (subdomains count: jobs.company.com). Following
-        # off-site pages is how a company ended up with someone else's board.
-        # Off-site links straight into a job system are already caught above.
-        if _site(href) == _site(base):
-            follow.append(href)
-
-    return (supported_hit or unsupported_hit), follow[:4]
-
-
-SITE_CODE_FILES = 6            # the company's own .js files read per careers page
-SITE_CODE_MAX_CHARS = 2_000_000
-
-
-def _scan_site_code(html: str, page_url: str) -> Resolution | None:
-    """Look for a job-system address inside the company's own code files.
-
-    When a careers page fills its job table with a script, the address of the
-    job feed usually sits in one of the site's own .js files rather than in the
-    page. Only files on the company's own site are read; analytics and other
-    third-party code is skipped. Returns a supported match if one is found,
-    else an unsupported one (worth naming), else None.
+    Reads structured job data on the page if there is any, otherwise the job
+    listings on the page (following its pagination). Never leaves the page to
+    look for a job system: if the jobs aren't on this page, Column D needs the
+    job board's link instead, and NeedsLink says so.
     """
-    soup = BeautifulSoup(html, "lxml")
-    files = []
-    for el in soup.find_all(src=True):
-        src = _join(page_url, el.get("src"))
-        try:
-            is_code = urlparse(src).path.lower().endswith(".js")
-        except ValueError:
-            continue
-        if src and is_code and _site(src) == _site(page_url):
-            files.append(src)
-    unsupported = None
-    for f in list(dict.fromkeys(files))[:SITE_CODE_FILES]:
-        r = try_get(f, timeout=20)
-        if not r or len(r.text or "") > SITE_CODE_MAX_CHARS:
-            continue
-        for u in re.findall(r"https?://[^\s\"'<>`)\\]+", r.text):
-            hit = _match_url(u)
-            if hit and hit.supported:
-                return hit
-            if hit and not unsupported:
-                unsupported = hit
-    return unsupported
-
-
-def check_careers_url(url: str):
-    """Fetch the careers URL and say plainly what happened.
-
-    Returns (response or None, diagnosis). The diagnosis is empty when the
-    careers page loaded as itself; otherwise it names the problem so the sheet
-    can be fixed, rather than the run quietly reading some other page.
-    """
-    if not url:
-        return None, "no careers URL in the sheet"
-    asked = urlparse(url)
-    careers_host = re.match(r"(careers?|jobs?|join|work|talent|hiring)\.", asked.netloc, re.I)
-    if asked.path in ("", "/") and not careers_host:
-        diag = "careers URL in the sheet is the homepage"
-    else:
-        diag = ""
     try:
-        r = get(url, timeout=20)
+        r = get(url, timeout=25)
     except FetchError as exc:
-        return None, f"careers URL failed ({exc})"
+        raise NeedsLink(f"the Column D page doesn't load ({exc})") from exc
 
     body = (r.text or "").strip()
     if not body:
-        return r, "careers URL returned an empty page"
-    if not re.search(r"<\s*(html|head|body|div|a|p|h[1-6]|section|main|ul|span|meta|title|link|"
-                     r"style|form|table|img|nav|header|footer|article|!doctype)\b", body[:300000], re.I) \
-            and "application/ld+json" not in body[:300000]:
-        return r, "careers URL didn't return a web page (it returned a file or raw data)"
+        raise NeedsLink("the Column D page is empty")
+    if not _LOOKS_LIKE_HTML.search(body[:300000]) and "application/ld+json" not in body[:300000]:
+        raise NeedsLink("the Column D link isn't a web page (it returned a file or raw data)")
 
-    landed = urlparse(r.url)
-    if not diag and asked.path not in ("", "/") and landed.path in ("", "/") \
-            and not re.match(r"(careers?|jobs?|join|work|talent|hiring)\.", landed.netloc, re.I):
-        diag = "careers URL redirects to the homepage, so the page probably doesn't exist"
-    elif not diag and _site(r.url) != _site(url) and not _is_ats_host(r.url):
-        diag = f"careers URL now redirects to {landed.netloc} - update Column D to the new address"
-    return r, diag
+    asked, landed = urlparse(url), urlparse(r.url)
+    if asked.path in ("", "/") and not _CAREERS_HOST.match(asked.netloc):
+        raise NeedsLink("Column D is a homepage, not a careers page or job board")
+    if asked.path not in ("", "/") and landed.path in ("", "/") and not _CAREERS_HOST.match(landed.netloc):
+        raise NeedsLink("the Column D page redirects to the homepage, so it probably doesn't exist")
+    moved = (f"Column D now redirects to {landed.netloc} - worth updating; "
+             if _site(r.url) != _site(url) else "")
 
-
-def from_careers_page(url: str) -> Resolution | None:
-    """Find a job system that the company's own careers page points to.
-
-    Anything found this way is trusted: the company itself is linking to it.
-    """
-    # If Column D already *is* a job-system link (a Workday, Greenhouse, UKG...
-    # board), use it as-is. This is the most reliable value Column D can hold,
-    # so it shouldn't depend on loading the page first.
-    direct = _match_url(url) if url else None
-    if direct:
-        direct.source = "Column D (job system link)"
-        if not direct.supported:
-            direct.note = f"{direct.ats} detected; no adapter yet"
-        return direct
-
-    r, diag = check_careers_url(url)
-    if not r:
-        return Resolution(source="none", careers_check=diag, note=diag)
-
-    def done(res, source):
-        res.source, res.careers_check = source, diag
-        if diag:
-            res.note = diag
-        return res
-
-    # The careers URL itself may already be the ATS (redirects included).
-    for candidate in (r.url, url):
-        res = _match_url(candidate)
-        if res and res.supported:
-            return done(res, "careers-page")
-
-    res, follow = _scan_html(r.text, r.url)
-    if res and res.supported:
-        return done(res, "careers-page")
-
-    # The page itself names no job system: check the site's own code files,
-    # where scripts that fill job tables keep the feed's address.
-    in_code = _scan_site_code(r.text, r.url)
-    if in_code and in_code.supported:
-        return done(in_code, "careers-page (site code)")
-    if in_code and not res:
-        res = in_code
-
-    # One hop, same site only: "View openings" buttons and /jobs subpages.
-    for link in follow:
-        hit = _match_url(link)
-        if hit and hit.supported:
-            return done(hit, "careers-page (link)")
-        r2 = try_get(link, timeout=20)
-        if not r2:
-            continue
-        hit2 = _match_url(r2.url)
-        if hit2 and hit2.supported:
-            return done(hit2, "careers-page (1 hop)")
-        hit3, _ = _scan_html(r2.text, r2.url)
-        if hit3 and hit3.supported:
-            return done(hit3, "careers-page (1 hop)")
-        if hit3 and not res:
-            res = hit3
-
-    if res:  # only an unsupported ATS was found, which is worth naming
-        res.source, res.careers_check = "careers-page", diag
-        res.note = f"{res.ats} detected; no adapter yet"
-        return res
-
-    return Resolution(source="none", careers_check=diag or "no-link", note=diag or
-                      "careers page loaded but links to no job system "
-                      "(it probably builds its job list with JavaScript)")
-
-
-def candidate_slugs(name: str, website: str) -> list[str]:
-    base = re.sub(
-        r"\b(inc|llc|ltd|corp|corporation|company|co|group|holdings?|trust|reit|the|"
-        r"properties|property|management|services|communities|real estate|living)\b",
-        " ", name.lower())
-    words = re.sub(r"[^a-z0-9\s]", " ", base).split()
-    out: list[str] = []
-
-    def add(s):
-        s = s.strip("-")
-        if len(s) >= 3 and s not in out:
-            out.append(s)
-
-    if words:
-        add("".join(words))
-        add("-".join(words))
-    if website:
-        host = urlparse(website if "//" in website else f"//{website}").netloc.replace("www.", "")
-        if host:
-            add(host.split(".")[0])
-    add(re.sub(r"[^a-z0-9]", "", name.lower()))
-    return out[:4]
-
-
-def by_probing(company) -> Resolution | None:
-    """Guess a board from the company's name. Last resort, and never trusted.
-
-    Common names collide: a guess of "atlas" finds an AI startup, "uniti" a
-    London software company. So a guessed board is never published. It is
-    reported with a link, and only goes live once someone pins it in
-    opco_config.yml.
-
-    One mismatch is caught automatically: if the guessed board's postings live
-    on a company website, and it isn't this company's website, it's someone
-    else (that's how "evernest" found Evernest GmbH in Hamburg).
-    """
-    own_sites = {_site(u) for u in (company.website, company.careers_url) if u}
-    for slug in candidate_slugs(company.name, company.website or company.careers_url):
-        for ats in PROBEABLE:
-            try:
-                roles = ADAPTERS[ats](slug)
-            except Exception:  # noqa: BLE001 - a probe miss is expected
-                continue
-            if not roles:
-                continue
-            foreign = {_site(r.url) for r in roles
-                       if r.url and not _is_ats_host(r.url)} - own_sites
-            if own_sites and foreign:
-                log.info("  %s: guessed %s/%s rejected - postings live on %s",
-                         company.name, ats, slug, ", ".join(sorted(foreign)))
-                continue
-            return Resolution(ats=ats, slug=slug, source="guess", verified=False,
-                              note="guessed from the company name - confirm before publishing")
-    return None
-
-
-def resolve(company, overrides: dict, cache: dict, *, refresh: bool = False) -> Resolution:
-    """Most trustworthy source first: pinned, the company's own careers page,
-    JSON-LD on that page, and only then a guess (which is never published)."""
-    key = company.name.lower()
-    today = date.today().isoformat()
-
-    if key in overrides:
-        return overrides[key]
-
-    cached = cache.get(key)
-    # A changed Column D always means a fresh look, never a remembered answer.
-    if cached and cached.get("careers_url", "") != (company.careers_url or ""):
-        if cached.get("careers_url"):
-            log.info("  %s: careers URL changed in the sheet, re-checking", company.name)
-        cached = None
-    if cached and not refresh and cached.get("version", 0) == CACHE_VERSION:
-        res = Resolution(**cached)
-        if res.ats:
-            return res
-        retry_after = (date.fromisoformat(res.resolved_on or today)
-                       + timedelta(days=UNRESOLVED_RETRY_DAYS)).isoformat()
-        if today < retry_after:
-            return res
-
-    res = from_careers_page(company.careers_url)
-
-    # The company's own site, read three ways. These also run when the page
-    # named a job system we can't read yet (Dayforce, iCIMS...): if the jobs
-    # are readable on the company's own pages, that beats "unsupported".
-    refused = ""
-    blocked_by = res.ats if res.ats and not res.supported else ""
-    via = f" (applications go through {blocked_by})" if blocked_by else ""
-    for ats, label, describe in (
-        ("jsonld", "jsonld", lambda n: "schema.org markup on careers page"),
-        ("onpage", "careers-page (job list)", lambda n: f"jobs listed directly on the careers page ({n} found)"),
-        ("sitemap", "careers-site sitemap", lambda n: f"job pages found through the site's sitemap ({n} read)"),
-    ):
-        if res.supported or not company.careers_url:
-            break
-        try:
-            listed = ADAPTERS[ats](url=company.careers_url)
-        except FetchError as exc:
-            msg = str(exc)
-            if msg.startswith(("found ", "sitemap lists")):
-                refused = msg  # the page was read, but what it held wasn't trustworthy
-            continue
-        except Exception:  # noqa: BLE001
-            continue
-        res = Resolution(ats=ats, source=label, params={"url": company.careers_url},
-                         careers_check=res.careers_check,
-                         note=(res.careers_check or describe(len(listed))) + via)
-
-    if refused and not res.ats:
-        res.careers_check, res.note = "unreadable", refused
-
-    # Guess only when the careers page found nothing at all. If it found an
-    # unsupported system (Dayforce, iCIMS...), that's the real answer.
-    if not res.ats:
-        guess = by_probing(company)
-        if guess:
-            guess.careers_check = res.careers_check
-            guess.note = (res.note + " | " if res.note else "") + guess.note
-            res = guess
-
-    res.resolved_on = today
-    res.version = CACHE_VERSION
-    res.careers_url = company.careers_url or ""
-    cache[key] = res.to_dict()   # stored with fresh=False
-    res.fresh = True
-    return res
+    try:
+        return jsonld(url=r.url), moved + "read from structured job data on the page"
+    except FetchError:
+        pass
+    try:
+        return onpage(url=r.url, trusted=trusted), moved + "read from the jobs listed on the page"
+    except FetchError as exc:
+        msg = str(exc)
+        if msg.startswith("found "):
+            raise NeedsLink(f"{msg}, so nothing was published") from exc
+        raise NeedsLink("no jobs are listed on this page itself (it may load them with "
+                        "JavaScript) - put the job board's link in Column D") from exc
 
 
 # ==========================================================================
-# CORE
+# BASELINE
 # ==========================================================================
-
-"""Companies, the role filter, and run-to-run state.
-
-STATE AND THE SEPT 30 LESSON
-----------------------------
-A company that fails to scrape must never look like a company that closed all
-its roles. That error corrupts the job board and produces false "recently
-hired" signals. So:
-
-  - every company's result is checkpointed as soon as it lands, and a re-run
-    on the same day skips companies already done
-  - a failed company carries forward last good roles, marked stale, and is
-    excluded from the closed-role diff
-  - a company that drops from 5+ roles to zero in one week is treated as a
-    probable scrape failure, not a hiring freeze, and carried forward too
-"""
-
-
-import csv
-import io
-import json
-import logging
-import re
-from dataclasses import dataclass
-from datetime import date
-from pathlib import Path
-
-import yaml
-
-log = logging.getLogger(__name__)
+#
+# The only thing remembered between runs: last week's roles per company, so the
+# brief can say what's new and what closed. Stored with the board it came from,
+# so changing Column D starts that company over instead of reporting false
+# closures.
 
 ROOT = Path(__file__).resolve().parent
-STATE = ROOT / "state"
+STATE = ROOT / "state" / "opco"
+BASELINE_PATH = STATE / "baseline.json"
+LIVE_COPY = STATE / "opco_live.csv"
 SUSPICIOUS_DROP = 5
 
+# Files the previous version of this search kept in state/. Nothing reads them
+# any more; they're removed so nobody mistakes them for live data. Only these
+# exact names: state/ also holds the people-moves workflow's files.
+LEGACY_FILES = ("ats_cache.json", "last_good.json", "job_pages.json", "opco_live.csv")
 
-# ----------------------------------------------------------------- companies
+
+class Baseline:
+    def __init__(self, run_date: str | None = None):
+        self.run_date = run_date or date.today().isoformat()
+        self.data: dict = _read(BASELINE_PATH, {})
+
+    def _prev(self, company: str, board: str) -> dict | None:
+        prev = self.data.get(company)
+        return prev if prev and prev.get("board") == board else None
+
+    def carry_forward(self, company: str, reason: str, board: str) -> dict:
+        prev = self._prev(company, board)
+        if not prev:
+            return {"status": "failed", "reason": reason, "roles": []}
+        return {"status": "stale", "reason": reason, "roles": prev["roles"],
+                "stale_since": prev.get("fetched_on")}
+
+    def is_suspicious_drop(self, company: str, count: int, board: str) -> bool:
+        prev = self._prev(company, board)
+        return bool(prev) and count == 0 and len(prev.get("roles", [])) >= SUSPICIOUS_DROP
+
+    def is_first_read(self, company: str, board: str) -> bool:
+        return self._prev(company, board) is None
+
+    def save(self, results: dict) -> None:
+        for company, r in results.items():
+            if r["status"] == "ok":
+                self.data[company] = {"fetched_on": self.run_date, "board": r["board"],
+                                      "roles": r["roles"]}
+            elif r["status"] in ("needs-link", "unsupported"):
+                self.data.pop(company, None)   # no board, so no trustworthy baseline
+        _write(BASELINE_PATH, self.data)
+
+
+def remove_legacy_state() -> None:
+    old = ROOT / "state"
+    for name in LEGACY_FILES:
+        f = old / name
+        if f.exists():
+            f.unlink()
+            log.info("removed old state file %s (no longer used)", f.relative_to(ROOT))
+    for f in old.glob("checkpoint-*.json"):
+        f.unlink()
+        log.info("removed old state file %s (no longer used)", f.relative_to(ROOT))
+
+
+# ==========================================================================
+# ONE COMPANY
+# ==========================================================================
+
+def read_company(company, role_filter, baseline) -> dict:
+    """Read one company from its Column D. Always returns a result."""
+    board = classify(company.careers_url)
+    base = {"column_d": company.careers_url, "column_d_from": company.careers_from,
+            "system": board.system, "board": board.key, "note": "",
+            "roles": [], "filtered": [], "total": 0}
+
+    if not board.system:
+        return {**base, "status": "needs-link", "reason": board.problem}
+    if not board.readable:
+        return {**base, "status": "unsupported", "reason": f"{board.system} isn't supported yet"}
+
+    name = company.name
+    try:
+        if board.system == "page":
+            fetched, how = read_page(board.params["url"],
+                                     trusted=name.lower() in role_filter.trusted_pages)
+            base["note"] = how
+        else:
+            params = dict(board.params)
+            if board.system == "workday" and role_filter.search_terms.get(name.lower()):
+                params["search_terms"] = role_filter.search_terms[name.lower()]
+            fetched = READERS[board.system](board.slug, **params)
+        roles = [r.to_dict() for r in fetched if r.title]
+    except NeedsLink as exc:
+        return {**base, "status": "needs-link", "reason": str(exc)}
+    except Exception as exc:  # noqa: BLE001 - one company never sinks the run
+        reason = plain_error(exc)
+        log.warning("  %s: read failed (%s)", name, reason)
+        result = {**base, **baseline.carry_forward(name, reason, board.key)}
+    else:
+        truncated = getattr(fetched, "truncated", "")
+        if truncated:
+            base["note"] = (base["note"] + "; " if base["note"] else "") + f"cut short: {truncated}"
+        if baseline.is_suspicious_drop(name, len(roles), board.key):
+            result = {**base, **baseline.carry_forward(
+                name, "dropped to 0 roles from 5+ last week; treated as a read failure", board.key)}
+        else:
+            result = {**base, "status": "ok", "roles": roles}
+            if board.system == "page" and baseline.is_first_read(name, board.key):
+                result["spot_check"] = [r["title"] for r in roles[:5]]
+
+    result["filtered"] = []
+    for r in result["roles"]:
+        category = role_filter.categorize(r["title"], name)
+        if category:
+            result["filtered"].append({**r, "company": name, "category": category,
+                                       "status": result["status"]})
+    result["total"] = len(result["roles"])
+    return result
+
+
+def compute_diff(results: dict, baseline: Baseline, role_filter) -> dict:
+    """New and closed matching roles, for companies read cleanly both weeks
+    from the same board."""
+    new, closed = [], []
+    for company, c in results.items():
+        if c["status"] != "ok":
+            continue
+        prev = baseline._prev(company, c["board"])
+        if not prev:
+            continue
+        prev_ids = {r["id"] for r in prev["roles"]}
+        now_ids = {r["id"] for r in c["roles"]}
+        new.extend(r for r in c["filtered"] if r["id"] not in prev_ids)
+        for r in prev["roles"]:
+            if r["id"] not in now_ids:
+                category = role_filter.categorize(r["title"], company)
+                if category:
+                    closed.append({**r, "company": company, "category": category})
+    return {"new": new, "closed": closed}
+
+
+# ==========================================================================
+# COMPANIES
+# ==========================================================================
 
 @dataclass
 class Company:
@@ -1638,7 +1300,30 @@ def load_companies(path: Path) -> list[Company]:
     return parse_companies(path.read_text(encoding="utf-8-sig"), str(path))
 
 
-LIVE_COPY = STATE / "opco_live.csv"
+def find_companies_file(explicit: str | None) -> Path:
+    if explicit:
+        return Path(explicit)
+    for candidate in (ROOT.parent / "opco.csv", ROOT.parent / "data" / "opco.csv",
+                      ROOT / "opco.csv", Path("opco.csv")):
+        if candidate.exists():
+            return candidate
+    raise FileNotFoundError(
+        "opco.csv not found. Expected it at the repo root or data/opco.csv.")
+
+
+def _read(path: Path, default):
+    if not path.exists():
+        return default
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        log.warning("could not read %s; starting fresh", path)
+        return default
+
+
+def _write(path: Path, data) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
 
 
 def load_live_companies(url: str) -> tuple[list[Company], str]:
@@ -1665,21 +1350,12 @@ def load_live_companies(url: str) -> tuple[list[Company], str]:
         raise
 
 
-def find_companies_file(explicit: str | None) -> Path:
-    if explicit:
-        return Path(explicit)
-    for candidate in (ROOT.parent / "opco.csv", ROOT.parent / "data" / "opco.csv",
-                      ROOT / "opco.csv", Path("opco.csv")):
-        if candidate.exists():
-            return candidate
-    raise FileNotFoundError(
-        "opco.csv not found. Expected it at the repo root or data/opco.csv.")
-
-
-# ----------------------------------------------------------------- role filter
+# ==========================================================================
+# ROLE FILTER
+# ==========================================================================
 
 class RoleFilter:
-    """Title-keyword filter, configured in opco_config/roles.yml."""
+    """Title-keyword filter, configured in opco_config.yml."""
 
     def __init__(self, cfg: dict):
         def rx(words):
@@ -1689,8 +1365,11 @@ class RoleFilter:
         self.exclude = rx(cfg.get("exclude") or [])
         self.overrides = {}
         self.search_terms = {}
+        self.trusted_pages = set()   # pages whose listings skip the "looks like jobs" check
         for name, rule in (cfg.get("company_overrides") or {}).items():
             rule = rule or {}
+            if rule.get("trust_page"):
+                self.trusted_pages.add(name.lower())
             self.overrides[name.lower()] = {
                 "require": rx(rule.get("require") or []),
                 "exclude": rx(rule.get("exclude") or []),
@@ -1721,310 +1400,9 @@ class RoleFilter:
         return None
 
 
-# ----------------------------------------------------------------- state
-
-def _read(path: Path, default):
-    if not path.exists():
-        return default
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        log.warning("could not read %s; starting fresh", path)
-        return default
-
-
-def _write(path: Path, data) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
-
-
-class RunState:
-    def __init__(self, run_date: str | None = None):
-        self.run_date = run_date or date.today().isoformat()
-        self.cache = _read(STATE / "ats_cache.json", {})
-        self.previous = _read(STATE / "last_good.json", {})   # company -> snapshot
-        self.checkpoint_path = STATE / f"checkpoint-{self.run_date}.json"
-        self.checkpoint = _read(self.checkpoint_path, {})
-
-    def done(self, company: str) -> bool:
-        return company in self.checkpoint
-
-    def record(self, company: str, result: dict) -> None:
-        """Checkpoint one company immediately, so a crash loses nothing."""
-        self.checkpoint[company] = result
-        _write(self.checkpoint_path, self.checkpoint)
-
-    def carry_forward(self, company: str, reason: str, board: str = "") -> dict:
-        prev = self.previous.get(company)
-        # Never carry forward roles that came from a different board.
-        if prev and board and prev.get("board") and prev["board"] != board:
-            prev = None
-        if not prev:
-            return {"status": "failed", "reason": reason, "roles": [], "stale_since": None}
-        return {"status": "stale", "reason": reason, "roles": prev["roles"],
-                "stale_since": prev.get("fetched_on")}
-
-    def is_suspicious_drop(self, company: str, new_count: int) -> bool:
-        prev = self.previous.get(company)
-        return bool(prev) and new_count == 0 and len(prev.get("roles", [])) >= SUSPICIOUS_DROP
-
-    def save(self) -> None:
-        _write(STATE / "ats_cache.json", self.cache)
-        # Only fresh results become next week's baseline. Stale ones keep the
-        # older snapshot they were carried from.
-        for company, result in self.checkpoint.items():
-            status = result.get("status")
-            if status == "ok":
-                self.previous[company] = {"fetched_on": self.run_date,
-                                          "roles": result["roles"],
-                                          "board": f"{result.get('ats')}:{result.get('slug')}"}
-            elif status in ("unconfirmed", "unresolved", "unsupported"):
-                # No trustworthy board this week, so whatever was saved before
-                # can't serve as a baseline (it may be another company's jobs).
-                self.previous.pop(company, None)
-        _write(STATE / "last_good.json", self.previous)
-        # Prune checkpoints older than this run.
-        for old in STATE.glob("checkpoint-*.json"):
-            if old.name != self.checkpoint_path.name:
-                old.unlink(missing_ok=True)
-
-
 # ==========================================================================
-# REPORT
+# ERRORS
 # ==========================================================================
-
-"""Weekly brief: new roles, closed roles, all open roles, and coverage.
-
-Three outputs per run:
-  out/opco-jobs-<date>.md     the brief, with a direct link on every role
-  out/opco-jobs-latest.json   machine-readable; this is the file the
-                              people-moves `reqs` source can read
-  out/opco-jobs-<date>.csv    flat table, for pasting into a sheet or Airtable
-"""
-
-
-import csv
-import json
-from pathlib import Path
-
-CATEGORY_LABEL = {"executive": "Executive", "sales": "Sales", "gtm": "GTM",
-                  "engineering": "Engineering", "operators": "Operators"}
-
-
-def _line(r: dict) -> str:
-    bits = [f"[{r['title']}]({r['url']})" if r.get("url") else r["title"]]
-    if r.get("location"):
-        bits.append(r["location"])
-    return " — ".join(bits)
-
-
-def _attention_section(results: dict) -> list[str]:
-    """Everything a human needs to act on, grouped by what to do about it."""
-    guessed = {n: c for n, c in results.items() if c.get("status") == "unconfirmed"}
-    bad_url = {n: c for n, c in results.items()
-               if c.get("careers_check") and c["careers_check"] not in ("no-link", "unreadable")}
-    no_link = {n: c for n, c in results.items()
-               if c.get("status") == "unresolved" and c.get("careers_check") == "no-link"}
-    no_adapter = {n: c for n, c in results.items() if c.get("status") == "unsupported"}
-    cut = {n: c for n, c in results.items() if str(c.get("note", "")).startswith("cut short")}
-    refused = {n: c for n, c in results.items()
-               if c.get("status") == "unresolved" and c.get("careers_check") == "unreadable"}
-    spot = {n: c for n, c in results.items() if c.get("spot_check")}
-    failed = {n: c for n, c in results.items() if c.get("status") == "failed"}
-
-    if not any((guessed, bad_url, no_link, no_adapter, cut, refused, spot, failed)):
-        return []
-
-    md = ["## Needs your attention", ""]
-    if guessed:
-        md += [f"### Confirm these job boards ({len(guessed)})", "",
-               "*Guessed from the company name, so their roles are held back from this "
-               "brief. Open each link and check it's the right company. Wrong ones need "
-               "nothing; they stay held back.*", ""]
-        for name, c in sorted(guessed.items()):
-            md.append(f"- **{name}** — [{c['ats']} board: {c['slug']}]({c['board_url']}) "
-                      f"· {c.get('total', 0)} roles, e.g. {'; '.join(c.get('samples', [])[:3])}")
-        # No `ats_overrides:` header (pasting a second one would wipe the
-        # existing pins) and every entry commented out, so pasting the whole
-        # block changes nothing until someone deliberately confirms an entry.
-        md += ["", "*To confirm one: paste its lines under the existing `ats_overrides:` line "
-               "in opco_config.yml and delete the `#` at the start of each.*", "", "```yaml"]
-        for name, c in sorted(guessed.items()):
-            md += [f"  # {name}:", f"  #   ats: {c['ats']}", f"  #   slug: {c['slug']}"]
-        md += ["```", ""]
-    if bad_url:
-        md += [f"### Fix the careers URL in the sheet ({len(bad_url)})", ""]
-        for name, c in sorted(bad_url.items()):
-            url = c.get("careers_url") or ""
-            md.append(f"- **{name}** — {c['careers_check']}" + (f" · `{url}`" if url else ""))
-        md.append("")
-    if no_link:
-        md += [f"### Careers page found, but no job system on it ({len(no_link)})", "",
-               "*The page loaded but contains no link to a job system — usually because it "
-               "builds the job list with JavaScript. Check the page: if jobs show, note "
-               "which system the Apply button goes to and pin it in opco_config.yml.*", ""]
-        for name, c in sorted(no_link.items()):
-            md.append(f"- **{name}** · {c.get('careers_url', '')}")
-        md.append("")
-    if failed:
-        md += [f"### Failed this week ({len(failed)})", "",
-               "*Something went wrong reading these. Last week's roles are carried forward "
-               "where there were any, and they're left out of new/closed so a failure never "
-               "reads as a hire.*", ""]
-        for name, c in sorted(failed.items()):
-            md.append(f"- **{name}** — {c.get('reason') or 'unknown error'}")
-        md.append("")
-    if refused:
-        md += [f"### Read the page, but didn't trust what it found ({len(refused)})", "",
-               "*The scraper found something on these pages but it didn't look like job "
-               "listings, so nothing was published. If the page really does list jobs, pin it "
-               "in opco_config.yml (`ats: onpage` or `ats: sitemap`) to override.*", ""]
-        for name, c in sorted(refused.items()):
-            md.append(f"- **{name}** — {c.get('note', '')}")
-        md.append("")
-    if spot:
-        md += [f"### Read for the first time from page layout — spot-check once ({len(spot)})", "",
-               "*These have no job system, so their jobs were read from how the page is laid "
-               "out. They're published, but glance at the titles once to confirm they're real "
-               "jobs. They won't be listed here again unless the careers URL changes.*", ""]
-        for name, c in sorted(spot.items()):
-            md.append(f"- **{name}** — {'; '.join(c['spot_check'][:4])}")
-        md.append("")
-    if no_adapter:
-        md += [f"### Job system found, but not supported yet ({len(no_adapter)})", ""]
-        for name, c in sorted(no_adapter.items()):
-            md.append(f"- **{name}** — {c.get('ats')}")
-        md.append("")
-    if cut:
-        md += [f"### Results cut short ({len(cut)})", ""]
-        for name, c in sorted(cut.items()):
-            md.append(f"- **{name}** — {c['note']}")
-        md.append("")
-    return md
-
-
-def write_report(results: dict, diff: dict, run_date: str, first_run: bool, out_dir: Path,
-                 source: str = "") -> Path:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    open_roles = [r for c in results.values() for r in c.get("filtered", [])]
-    companies_with_roles = sorted({r["company"] for r in open_roles})
-
-    md = [f"# OpCo job search — week of {run_date}", ""]
-    md.append(f"{len(open_roles)} matching roles open across "
-              f"{len(companies_with_roles)} of {len(results)} companies.")
-    if source:
-        md += ["", f"Company list and careers URLs read from: **{source}**."]
-    md += ["", "> Open each link before it goes in the newsletter. Postings move.", ""]
-    md += _attention_section(results)
-
-    if first_run:
-        md += ["*First run: this is the baseline. New-this-week and recently-closed "
-               "sections start next week.*", ""]
-    else:
-        new = diff["new"]
-        md += [f"## New this week ({len(new)})", ""]
-        if new:
-            for r in sorted(new, key=lambda x: (x["company"], x["title"])):
-                md.append(f"- **{r['company']}** · {CATEGORY_LABEL.get(r['category'], r['category'])} · {_line(r)}")
-        else:
-            md.append("No new matching roles.")
-        md.append("")
-
-        closed = diff["closed"]
-        md += [f"## Recently closed ({len(closed)})", "",
-               "*Roles that were open last week and are gone now — the \"recently "
-               "hired\" signal. Closed usually means filled, but can mean pulled. "
-               "Companies that failed to scrape this week are excluded so a broken "
-               "fetch never reads as a hire.*", ""]
-        if closed:
-            for r in sorted(closed, key=lambda x: (x["company"], x["title"])):
-                md.append(f"- **{r['company']}** · {r['title']}"
-                          + (f" — {r['location']}" if r.get("location") else ""))
-        else:
-            md.append("No matching roles closed.")
-        md.append("")
-
-    md += ["## All open roles", ""]
-    for company in companies_with_roles:
-        roles = [r for r in open_roles if r["company"] == company]
-        stale = results[company].get("status") == "stale"
-        md.append(f"### {company} ({len(roles)})"
-                  + (f" — *carried forward from {results[company].get('stale_since')}*" if stale else ""))
-
-        # Large operators post one title per region (Greystar: "Regional Vice
-        # President" x4). Collapse those to one line so the brief stays
-        # readable; the JSON and CSV keep every posting.
-        groups: dict[tuple, list] = {}
-        for r in roles:
-            groups.setdefault((r["category"], r["title"]), []).append(r)
-        for (category, title), group in sorted(groups.items()):
-            label = CATEGORY_LABEL.get(category, category)
-            if len(group) == 1:
-                md.append(f"- {label} · {_line(group[0])}")
-            else:
-                places = sorted({g["location"] for g in group if g.get("location")})
-                where = f" — {', '.join(places[:5])}{'…' if len(places) > 5 else ''}" if places else ""
-                md.append(f"- {label} · [{title}]({group[0]['url']}) "
-                          f"**({len(group)} openings)**{where}")
-        md.append("")
-
-    # Coverage: the part that tells you what to fix.
-    md += ["## Coverage", "",
-           "*Every company, the exact careers URL checked (from Column D unless noted), "
-           "and what happened.*", "",
-           "| Company | Careers URL checked | ATS | Status | Roles (all / matching) | Note |",
-           "|---|---|---|---|---|---|"]
-    order = {"ok": 0, "stale": 1, "unconfirmed": 2, "unsupported": 3, "failed": 4, "unresolved": 5}
-    for name, c in sorted(results.items(), key=lambda kv: (order.get(kv[1]["status"], 9), kv[0])):
-        url = c.get("careers_url") or ""
-        checked = f"[{url.split('//')[-1][:45]}]({url})" if url else "— (Column D empty)"
-        if url and c.get("careers_from", "").startswith("Column B"):
-            checked += " *(from Column B)*"
-        md.append(f"| {name} | {checked} | {c.get('ats') or '—'} | {c['status']} | "
-                  f"{c.get('total', 0)} / {len(c.get('filtered', []))} | "
-                  f"{(c.get('reason') or c.get('note') or '').replace('|', '/')} |")
-    md.append("")
-
-    counts = {}
-    for c in results.values():
-        counts[c["status"]] = counts.get(c["status"], 0) + 1
-    md.append("**Status:** " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
-    md.append("")
-
-    text = "\n".join(md)
-    dated = out_dir / f"opco-jobs-{run_date}.md"
-    dated.write_text(text, encoding="utf-8")
-    (out_dir / "opco-jobs-latest.md").write_text(text, encoding="utf-8")
-
-    (out_dir / "opco-jobs-latest.json").write_text(json.dumps({
-        "run_date": run_date,
-        "roles": open_roles,
-        "new": diff["new"],
-        "closed": diff["closed"],
-        "coverage": {k: {kk: v for kk, v in c.items() if kk not in ("roles", "filtered")}
-                     for k, c in results.items()},
-    }, indent=2), encoding="utf-8")
-
-    with (out_dir / f"opco-jobs-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=["company", "category", "title", "location",
-                                           "url", "posted", "status"])
-        w.writeheader()
-        for r in open_roles:
-            w.writerow({k: r.get(k, "") for k in w.fieldnames})
-
-    return dated
-
-
-# ==========================================================================
-# MAIN
-# ==========================================================================
-
-log = logging.getLogger("opco")
-CONFIG_PATH = ROOT / "opco_config.yml"
-
-
-LAYOUT_SOURCES = ("careers-page (job list)", "careers-site sitemap", "jsonld")
-
 
 def plain_error(exc: Exception) -> str:
     """What went wrong, in words a person can act on."""
@@ -2038,123 +1416,204 @@ def plain_error(exc: Exception) -> str:
     return f"unexpected error ({detail})"
 
 
-def fetch_company(company, res, role_filter, state) -> dict:
-    base = {"ats": res.ats, "slug": res.slug, "source": res.source, "note": res.note,
-            "careers_url": company.careers_url, "careers_from": company.careers_from,
-            "careers_check": res.careers_check,
-            "verified": res.verified}
+CATEGORY_LABEL = {"executive": "Executive", "sales": "Sales", "gtm": "GTM",
+                  "engineering": "Engineering", "operators": "Operators"}
 
-    if not res.ats:
-        return {**base, "status": "unresolved", "reason": res.note, "roles": [], "filtered": []}
-    if not res.supported:
-        return {**base, "status": "unsupported", "reason": f"{res.ats} has no adapter yet",
-                "roles": [], "filtered": []}
 
-    try:
-        params = dict(res.params)
-        if res.ats in ("jsonld", "onpage", "sitemap"):
-            params.setdefault("url", company.careers_url)
-        if res.source == "override" and res.ats in ("onpage", "sitemap"):
-            params["trusted"] = True  # a person confirmed this page reads correctly
-        if res.ats == "workday" and role_filter.search_terms.get(company.name.lower()):
-            params["search_terms"] = role_filter.search_terms[company.name.lower()]
-        fetched = ADAPTERS[res.ats](res.slug, **params)
-        truncated = getattr(fetched, "truncated", "")
-        if truncated:
-            log.warning("  %s: results cut short (%s) - add search_terms in opco_config.yml",
-                        company.name, truncated)
-            base["note"] = f"cut short: {truncated}; add search_terms in opco_config.yml"
-        roles = [r.to_dict() for r in fetched if r.title]  # untitled records aren't jobs
-    except Exception as exc:  # noqa: BLE001 — one company must never sink the run
-        reason = plain_error(exc)
-        log.warning("  %s: fetch failed (%s)", company.name, reason)
-        # Before giving up, try reading the company's own careers pages. Only
-        # when Column D is the company's site (not the job board itself), and
-        # never for a guess.
-        fallback = None
-        if (res.verified and res.ats not in ("onpage", "sitemap", "jsonld")
-                and company.careers_url and not _is_ats_host(company.careers_url)):
-            for alt in ("onpage", "sitemap"):
-                try:
-                    alt_roles = [r.to_dict() for r in ADAPTERS[alt](url=company.careers_url) if r.title]
-                except Exception:  # noqa: BLE001
-                    continue
-                if alt_roles:
-                    fallback = (alt, alt_roles)
-                    break
-        if fallback:
-            log.info("  %s: read %d roles from its own pages instead", company.name, len(fallback[1]))
-            base["ats"] = fallback[0]
-            base["note"] = (f"{res.ats} couldn't be read this week ({reason}); "
-                            f"jobs read from the company's own pages instead")
-            result = {**base, "status": "ok", "roles": fallback[1]}
-        else:
-            result = {**base, **state.carry_forward(company.name, reason, f"{res.ats}:{res.slug}")}
+def _line(r: dict) -> str:
+    bits = [f"[{r['title']}]({r['url']})" if r.get("url") else r["title"]]
+    if r.get("location"):
+        bits.append(r["location"])
+    return " — ".join(bits)
+
+
+# ==========================================================================
+# REPORT
+# ==========================================================================
+
+STATUS_ORDER = {"ok": 0, "stale": 1, "failed": 2, "unsupported": 3, "needs-link": 4}
+
+
+def _attention(results: dict) -> list[str]:
+    """Everything that needs a person, grouped by what to do about it."""
+    needs = {n: c for n, c in results.items() if c["status"] == "needs-link"}
+    unsupported = {n: c for n, c in results.items() if c["status"] == "unsupported"}
+    failed = {n: c for n, c in results.items() if c["status"] in ("failed", "stale")}
+    spot = {n: c for n, c in results.items() if c.get("spot_check")}
+    cut = {n: c for n, c in results.items() if "cut short" in (c.get("note") or "")}
+    moved = {n: c for n, c in results.items()
+             if c["status"] == "ok" and "now redirects" in (c.get("note") or "")}
+    if not any((needs, unsupported, failed, spot, cut, moved)):
+        return []
+
+    md = ["## Needs your attention", ""]
+    if needs:
+        md += [f"### Needs a job-board link in Column D ({len(needs)})", "",
+               "*Fix: open the company's careers page, click any job, and paste the address "
+               "it lands on into Column D (drop the part that names the specific job). If "
+               "the jobs are listed on the company's own page, that page's address works too.*", ""]
+        for n, c in sorted(needs.items()):
+            md.append(f"- **{n}** — {c['reason']}")
+        md.append("")
+    if unsupported:
+        by_system: dict[str, list[str]] = {}
+        for n, c in unsupported.items():
+            by_system.setdefault(c["system"], []).append(n)
+        md += [f"### Job system not supported yet ({len(unsupported)})", "",
+               "*Column D is fine; the scraper has no reader for this system yet. "
+               "Ordered by how many companies a reader would unlock.*", ""]
+        for system, names in sorted(by_system.items(), key=lambda kv: (-len(kv[1]), kv[0])):
+            md.append(f"- **{system}** ({len(names)}) — {', '.join(sorted(names))}")
+        md.append("")
+    if failed:
+        md += [f"### Failed this week ({len(failed)})", "",
+               "*Reading went wrong. Last week's roles are carried forward where there were "
+               "any, and these are left out of new/closed so a failure never reads as a hire.*", ""]
+        for n, c in sorted(failed.items()):
+            md.append(f"- **{n}** — {c.get('reason') or 'unknown error'}")
+        md.append("")
+    if spot:
+        md += [f"### Read from a page for the first time — spot-check once ({len(spot)})", "",
+               "*These have no job system, so their jobs were read from the page in Column D. "
+               "Published normally; glance at the titles once to confirm they're real jobs.*", ""]
+        for n, c in sorted(spot.items()):
+            md.append(f"- **{n}** — {'; '.join(c['spot_check'][:4])}")
+        md.append("")
+    if moved:
+        md += [f"### Works, but Column D has moved ({len(moved)})", ""]
+        for n, c in sorted(moved.items()):
+            md.append(f"- **{n}** — {c['note'].split(';')[0]}")
+        md.append("")
+    if cut:
+        md += [f"### Results cut short ({len(cut)})", ""]
+        for n, c in sorted(cut.items()):
+            md.append(f"- **{n}** — {c['note']}")
+        md.append("")
+    return md
+
+
+def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
+                 out_dir: Path, source: str) -> Path:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    open_roles = [r for c in results.values() for r in c.get("filtered", [])]
+    with_roles = sorted({r["company"] for r in open_roles})
+    readable = sum(1 for c in results.values() if c["status"] in ("ok", "stale"))
+
+    md = [f"# OpCo job search — week of {run_date}", "",
+          f"{len(open_roles)} matching roles across {len(with_roles)} companies. "
+          f"{readable} of {len(results)} companies read from their Column D.", "",
+          f"Company list read from: **{source}**.", "",
+          "> Open each link before it goes in the newsletter. Postings move.", ""]
+    md += _attention(results)
+
+    if first_run:
+        md += ["*First run of this version: this is the baseline. New-this-week and "
+               "recently-closed start next week.*", ""]
     else:
-        if state.is_suspicious_drop(company.name, len(roles)):
-            reason = "dropped to 0 roles from 5+ last week; treated as a scrape failure"
-            log.warning("  %s: %s", company.name, reason)
-            result = {**base, **state.carry_forward(company.name, reason, f"{res.ats}:{res.slug}")}
+        md += [f"## New this week ({len(diff['new'])})", ""]
+        md += ([f"- **{r['company']}** · {CATEGORY_LABEL.get(r['category'], r['category'])} · {_line(r)}"
+                for r in sorted(diff["new"], key=lambda x: (x["company"], x["title"]))]
+               or ["No new matching roles."])
+        md += ["", f"## Recently closed ({len(diff['closed'])})", "",
+               "*Open last week, gone now — the \"recently hired\" signal. Closed usually means "
+               "filled, but can mean pulled. Companies that failed this week are left out.*", ""]
+        md += ([f"- **{r['company']}** · {r['title']}" + (f" — {r['location']}" if r.get("location") else "")
+                for r in sorted(diff["closed"], key=lambda x: (x["company"], x["title"]))]
+               or ["No matching roles closed."])
+        md.append("")
+
+    md += ["## All open roles", ""]
+    for company in with_roles:
+        roles = [r for r in open_roles if r["company"] == company]
+        c = results[company]
+        md.append(f"### {company} ({len(roles)})"
+                  + (f" — *carried forward from {c.get('stale_since')}*" if c["status"] == "stale" else ""))
+        groups: dict[tuple, list] = {}
+        for r in roles:
+            groups.setdefault((r["category"], r["title"]), []).append(r)
+        for (category, title), group in sorted(groups.items()):
+            label = CATEGORY_LABEL.get(category, category)
+            if len(group) == 1:
+                md.append(f"- {label} · {_line(group[0])}")
+            else:
+                places = sorted({g["location"] for g in group if g.get("location")})
+                where = f" — {', '.join(places[:5])}{'…' if len(places) > 5 else ''}" if places else ""
+                md.append(f"- {label} · [{title}]({group[0]['url']}) **({len(group)} openings)**{where}")
+        md.append("")
+
+    md += ["## Coverage", "",
+           "| Company | Column D | System | Status | Roles (all / matching) | Note |",
+           "|---|---|---|---|---|---|"]
+    for n, c in sorted(results.items(), key=lambda kv: (STATUS_ORDER.get(kv[1]["status"], 9), kv[0])):
+        d = c.get("column_d") or ""
+        shown = f"[{d.split('//')[-1][:45]}]({d})" if d.startswith("http") else (d[:45] or "— empty")
+        if d and str(c.get("column_d_from", "")).startswith("Column B"):
+            shown += " *(from Column B)*"
+        note = (c.get("reason") or c.get("note") or "").replace("|", "/")
+        md.append(f"| {n} | {shown} | {c.get('system') or '—'} | {c['status']} | "
+                  f"{c.get('total', 0)} / {len(c.get('filtered', []))} | {note} |")
+    counts: dict[str, int] = {}
+    for c in results.values():
+        counts[c["status"]] = counts.get(c["status"], 0) + 1
+    md += ["", "**Status:** " + ", ".join(f"{k} {v}" for k, v in
+                                          sorted(counts.items(), key=lambda kv: STATUS_ORDER.get(kv[0], 9))), ""]
+
+    text = "\n".join(md)
+    path = out_dir / f"opco-jobs-{run_date}.md"
+    path.write_text(text, encoding="utf-8")
+    (out_dir / "opco-jobs-latest.md").write_text(text, encoding="utf-8")
+    (out_dir / "opco-jobs-latest.json").write_text(json.dumps({
+        "run_date": run_date, "roles": open_roles, "new": diff["new"], "closed": diff["closed"],
+        "coverage": {n: {k: v for k, v in c.items() if k not in ("roles", "filtered")}
+                     for n, c in results.items()},
+    }, indent=2), encoding="utf-8")
+    with (out_dir / f"opco-jobs-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=["company", "category", "title", "location", "url",
+                                           "posted", "status"])
+        w.writeheader()
+        for r in open_roles:
+            w.writerow({k: r.get(k, "") for k in w.fieldnames})
+    return path
+
+
+def write_column_d_check(companies, out_dir: Path) -> Path:
+    """--discover: what each Column D is, without reading any jobs."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    rows = []
+    for c in companies:
+        b = classify(c.careers_url)
+        if not b.system:
+            verdict = f"needs a link — {b.problem}"
+        elif b.system == "page":
+            verdict = "a web page — jobs will be read from the page itself"
+        elif b.readable:
+            verdict = f"{b.system} job board — ready"
         else:
-            result = {**base, "status": "ok", "roles": roles}
-
-    # A guessed board is never published. Keep a few titles as evidence so the
-    # brief can show what was found, and let a human pin it if it's right.
-    if not res.verified and result["status"] == "ok":
-        board = BOARD_URL.get(res.ats, "").format(slug=res.slug)
-        return {**result, "status": "unconfirmed", "board_url": board,
-                "samples": [f"{r['title']} ({r['location']})" if r.get("location") else r["title"]
-                            for r in result["roles"][:4]],
-                "filtered": [], "total": len(result["roles"]), "roles": []}
-
-    # The first time a company is read from page layout (not a job system),
-    # list it once for a human spot-check. Published normally either way.
-    if result["status"] == "ok" and res.source in LAYOUT_SOURCES and res.fresh:
-        result["spot_check"] = [r["title"] for r in result["roles"][:5]]
-
-    filtered = []
-    for r in result["roles"]:
-        category = role_filter.categorize(r["title"], company.name)
-        if category:
-            filtered.append({**r, "company": company.name, "category": category,
-                             "status": result["status"]})
-    result["filtered"] = filtered
-    result["total"] = len(result["roles"])
-    return result
+            verdict = f"{b.system} — not supported yet"
+        rows.append((c.name, c.careers_url, verdict))
+    md = ["# Column D check", "", "| Company | Column D | What it is |", "|---|---|---|"]
+    md += [f"| {n} | {d[:70] or '— empty'} | {v} |" for n, d, v in rows]
+    path = out_dir / "opco-columnd-check.md"
+    path.write_text("\n".join(md) + "\n", encoding="utf-8")
+    return path
 
 
-def compute_diff(results: dict, state: RunState, role_filter) -> dict:
-    """New and closed matching roles, for companies scraped cleanly both weeks."""
-    new, closed = [], []
-    for company, c in results.items():
-        if c["status"] != "ok":
-            continue  # stale/failed companies are excluded from the diff
-        prev = state.previous.get(company)
-        if not prev:
-            continue
-        # Board changed since last week (e.g. a guess was replaced by a pinned
-        # board): this week is a fresh baseline, not a wave of closures.
-        if prev.get("board") and prev["board"] != f"{c.get('ats')}:{c.get('slug')}":
-            continue
-        prev_ids = {r["id"] for r in prev["roles"]}
-        now_ids = {r["id"] for r in c["roles"]}
-        new.extend(r for r in c["filtered"] if r["id"] not in prev_ids)
-        for r in prev["roles"]:
-            if r["id"] in now_ids:
-                continue
-            category = role_filter.categorize(r["title"], company)
-            if category:
-                closed.append({**r, "company": company, "category": category})
-    return {"new": new, "closed": closed}
+# ==========================================================================
+# MAIN
+# ==========================================================================
+
+CONFIG_PATH = ROOT / "opco_config.yml"
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--companies", help="path to opco.csv (default: auto-find)")
+    p.add_argument("--companies", help="path to opco.csv (default: live sheet or repo copy)")
     p.add_argument("--only", help="comma-separated company names")
-    p.add_argument("--discover", action="store_true", help="resolve ATS only")
-    p.add_argument("--refresh-ats", action="store_true", help="ignore the ATS cache")
+    p.add_argument("--discover", action="store_true",
+                   help="check what each Column D is, without reading jobs")
+    p.add_argument("--refresh-ats", action="store_true",
+                   help="no longer does anything: nothing is cached between runs")
     p.add_argument("--config", default=str(CONFIG_PATH))
     p.add_argument("--out", default=str(ROOT / "out"))
     p.add_argument("-v", "--verbose", action="store_true")
@@ -2162,6 +1621,8 @@ def main() -> int:
 
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(levelname)-7s %(message)s")
+    if args.refresh_ats:
+        log.info("--refresh-ats has no effect: this version caches nothing between runs")
 
     config_path = Path(args.config)
     if not config_path.exists():
@@ -2169,23 +1630,19 @@ def main() -> int:
         return 2
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
 
-    # Where the company list (and Column D) comes from, most current first.
     sheet_url = str(config.get("sheet_csv_url") or "").strip()
     try:
         if args.companies:
-            companies, source = load_companies(Path(args.companies)), f"file {args.companies}"
+            companies, source = load_companies(Path(args.companies)), f"file {Path(args.companies).name}"
         elif sheet_url:
             try:
                 companies, source = load_live_companies(sheet_url)
             except (FetchError, ValueError) as exc:
                 path = find_companies_file(None)
-                companies = load_companies(path)
-                source = f"repo copy {path.name} - live sheet unavailable: {exc}"
+                companies, source = load_companies(path), f"repo copy {path.name} (live sheet unavailable: {exc})"
         else:
             path = find_companies_file(None)
-            companies, source = load_companies(path), (
-                f"repo copy {path.name} (set sheet_csv_url in opco_config.yml to read "
-                "the live sheet instead)")
+            companies, source = load_companies(path), f"repo copy {path.name}"
     except (FileNotFoundError, ValueError) as exc:
         log.error("%s", exc)
         return 2
@@ -2195,83 +1652,57 @@ def main() -> int:
         wanted = {n.strip().lower() for n in args.only.split(",")}
         companies = [c for c in companies if c.name.lower() in wanted]
 
+    if args.discover:
+        path = write_column_d_check(companies, Path(args.out))
+        log.info("Column D check written to %s", path)
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            with open(summary, "a", encoding="utf-8") as fh:
+                fh.write(path.read_text(encoding="utf-8"))
+        return 0
+
+    remove_legacy_state()
     role_filter = RoleFilter(config)
-    overrides = load_overrides(config.get("ats_overrides"))
-    state = RunState()
-    first_run = not state.previous
+    baseline = Baseline()
+    first_run = not baseline.data
 
     results: dict = {}
     for i, company in enumerate(companies, 1):
-        if state.done(company.name) and not args.discover:
-            results[company.name] = state.checkpoint[company.name]
-            log.info("[%2d/%d] %s - already done today, skipping", i, len(companies), company.name)
-            continue
-
         try:
-            res = resolve(company, overrides, state.cache, refresh=args.refresh_ats)
+            result = read_company(company, role_filter, baseline)
         except Exception as exc:  # noqa: BLE001 - recorded, never dropped
-            log.error("  %s: detection crashed\n%s", company.name, traceback.format_exc())
-            result = {"ats": "", "slug": "", "source": "", "status": "failed",
-                      "reason": f"couldn't inspect this careers page - {plain_error(exc)}",
-                      "careers_url": company.careers_url, "careers_from": company.careers_from,
-                      "careers_check": "", "verified": True, "roles": [], "filtered": [], "total": 0}
-            results[company.name] = result
-            if not args.discover:
-                state.record(company.name, result)
-            continue
-
-        log.info("[%2d/%d] %-34s %-15s %s", i, len(companies), company.name[:34],
-                 res.ats or "-", res.source)
-        if args.discover:
-            results[company.name] = {"ats": res.ats, "status": "discover",
-                                     "note": res.note, "roles": [], "filtered": []}
-            continue
-
-        try:
-            result = fetch_company(company, res, role_filter, state)
-        except Exception as exc:  # noqa: BLE001 - recorded, never dropped
-            log.error("  %s: processing crashed\n%s", company.name, traceback.format_exc())
-            result = {"ats": res.ats, "slug": res.slug, "source": res.source,
-                      **state.carry_forward(company.name, plain_error(exc), f"{res.ats}:{res.slug}"),
-                      "careers_url": company.careers_url, "careers_check": res.careers_check,
-                      "verified": res.verified, "filtered": [], "total": 0}
+            log.error("  %s: crashed\n%s", company.name, traceback.format_exc())
+            result = {"column_d": company.careers_url, "column_d_from": company.careers_from,
+                      "system": "", "board": "", "note": "", "status": "failed",
+                      "reason": plain_error(exc), "roles": [], "filtered": [], "total": 0}
         results[company.name] = result
-        state.record(company.name, result)
+        log.info("[%2d/%d] %-34s %-11s %-11s %d/%d", i, len(companies), company.name[:34],
+                 result.get("system") or "-", result["status"],
+                 result["total"], len(result["filtered"]))
 
-    if args.discover:
-        state.save()
-        resolved = sum(1 for r in results.values() if r["ats"])
-        log.info("")
-        log.info("Resolved %d of %d. Cached for next run.", resolved, len(results))
-        for name, r in results.items():
-            if not r["ats"] or r["ats"] not in ADAPTERS:
-                log.info("  needs attention: %-34s %s", name, r.get("note") or r.get("ats"))
-        return 0
-
-    diff = compute_diff(results, state, role_filter) if not first_run else {"new": [], "closed": []}
-    state.save()
+    diff = {"new": [], "closed": []} if first_run else compute_diff(results, baseline, role_filter)
+    baseline.save(results)
     try:
-        path = write_report(results, diff, state.run_date, first_run, Path(args.out), source)
+        path = write_report(results, diff, baseline.run_date, first_run, Path(args.out), source)
     except Exception:  # noqa: BLE001 - always leave something readable
         log.error("report failed, writing a plain fallback\n%s", traceback.format_exc())
-        out_dir = Path(args.out); out_dir.mkdir(parents=True, exist_ok=True)
-        path = out_dir / f"opco-jobs-{state.run_date}.md"
-        lines = [f"# OpCo job search - {state.run_date} (plain fallback: the full report failed)", ""]
-        for name, c in sorted(results.items()):
-            lines.append(f"## {name} - {c.get('status')} - {c.get('reason') or c.get('note') or ''}")
-            for r in c.get("filtered", []):
-                lines.append(f"- {r.get('title')} - {r.get('location')} - {r.get('url')}")
+        out_dir = Path(args.out)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        path = out_dir / f"opco-jobs-{baseline.run_date}.md"
+        lines = [f"# OpCo job search - {baseline.run_date} (plain fallback)", ""]
+        for n, c in sorted(results.items()):
+            lines.append(f"## {n} - {c['status']} - {c.get('reason') or c.get('note') or ''}")
+            lines += [f"- {r['title']} - {r.get('location', '')} - {r.get('url', '')}"
+                      for r in c.get("filtered", [])]
         path.write_text("\n".join(lines), encoding="utf-8")
 
-    ok = sum(1 for r in results.values() if r["status"] == "ok")
+    ok = sum(1 for c in results.values() if c["status"] == "ok")
     log.info("")
-    log.info("%d/%d companies scraped cleanly -> %s", ok, len(results), path)
-
+    log.info("%d/%d companies read cleanly -> %s", ok, len(results), path)
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as fh:
             fh.write(path.read_text(encoding="utf-8"))
-
     return 0 if ok or not results else 1
 
 
