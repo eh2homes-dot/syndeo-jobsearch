@@ -1,5 +1,6 @@
 {
   "Atlas Real Estate": {
+    "board": "ashby:atlas",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -61,6 +62,7 @@
     ]
   },
   "BH Management Services": {
+    "board": "workday:pretiumenterpriseservices",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -1378,6 +1380,7 @@
     ]
   },
   "Belong": {
+    "board": "workable:belong-6",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -1423,6 +1426,7 @@
     ]
   },
   "Doorstead": {
+    "board": "breezy:doorstead",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -2164,6 +2168,7 @@
     ]
   },
   "EPR Properties": {
+    "board": "bamboohr:eprproperties",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -2177,6 +2182,7 @@
     ]
   },
   "Evernest Property Management": {
+    "board": "greenhouse:evernest",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -3046,6 +3052,7 @@
     ]
   },
   "Flock Homes": {
+    "board": "greenhouse:flockhomes",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -3067,6 +3074,7 @@
     ]
   },
   "Greystar": {
+    "board": "workday:greystar",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -7872,6 +7880,7 @@
     ]
   },
   "Highwoods Properties": {
+    "board": "ukg:HIG1001HIW",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -7917,6 +7926,7 @@
     ]
   },
   "Industrious": {
+    "board": "ashby:industrious",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -8394,6 +8404,7 @@
     ]
   },
   "Kasa Living": {
+    "board": "greenhouse:kasa",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -8519,10 +8530,12 @@
     ]
   },
   "PURE Homeriver Group": {
+    "board": "adp:eea42ed6-3dcf-47f3-b99b-29a304948b2b",
     "fetched_on": "2026-10-06",
     "roles": []
   },
   "Renters Warehouse": {
+    "board": "adp:0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -8624,6 +8637,7 @@
     ]
   },
   "Uniti Group": {
+    "board": "ashby:uniti",
     "fetched_on": "2026-10-06",
     "roles": [
       {
@@ -8693,6 +8707,7 @@
     ]
   },
   "WeWork": {
+    "board": "workday:wework",
     "fetched_on": "2026-10-06",
     "roles": [
       {

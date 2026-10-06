@@ -2,9 +2,34 @@
 
 35 matching roles open across 10 of 42 companies.
 
+Company list and careers URLs read from: **file /home/runner/work/syndeo-jobsearch/syndeo-jobsearch/opco.csv**.
+
 > Open each link before it goes in the newsletter. Postings move.
 
-*First run: this is the baseline. New-this-week and recently-closed sections start next week.*
+## Needs your attention
+
+### Failed this week (1)
+
+*Something went wrong reading these. Last week's roles are carried forward where there were any, and they're left out of new/closed so a failure never reads as a hire.*
+
+- **Divvy Homes** — HTTP 404
+
+### Job system found, but not supported yet (4)
+
+- **Alexander & Baldwin** — dayforce
+- **Picerne Real Estate Group** — jazzhr
+- **Real Property Management** — paradox
+- **Redstone** — paylocity
+
+## New this week (0)
+
+No new matching roles.
+
+## Recently closed (0)
+
+*Roles that were open last week and are gone now — the "recently hired" signal. Closed usually means filled, but can mean pulled. Companies that failed to scrape this week are excluded so a broken fetch never reads as a hire.*
+
+No matching roles closed.
 
 ## All open roles
 
@@ -63,49 +88,51 @@
 
 ## Coverage
 
-| Company | ATS | Status | Roles (all / matching) | Note |
-|---|---|---|---|---|
-| Atlas Real Estate | ashby | ok | 7 / 5 | probed slug, 7 roles live |
-| BH Management Services | workday | ok | 164 / 2 |  |
-| Belong | workable | ok | 5 / 1 | Confirmed slug from the job board's adapter work |
-| Doorstead | breezy | ok | 92 / 0 | probed slug, 92 roles live |
-| EPR Properties | bamboohr | ok | 1 / 0 |  |
-| Evernest Property Management | greenhouse | ok | 108 / 6 | probed slug, 108 roles live |
-| Flock Homes | greenhouse | ok | 2 / 1 |  |
-| Greystar | workday | ok | 600 / 0 |  |
-| Highwoods Properties | ukg | ok | 5 / 0 |  |
-| Industrious | ashby | ok | 59 / 3 | probed slug, 59 roles live |
-| Kasa Living | greenhouse | ok | 15 / 5 | probed slug, 15 roles live |
-| PURE Homeriver Group | adp | ok | 0 / 0 |  |
-| Renters Warehouse | adp | ok | 12 / 2 |  |
-| Uniti Group | ashby | ok | 8 / 6 | probed slug, 8 roles live |
-| WeWork | workday | ok | 74 / 4 |  |
-| Alexander & Baldwin | dayforce | unsupported | 0 / 0 | dayforce has no adapter yet |
-| Picerne Real Estate Group | jazzhr | unsupported | 0 / 0 | jazzhr has no adapter yet |
-| Real Property Management | paradox | unsupported | 0 / 0 | paradox has no adapter yet |
-| Redstone | paylocity | unsupported | 0 / 0 | paylocity has no adapter yet |
-| Divvy Homes | greenhouse | failed | 0 / 0 | HTTP 404 |
-| Atria Senior Living | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Case & Associates | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Cohen-Esrey Communities | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| EastGroup Properties | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Easterly Government Properties | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Evergreen Live | — | unresolved | 0 / 0 | no careers URL |
-| Evergreen Residential | — | unresolved | 0 / 0 | no careers URL |
-| Key Renter Property Managment | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Kite Realty Group Trust | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Lamar Advertising Company | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Medical Properties Trust | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Mountain Property Management | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Mynd | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| NARPM (National Association of Residential Property Managers) Job Board | — | unresolved | 0 / 0 | no careers URL |
-| Northpoint Asset Manamgement | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Oakbrook Corporation | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| PMI | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Rhome Property Management | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Starwood Property Trust | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Tamarack Property Management | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| The Lund Company | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
-| Veris Residential | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+*Every company, the exact careers URL checked (from Column D unless noted), and what happened.*
+
+| Company | Careers URL checked | ATS | Status | Roles (all / matching) | Note |
+|---|---|---|---|---|---|
+| Atlas Real Estate | — (Column D empty) | ashby | ok | 7 / 5 | probed slug, 7 roles live |
+| BH Management Services | — (Column D empty) | workday | ok | 164 / 2 |  |
+| Belong | — (Column D empty) | workable | ok | 5 / 1 | Confirmed slug from the job board's adapter work |
+| Doorstead | — (Column D empty) | breezy | ok | 92 / 0 | probed slug, 92 roles live |
+| EPR Properties | — (Column D empty) | bamboohr | ok | 1 / 0 |  |
+| Evernest Property Management | — (Column D empty) | greenhouse | ok | 108 / 6 | probed slug, 108 roles live |
+| Flock Homes | — (Column D empty) | greenhouse | ok | 2 / 1 |  |
+| Greystar | — (Column D empty) | workday | ok | 600 / 0 |  |
+| Highwoods Properties | — (Column D empty) | ukg | ok | 5 / 0 |  |
+| Industrious | — (Column D empty) | ashby | ok | 59 / 3 | probed slug, 59 roles live |
+| Kasa Living | — (Column D empty) | greenhouse | ok | 15 / 5 | probed slug, 15 roles live |
+| PURE Homeriver Group | — (Column D empty) | adp | ok | 0 / 0 |  |
+| Renters Warehouse | — (Column D empty) | adp | ok | 12 / 2 |  |
+| Uniti Group | — (Column D empty) | ashby | ok | 8 / 6 | probed slug, 8 roles live |
+| WeWork | — (Column D empty) | workday | ok | 74 / 4 |  |
+| Alexander & Baldwin | — (Column D empty) | dayforce | unsupported | 0 / 0 | dayforce has no adapter yet |
+| Picerne Real Estate Group | — (Column D empty) | jazzhr | unsupported | 0 / 0 | jazzhr has no adapter yet |
+| Real Property Management | — (Column D empty) | paradox | unsupported | 0 / 0 | paradox has no adapter yet |
+| Redstone | — (Column D empty) | paylocity | unsupported | 0 / 0 | paylocity has no adapter yet |
+| Divvy Homes | — (Column D empty) | greenhouse | failed | 0 / 0 | HTTP 404 |
+| Atria Senior Living | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Case & Associates | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Cohen-Esrey Communities | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| EastGroup Properties | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Easterly Government Properties | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Evergreen Live | — (Column D empty) | — | unresolved | 0 / 0 | no careers URL |
+| Evergreen Residential | — (Column D empty) | — | unresolved | 0 / 0 | no careers URL |
+| Key Renter Property Managment | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Kite Realty Group Trust | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Lamar Advertising Company | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Medical Properties Trust | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Mountain Property Management | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Mynd | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| NARPM (National Association of Residential Property Managers) Job Board | — (Column D empty) | — | unresolved | 0 / 0 | no careers URL |
+| Northpoint Asset Manamgement | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Oakbrook Corporation | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| PMI | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Rhome Property Management | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Starwood Property Trust | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Tamarack Property Management | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| The Lund Company | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
+| Veris Residential | — (Column D empty) | — | unresolved | 0 / 0 | no ATS found on careers page or by probing |
 
 **Status:** failed 1, ok 15, unresolved 22, unsupported 4
