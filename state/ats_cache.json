@@ -1,0 +1,342 @@
+{
+  "alexander & baldwin": {
+    "ats": "dayforce",
+    "note": "dayforce detected; no adapter yet",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "careers-page"
+  },
+  "atlas real estate": {
+    "ats": "ashby",
+    "note": "probed slug, 7 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "atlas",
+    "source": "probe"
+  },
+  "atria senior living": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "bh management services": {
+    "ats": "workday",
+    "note": "",
+    "params": {
+      "host": "pretiumenterpriseservices.wd1.myworkdayjobs.com",
+      "site": "livebhcareers"
+    },
+    "resolved_on": "2026-10-06",
+    "slug": "pretiumenterpriseservices",
+    "source": "careers-page (1 hop)"
+  },
+  "case & associates": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "cohen-esrey communities": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "divvy homes": {
+    "ats": "greenhouse",
+    "note": "",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "divvyhomes",
+    "source": "careers-page"
+  },
+  "doorstead": {
+    "ats": "breezy",
+    "note": "probed slug, 92 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "doorstead",
+    "source": "probe"
+  },
+  "easterly government properties": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "eastgroup properties": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "epr properties": {
+    "ats": "bamboohr",
+    "note": "",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "eprproperties",
+    "source": "careers-page"
+  },
+  "evergreen live": {
+    "ats": "",
+    "note": "no careers URL",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "evergreen residential": {
+    "ats": "",
+    "note": "no careers URL",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "evernest property management": {
+    "ats": "greenhouse",
+    "note": "probed slug, 108 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "evernest",
+    "source": "probe"
+  },
+  "flock homes": {
+    "ats": "greenhouse",
+    "note": "",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "flockhomes",
+    "source": "careers-page"
+  },
+  "greystar": {
+    "ats": "workday",
+    "note": "",
+    "params": {
+      "host": "greystar.wd1.myworkdayjobs.com",
+      "site": "External"
+    },
+    "resolved_on": "2026-10-06",
+    "slug": "greystar",
+    "source": "careers-page"
+  },
+  "highwoods properties": {
+    "ats": "ukg",
+    "note": "",
+    "params": {
+      "board": "cf2a3a89-ceb7-4bb7-aa13-3167c6417621",
+      "host": "recruiting.ultipro.com"
+    },
+    "resolved_on": "2026-10-06",
+    "slug": "HIG1001HIW",
+    "source": "careers-page"
+  },
+  "industrious": {
+    "ats": "ashby",
+    "note": "probed slug, 59 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "industrious",
+    "source": "probe"
+  },
+  "kasa living": {
+    "ats": "greenhouse",
+    "note": "probed slug, 15 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "kasa",
+    "source": "probe"
+  },
+  "key renter property managment": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "kite realty group trust": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "lamar advertising company": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "medical properties trust": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "mountain property management": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "mynd": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "narpm (national association of residential property managers) job board": {
+    "ats": "",
+    "note": "no careers URL",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "northpoint asset manamgement": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "oakbrook corporation": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "picerne real estate group": {
+    "ats": "jazzhr",
+    "note": "jazzhr detected; no adapter yet",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "picerne",
+    "source": "careers-page"
+  },
+  "pmi": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "pure homeriver group": {
+    "ats": "adp",
+    "note": "",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "eea42ed6-3dcf-47f3-b99b-29a304948b2b",
+    "source": "careers-page"
+  },
+  "real property management": {
+    "ats": "paradox",
+    "note": "paradox detected; no adapter yet",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "careers-page"
+  },
+  "redstone": {
+    "ats": "paylocity",
+    "note": "paylocity detected; no adapter yet",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "careers-page"
+  },
+  "renters warehouse": {
+    "ats": "adp",
+    "note": "",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
+    "source": "careers-page"
+  },
+  "rhome property management": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "starwood property trust": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "tamarack property management": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "the lund company": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "uniti group": {
+    "ats": "ashby",
+    "note": "probed slug, 8 roles live",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "uniti",
+    "source": "probe"
+  },
+  "veris residential": {
+    "ats": "",
+    "note": "no ATS found on careers page or by probing",
+    "params": {},
+    "resolved_on": "2026-10-06",
+    "slug": "",
+    "source": "none"
+  },
+  "wework": {
+    "ats": "workday",
+    "note": "",
+    "params": {
+      "host": "wework.wd1.myworkdayjobs.com",
+      "site": "WeWork"
+    },
+    "resolved_on": "2026-10-06",
+    "slug": "wework",
+    "source": "careers-page"
+  }
+}
