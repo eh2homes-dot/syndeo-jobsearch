@@ -18,7 +18,7 @@
 # Publishing makes that one tab readable by anyone with the link. Since this
 # repo is public, the opco.csv in it already is, so this adds no new exposure.
 # ---------------------------------------------------------------------------
-sheet_csv_url:https://docs.google.com/spreadsheets/d/e/2PACX-1vTSwmVSPJRHEhczKBKMoy2qM5V45fqKzJTxdygsppLrj-Q8Gx9LpJXg4BA3biaue5UqAqzVWTGEq5Uk/pub?gid=586376452&single=true&output=csv
+sheet_csv_url: https://docs.google.com/spreadsheets/d/e/2PACX-1vTSwmVSPJRHEhczKBKMoy2qM5V45fqKzJTxdygsppLrj-Q8Gx9LpJXg4BA3biaue5UqAqzVWTGEq5Uk/pub?gid=586376452&single=true&output=csv
 
 # Which open roles make the weekly brief.
 #
