@@ -4,6 +4,22 @@
 # which open roles make the weekly brief.
 
 # ---------------------------------------------------------------------------
+# Read the company list live from the master sheet's OpCo tab.
+#
+# With this set, every run reads Column D (Careers Page URL) straight from the
+# sheet, so a careers URL you fix there is used the very next run. No more
+# exporting opco.csv. Leave it blank to keep using the opco.csv in the repo.
+#
+# To get the URL: in the sheet, File > Share > Publish to web. Under "Link",
+# choose the OpCo tab (not "Entire document") and "Comma-separated values
+# (.csv)", click Publish, and paste the link below.
+#
+# Publishing makes that one tab readable by anyone with the link. Since this
+# repo is public, the opco.csv in it already is, so this adds no new exposure.
+# ---------------------------------------------------------------------------
+sheet_csv_url:
+
+# ---------------------------------------------------------------------------
 # Pinned ATS. Anything listed here skips detection entirely.
 #
 #   Company Name:            must match the sheet exactly
@@ -17,6 +33,9 @@ ats_overrides:
     ats: workable
     slug: belong-6
     note: Confirmed slug from the job board's adapter work
+
+  # Boards the weekly brief asks you to confirm go here. The brief prints a
+  # ready-to-paste snippet; only add the ones you've checked are right.
 
 # Which open roles make the weekly brief.
 #
@@ -108,7 +127,17 @@ exclude:
 # Per-company rules, applied on top of the above.
 company_overrides:
   Greystar:
-    # Corporate and leadership only. Greystar posts thousands of site roles.
+    # Corporate and leadership only. Greystar posts thousands of site roles,
+    # so a plain fetch fills up on leasing and maintenance jobs before it ever
+    # reaches a corporate one. These run as separate Workday keyword searches
+    # instead. Works for any Workday company: add search_terms the same way.
+    search_terms:
+      - Vice President
+      - Director
+      - Chief
+      - Head of
+      - Corporate
+      - Managing Director
     require:
       - vice president
       - VP
