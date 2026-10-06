@@ -1,6 +1,7 @@
 # OpCo job search configuration.
 #
-# Two things live here: which ATS a company uses when you already know it, and
+# Which ATS a company uses is no longer set here: Column D of the sheet decides
+# that. This file holds two things: where to read the company list from, and
 # which open roles make the weekly brief.
 
 # ---------------------------------------------------------------------------
@@ -18,24 +19,6 @@
 # repo is public, the opco.csv in it already is, so this adds no new exposure.
 # ---------------------------------------------------------------------------
 sheet_csv_url:
-
-# ---------------------------------------------------------------------------
-# Pinned ATS. Anything listed here skips detection entirely.
-#
-#   Company Name:            must match the sheet exactly
-#     ats:   workday | ukg | greenhouse | lever | ashby | workable |
-#            smartrecruiters | recruitee | breezy | bamboohr | adp | jsonld
-#     slug:  the company's id in that system (Workday: the tenant)
-#     host / site / board:   Workday and UKG only
-# ---------------------------------------------------------------------------
-ats_overrides:
-  Belong:
-    ats: workable
-    slug: belong-6
-    note: Confirmed slug from the job board's adapter work
-
-  # Boards the weekly brief asks you to confirm go here. The brief prints a
-  # ready-to-paste snippet; only add the ones you've checked are right.
 
 # Which open roles make the weekly brief.
 #
@@ -154,3 +137,9 @@ company_overrides:
       - community manager
       - assistant manager
       - leasing
+
+  # If a company's jobs are read from a web page in Column D and the brief
+  # refuses them because they don't look like job titles, but you've checked and
+  # they are real jobs, add the company here with trust_page: true.
+  # Medical Properties Trust:
+  #   trust_page: true
