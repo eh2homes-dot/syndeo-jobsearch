@@ -1,6 +1,74 @@
 {
+  "Alexander & Baldwin": {
+    "ats": "dayforce",
+    "filtered": [],
+    "note": "dayforce detected; no adapter yet",
+    "reason": "dayforce has no adapter yet",
+    "roles": [],
+    "slug": "",
+    "source": "careers-page",
+    "status": "unsupported"
+  },
   "Atlas Real Estate": {
-    "fetched_on": "2026-10-06",
+    "ats": "ashby",
+    "filtered": [
+      {
+        "category": "engineering",
+        "company": "Atlas Real Estate",
+        "department": "Engineering",
+        "id": "ab-dae00fcb-35a5-4559-8114-7553138b3ea3",
+        "location": "San Francisco",
+        "posted": "2026-02-24",
+        "status": "ok",
+        "title": "Founding Applied AI Engineer",
+        "url": "https://jobs.ashbyhq.com/atlas/dae00fcb-35a5-4559-8114-7553138b3ea3"
+      },
+      {
+        "category": "executive",
+        "company": "Atlas Real Estate",
+        "department": "Credit",
+        "id": "ab-d2ef3a53-f40c-439c-b308-0c16cc265e5b",
+        "location": "New York",
+        "posted": "2026-06-17",
+        "status": "ok",
+        "title": "Head of Credit & Underwriting",
+        "url": "https://jobs.ashbyhq.com/atlas/d2ef3a53-f40c-439c-b308-0c16cc265e5b"
+      },
+      {
+        "category": "gtm",
+        "company": "Atlas Real Estate",
+        "department": "Growth",
+        "id": "ab-80aa9c37-1f1b-42b5-b5a3-c6c2750a62db",
+        "location": "New York",
+        "posted": "2026-06-18",
+        "status": "ok",
+        "title": "Growth",
+        "url": "https://jobs.ashbyhq.com/atlas/80aa9c37-1f1b-42b5-b5a3-c6c2750a62db"
+      },
+      {
+        "category": "gtm",
+        "company": "Atlas Real Estate",
+        "department": "Marketing",
+        "id": "ab-685686cb-5fc7-4dd9-83e6-f63c5368b798",
+        "location": "New York",
+        "posted": "2026-07-20",
+        "status": "ok",
+        "title": "Email Marketing Operations Consultant \u2013 Contract",
+        "url": "https://jobs.ashbyhq.com/atlas/685686cb-5fc7-4dd9-83e6-f63c5368b798"
+      },
+      {
+        "category": "executive",
+        "company": "Atlas Real Estate",
+        "department": "Growth",
+        "id": "ab-b3d7fdc0-21f5-4b47-a857-b7d1a4f0cae0",
+        "location": "New York",
+        "posted": "2026-08-21",
+        "status": "ok",
+        "title": "Head of Growth",
+        "url": "https://jobs.ashbyhq.com/atlas/b3d7fdc0-21f5-4b47-a857-b7d1a4f0cae0"
+      }
+    ],
+    "note": "probed slug, 7 roles live",
     "roles": [
       {
         "department": "Engineering",
@@ -58,10 +126,49 @@
         "title": "Head of Growth",
         "url": "https://jobs.ashbyhq.com/atlas/b3d7fdc0-21f5-4b47-a857-b7d1a4f0cae0"
       }
-    ]
+    ],
+    "slug": "atlas",
+    "source": "probe",
+    "status": "ok",
+    "total": 7
+  },
+  "Atria Senior Living": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
   },
   "BH Management Services": {
-    "fetched_on": "2026-10-06",
+    "ats": "workday",
+    "filtered": [
+      {
+        "category": "gtm",
+        "company": "BH Management Services",
+        "department": "",
+        "id": "wd-pretiumenterpriseservices-JR117037",
+        "location": "Remote - Open",
+        "posted": "Posted 5 Days Ago",
+        "status": "ok",
+        "title": "Marketing Strategist, Digital & Paid Media",
+        "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/Remote---Open/Marketing-Strategist--Digital---Paid-Media_JR117037"
+      },
+      {
+        "category": "engineering",
+        "company": "BH Management Services",
+        "department": "",
+        "id": "wd-pretiumenterpriseservices-JR117013",
+        "location": "2 Locations",
+        "posted": "Posted 7 Days Ago",
+        "status": "ok",
+        "title": "UI/UX Developer II",
+        "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/Remote---Open/UI-UX-Developer-II_JR117013"
+      }
+    ],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -1375,10 +1482,28 @@
         "title": "Service Technician II",
         "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/The-Champion-at-Bluegrass-Apartments-BH/Service-Technician-II_JR115516"
       }
-    ]
+    ],
+    "slug": "pretiumenterpriseservices",
+    "source": "careers-page (1 hop)",
+    "status": "ok",
+    "total": 164
   },
   "Belong": {
-    "fetched_on": "2026-10-06",
+    "ats": "workable",
+    "filtered": [
+      {
+        "category": "gtm",
+        "company": "Belong",
+        "department": null,
+        "id": "wk-996A05186B",
+        "location": "Buenos Aires, Buenos Aires",
+        "posted": "2026-09-30",
+        "status": "ok",
+        "title": "Growth Advisor, Leasing",
+        "url": "https://apply.workable.com/j/996A05186B"
+      }
+    ],
+    "note": "Confirmed slug from the job board's adapter work",
     "roles": [
       {
         "department": "Experience",
@@ -1420,10 +1545,48 @@
         "title": "Senior Accountant",
         "url": "https://apply.workable.com/j/24F57D7BFE"
       }
-    ]
+    ],
+    "slug": "belong-6",
+    "source": "override",
+    "status": "ok",
+    "total": 5
+  },
+  "Case & Associates": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Cohen-Esrey Communities": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Divvy Homes": {
+    "ats": "greenhouse",
+    "filtered": [],
+    "note": "",
+    "reason": "HTTP 404",
+    "roles": [],
+    "slug": "divvyhomes",
+    "source": "careers-page",
+    "stale_since": null,
+    "status": "failed",
+    "total": 0
   },
   "Doorstead": {
-    "fetched_on": "2026-10-06",
+    "ats": "breezy",
+    "filtered": [],
+    "note": "probed slug, 92 roles live",
     "roles": [
       {
         "department": "Field Ops",
@@ -2161,10 +2324,16 @@
         "title": "Showing Agent - Rental Property Showings - Paid per showing",
         "url": "https://doorstead.breezy.hr/p/c2067f818330-showing-agent-rental-property-showings--paid-per-showing"
       }
-    ]
+    ],
+    "slug": "doorstead",
+    "source": "probe",
+    "status": "ok",
+    "total": 92
   },
   "EPR Properties": {
-    "fetched_on": "2026-10-06",
+    "ats": "bamboohr",
+    "filtered": [],
+    "note": "",
     "roles": [
       {
         "department": "Lease Operations",
@@ -2174,10 +2343,123 @@
         "title": "Property Accountant",
         "url": "https://eprproperties.bamboohr.com/careers/43"
       }
-    ]
+    ],
+    "slug": "eprproperties",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 1
+  },
+  "EastGroup Properties": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Easterly Government Properties": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Evergreen Live": {
+    "ats": "",
+    "filtered": [],
+    "note": "no careers URL",
+    "reason": "no careers URL",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Evergreen Residential": {
+    "ats": "",
+    "filtered": [],
+    "note": "no careers URL",
+    "reason": "no careers URL",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
   },
   "Evernest Property Management": {
-    "fetched_on": "2026-10-06",
+    "ats": "greenhouse",
+    "filtered": [
+      {
+        "category": "engineering",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4957926101",
+        "location": "Hamburg, Germany",
+        "posted": "2026-08-21",
+        "status": "ok",
+        "title": "Data Engineer  (Focus AI & Data Platform) (m/w/d)",
+        "url": "https://www.evernest.com/de/karriere/job/4957926101/?gh_jid=4957926101"
+      },
+      {
+        "category": "gtm",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4961211101",
+        "location": "Hamburg",
+        "posted": "2026-08-26",
+        "status": "ok",
+        "title": "Expansion Manager (m/w/d) Agent Growth",
+        "url": "https://www.evernest.com/de/karriere/job/4961211101/?gh_jid=4961211101"
+      },
+      {
+        "category": "gtm",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4963072101",
+        "location": "Berlin",
+        "posted": "2026-08-28",
+        "status": "ok",
+        "title": "Expansion Manager (m/w/d) Agent Growth",
+        "url": "https://www.evernest.com/de/karriere/job/4963072101/?gh_jid=4963072101"
+      },
+      {
+        "category": "gtm",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4417229101",
+        "location": "Hamburg, Hamburg, Germany",
+        "posted": "2026-08-12",
+        "status": "ok",
+        "title": "Performance Marketing Manager (m/w/d)",
+        "url": "https://www.evernest.com/de/karriere/job/4417229101/?gh_jid=4417229101"
+      },
+      {
+        "category": "sales",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4822613101",
+        "location": "M\u00fcnster, North Rhine-Westphalia, Germany",
+        "posted": "2026-08-12",
+        "status": "ok",
+        "title": "(Senior) Sales Manager - M\u00fcnster (m/w/d)",
+        "url": "https://www.evernest.com/de/karriere/job/4822613101/?gh_jid=4822613101"
+      },
+      {
+        "category": "executive",
+        "company": "Evernest Property Management",
+        "department": "",
+        "id": "gh-4935464101",
+        "location": "Hamburg, Hamburg, Germany",
+        "posted": "2026-08-12",
+        "status": "ok",
+        "title": "Vice President Sales (m/w/d) Hamburg ",
+        "url": "https://www.evernest.com/de/karriere/job/4935464101/?gh_jid=4935464101"
+      }
+    ],
+    "note": "probed slug, 108 roles live",
     "roles": [
       {
         "department": "",
@@ -3043,10 +3325,28 @@
         "title": "Werkstudent Social Media  (m/w/d)",
         "url": "https://www.evernest.com/de/karriere/job/4871838101/?gh_jid=4871838101"
       }
-    ]
+    ],
+    "slug": "evernest",
+    "source": "probe",
+    "status": "ok",
+    "total": 108
   },
   "Flock Homes": {
-    "fetched_on": "2026-10-06",
+    "ats": "greenhouse",
+    "filtered": [
+      {
+        "category": "engineering",
+        "company": "Flock Homes",
+        "department": "",
+        "id": "gh-4719723005",
+        "location": "San Franciso or Denver",
+        "posted": "2026-08-20",
+        "status": "ok",
+        "title": "Full Stack Software Engineer",
+        "url": "https://job-boards.greenhouse.io/flockhomes/jobs/4719723005"
+      }
+    ],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -3064,10 +3364,16 @@
         "title": "Full Stack Software Engineer",
         "url": "https://job-boards.greenhouse.io/flockhomes/jobs/4719723005"
       }
-    ]
+    ],
+    "slug": "flockhomes",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 2
   },
   "Greystar": {
-    "fetched_on": "2026-10-06",
+    "ats": "workday",
+    "filtered": [],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -7869,10 +8175,16 @@
         "title": "Maintenance Supervisor (BTR) - Frame Med Center",
         "url": "https://greystar.wd1.myworkdayjobs.com/External/job/Frame-Med-Center-San-Antonio-TX/Maintenance-Supervisor--BTR----Frame-Med-Center_R0202000"
       }
-    ]
+    ],
+    "slug": "greystar",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 600
   },
   "Highwoods Properties": {
-    "fetched_on": "2026-10-06",
+    "ats": "ukg",
+    "filtered": [],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -7914,10 +8226,50 @@
         "title": "Maintenance Technician",
         "url": "https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/OpportunityDetail?opportunityId=fa402171-f196-4ceb-a293-bb5706876040"
       }
-    ]
+    ],
+    "slug": "HIG1001HIW",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 5
   },
   "Industrious": {
-    "fetched_on": "2026-10-06",
+    "ats": "ashby",
+    "filtered": [
+      {
+        "category": "engineering",
+        "company": "Industrious",
+        "department": "Engineering",
+        "id": "ab-a750a9f3-7a16-4e0e-ae14-0260eabd3e07",
+        "location": "NYC - 12 E 49th St (Tower 49)",
+        "posted": "2026-09-09",
+        "status": "ok",
+        "title": "Tech Lead, DevOps Engineer",
+        "url": "https://jobs.ashbyhq.com/industrious/a750a9f3-7a16-4e0e-ae14-0260eabd3e07"
+      },
+      {
+        "category": "sales",
+        "company": "Industrious",
+        "department": "Sales",
+        "id": "ab-7490c8f9-5cc8-4493-875b-864d9c96b33f",
+        "location": "Los Angeles - 1925 Century Park E (Century City)",
+        "posted": "2026-09-08",
+        "status": "ok",
+        "title": "Assistant Regional Sales Manager",
+        "url": "https://jobs.ashbyhq.com/industrious/7490c8f9-5cc8-4493-875b-864d9c96b33f"
+      },
+      {
+        "category": "engineering",
+        "company": "Industrious",
+        "department": "All Departments",
+        "id": "ab-04849166-225c-4330-822a-297776431f83",
+        "location": "NYC - 12 E 49th St (Tower 49)",
+        "posted": "2026-09-11",
+        "status": "ok",
+        "title": "Senior Backend Engineer",
+        "url": "https://jobs.ashbyhq.com/industrious/04849166-225c-4330-822a-297776431f83"
+      }
+    ],
+    "note": "probed slug, 59 roles live",
     "roles": [
       {
         "department": "Unit Ops",
@@ -8391,10 +8743,72 @@
         "title": "Member Experience Manager - Silicon Valley",
         "url": "https://jobs.ashbyhq.com/industrious/f2556832-8d15-41c5-b33c-8ec65b17723f"
       }
-    ]
+    ],
+    "slug": "industrious",
+    "source": "probe",
+    "status": "ok",
+    "total": 59
   },
   "Kasa Living": {
-    "fetched_on": "2026-10-06",
+    "ats": "greenhouse",
+    "filtered": [
+      {
+        "category": "sales",
+        "company": "Kasa Living",
+        "department": "",
+        "id": "gh-7985822003",
+        "location": "Remote (United States)",
+        "posted": "2026-09-09",
+        "status": "ok",
+        "title": "Area Sales Manager - West",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/7985822003"
+      },
+      {
+        "category": "sales",
+        "company": "Kasa Living",
+        "department": "",
+        "id": "gh-7978071003",
+        "location": "Remote (United States)",
+        "posted": "2026-09-03",
+        "status": "ok",
+        "title": "Associate Director, National & Regional Sales",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/7978071003"
+      },
+      {
+        "category": "sales",
+        "company": "Kasa Living",
+        "department": "",
+        "id": "gh-7978069003",
+        "location": "Remote",
+        "posted": "2026-09-03",
+        "status": "ok",
+        "title": "National Sales Manager",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/7978069003"
+      },
+      {
+        "category": "sales",
+        "company": "Kasa Living",
+        "department": "",
+        "id": "gh-7811738003",
+        "location": "Remote",
+        "posted": "2026-10-01",
+        "status": "ok",
+        "title": "Portfolio Revenue Manager",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/7811738003"
+      },
+      {
+        "category": "sales",
+        "company": "Kasa Living",
+        "department": "",
+        "id": "gh-8002784003",
+        "location": "Los Angeles, CA",
+        "posted": "2026-09-28",
+        "status": "ok",
+        "title": "Sales Manager",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8002784003"
+      }
+    ],
+    "note": "probed slug, 15 roles live",
     "roles": [
       {
         "department": "",
@@ -8516,14 +8930,179 @@
         "title": "Senior Operations Manager",
         "url": "https://job-boards.greenhouse.io/kasa/jobs/7978230003"
       }
-    ]
+    ],
+    "slug": "kasa",
+    "source": "probe",
+    "status": "ok",
+    "total": 15
+  },
+  "Key Renter Property Managment": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Kite Realty Group Trust": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Lamar Advertising Company": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Medical Properties Trust": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Mountain Property Management": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Mynd": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "NARPM (National Association of Residential Property Managers) Job Board": {
+    "ats": "",
+    "filtered": [],
+    "note": "no careers URL",
+    "reason": "no careers URL",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Northpoint Asset Manamgement": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Oakbrook Corporation": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "PMI": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
   },
   "PURE Homeriver Group": {
-    "fetched_on": "2026-10-06",
-    "roles": []
+    "ats": "adp",
+    "filtered": [],
+    "note": "",
+    "roles": [],
+    "slug": "eea42ed6-3dcf-47f3-b99b-29a304948b2b",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 0
+  },
+  "Picerne Real Estate Group": {
+    "ats": "jazzhr",
+    "filtered": [],
+    "note": "jazzhr detected; no adapter yet",
+    "reason": "jazzhr has no adapter yet",
+    "roles": [],
+    "slug": "picerne",
+    "source": "careers-page",
+    "status": "unsupported"
+  },
+  "Real Property Management": {
+    "ats": "paradox",
+    "filtered": [],
+    "note": "paradox detected; no adapter yet",
+    "reason": "paradox has no adapter yet",
+    "roles": [],
+    "slug": "",
+    "source": "careers-page",
+    "status": "unsupported"
+  },
+  "Redstone": {
+    "ats": "paylocity",
+    "filtered": [],
+    "note": "paylocity detected; no adapter yet",
+    "reason": "paylocity has no adapter yet",
+    "roles": [],
+    "slug": "",
+    "source": "careers-page",
+    "status": "unsupported"
   },
   "Renters Warehouse": {
-    "fetched_on": "2026-10-06",
+    "ats": "adp",
+    "filtered": [
+      {
+        "category": "sales",
+        "company": "Renters Warehouse",
+        "department": "",
+        "id": "adp-25868749_1",
+        "location": "Tempe, AZ",
+        "posted": "2026-06-26",
+        "status": "ok",
+        "title": "BUSINESS DEVELOPMENT MANAGER ",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=25868749_1"
+      },
+      {
+        "category": "sales",
+        "company": "Renters Warehouse",
+        "department": "",
+        "id": "adp-25863430_1",
+        "location": "Minneapolis, MN",
+        "posted": "2026-06-25",
+        "status": "ok",
+        "title": "BUSINESS DEVELOPMENT MANAGER ",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=25863430_1"
+      }
+    ],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -8621,10 +9200,123 @@
         "title": "PROPERTY ACCOUNTING MANAGER - A/P",
         "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=25578606_1"
       }
-    ]
+    ],
+    "slug": "0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 12
+  },
+  "Rhome Property Management": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Starwood Property Trust": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "Tamarack Property Management": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
+  },
+  "The Lund Company": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
   },
   "Uniti Group": {
-    "fetched_on": "2026-10-06",
+    "ats": "ashby",
+    "filtered": [
+      {
+        "category": "engineering",
+        "company": "Uniti Group",
+        "department": "Engineering & Product",
+        "id": "ab-1f2d6d5e-9c35-4399-bc27-5b1ac9dd05a3",
+        "location": "New York City or London",
+        "posted": "2026-09-21",
+        "status": "ok",
+        "title": "Staff/Principal Product Engineer",
+        "url": "https://jobs.ashbyhq.com/uniti/1f2d6d5e-9c35-4399-bc27-5b1ac9dd05a3"
+      },
+      {
+        "category": "engineering",
+        "company": "Uniti Group",
+        "department": "Engineering & Product",
+        "id": "ab-9a9a6d2c-7201-40a0-8b31-d294a6683d36",
+        "location": "Uniti HQ",
+        "posted": "2026-02-27",
+        "status": "ok",
+        "title": "Staff/Principal Software Engineer",
+        "url": "https://jobs.ashbyhq.com/uniti/9a9a6d2c-7201-40a0-8b31-d294a6683d36"
+      },
+      {
+        "category": "sales",
+        "company": "Uniti Group",
+        "department": "Sales",
+        "id": "ab-c4587660-c300-4288-b4dd-785f5f40d29d",
+        "location": "Uniti HQ",
+        "posted": "2026-05-20",
+        "status": "ok",
+        "title": "Account Executive",
+        "url": "https://jobs.ashbyhq.com/uniti/c4587660-c300-4288-b4dd-785f5f40d29d"
+      },
+      {
+        "category": "gtm",
+        "company": "Uniti Group",
+        "department": "Customer Success",
+        "id": "ab-008eda1d-b382-423e-9791-d1abfef4ddc4",
+        "location": "Uniti HQ",
+        "posted": "2026-06-03",
+        "status": "ok",
+        "title": "Customer Success Manager",
+        "url": "https://jobs.ashbyhq.com/uniti/008eda1d-b382-423e-9791-d1abfef4ddc4"
+      },
+      {
+        "category": "gtm",
+        "company": "Uniti Group",
+        "department": "Customer Success",
+        "id": "ab-2a2b0247-6e24-4127-ba47-e038eaa320e9",
+        "location": "Remote - London",
+        "posted": "2026-08-24",
+        "status": "ok",
+        "title": "Customer Success Manager (International)",
+        "url": "https://jobs.ashbyhq.com/uniti/2a2b0247-6e24-4127-ba47-e038eaa320e9"
+      },
+      {
+        "category": "gtm",
+        "company": "Uniti Group",
+        "department": "Marketing",
+        "id": "ab-bb81cdbe-ca14-4a92-9bba-f2a61ae95194",
+        "location": "Remote",
+        "posted": "2026-09-22",
+        "status": "ok",
+        "title": "Growth Marketing Manager",
+        "url": "https://jobs.ashbyhq.com/uniti/bb81cdbe-ca14-4a92-9bba-f2a61ae95194"
+      }
+    ],
+    "note": "probed slug, 8 roles live",
     "roles": [
       {
         "department": "Engineering & Product",
@@ -8690,10 +9382,71 @@
         "title": "Growth Marketing Manager",
         "url": "https://jobs.ashbyhq.com/uniti/bb81cdbe-ca14-4a92-9bba-f2a61ae95194"
       }
-    ]
+    ],
+    "slug": "uniti",
+    "source": "probe",
+    "status": "ok",
+    "total": 8
+  },
+  "Veris Residential": {
+    "ats": "",
+    "filtered": [],
+    "note": "no ATS found on careers page or by probing",
+    "reason": "no ATS found on careers page or by probing",
+    "roles": [],
+    "slug": "",
+    "source": "none",
+    "status": "unresolved"
   },
   "WeWork": {
-    "fetched_on": "2026-10-06",
+    "ats": "workday",
+    "filtered": [
+      {
+        "category": "gtm",
+        "company": "WeWork",
+        "department": "",
+        "id": "wd-wework-JR-0064210",
+        "location": "Mexico City, Mexico",
+        "posted": "Posted 5 Days Ago",
+        "status": "ok",
+        "title": "Lead, Email Marketing",
+        "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Lead--Email-Marketing_JR-0064210"
+      },
+      {
+        "category": "gtm",
+        "company": "WeWork",
+        "department": "",
+        "id": "wd-wework-JR-0064161",
+        "location": "New York, NY United States of America",
+        "posted": "Posted 8 Days Ago",
+        "status": "ok",
+        "title": "Lead, Integrated Marketing",
+        "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/New-York-NY-United-States-of-America/Lead--Integrated-Marketing_JR-0064161-1"
+      },
+      {
+        "category": "sales",
+        "company": "WeWork",
+        "department": "",
+        "id": "wd-wework-JR-0064152",
+        "location": "Singapore",
+        "posted": "Posted 19 Days Ago",
+        "status": "ok",
+        "title": "Sales Development Representative - SEA & Australia (Vietnamese Speaking)",
+        "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Singapore/Sales-Development-Representative---SEA---Australia--Vietnamese-Speaking-_JR-0064152"
+      },
+      {
+        "category": "gtm",
+        "company": "WeWork",
+        "department": "",
+        "id": "wd-wework-JR-0064060",
+        "location": "Mexico City, Mexico",
+        "posted": "Posted 30+ Days Ago",
+        "status": "ok",
+        "title": "Senior Manager, Field Marketing",
+        "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Senior-Manager--Field-Marketing_JR-0064060-1"
+      }
+    ],
+    "note": "",
     "roles": [
       {
         "department": "",
@@ -9287,6 +10040,10 @@
         "title": "Community Lead, Seoul",
         "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Seoul-Republic-of-Korea/Community-Lead--Seoul_JR-0062960"
       }
-    ]
+    ],
+    "slug": "wework",
+    "source": "careers-page",
+    "status": "ok",
+    "total": 74
   }
 }
