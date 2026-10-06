@@ -2,7 +2,7 @@
 
 43 matching roles across 4 companies. 7 of 42 companies read from their Column D.
 
-Company list read from: **file opco.csv**.
+Company list read from: **live Google Sheet (OpCo tab)**.
 
 > Open each link before it goes in the newsletter. Postings move.
 
@@ -12,7 +12,7 @@ Company list read from: **file opco.csv**.
 
 *Fix: open the company's careers page, click any job, and paste the address it lands on into Column D (drop the part that names the specific job). If the jobs are listed on the company's own page, that page's address works too.*
 
-- **Atlas Real Estate** — the Column D page doesn't load (HTTP 403)
+- **Atlas Real Estate** — the Column D page doesn't load (HTTP 202)
 - **Atria Senior Living** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **BH Management Services** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Case & Associates** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
@@ -28,7 +28,7 @@ Company list read from: **file opco.csv**.
 - **Highwoods Properties** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Industrious** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Kasa Living** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
-- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 403)
+- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 202)
 - **Kite Realty Group Trust** — the Column D page doesn't load (connection error (ReadTimeout))
 - **Mountain Property Management** — the Column D page doesn't load (HTTP 404)
 - **Mynd** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
@@ -41,7 +41,7 @@ Company list read from: **file opco.csv**.
 - **Renters Warehouse** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Rhome Property Management** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Starwood Property Trust** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
-- **Tamarack Property Management** — the Column D page doesn't load (connection error (SSLError))
+- **Tamarack Property Management** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **The Lund Company** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Uniti Group** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
 - **Veris Residential** — no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D
@@ -53,19 +53,15 @@ Company list read from: **file opco.csv**.
 - **isolved** (1) — Oakbrook Corporation
 - **paycom** (1) — EastGroup Properties
 
-### Confirm these are the right companies — once (7)
+## New this week (0)
 
-*First time each of these Column D links was read. Open the link and check the jobs belong to this company. If one is wrong, fix its Column D; nothing else is needed. Each is listed only once, and again only if its Column D changes.*
+No new matching roles.
 
-- **Alexander & Baldwin** — [jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL](https://jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL) · 3 jobs, e.g. Property Management Administrator (Kailua, HI, USA); Senior Accountant CRE (822 Bishop St, Honolulu, HI 96813, USA); Tenant Coordinator / Project Manager
-- **Belong** — [apply.workable.com/belong-6](https://apply.workable.com/belong-6) · 5 jobs, e.g. Associate General Counsel (Coral Gables, Florida); Experience Manager (Buenos Aires, Buenos Aires); Growth Advisor, Leasing (Buenos Aires, Buenos Aires)
-- **EPR Properties** — [eprproperties.bamboohr.com/careers](https://eprproperties.bamboohr.com/careers) · 1 jobs, e.g. Property Accountant (Kansas City, Missouri)
-- **Lamar Advertising Company** — [recruiting2.ultipro.com/LAM1000LAC/JobBoard/828982](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/?q=&o=postedDateDesc) · 108 jobs, e.g. Sales Account Executive (Raleigh, NC); Logos Assistant General Manager (NORCROSS, GA); Construction - Billboard Installer (MONROE, LA)
-- **Medical Properties Trust** — [www.medicalpropertiestrust.com/careers](https://www.medicalpropertiestrust.com/careers) · 3 jobs, e.g. Senior of Accounting, International (Birmingham, AL); Senior of Accounting, Domestic (Birmingham, AL); Corporate Accountant (Birmingham, AL)
-- **Real Property Management** — [jobs.realpropertymgt.com/jobs](https://jobs.realpropertymgt.com/jobs) · 45 jobs, e.g. Copia - Técnico de mantenimiento; Level I Maintenance Technician; Copia - Copia - Técnico de mantenimiento
-- **WeWork** — [wework.wd1.myworkdayjobs.com/WeWork](https://wework.wd1.myworkdayjobs.com/WeWork) · 73 jobs, e.g. Front Desk Associate, 120 West Trinity Place (Atlanta, GA United States of America); Community Associate - London (London, United Kingdom); Community Lead, 2222 Ponce De Leon Blvd (Miami, FL United States of America)
+## Recently closed (0)
 
-*First run of this version: this is the baseline. New-this-week and recently-closed start next week.*
+*Open last week, gone now — the "recently hired" signal. Closed usually means filled, but can mean pulled. Companies that failed this week are left out.*
+
+No matching roles closed.
 
 ## All open roles
 
@@ -103,7 +99,7 @@ Company list read from: **file opco.csv**.
 | WeWork | [wework.wd1.myworkdayjobs.com/WeWork](https://wework.wd1.myworkdayjobs.com/WeWork) | workday | ok | 73 / 4 |  |
 | EastGroup Properties | [phx.us-west.paycomonline.net/v4/ats/web.php/p](https://phx.us-west.paycomonline.net/v4/ats/web.php/portal/FF95F1D079994D46C22FCB801D0A2C8F/career-page) | paycom | unsupported | 0 / 0 | paycom isn't supported yet |
 | Oakbrook Corporation | [oakbrookcorp.isolvedhire.com/jobs/](https://oakbrookcorp.isolvedhire.com/jobs/) | isolved | unsupported | 0 / 0 | isolved isn't supported yet |
-| Atlas Real Estate | [realatlas.com/careers/#positions](https://realatlas.com/careers/#positions) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 403) |
+| Atlas Real Estate | [realatlas.com/careers/#positions](https://realatlas.com/careers/#positions) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 202) |
 | Atria Senior Living | [www.atriaseniorliving.com/careers](https://www.atriaseniorliving.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | BH Management Services | [livebh.com/careers/job-search/](https://livebh.com/careers/job-search/) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Case & Associates | [www.caseandassociates.com/careers](https://www.caseandassociates.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
@@ -119,7 +115,7 @@ Company list read from: **file opco.csv**.
 | Highwoods Properties | [www.highwoods.com/careers](https://www.highwoods.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Industrious | [www.industriousoffice.com/careers#open-positi](https://www.industriousoffice.com/careers#open-positions) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Kasa Living | [www.kasa.com/careers](https://www.kasa.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
-| Key Renter Property Managment | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 403) |
+| Key Renter Property Managment | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 202) |
 | Kite Realty Group Trust | [www.kiterealty.com/careers](https://www.kiterealty.com/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (connection error (ReadTimeout)) |
 | Mountain Property Management | [jacksonholeproperties.net/careers](https://jacksonholeproperties.net/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 404) |
 | Mynd | [www.mynd.co/talent-and-culture](https://www.mynd.co/talent-and-culture) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
@@ -132,7 +128,7 @@ Company list read from: **file opco.csv**.
 | Renters Warehouse | [www.renterswarehouse.com/careers](https://www.renterswarehouse.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Rhome Property Management | [www.rhomepm.com/employment](https://www.rhomepm.com/employment) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Starwood Property Trust | [www.starwoodcapital.com/careers](https://www.starwoodcapital.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
-| Tamarack Property Management | [www.tamarackproperty.com/careers](https://www.tamarackproperty.com/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (connection error (SSLError)) |
+| Tamarack Property Management | [www.tamarackproperty.com/careers](https://www.tamarackproperty.com/careers) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | The Lund Company | [lundco.com/join-our-team/](https://lundco.com/join-our-team/) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Uniti Group | [careers.uniti.com/](https://careers.uniti.com/) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |
 | Veris Residential | [www.rhoresidential.com/careers/#careers-posit](https://www.rhoresidential.com/careers/#careers-positions) | page | needs-link | 0 / 0 | no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D |

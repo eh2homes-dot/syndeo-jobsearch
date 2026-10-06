@@ -515,12 +515,7 @@
       "board": "page::{\"url\": \"https://www.medicalpropertiestrust.com/careers\"}",
       "note": "read from the jobs listed on the page",
       "total": 3,
-      "status": "ok",
-      "spot_check": [
-        "Senior of Accounting, International (Birmingham, AL)",
-        "Senior of Accounting, Domestic (Birmingham, AL)",
-        "Corporate Accountant (Birmingham, AL)"
-      ]
+      "status": "ok"
     },
     "Uniti Group": {
       "column_d": "https://careers.uniti.com/",
@@ -549,12 +544,7 @@
       "board": "dayforce:abhi:{\"board\": \"CANDIDATEPORTAL\"}",
       "note": "",
       "total": 3,
-      "status": "ok",
-      "spot_check": [
-        "Property Management Administrator (Kailua, HI, USA)",
-        "Senior Accountant CRE (822 Bishop St, Honolulu, HI 96813, USA)",
-        "Tenant Coordinator / Project Manager"
-      ]
+      "status": "ok"
     },
     "Kite Realty Group Trust": {
       "column_d": "https://www.kiterealty.com/careers",
@@ -573,12 +563,7 @@
       "board": "ukg:LAM1000LAC:{\"board\": \"82898216-ca7a-4621-b01b-bf3410c919b2\", \"host\": \"recruiting2.ultipro.com\"}",
       "note": "",
       "total": 108,
-      "status": "ok",
-      "spot_check": [
-        "Sales Account Executive (Raleigh, NC)",
-        "Logos Assistant General Manager (NORCROSS, GA)",
-        "Construction - Billboard Installer (MONROE, LA)"
-      ]
+      "status": "ok"
     },
     "EastGroup Properties": {
       "column_d": "https://phx.us-west.paycomonline.net/v4/ats/web.php/portal/FF95F1D079994D46C22FCB801D0A2C8F/career-page",
@@ -597,10 +582,7 @@
       "board": "bamboohr:eprproperties:{}",
       "note": "",
       "total": 1,
-      "status": "ok",
-      "spot_check": [
-        "Property Accountant (Kansas City, Missouri)"
-      ]
+      "status": "ok"
     },
     "Veris Residential": {
       "column_d": "https://www.rhoresidential.com/careers/#careers-positions",
@@ -720,7 +702,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "the Column D page doesn't load (connection error (SSLError))"
+      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
     },
     "Mountain Property Management": {
       "column_d": "https://jacksonholeproperties.net/careers",
@@ -759,12 +741,7 @@
       "board": "workable:belong-6:{}",
       "note": "",
       "total": 5,
-      "status": "ok",
-      "spot_check": [
-        "Associate General Counsel (Coral Gables, Florida)",
-        "Experience Manager (Buenos Aires, Buenos Aires)",
-        "Growth Advisor, Leasing (Buenos Aires, Buenos Aires)"
-      ]
+      "status": "ok"
     },
     "Mynd": {
       "column_d": "https://www.mynd.co/talent-and-culture",
@@ -783,12 +760,7 @@
       "board": "workday:wework:{\"host\": \"wework.wd1.myworkdayjobs.com\", \"site\": \"WeWork\"}",
       "note": "",
       "total": 73,
-      "status": "ok",
-      "spot_check": [
-        "Front Desk Associate, 120 West Trinity Place (Atlanta, GA United States of America)",
-        "Community Associate - London (London, United Kingdom)",
-        "Community Lead, 2222 Ponce De Leon Blvd (Miami, FL United States of America)"
-      ]
+      "status": "ok"
     },
     "Industrious": {
       "column_d": "https://www.industriousoffice.com/careers#open-positions",
@@ -818,7 +790,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 403)"
+      "reason": "the Column D page doesn't load (HTTP 202)"
     },
     "Evernest Property Management": {
       "column_d": "https://www.evernest.co/careers",
@@ -868,7 +840,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 403)"
+      "reason": "the Column D page doesn't load (HTTP 202)"
     },
     "PMI": {
       "column_d": "https://www.propertymanagementinc.com/careers",
@@ -887,12 +859,7 @@
       "board": "page::{\"url\": \"https://jobs.realpropertymgt.com/jobs\"}",
       "note": "read from the jobs listed on the page",
       "total": 45,
-      "status": "ok",
-      "spot_check": [
-        "Copia - T\u00e9cnico de mantenimiento",
-        "Level I Maintenance Technician",
-        "Copia - Copia - T\u00e9cnico de mantenimiento"
-      ]
+      "status": "ok"
     },
     "Renters Warehouse": {
       "column_d": "https://www.renterswarehouse.com/careers",
