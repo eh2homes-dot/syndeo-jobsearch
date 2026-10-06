@@ -58,15 +58,18 @@ jobs:
             echo "::error::opco_config.yml must sit in the same folder as opco_search.py ($DIR)."
             exit 1
           fi
-          CSV=$(find . -type f -iname 'opco.csv' -not -path './.git/*' | head -1)
-          if [ -z "$CSV" ]; then
-            echo "::error::opco.csv not found. Export the OpCo tab, name it opco.csv, and commit it."
-            exit 1
-          fi
           echo "Script: $SCRIPT"
-          echo "Company list: $CSV ($(wc -l < "$CSV") lines)"
           echo "dir=$DIR" >> "$GITHUB_OUTPUT"
-          echo "csv=$GITHUB_WORKSPACE/${CSV#./}" >> "$GITHUB_OUTPUT"
+          # The script reads the live Google Sheet when opco_config.yml has its
+          # link, and falls back to opco.csv in the repo otherwise.
+          if grep -qE '^sheet_csv_url:[[:space:]]*https?://' "$DIR/opco_config.yml"; then
+            echo "Company list: the live Google Sheet (opco.csv is the fallback)"
+          elif [ -z "$(find . -type f -iname 'opco.csv' -not -path './.git/*' | head -1)" ]; then
+            echo "::error::No company list: set sheet_csv_url in opco_config.yml, or commit opco.csv."
+            exit 1
+          else
+            echo "Company list: opco.csv in the repo"
+          fi
 
       - uses: actions/setup-python@v5
         if: steps.guard.outputs.run == 'true'
@@ -84,9 +87,9 @@ jobs:
           ONLY: ${{ inputs.only }}
         run: |
           if [ -n "$ONLY" ]; then
-            python opco_search.py --companies "${{ steps.locate.outputs.csv }}" --only "$ONLY"
+            python opco_search.py --only "$ONLY"
           else
-            python opco_search.py --companies "${{ steps.locate.outputs.csv }}"
+            python opco_search.py
           fi
 
       # The people-moves workflow also commits on Sundays, so retry the push.
