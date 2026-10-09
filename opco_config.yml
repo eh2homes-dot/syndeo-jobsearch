@@ -1,7 +1,8 @@
 # OpCo job search configuration.
 #
-# Which ATS a company uses is no longer set here: Column D of the sheet decides
-# that. This file holds two things: where to read the company list from, and
+# Which job system a company uses is not set here: Column D of the sheet decides
+# that (a job-board link is read directly; a careers page is read through the
+# job board it loads). This file holds two things: where to read the company list from, and
 # which open roles make the weekly brief.
 
 # ---------------------------------------------------------------------------
@@ -137,6 +138,30 @@ company_overrides:
       - community manager
       - assistant manager
       - leasing
+
+  Atria Senior Living:
+    # Corporate and leadership only, same rule as Greystar: nearly all of
+    # Atria's ~1,000 postings are community roles (caregivers, dining, nursing).
+    require:
+      - vice president
+      - VP
+      - SVP
+      - EVP
+      - chief
+      - director
+      - head of
+      - president
+      - managing director
+      - corporate
+    exclude:
+      - community
+      - resident
+      - dining
+      - culinary
+      - care
+      - nurs\w*
+      - housekeep\w*
+      - maintenance
 
   # If a company's jobs are read from a web page in Column D and the brief
   # refuses them because they don't look like job titles, but you've checked and

@@ -1,0 +1,9 @@
+<!doctype html><html><head><title>Join us</title></head><body>
+<h1>Careers</h1><div id="jobs"></div><button id="more">Load more jobs</button>
+<script>
+const all=[["101","Leasing Director","Tampa, FL"],["102","Senior Software Engineer","Remote"],["103","Regional Manager","Austin, TX"],["104","Marketing Coordinator","Denver, CO"],["105","Data Analyst","Raleigh, NC"]];
+let shown=0;
+function add(n){for(let i=0;i<n&&shown<all.length;i++,shown++){const j=all[shown];const d=document.createElement('div');d.className='card';d.innerHTML='<h3>'+j[1]+'</h3><span>'+j[2]+'</span> <a href="/jobs/'+j[0]+'">View job</a>';document.getElementById('jobs').appendChild(d);} if(shown>=all.length)document.getElementById('more').style.display='none';}
+setTimeout(()=>add(2),300);
+document.getElementById('more').addEventListener('click',()=>setTimeout(()=>add(2),200));
+</script></body></html>

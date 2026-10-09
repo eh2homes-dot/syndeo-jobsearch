@@ -42,9 +42,41 @@ def _job_token(url: str) -> str:
     return path.rsplit("/", 1)[-1] if path else ""
 
 
+_WORKDAY = re.compile(r"^https://(?P<host>(?P<tenant>[a-z0-9-]+)\.wd\d+\.myworkdayjobs\.com)/"
+                      r"(?:[a-z]{2}-[A-Z]{2}/)?(?P<site>[^/]+)(?P<path>/job/.+)$", re.I)
+
+
+def _check_workday(m) -> tuple[str, int]:
+    """A Workday posting's page loads whether or not the job is still open, so ask
+    Workday's own data for the posting: it answers for an open one and refuses
+    (403/404) once it has come down."""
+    api = f"https://{m['host']}/wday/cxs/{m['tenant']}/{m['site']}{m['path'].split('?')[0]}"
+    try:
+        r = requests.get(api, headers={**UA, "Accept": "application/json"}, timeout=10)
+    except Exception:
+        return "error", 0
+    if r.status_code == 200:
+        try:
+            return ("live" if (r.json().get("jobPostingInfo") or {}).get("title") else "gone"), 200
+        except ValueError:
+            return "error", 200
+    if r.status_code in (403, 404, 410):
+        # Workday refuses a posting that has come down with a small data answer of its own
+        # ("permission denied"). A refusal that isn't that is the runner being blocked.
+        try:
+            refused_by_workday = bool(r.json().get("errorCode"))
+        except (ValueError, AttributeError):
+            refused_by_workday = False
+        return ("gone" if refused_by_workday or r.status_code != 403 else "blocked"), r.status_code
+    return ("blocked" if r.status_code == 429 else "error"), r.status_code
+
+
 def check(url: str) -> tuple[str, int]:
     if not url:
         return "error", 0
+    workday = _WORKDAY.match(url)
+    if workday:
+        return _check_workday(workday)
     try:
         r = requests.get(url, headers=UA, timeout=10, allow_redirects=True)
     except Exception:

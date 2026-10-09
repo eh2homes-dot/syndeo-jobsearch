@@ -1,0 +1,238 @@
+{
+  "about": "One-time change applied to data/ats_map.json the first time the rebuilt weekly search runs. Built In is no longer a source: each company below is pointed at its own job board, and acquired companies at their parent. 'remove' drops an entry (only if it still names Built In or names nothing) so the company is read from its own careers page instead.",
+  "id": "2026-10-own-boards",
+  "remove": [
+    "Agora",
+    "Apartment List",
+    "Better.com",
+    "Bright MLS",
+    "Cadre",
+    "Cecilian Partners",
+    "CoStar Group",
+    "DoorLoop",
+    "Evergreen Residential",
+    "Guesty",
+    "Hemlane",
+    "HouseCanary",
+    "Kiavi",
+    "LeaseLock",
+    "MRI Software",
+    "Matterport",
+    "Measurabl",
+    "Northpoint Asset Management",
+    "Offerpad",
+    "PURE HomeRiver Group",
+    "Placester",
+    "Procore Technologies",
+    "Realtor.com (Move Inc.)",
+    "Rent Manager (LCS)",
+    "Renters Warehouse",
+    "ResMan",
+    "Robin",
+    "Rocket Companies",
+    "SquareFoot"
+  ],
+  "set": {
+    "Alarm.com": {
+      "ats": "greenhouse",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 85 jobs; replaces Built In",
+      "slug": "alarmcom",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Auction.com": {
+      "ats": "dayforce",
+      "board": "CANDIDATEPORTAL",
+      "confidence": "unconfirmed",
+      "evidence": "jobs.dayforcehcm.com/en-US/auction/CANDIDATEPORTAL found 2026-10-09; feed not read from here. If it is wrong the careers page is used instead; replaces Built In",
+      "slug": "auction",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Avail (Realtor.com)": {
+      "confidence": "manual",
+      "evidence": "part of Realtor.com; hires through Realtor.com",
+      "parent": "Realtor.com (Move Inc.)",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Bilt Rewards": {
+      "ats": "gem",
+      "confidence": "verified",
+      "evidence": "jobs.gem.com/bilt opened in a browser 2026-10-09: about 20 postings. Read by opening the board in the headless browser",
+      "slug": "bilt",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Buildium (RealPage)": {
+      "confidence": "manual",
+      "evidence": "Buildium hires through RealPage's shared job board",
+      "parent": "RealPage",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "CertifID": {
+      "ats": "ashby",
+      "confidence": "verified",
+      "evidence": "certifid.com/company/careers loads api.ashbyhq.com/posting-api/job-board/certifid (seen in a browser 2026-10-09; feed read live, 1 job). The Lever board on file returned nothing: jobs.lever.co/certifid is a 404",
+      "slug": "certifid",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Compass": {
+      "ats": "greenhouse",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: postings link to compass.com/careers; replaces Built In",
+      "slug": "urbancompass",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Doorstead": {
+      "ats": "breezy",
+      "confidence": "verified",
+      "evidence": "doorstead.breezy.hr feed read live on 2026-10-09 (94 postings; also served at jobs.doorstead.com); replaces Built In",
+      "slug": "doorstead",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Footprint": {
+      "ats": "ashby",
+      "confidence": "verified",
+      "evidence": "api.ashbyhq.com/posting-api/job-board/footprint read live on 2026-10-09: 7+ jobs, postings at jobs.ashbyhq.com/footprint/..., descriptions name Footprint's agent 'Percy', as onefootprint.com does. The earlier board name 'onefootprint' no longer exists (404 since 2026-09-30); an earlier note called 'footprint' a different board, which was true then and isn't now",
+      "slug": "footprint",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Funnel Leasing": {
+      "ats": "workable",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: account 'Funnel Leasing', 5 jobs; replaces Built In",
+      "slug": "funnel-leasing",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "GetCovered": {
+      "ats": "rippling",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 7 jobs",
+      "slug": "get-covered-insurance",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Knock CRM": {
+      "confidence": "manual",
+      "evidence": "Knock is part of RealPage (knockcrm.com links into RealPage) and hires through RealPage's board",
+      "parent": "RealPage",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Mynd": {
+      "confidence": "manual",
+      "evidence": "Mynd is part of Roofstock and hires through Roofstock's Greenhouse board, which is read under Roofstock",
+      "parent": "Roofstock",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Ojo Labs": {
+      "ats": "page",
+      "confidence": "unconfirmed",
+      "evidence": "ojolabs.com now redirects to Movoto, which hires through Lower (acquired 2025). Lower is not on the list, so its board is read here under Ojo Labs",
+      "slug": "",
+      "url": "https://careers.lower.com/",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Opcity (Realtor.com)": {
+      "confidence": "manual",
+      "evidence": "legacy Realtor.com brand; hires through Realtor.com",
+      "parent": "Realtor.com (Move Inc.)",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Opendoor": {
+      "ats": "page",
+      "confidence": "unconfirmed",
+      "evidence": "own page lists its openings in plain HTML (about 46 seen 2026-10-09); replaces Built In",
+      "slug": "",
+      "url": "https://www.opendoor.com/careers/open-positions",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Placer.ai": {
+      "ats": "greenhouse",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 19 jobs, company_name Placer.ai; replaces Built In",
+      "slug": "placerlabs",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Point": {
+      "ats": "greenhouse",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 14 jobs, Point Digital Finance; replaces Built In",
+      "slug": "pointdigitalfinance",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "RealPage": {
+      "ats": "icims",
+      "confidence": "verified",
+      "evidence": "careers-realpagepms.icims.com opened in a browser 2026-10-09: 45 postings on page 1",
+      "host": "careers-realpagepms.icims.com",
+      "slug": "careers-realpagepms",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Redfin": {
+      "confidence": "manual",
+      "evidence": "redfin.com/careers redirects to careers.rocket.com ('Redfin Powered by Rocket')",
+      "parent": "Rocket Companies",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "RentSpree": {
+      "ats": "rippling",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 14 postings (ats.rippling.com/rentspree/jobs)",
+      "slug": "rentspree",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Rentec Direct": {
+      "ats": "page",
+      "confidence": "unconfirmed",
+      "evidence": "careers live at /jobs, not /careers; no openings on 2026-10-09",
+      "slug": "",
+      "url": "https://rentecdirect.com/jobs",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Worksmith": {
+      "ats": "page",
+      "confidence": "unconfirmed",
+      "evidence": "careers live here, not at /careers; said 'No open roles right now' on 2026-10-09; replaces Built In",
+      "slug": "",
+      "url": "https://www.worksmith.com/team-and-careers",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Yardi Systems": {
+      "ats": "page",
+      "confidence": "unconfirmed",
+      "evidence": "own careers site; 62 postings seen 2026-10-09",
+      "slug": "",
+      "url": "https://careers.yardi.com/openings/",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    },
+    "Zumper": {
+      "ats": "rippling",
+      "confidence": "verified",
+      "evidence": "job-board feed read live on 2026-10-09: 2 jobs; replaces Built In",
+      "slug": "zumper",
+      "verified_by": "Claude",
+      "verified_on": "2026-10-09"
+    }
+  }
+}

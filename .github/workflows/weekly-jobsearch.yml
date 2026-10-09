@@ -15,9 +15,13 @@ on:
         description: "Full run only: tier filter (A, B, or blank for all)"
         default: ""
       detect:
-        description: "Full run only: auto-detect job boards for unmapped companies"
+        description: "Full run only: read companies with no job board on file from their careers page"
         type: boolean
         default: true
+      dry_run:
+        description: "Run and attach the report, but don't save anything to the repo"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -25,7 +29,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 50        # hard stop - never another 6-hour run
+    timeout-minutes: 60        # hard stop - never another 6-hour run
     steps:
       - name: Check it's 4am Eastern
         id: et
@@ -47,6 +51,12 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install -r requirements.txt
         if: steps.et.outputs.run == 'true'
+      # Headless browser for careers pages that only show their jobs after scripts run.
+      # If this step fails the search still runs; those pages are reported instead of read.
+      - name: Install the headless browser
+        if: steps.et.outputs.run == 'true'
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
       - name: Run job search
         if: steps.et.outputs.run == 'true'
         env:
@@ -64,7 +74,7 @@ jobs:
             python -m jobsearch.run $ARGS
           fi
       - name: Commit results
-        if: steps.et.outputs.run == 'true'
+        if: steps.et.outputs.run == 'true' && github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
