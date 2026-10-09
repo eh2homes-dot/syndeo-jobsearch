@@ -1,0 +1,766 @@
+{
+  "AbodeMine": {
+    "ats": "linkedin",
+    "company_name": "AbodeMine",
+    "confidence": "guess",
+    "evidence": "LinkedIn page GUESSED as /company/abodemine - wrong guess returns nothing (strict page match); confirm with Evan",
+    "linkedin_pages": [
+      "abodemine"
+    ],
+    "slug": "abodemine"
+  },
+  "Alarm.com": {
+    "ats": "greenhouse",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 85 jobs; replaces Built In",
+    "slug": "alarmcom",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Apartment List": {
+    "ats": "gem",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page loads its jobs from (gem: apartment-list: https://jobs.gem.com/apartment-list)",
+    "slug": "apartment-list"
+  },
+  "AppFolio": {
+    "ats": "jobvite",
+    "confidence": "manual",
+    "evidence": "jobs.jobvite.com/appfolio-internal/jobs fetched live, 31 roles; sheet said Greenhouse (wrong)",
+    "slug": "appfolio-internal",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  },
+  "Atlas Real Estate": {
+    "ats": "paylocity",
+    "confidence": "html",
+    "detected_on": "2026-09-28",
+    "evidence": "recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081",
+    "slug": "5e5fc082-a90b-4d93-8b73-46f77d40e081"
+  },
+  "Auction.com": {
+    "ats": "dayforce",
+    "board": "CANDIDATEPORTAL",
+    "confidence": "unconfirmed",
+    "evidence": "jobs.dayforcehcm.com/en-US/auction/CANDIDATEPORTAL found 2026-10-09; feed not read from here. If it is wrong the careers page is used instead; replaces Built In",
+    "slug": "auction",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Avail (Realtor.com)": {
+    "confidence": "manual",
+    "evidence": "part of Realtor.com; hires through Realtor.com",
+    "parent": "Realtor.com (Move Inc.)",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Belong": {
+    "ats": "workable",
+    "confidence": "manual",
+    "evidence": "from existing F&F adapter config",
+    "slug": "belong-6",
+    "verified_by": "Evan (prior session)",
+    "verified_on": "2026-09"
+  },
+  "Bilt Rewards": {
+    "ats": "gem",
+    "confidence": "verified",
+    "evidence": "jobs.gem.com/bilt opened in a browser 2026-10-09: about 20 postings. Read by opening the board in the headless browser",
+    "slug": "bilt",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Blend Labs": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:blend returned 13 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "blend"
+  },
+  "Boom": {
+    "ats": "linkedin",
+    "company_name": "Boom Pay",
+    "confidence": "guess",
+    "evidence": "LinkedIn page GUESSED for Boom Pay (Austin rent reporting). NOT /company/boom-market (unrelated crypto co). Strict page match; confirm with Evan",
+    "linkedin_pages": [
+      "boompay",
+      "boom-pay",
+      "boompayapp"
+    ],
+    "slug": "boompay"
+  },
+  "Bowery Valuation": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/bowery-valuation | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
+    "slug": "bowery-valuation"
+  },
+  "Bright MLS": {
+    "ats": "adp",
+    "cc": "19000101_000001",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page links to (adp: c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693&ccId=19000101_000001)",
+    "slug": "c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693"
+  },
+  "Buildium (RealPage)": {
+    "confidence": "manual",
+    "evidence": "Buildium hires through RealPage's shared job board",
+    "parent": "RealPage",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "ButterflyMX": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/butterflymx",
+    "slug": "butterflymx"
+  },
+  "CertifID": {
+    "ats": "ashby",
+    "confidence": "verified",
+    "evidence": "certifid.com/company/careers loads api.ashbyhq.com/posting-api/job-board/certifid (seen in a browser 2026-10-09; feed read live, 1 job). The Lever board on file returned nothing: jobs.lever.co/certifid is a 404",
+    "slug": "certifid",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Chamberlain Group": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://chamberlain.wd1.myworkdayjobs.com/Chamberlain_Group",
+    "site": "Chamberlain_Group",
+    "slug": "chamberlain",
+    "wd": "wd1"
+  },
+  "Cherre": {
+    "ats": "lever",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:cherre returned 1 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "cherre"
+  },
+  "Closinglock": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/closinglock | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
+    "slug": "closinglock",
+    "zero_since": "2026-10-09"
+  },
+  "CompStak": {
+    "ats": "lever",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:compstak returned 4 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "compstak"
+  },
+  "Compass": {
+    "ats": "greenhouse",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: postings link to compass.com/careers; replaces Built In",
+    "slug": "urbancompass",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Convene": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/convene",
+    "slug": "convene"
+  },
+  "Crexi": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:crexi returned 16 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "crexi"
+  },
+  "Density": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "greenhouse.io/embed/job_board/js?for=density",
+    "slug": "density"
+  },
+  "Digible": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse.io/embed/job_board/js?for=digible",
+    "slug": "digible"
+  },
+  "Divvy Homes": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "boards.greenhouse.io/divvyhomes",
+    "slug": "divvyhomes"
+  },
+  "Doma": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:doma returned 5 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "doma"
+  },
+  "DoorLoop": {
+    "ats": "comeet",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page loads its jobs from (comeet: 0A.006: the company's careers page (Comeet feed))",
+    "key": "A06462A1E122818321EA061E12028181E12",
+    "slug": "0A.006"
+  },
+  "Doorstead": {
+    "ats": "breezy",
+    "confidence": "verified",
+    "evidence": "doorstead.breezy.hr feed read live on 2026-10-09 (94 postings; also served at jobs.doorstead.com); replaces Built In",
+    "slug": "doorstead",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Enertiv": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/enertiv-jobs | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
+    "slug": "enertiv-jobs"
+  },
+  "Entrata": {
+    "ats": "lever",
+    "confidence": "manual",
+    "evidence": "jobs.lever.co/entrata posting fetched live",
+    "slug": "entrata",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  },
+  "Envoy": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/envoy",
+    "slug": "envoy"
+  },
+  "Evergreen Residential": {
+    "ats": "greenhouse",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp); found by following the page's link to its full list (https://evergre",
+    "slug": "evergreenresidentialemployeeservicescorp"
+  },
+  "Evernest": {
+    "ats": "lever",
+    "confidence": "probe-likely",
+    "detected_on": "2026-09-24",
+    "evidence": "lever:evernest returned 17 jobs; greenhouse:evernest rejected (postings link to evernest.com, not evernest.co) | 2026-09-24: roles are offshore PM support (Mexico/Philippines) - consistent with a US SFR PM using offshore staff; confirm",
+    "slug": "evernest"
+  },
+  "Flock Homes": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/flockhomes",
+    "slug": "flockhomes"
+  },
+  "Footprint": {
+    "ats": "ashby",
+    "confidence": "verified",
+    "evidence": "api.ashbyhq.com/posting-api/job-board/footprint read live on 2026-10-09: 7+ jobs, postings at jobs.ashbyhq.com/footprint/..., descriptions name Footprint's agent 'Percy', as onefootprint.com does. The earlier board name 'onefootprint' no longer exists (404 since 2026-09-30); an earlier note called 'footprint' a different board, which was true then and isn't now",
+    "slug": "footprint",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Funnel Leasing": {
+    "ats": "workable",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: account 'Funnel Leasing', 5 jobs; replaces Built In",
+    "slug": "funnel-leasing",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "GetCovered": {
+    "ats": "rippling",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 7 jobs",
+    "slug": "get-covered-insurance",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "GreenLite": {
+    "ats": "",
+    "confidence": "excluded",
+    "evidence": "greenlite.ai careers page links jobs.ashbyhq.com/brettonai = Greenlite AI / Bretton AI, an AML/financial-crime compliance startup, not an AI permitting company. Sheet lead points at the wrong company. Excluded until Evan confirms the intended company.",
+    "slug": ""
+  },
+  "Greystar": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://greystar.wd1.myworkdayjobs.com/en-US/External",
+    "site": "External",
+    "slug": "greystar",
+    "wd": "wd1"
+  },
+  "Haven": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "YC jobs page fetched live, 1 role (Founding Engineer); company identity assumed (usehaven.ai) - confirm with Evan; verified by Claude 2026-09-24",
+    "link_regex": "/companies/haven-2/jobs/[A-Za-z0-9]+-[a-z0-9-]+",
+    "slug": "haven-yc"
+  },
+  "HiredHelpr": {
+    "ats": "linkedin",
+    "company_name": "HiredHelpr",
+    "confidence": "manual",
+    "evidence": "linkedin.com/company/hiredhelpr confirmed via search 2026-09-24 (no careers page/ATS)",
+    "linkedin_pages": [
+      "hiredhelpr"
+    ],
+    "slug": "hiredhelpr"
+  },
+  "Home365": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://home365.bamboohr.com/careers",
+    "slug": "home365"
+  },
+  "HomeLight": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/homelight",
+    "slug": "homelight"
+  },
+  "Homebot": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/homebot",
+    "slug": "homebot"
+  },
+  "Homeward": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse.io/embed/job_board/js?for=homeward",
+    "slug": "homeward"
+  },
+  "HqO": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-24",
+    "evidence": "jobs.ashbyhq.com/hqo",
+    "slug": "hqo"
+  },
+  "Kiavi": {
+    "ats": "greenhouse",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page loads its jobs from (greenhouse: kiavi: https://job-boards.greenhouse.io/kiavi)",
+    "slug": "kiavi"
+  },
+  "Knock CRM": {
+    "confidence": "manual",
+    "evidence": "Knock is part of RealPage (knockcrm.com links into RealPage) and hires through RealPage's board",
+    "parent": "RealPage",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Latch": {
+    "ats": "lever",
+    "confidence": "probe-doubtful",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:latch returned 2 jobs | 2026-09-24: roles are in Mission Bay SF; Latch (smart access) was NYC-based - may be a different company, confirm",
+    "slug": "latch"
+  },
+  "Lineage": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "lineage.finance/careers says no open positions 2026-09-24; watching for role links; verified by Claude 2026-09-24",
+    "link_regex": "lineage\\.finance/careers/[a-z0-9-]+",
+    "slug": "lineage-finance"
+  },
+  "Livly": {
+    "ats": "paylocity",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "recruiting.paylocity.com/recruiting/jobs/All/65717b9a-7d08-4867-8ae9-5f3553eff988",
+    "slug": "65717b9a-7d08-4867-8ae9-5f3553eff988"
+  },
+  "Luxury Presence": {
+    "ats": "lever",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:luxurypresence returned 32 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "luxurypresence"
+  },
+  "MRI Software": {
+    "ats": "workday",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page links to (workday: mrisoftware: https://mrisoftware.wd501.myworkdayjobs.com/External_CareerSite)",
+    "host": "mrisoftware.wd501.myworkdayjobs.com",
+    "site": "External_CareerSite",
+    "slug": "mrisoftware"
+  },
+  "Mason": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)",
+    "slug": ""
+  },
+  "Measurabl": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "the page says nothing is open (\"There are currently no open roles\")",
+    "slug": "measurabl",
+    "url": "https://measurabl.com/careers"
+  },
+  "Mynd": {
+    "confidence": "manual",
+    "evidence": "Mynd is part of Roofstock and hires through Roofstock's Greenhouse board, which is read under Roofstock",
+    "parent": "Roofstock",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "NetVendor": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://netvendor.bamboohr.com/careers",
+    "slug": "netvendor"
+  },
+  "Notarize (Proof)": {
+    "ats": "lever",
+    "confidence": "probe-likely",
+    "detected_on": "2026-09-24",
+    "evidence": "lever:proof returned 2 jobs; greenhouse:proof rejected (postings link to proofserve.com, not proof.com) | 2026-09-24: 2 remote roles (IT eng, enterprise AE) - plausible for proof.com; confirm",
+    "slug": "proof"
+  },
+  "Nutiliti": {
+    "ats": "linkedin",
+    "company_name": "Nutiliti",
+    "confidence": "manual",
+    "evidence": "linkedin.com/company/nutiliti confirmed via search 2026-09-24 (no careers page/ATS)",
+    "linkedin_pages": [
+      "nutiliti"
+    ],
+    "slug": "nutiliti"
+  },
+  "Obie": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/obie | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
+    "slug": "obie"
+  },
+  "Obligo": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/obligo",
+    "slug": "obligo"
+  },
+  "Offerpad": {
+    "ats": "adp",
+    "cc": "19000101_000001",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page links to (adp: 1259f4b4-8ba3-4cf9-86d2-e957dc127478: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=1259f4b4-8ba3-4cf9-86d2-e957dc127478&ccId=19000101_000001)",
+    "slug": "1259f4b4-8ba3-4cf9-86d2-e957dc127478"
+  },
+  "Ojo Labs": {
+    "ats": "gem",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page loads its jobs from (gem: lower-llc: https://jobs.gem.com/lower-llc)",
+    "slug": "lower-llc"
+  },
+  "Opcity (Realtor.com)": {
+    "confidence": "manual",
+    "evidence": "legacy Realtor.com brand; hires through Realtor.com",
+    "parent": "Realtor.com (Move Inc.)",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Opendoor": {
+    "ats": "page",
+    "confidence": "unconfirmed",
+    "evidence": "own page lists its openings in plain HTML (about 46 seen 2026-10-09); replaces Built In",
+    "slug": "",
+    "url": "https://www.opendoor.com/careers/open-positions",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Orchard": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/orchard",
+    "slug": "orchard"
+  },
+  "Ownwell": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/ownwell",
+    "slug": "ownwell"
+  },
+  "PURE HomeRiver Group": {
+    "ats": "adp",
+    "cc": "9200441095595_2",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2)",
+    "slug": "eea42ed6-3dcf-47f3-b99b-29a304948b2b"
+  },
+  "Pacaso": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/pacaso",
+    "slug": "pacaso"
+  },
+  "Placer.ai": {
+    "ats": "greenhouse",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 19 jobs, company_name Placer.ai; replaces Built In",
+    "slug": "placerlabs",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Point": {
+    "ats": "greenhouse",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 14 jobs, Point Digital Finance; replaces Built In",
+    "slug": "pointdigitalfinance",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "PointCentral": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:pointcentral returned 1 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "pointcentral"
+  },
+  "Property Meld": {
+    "ats": "breezy",
+    "confidence": "manual",
+    "evidence": "property-meld.breezy.hr fetched live (no open positions); verified by Claude 2026-09-24",
+    "slug": "property-meld"
+  },
+  "PropertyManagement.com": {
+    "ats": "",
+    "confidence": "manual",
+    "evidence": "company identity unconfirmed 2026-09-24 - waiting on Evan",
+    "slug": ""
+  },
+  "RealPage": {
+    "ats": "icims",
+    "confidence": "verified",
+    "evidence": "careers-realpagepms.icims.com opened in a browser 2026-10-09: 45 postings on page 1",
+    "host": "careers-realpagepms.icims.com",
+    "slug": "careers-realpagepms",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Redfin": {
+    "confidence": "manual",
+    "evidence": "redfin.com/careers redirects to careers.rocket.com ('Redfin Powered by Rocket')",
+    "parent": "Rocket Companies",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Reffie": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "careers.reffie.me fetched live, 1 role; verified by Claude 2026-09-24",
+    "link_regex": "^https://careers\\.reffie\\.me/[a-z0-9]+(-[a-z0-9]+)+$",
+    "slug": "reffie",
+    "title_from_slug": true
+  },
+  "Rent Manager (LCS)": {
+    "ats": "adp",
+    "cc": "19000101_000001",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page links to (adp: b156e713-5801-4c36-bb62-a62f3bc9844f: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=b156e713-5801-4c36-bb62-a62f3bc9844f&ccId=19000101_000001); found by fol",
+    "slug": "b156e713-5801-4c36-bb62-a62f3bc9844f"
+  },
+  "RentSpree": {
+    "ats": "rippling",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 14 postings (ats.rippling.com/rentspree/jobs)",
+    "slug": "rentspree",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Rentec Direct": {
+    "ats": "page",
+    "confidence": "unconfirmed",
+    "evidence": "careers live at /jobs, not /careers; no openings on 2026-10-09",
+    "slug": "",
+    "url": "https://rentecdirect.com/jobs",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Renters Warehouse": {
+    "ats": "adp",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da)",
+    "slug": "0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da"
+  },
+  "ResMan": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-10-09",
+    "evidence": "read from the jobs the page shows in a browser; found by following the page's link to its full list (https://inhabit.com/about/careers/)",
+    "slug": "resman",
+    "url": "https://myresman.com/careers"
+  },
+  "Rhino": {
+    "ats": "bamboohr",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://rhinolabs.bamboohr.com/careers | slug rhinolabs came from Rhino's own careers page HTML; titles (counsel, data eng) consistent with Rhino - keep, spot-check",
+    "slug": "rhinolabs"
+  },
+  "Roofstock": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "boards.greenhouse.io/roofstock",
+    "slug": "roofstock"
+  },
+  "Second Nature": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/second-nature",
+    "slug": "second-nature"
+  },
+  "Series Homes": {
+    "ats": "linkedin",
+    "company_name": "Series Homes",
+    "confidence": "manual",
+    "evidence": "linkedin.com/company/serieshomes linked from serieshomes.com footer 2026-09-24",
+    "linkedin_pages": [
+      "serieshomes"
+    ],
+    "slug": "serieshomes"
+  },
+  "Side": {
+    "ats": "lever",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "lever:sideinc returned 5 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "sideinc"
+  },
+  "SmartRent": {
+    "ats": "greenhouse",
+    "confidence": "manual-slug-unconfirmed",
+    "evidence": "smartrent.com/careers/apply renders Greenhouse (gh_jid=) on own domain; 9 roles; API slug 'smartrent' to be confirmed on first Actions run",
+    "slug": "smartrent",
+    "verified_by": "Claude",
+    "verified_on": "2026-09-23"
+  },
+  "Snapdocs": {
+    "ats": "ashby",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "jobs.ashbyhq.com/snapdocs",
+    "slug": "snapdocs"
+  },
+  "Steadily": {
+    "ats": "ashby",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "ashby:steadily returned 34 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "steadily"
+  },
+  "Super": {
+    "ats": "generic",
+    "confidence": "manual",
+    "evidence": "hiresuper.com posts roles at /careers/<slug>; SDR posting 404 on 2026-09-24; verified by Claude 2026-09-24",
+    "link_regex": "hiresuper\\.com/careers/[a-z0-9-]+",
+    "slug": "hiresuper"
+  },
+  "TheGuarantors": {
+    "ats": "rippling",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "ats.rippling.com/theguarantors-open-positions | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
+    "slug": "theguarantors-open-positions"
+  },
+  "TurboTenant": {
+    "ats": "greenhouse",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "job-boards.greenhouse.io/turbotenant",
+    "slug": "turbotenant"
+  },
+  "Two Dots": {
+    "ats": "lever",
+    "confidence": "manual",
+    "evidence": "jobs.lever.co/twodots posting fetched live; verified by Claude 2026-09-24",
+    "slug": "twodots"
+  },
+  "Updater": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:updater returned 1 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "updater"
+  },
+  "VTS": {
+    "ats": "greenhouse",
+    "confidence": "probe-reviewed",
+    "detected_on": "2026-09-23",
+    "evidence": "greenhouse:vts returned 17 jobs | 2026-09-24 reviewed: titles/locations match the company",
+    "slug": "vts"
+  },
+  "Worksmith": {
+    "ats": "page",
+    "confidence": "unconfirmed",
+    "evidence": "careers live here, not at /careers; said 'No open roles right now' on 2026-10-09; replaces Built In",
+    "slug": "",
+    "url": "https://www.worksmith.com/team-and-careers",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Yardi Systems": {
+    "ats": "page",
+    "confidence": "unconfirmed",
+    "evidence": "own careers site; 62 postings seen 2026-10-09",
+    "slug": "",
+    "url": "https://careers.yardi.com/openings/",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  },
+  "Zillow Group": {
+    "ats": "workday",
+    "confidence": "html",
+    "detected_on": "2026-09-23",
+    "evidence": "https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External",
+    "site": "Zillow_Group_External",
+    "slug": "zillow",
+    "wd": "wd5"
+  },
+  "Zumper": {
+    "ats": "rippling",
+    "confidence": "verified",
+    "evidence": "job-board feed read live on 2026-10-09: 2 jobs; replaces Built In",
+    "slug": "zumper",
+    "verified_by": "Claude",
+    "verified_on": "2026-10-09"
+  }
+}

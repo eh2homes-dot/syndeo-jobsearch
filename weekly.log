@@ -1,0 +1,131 @@
+  migrate applied one-time change to ats_map.json: 2026-10-own-boards
+  read    AppFolio                         jobvite            34 jobs  ok  (1s)
+  read    Yardi Systems                    page                0 jobs  failed:the careers page needs a browser to show its jobs, and the brow  (6s)
+  read    Procore Technologies             -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (18s)
+  read    Matterport                       -                   0 jobs  needs-link: the careers page doesn't load (HTTP 403; in a browser: the  (4s)
+  read    Measurabl                        page                0 jobs  ok  (7s)  [the page says nothing is open ("There are currently no open roles")]
+  read    Placer.ai                        greenhouse         19 jobs  ok  (0s)
+  read    Roofstock                        greenhouse          7 jobs  ok  (0s)
+  read    Doma                             greenhouse          4 jobs  ok  (0s)
+  read    Blend Labs                       greenhouse         13 jobs  ok  (0s)
+  read    Point                            greenhouse         12 jobs  ok  (0s)
+  read    Zumper                           rippling            2 jobs  ok  (0s)
+  read    Apartment List                   gem                13 jobs  ok  (11s)  [read from the job board this page loads its jobs from (gem: apartment-list: https://jobs.gem.com/apartment-lis]
+  read    Hemlane                          -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (4s)
+  read    Pacaso                           greenhouse          2 jobs  ok  (0s)
+  read    Crexi                            greenhouse         16 jobs  ok  (0s)
+  read    Kiavi                            greenhouse          1 jobs  ok  (18s)  [read from the job board this page loads its jobs from (greenhouse: kiavi: https://job-boards.greenhouse.io/kia]
+  read    Side                             lever               4 jobs  ok  (0s)
+  read    HouseCanary                      -                   0 jobs  needs-link: no jobs were found on the careers page, even after running  (17s)
+  read    HomeLight                        greenhouse         17 jobs  ok  (0s)
+  read    Snapdocs                         ashby               3 jobs  ok  (0s)
+  read    RentSpree                        rippling           14 jobs  ok  (0s)
+  read    Realtor.com (Move Inc.)          -                   0 jobs  needs-link: the careers page doesn't load (HTTP 403; in a browser: the  (4s)
+  read    Auction.com                      dayforce           37 jobs  ok  (2s)
+  read    RealPage                         icims              45 jobs  ok  (1s)
+  read    ResMan                           page                4 jobs  ok  (13s)  [read from the jobs the page shows in a browser; found by following the page's link to its full list (https://i]
+  read    Homeward                         greenhouse          4 jobs  ok  (0s)
+  read    Steadily                         ashby              36 jobs  ok  (0s)
+  read    Closinglock                      rippling            0 jobs  failed:dropped to 0 roles from 10 last run; treated as a read failure   (6s)
+  read    CertifID                         ashby               1 jobs  ok  (0s)
+  read    Luxury Presence                  lever              29 jobs  ok  (1s)
+  read    GreenLite                        -                   0 jobs  excluded  (0s)
+  read    Worksmith                        page                0 jobs  ok  (4s)  [the page says nothing is open ("No open roles")]
+  read    Ownwell                          greenhouse         13 jobs  ok  (0s)
+  read    Ojo Labs                         gem                11 jobs  ok  (9s)  [read from the job board this page loads its jobs from (gem: lower-llc: https://jobs.gem.com/lower-llc)]
+  read    Opcity (Realtor.com)             -                   0 jobs  covered by parent: Realtor.com (Move Inc.)  (0s)  [legacy Realtor.com brand; hires through Realtor.com]
+  read    Compass                          greenhouse        203 jobs  ok  (0s)
+  read    VTS                              greenhouse         17 jobs  ok  (0s)
+  read    ButterflyMX                      ashby              18 jobs  ok  (0s)
+  read    Guesty                           -                   0 jobs  needs-link: no jobs were found on the careers page, even after running  (10s)
+  read    Rhino                            bamboohr            2 jobs  ok  (0s)
+  read    Bilt Rewards                     gem                19 jobs  ok  (5s)
+  read    CompStak                         lever               3 jobs  ok  (0s)
+  read    Cadre                            -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (4s)
+  read    SquareFoot                       -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (5s)
+  read    Latch                            lever               2 jobs  ok  (0s)
+  read    Agora                            -                   0 jobs  needs-link: no jobs were found on the careers page, even after running  (7s)
+  read    Cherre                           lever               1 jobs  ok  (0s)
+  read    Enertiv                          rippling            0 jobs  ok  (7s)
+  read    Bowery Valuation                 rippling           15 jobs  ok  (0s)
+  read    Obligo                           greenhouse          3 jobs  ok  (0s)
+  read    TheGuarantors                    rippling           22 jobs  ok  (0s)
+  read    Funnel Leasing                   workable            5 jobs  ok  (0s)
+  read    Convene                          greenhouse         43 jobs  ok  (0s)
+  read    Orchard                          greenhouse         27 jobs  ok  (0s)
+  read    Better.com                       -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (6s)
+  read    Updater                          greenhouse          1 jobs  ok  (0s)
+  read    Livly                            paylocity           0 jobs  ok  (5s)
+  read    Chamberlain Group                workday            66 jobs  ok  (3s)
+  read    Obie                             rippling            5 jobs  ok  (0s)
+  read    Avail (Realtor.com)              -                   0 jobs  covered by parent: Realtor.com (Move Inc.)  (0s)  [part of Realtor.com; hires through Realtor.com]
+  read    HqO                              ashby               0 jobs  failed:Ashby has no board named 'hqo' (it may have moved); _ashby_grap  (21s)
+  read    Buildium (RealPage)              -                   0 jobs  covered by parent: RealPage  (0s)  [Buildium hires through RealPage's shared job board]
+  read    Placester                        -                   0 jobs  failed:the careers page needs a browser to show its jobs, and the brow  (4s)
+  read    Robin                            -                   0 jobs  needs-link: no jobs were found on the careers page, even after running  (6s)
+  read    GetCovered                       rippling            7 jobs  ok  (0s)
+  read    TurboTenant                      greenhouse          3 jobs  ok  (0s)
+  read    Homebot                          ashby               0 jobs  ok  (18s)
+  read    Digible                          greenhouse          6 jobs  ok  (0s)
+  read    NetVendor                        bamboohr           10 jobs  ok  (0s)
+  read    SmartRent                        greenhouse          8 jobs  ok  (0s)
+  read    Offerpad                         adp                15 jobs  ok  (6s)  [read from the job board this page links to (adp: 1259f4b4-8ba3-4cf9-86d2-e957dc127478: https://workforcenow.ad]
+  read    Opendoor                         page               44 jobs  ok  (1s)  [read from the jobs listed on the page]
+  read    PointCentral                     greenhouse          1 jobs  ok  (0s)
+  read    Entrata                          lever              25 jobs  ok  (0s)
+  read    Rentec Direct                    page                2 jobs  ok  (0s)  [read from structured job data on the page]
+  read    Second Nature                    ashby               5 jobs  ok  (0s)
+  read    Home365                          bamboohr           12 jobs  ok  (0s)
+  read    Cecilian Partners                -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (5s)
+  read    CoStar Group                     -                   0 jobs  needs-link: the careers page doesn't load (HTTP 403; in a browser: the  (3s)
+  read    Alarm.com                        greenhouse         89 jobs  ok  (0s)
+  read    Notarize (Proof)                 lever               1 jobs  ok  (0s)
+  read    Zillow Group                     workday           179 jobs  ok  (7s)
+  read    Redfin                           -                   0 jobs  covered by parent: Rocket Companies  (0s)  [redfin.com/careers redirects to careers.rocket.com ('Redfin Powered by Rocket')]
+  read    Knock CRM                        -                   0 jobs  covered by parent: RealPage  (0s)  [Knock is part of RealPage (knockcrm.com links into RealPage) and hires through RealPage's board]
+  read    Rocket Companies                 -                   0 jobs  needs-link: the careers page doesn't load (HTTP 403; in a browser: the  (4s)
+  read    Rent Manager (LCS)               adp                 4 jobs  ok  (26s)  [read from the job board this page links to (adp: b156e713-5801-4c36-bb62-a62f3bc9844f: https://workforcenow.ad]
+  read    MRI Software                     workday            86 jobs  ok  (11s)  [read from the job board this page links to (workday: mrisoftware: https://mrisoftware.wd501.myworkdayjobs.com/]
+  read    Density                          greenhouse          0 jobs  failed:Greenhouse has no board named 'density' (it may have moved)  (18s)
+  read    Bright MLS                       adp                 5 jobs  ok  (9s)  [read from the job board this page links to (adp: c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693: https://workforcenow.ad]
+  read    DoorLoop                         comeet              4 jobs  ok  (7s)  [read from the job board this page loads its jobs from (comeet: 0A.006: the company's careers page (Comeet feed]
+  read    Envoy                            ashby              22 jobs  ok  (0s)
+  read    LeaseLock                        -                   0 jobs  needs-link: the careers page doesn't load (HTTP 404; in a browser: not  (5s)
+  read    Flock Homes                      greenhouse          2 jobs  ok  (0s)
+  read    Divvy Homes                      greenhouse          0 jobs  failed:Greenhouse has no board named 'divvyhomes' (it may have moved)  (5s)
+  read    Greystar                         workday          1518 jobs  ok  (63s)
+  filter  Greystar                         kept 76 of 1518 (company_filters rule)
+  read    Doorstead                        breezy             95 jobs  ok  (0s)
+  read    Belong                           workable            5 jobs  ok  (0s)
+  read    Mynd                             -                   0 jobs  covered by parent: Roofstock  (0s)  [Mynd is part of Roofstock and hires through Roofstock's Greenhouse board, which is read under Roofstock]
+  read    Renters Warehouse                adp                13 jobs  ok  (6s)  [read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.co]
+  read    Evernest                         lever              15 jobs  ok  (1s)
+  read    Atlas Real Estate                paylocity          16 jobs  ok  (0s)
+  read    PURE HomeRiver Group             adp                 8 jobs  ok  (6s)  [read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.ad]
+  read    Northpoint Asset Management      -                   0 jobs  needs-link: no jobs were found on the careers page, even after running  (5s)
+  read    Evergreen Residential            greenhouse         42 jobs  ok  (4s)  [read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-bo]
+  read    Property Meld                    breezy              0 jobs  ok  (0s)
+  read    Footprint                        ashby              11 jobs  ok  (0s)
+  read    Reffie                           generic             1 jobs  ok  (0s)
+  read    Two Dots                         lever               4 jobs  ok  (0s)
+  read    Haven                            generic             1 jobs  ok  (0s)
+  read    Nutiliti                         linkedin            0 jobs  ok  (0s)
+  read    HiredHelpr                       linkedin            0 jobs  ok  (0s)
+  read    Mason                            -                   0 jobs  unmapped  (0s)  [on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' ]
+  read    Super                            generic             0 jobs  ok  (0s)
+  read    Boom                             linkedin            8 jobs  ok  (0s)
+  read    AbodeMine                        linkedin            0 jobs  ok  (0s)
+  read    Lineage                          generic             0 jobs  ok  (0s)
+  read    Series Homes                     linkedin            0 jobs  ok  (0s)
+  read    PropertyManagement.com           -                   0 jobs  unmapped  (0s)  [on hold: company identity unconfirmed 2026-09-24 - waiting on Evan]
+  browser 44 pages opened in the headless browser, 299s
+  vc      MetaProp                            20 jobs  search API failed (HTTPError: 406 Client Error: Not Acceptable for url: https://api.getro.com/api/v2/collectio); FIRST PAGE ONLY (20 jobs) - board shows more  (11s)
+  vc      Fifth Wall                          20 jobs  search API failed (HTTPError: 406 Client Error: Not Acceptable for url: https://api.getro.com/api/v2/collectio); FIRST PAGE ONLY (20 jobs) - board shows more  (1s)
+  vc      RET Ventures                        20 jobs  search API failed (HTTPError: 406 Client Error: Not Acceptable for url: https://api.getro.com/api/v2/collectio); FIRST PAGE ONLY (20 jobs) - board shows more  (20s)
+  vc      Camber Creek                     FAILED: HTTPError: 404 Client Error: Not Found for url: https://careers.cambercreek.com/not-found
+  verify  checking 655 posting links (682 in-scope open, sampled 40/company; all closed)...
+  verify  done in 41s
+link check (open roles): {'not checked (out of scope)': 922, 'live': 534, 'listed in ATS, not rechecked': 143, 'open per job board; link check failed (HTTP 404)': 5} | closed reopened as scraper misses: 16
+  closed  80 roles that had already come down before this run were closed without being reported as this week's closures
+  draft   newsletter section -> output/newsletter/now-hiring-2026-10-09.md
+[2026-10-09] companies=118 scraped_ok=87 open_in_scope=682 open_all=1604 new=70 closed=32 -> /home/runner/work/syndeo-jobsearch/syndeo-jobsearch/output/2026-10-09

@@ -1,0 +1,119 @@
+company,tier,ats,slug,status,focus_open,open,new,closed,careers_url,note
+AppFolio,A,jobvite,appfolio-internal,ok,26,34,3,1,https://www.appfolio.com/company/careers,
+Yardi Systems,A,page,,"failed:the careers page needs a browser to show its jobs, and the browser couldn't be used this run (the site refused the browser (HTTP 403))",0,0,0,0,https://www.yardi.com/careers,
+Procore Technologies,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,7,https://www.procore.com/careers,
+Matterport,B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://matterport.com/careers,
+Measurabl,B,page,measurabl,ok,0,0,0,0,https://measurabl.com/careers,"the page says nothing is open (""There are currently no open roles"")"
+Placer.ai,B,greenhouse,placerlabs,ok,16,19,2,0,https://www.placer.ai/careers,
+Roofstock,A,greenhouse,roofstock,ok,0,7,1,4,https://www.roofstock.com/careers,
+Doma,B,greenhouse,doma,ok,1,4,0,1,https://www.doma.com/careers,
+Blend Labs,B,greenhouse,blend,ok,10,13,1,4,https://blend.com/careers,
+Point,B,greenhouse,pointdigitalfinance,ok,7,12,3,0,https://www.point.com/careers,
+Zumper,A,rippling,zumper,ok,2,2,0,0,https://www.zumper.com/careers,
+Apartment List,A,gem,apartment-list,ok,9,13,0,0,https://www.apartmentlist.com/careers,read from the job board this page loads its jobs from (gem: apartment-list: https://jobs.gem.com/apartment-list)
+Hemlane,A,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.hemlane.com/careers,
+Pacaso,B,greenhouse,pacaso,ok,2,2,0,3,https://www.pacaso.com/careers,
+Crexi,B,greenhouse,crexi,ok,14,16,0,0,https://www.crexi.com/careers,
+Kiavi,A,greenhouse,kiavi,ok,0,1,1,0,https://www.kiavi.com/careers,read from the job board this page loads its jobs from (greenhouse: kiavi: https://job-boards.greenhouse.io/kiavi)
+Side,B,lever,sideinc,ok,3,4,0,0,https://www.side.com/careers,
+HouseCanary,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.housecanary.com/careers,
+HomeLight,B,greenhouse,homelight,ok,11,17,2,0,https://www.homelight.com/careers,
+Snapdocs,B,ashby,snapdocs,ok,2,3,0,1,https://www.snapdocs.com/careers,
+RentSpree,A,rippling,rentspree,ok,9,14,0,0,https://www.rentspree.com/careers,
+Realtor.com (Move Inc.),B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://www.move.com/careers,
+Auction.com,B,dayforce,auction,ok,6,37,3,0,https://www.auction.com/careers,
+RealPage,A,icims,careers-realpagepms,ok,16,45,0,0,https://www.realpage.com/careers,
+ResMan,A,page,resman,ok,2,4,0,0,https://myresman.com/careers,read from the jobs the page shows in a browser; found by following the page's link to its full list (https://inhabit.com/about/careers/)
+Homeward,B,greenhouse,homeward,ok,2,4,1,0,https://www.homeward.com/careers,
+Steadily,A,ashby,steadily,ok,13,36,1,1,https://www.steadily.com/careers,
+Closinglock,B,rippling,closinglock,failed:dropped to 0 roles from 10 last run; treated as a read failure unless the next run agrees,0,0,0,0,https://www.closinglock.com/careers,
+CertifID,B,ashby,certifid,ok,1,1,0,0,https://www.certifid.com/careers,
+Luxury Presence,B,lever,luxurypresence,ok,19,29,0,2,https://www.luxurypresence.com/careers,
+GreenLite,B,,,excluded,0,0,0,0,https://www.greenlite.ai/careers,
+Worksmith,B,page,,ok,0,0,0,0,https://www.worksmith.com/careers,"the page says nothing is open (""No open roles"")"
+Ownwell,B,greenhouse,ownwell,ok,6,13,0,0,https://www.ownwell.com/careers,
+Ojo Labs,B,gem,lower-llc,ok,6,11,0,0,https://www.ojolabs.com/careers,read from the job board this page loads its jobs from (gem: lower-llc: https://jobs.gem.com/lower-llc)
+Opcity (Realtor.com),B,,,covered by parent: Realtor.com (Move Inc.),0,0,0,0,https://www.move.com/careers,Realtor.com (Move Inc.) itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br)
+Compass,B,greenhouse,urbancompass,ok,128,203,26,0,https://www.compass.com/careers,
+VTS,B,greenhouse,vts,ok,10,17,0,1,https://www.vts.com/careers,
+ButterflyMX,A,ashby,butterflymx,ok,6,18,1,6,https://www.butterflymx.com/careers,
+Guesty,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.guesty.com/careers,
+Rhino,A,bamboohr,rhinolabs,ok,1,2,0,1,https://careers.sayrhino.com,
+Bilt Rewards,A,gem,bilt,ok,10,19,0,0,https://www.biltrewards.com/careers,
+CompStak,B,lever,compstak,ok,3,3,0,1,https://www.compstak.com/careers,
+Cadre,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.cadre.com/careers,
+SquareFoot,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.squarefoot.com/careers,
+Latch,A,lever,latch,ok,1,2,0,0,https://www.latch.com/careers,
+Agora,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.agorareal.com/careers,
+Cherre,A,lever,cherre,ok,0,1,0,0,https://www.cherre.com/careers,
+Enertiv,B,rippling,enertiv-jobs,ok,0,0,0,0,https://www.enertiv.com/careers,
+Bowery Valuation,B,rippling,bowery-valuation,ok,0,2,0,0,https://www.boweryvaluation.com/careers,
+Obligo,A,greenhouse,obligo,ok,2,3,0,0,https://www.myobligo.com/careers,
+TheGuarantors,A,rippling,theguarantors-open-positions,ok,16,22,2,3,https://www.theguarantors.com/careers,
+Funnel Leasing,A,workable,funnel-leasing,ok,0,4,1,0,https://www.funnelleasing.com/careers,
+Convene,B,greenhouse,convene,ok,10,43,8,6,https://convene.com/careers,
+Orchard,B,greenhouse,orchard,ok,2,27,1,0,https://www.orchard.com/careers,
+Better.com,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://better.com/careers,
+Updater,A,greenhouse,updater,ok,0,1,0,0,https://www.updater.com/careers,
+Livly,A,paylocity,65717b9a-7d08-4867-8ae9-5f3553eff988,ok,0,0,0,0,https://www.livly.io/careers,
+Chamberlain Group,B,workday,chamberlain,ok,33,66,13,6,https://www.chamberlaingroup.com/careers,
+Obie,A,rippling,obie,ok,0,5,1,0,https://www.obieinsurance.com/careers,
+Avail (Realtor.com),A,,,covered by parent: Realtor.com (Move Inc.),0,0,0,0,https://www.avail.co/careers,Realtor.com (Move Inc.) itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br)
+HqO,B,ashby,hqo,failed:Ashby has no board named 'hqo' (it may have moved); _ashby_graphql: Ashby has no job board named 'hqo' | _ashby_page: Ashby page for 'hqo' has no embedded job data,0,0,0,0,https://www.hqo.com/careers,
+Buildium (RealPage),A,,,covered by parent: RealPage,0,0,0,0,https://www.buildium.com/careers,Buildium hires through RealPage's shared job board
+Placester,B,,,"failed:the careers page needs a browser to show its jobs, and the browser couldn't be used this run (the site refused the browser (HTTP 403))",0,0,0,0,https://placester.com/careers,
+Robin,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.robinpowered.com/careers,
+GetCovered,A,rippling,get-covered-insurance,ok,4,7,0,0,https://getcovered.io/careers,
+TurboTenant,A,greenhouse,turbotenant,ok,1,3,0,1,https://www.turbotenant.com/careers,
+Homebot,B,ashby,homebot,ok,0,0,0,0,https://www.homebot.ai/careers,
+Digible,A,greenhouse,digible,ok,3,6,0,2,https://www.digible.com/careers,
+NetVendor,A,bamboohr,netvendor,ok,1,10,1,0,https://www.netvendor.com/careers,
+SmartRent,A,greenhouse,smartrent,ok,4,8,0,0,https://smartrent.com/careers,
+Offerpad,B,adp,1259f4b4-8ba3-4cf9-86d2-e957dc127478,ok,0,15,0,0,https://www.offerpad.com/careers,read from the job board this page links to (adp: 1259f4b4-8ba3-4cf9-86d2-e957dc127478: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=1259f4b4-8ba3-4cf9-86d2-e957dc127478&ccId=19000101_000001)
+Opendoor,B,page,,ok,19,44,0,0,https://www.opendoor.com/careers,read from the jobs listed on the page
+PointCentral,A,greenhouse,pointcentral,ok,1,1,0,0,https://www.pointcentral.com/careers,
+Entrata,A,lever,entrata,ok,12,25,3,6,https://www.entrata.com/careers,
+Rentec Direct,A,page,,ok,2,2,0,0,https://www.rentecdirect.com/careers,read from structured job data on the page
+Second Nature,A,ashby,second-nature,ok,4,5,0,2,https://www.secondnature.com/careers,
+Home365,A,bamboohr,home365,ok,0,12,0,0,https://www.home365.co/careers,
+Cecilian Partners,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.cecilianpartners.com/careers,
+CoStar Group,B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://www.costargroup.com/careers,
+Alarm.com,B,greenhouse,alarmcom,ok,64,89,9,0,https://www.alarm.com/careers,
+Notarize (Proof),B,lever,proof,ok,1,1,0,1,https://www.proof.com/careers,
+Zillow Group,B,workday,zillow,ok,71,179,69,14,https://www.zillow.com/careers,
+Redfin,B,,,covered by parent: Rocket Companies,0,0,0,0,https://www.redfin.com/careers,Rocket Companies itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br)
+Knock CRM,A,,,covered by parent: RealPage,0,0,0,0,https://www.knockrentals.com/careers,Knock is part of RealPage (knockcrm.com links into RealPage) and hires through RealPage's board
+Rocket Companies,B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://www.rocketcompanies.com/careers,
+Rent Manager (LCS),A,adp,b156e713-5801-4c36-bb62-a62f3bc9844f,ok,0,4,0,0,https://www.rentmanager.com/careers,read from the job board this page links to (adp: b156e713-5801-4c36-bb62-a62f3bc9844f: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=b156e713-5801-4c36-bb62-a62f3bc9844f&ccId=19000101_000001); found by following the page's link to its full list (https://www.lcs.com/careers/?__hstc=147932712.f8e9cc1d40801d347f073e6ec683b53e.1791572958060.1791572958060.1791572958060.1&__hssc=147932712.1.1791572958060&__hsfp=6b271df3e814f5d5a75b6a80bc4eeb6b)
+MRI Software,A,workday,mrisoftware,ok,27,86,18,0,https://www.mrisoftware.com/careers,read from the job board this page links to (workday: mrisoftware: https://mrisoftware.wd501.myworkdayjobs.com/External_CareerSite)
+Density,B,greenhouse,density,failed:Greenhouse has no board named 'density' (it may have moved),0,0,0,0,https://www.density.io/careers,
+Bright MLS,B,adp,c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693,ok,2,5,1,0,https://www.brightmls.com/careers,read from the job board this page links to (adp: c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693&ccId=19000101_000001)
+DoorLoop,A,comeet,0A.006,ok,3,4,4,0,https://www.doorloop.com/careers,read from the job board this page loads its jobs from (comeet: 0A.006: the company's careers page (Comeet feed))
+Envoy,B,ashby,envoy,ok,16,22,1,1,https://envoy.com/careers,
+LeaseLock,A,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.leaselock.com/careers,
+Flock Homes,A,greenhouse,flockhomes,ok,1,2,0,0,https://www.flockhomes.com/careers,
+Divvy Homes,A,greenhouse,divvyhomes,failed:Greenhouse has no board named 'divvyhomes' (it may have moved),0,0,0,0,https://www.divvyhomes.com/careers,
+Greystar,A,workday,greystar,ok,16,76,12,10,https://www.greystar.com/careers,
+Doorstead,A,breezy,doorstead,ok,0,95,13,0,https://www.doorstead.com/careers,
+Belong,A,workable,belong-6,ok,0,5,0,1,https://belonghome.com/careers,
+Mynd,A,,,covered by parent: Roofstock,0,0,0,0,https://www.mynd.co/careers,"Mynd is part of Roofstock and hires through Roofstock's Greenhouse board, which is read under Roofstock"
+Renters Warehouse,A,adp,0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da,ok,2,13,4,0,https://www.renterswarehouse.com/careers,read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da)
+Evernest,A,lever,evernest,ok,0,15,0,0,https://www.evernest.co/careers,
+Atlas Real Estate,A,paylocity,5e5fc082-a90b-4d93-8b73-46f77d40e081,ok,3,16,2,0,https://realatlas.com/careers/,
+PURE HomeRiver Group,A,adp,eea42ed6-3dcf-47f3-b99b-29a304948b2b,ok,0,8,0,0,https://purehomeriver.com/company/careers/,read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2)
+Northpoint Asset Management,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://northpointam.com/careers,
+Evergreen Residential,A,greenhouse,evergreenresidentialemployeeservicescorp,ok,2,42,12,0,https://evergreenresi.com/careers/,read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp); found by following the page's link to its full list (https://evergreenresi.com/careers/openings/)
+Property Meld,A,breezy,property-meld,ok,0,0,0,0,https://property-meld.breezy.hr/,
+Footprint,A,ashby,footprint,ok,10,11,1,0,https://jobs.ashbyhq.com/onefootprint,
+Reffie,A,generic,reffie,ok,1,1,0,0,https://careers.reffie.me/,
+Two Dots,A,lever,twodots,ok,3,4,0,0,https://jobs.lever.co/twodots,
+Haven,A,generic,haven-yc,ok,1,1,0,0,https://www.ycombinator.com/companies/haven-2/jobs,
+Nutiliti,A,linkedin,nutiliti,ok,0,0,0,0,https://builtin.com/company/nutiliti/jobs,
+HiredHelpr,A,linkedin,hiredhelpr,ok,0,0,0,0,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm,
+Mason,A,,,unmapped,0,0,0,0,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)
+Super,A,generic,hiresuper,ok,0,0,0,0,https://www.hiresuper.com/careers,
+Boom,A,linkedin,boompay,ok,3,8,1,0,https://wellfound.com/company/boom-app/jobs,
+AbodeMine,A,linkedin,abodemine,ok,0,0,0,0,https://wellfound.com/company/abodemine/jobs,
+Lineage,A,generic,lineage-finance,ok,0,0,0,0,https://lineage.finance/careers,
+Series Homes,A,linkedin,serieshomes,ok,0,0,0,0,https://www.serieshomes.com,
+PropertyManagement.com,A,,,unmapped,0,0,0,0,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan
