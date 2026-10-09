@@ -260,6 +260,15 @@ def smartrecruiters(slug: str, **_) -> JobList:
         offset += len(content)
         if not content or offset >= int(d.get("totalFound") or 0):
             break
+    if not out:
+        # SmartRecruiters answers an unknown company with an empty list, exactly as it
+        # answers a company with nothing open. Its public board page tells them apart.
+        try:
+            get(f"https://jobs.smartrecruiters.com/{slug}", retries=1)
+        except NotFound as exc:
+            raise NotFound(f"SmartRecruiters has no company named '{slug}' (it may have moved)") from exc
+        except FetchError:
+            pass
     return out
 
 
@@ -674,11 +683,38 @@ def icims(slug: str, host: str = "", **_) -> JobList:
     return out
 
 
+# -------------------------------------------------------------------- Comeet
+def comeet(slug: str, key: str = "", **_) -> JobList:
+    """Comeet careers feed. `slug` is the company's id (like 3E.006) and `key`
+    the public token its careers page calls the feed with; both are read off
+    the address the careers page itself requests."""
+    if not key:
+        raise FetchError("Comeet needs the token its careers page uses (read the careers page instead)")
+    try:
+        d = _json(get(f"https://www.comeet.co/careers-api/2.0/company/{slug}/positions?token={key}&details=false"),
+                  "Comeet")
+    except NotFound as exc:
+        raise NotFound("Comeet has no company with that id (it may have moved)") from exc
+    out = JobList()
+    for j in records(d if isinstance(d, list) else d.get("positions")):
+        if j.get("is_internal"):
+            continue
+        loc = j.get("location") if isinstance(j.get("location"), dict) else {}
+        where = as_text(loc.get("name")) or place(loc.get("city"), loc.get("country"))
+        if loc.get("is_remote") and "remote" not in where.lower():
+            where = ("Remote · " + where) if where else "Remote"
+        out.append(_job("comeet", slug, rid(j, "uid"), j.get("name"),
+                        j.get("url_active_page") or j.get("url_comeet_hosted_page") or j.get("position_url"),
+                        where, as_text(j.get("department")), j.get("time_updated")))
+    return out
+
+
 READERS: dict[str, Callable[..., JobList]] = {
     "greenhouse": greenhouse, "lever": lever, "ashby": ashby, "workable": workable,
     "smartrecruiters": smartrecruiters, "recruitee": recruitee, "breezy": breezy,
     "bamboohr": bamboohr, "rippling": rippling, "workday": workday, "ukg": ukg, "adp": adp,
     "dayforce": dayforce, "jobvite": jobvite, "paylocity": paylocity, "icims": icims,
+    "comeet": comeet,
 }
 
 
@@ -762,6 +798,7 @@ class Board:
             "jobvite": f"https://jobs.jobvite.com/{s}/jobs",
             "paylocity": f"https://recruiting.paylocity.com/recruiting/jobs/All/{s}",
             "icims": f"https://{p.get('host') or s + '.icims.com'}/jobs/search?ss=1",
+            "comeet": "the company's careers page (Comeet feed)",
         }
         return public.get(self.system, p.get("url", ""))
 
@@ -844,6 +881,8 @@ PATTERNS = [
     ("jobvite", re.compile(r"jobs\.jobvite\.com/(?:careers/)?(?P<slug>[a-z0-9_-]+)", re.I)),
     ("paylocity", re.compile(r"recruiting\.paylocity\.com/recruiting/jobs/(?:All|List)/(?P<slug>" + _G + ")", re.I)),
     ("icims", re.compile(r"(?P<host>(?P<slug>[a-z0-9-]+)\.icims\.com)", re.I)),
+    ("comeet", re.compile(r"comeet\.co/careers-api/2\.0/company/(?P<slug>[A-Za-z0-9.]+)/positions"
+                          r"\?(?:[^\s\"'<>]*&)?token=(?P<key>[A-Za-z0-9]+)", re.I)),
     # Read by opening the board in the headless browser.
     ("paycom", re.compile(r"(?P<host>[a-z0-9.-]*paycomonline\.(?:net|com))/v4/ats/web\.php/portal/(?P<key>[A-F0-9]{32})", re.I)),
     ("paycom-classic", re.compile(r"(?P<host>[a-z0-9.-]*paycomonline\.(?:net|com))/v4/ats/web\.php/jobs.*?[?&]clientkey=(?P<key>[A-F0-9]{32})", re.I)),
@@ -893,7 +932,7 @@ JOB_SYSTEM_HOSTS = re.compile(
     r"breezy\.hr|bamboohr\.com|rippling\.com|myworkdayjobs\.com|myworkdaysite\.com|ultipro\.com|"
     r"adp\.com|dayforcehcm\.com|jobvite\.com|paylocity\.com|icims\.com|paycomonline\.|"
     r"isolvedhire\.com|applicantpro\.com|gem\.com|applytojob\.com|teamtailor\.com|trinethire\.com|"
-    r"pinpointhq\.com|paradox\.ai|taleo\.net|successfactors\.com|jobs\.sap\.com|"
+    r"pinpointhq\.com|comeet\.co|paradox\.ai|taleo\.net|successfactors\.com|jobs\.sap\.com|"
     r"recruitingbypaycor\.com|hireology\.com|apploi\.com", re.I)
 
 
@@ -922,6 +961,8 @@ def classify(link: str) -> Board:
             continue
         if system in _HOST_NAMED and _VENDOR_HOST.match(slug):
             continue
+        if system == "gem" and slug.lower() in ("gem", "embed"):
+            continue                     # Gem's own embed script, loaded by every page that embeds a Gem board
         if any((groups.get(k) or "").lower() in _NOT_A_SITE or (groups.get(k) or "").startswith("_")
                for k in ("site", "board")):
             continue

@@ -36,6 +36,7 @@ import sys
 import time
 from pathlib import Path
 
+from . import boards as boards_mod
 from . import browser as browser_mod
 from . import company as company_mod
 from . import verify as verify_mod
@@ -71,6 +72,36 @@ def load_json(p: Path, default):
 def save_json(p: Path, obj):
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(obj, indent=2, sort_keys=True))
+
+
+MIGRATIONS = Path(__file__).resolve().parent / "migrations"
+
+
+def apply_migrations(ats_map: dict, applied_path: Path) -> list:
+    """One-time changes to data/ats_map.json that ship with the code (jobsearch/migrations/*.json).
+
+    Kept out of ats_map.json itself because the weekly run rewrites that file: a change made there by
+    hand in a branch would collide with the run's own commit. Each migration is applied once and its
+    id recorded next to the data, so later hand edits to ats_map.json are never overwritten.
+    """
+    applied = load_json(applied_path, [])
+    done = []
+    for path in sorted(MIGRATIONS.glob("*.json")) if MIGRATIONS.is_dir() else []:
+        m = json.loads(path.read_text())
+        if m["id"] in applied:
+            continue
+        for company, entry in m.get("set", {}).items():
+            ats_map[company] = entry
+        for company in m.get("remove", []):
+            cur = ats_map.get(company) or {}
+            if cur.get("ats") == "builtin" or (not cur.get("ats") and not cur.get("parent")
+                                               and cur.get("confidence") not in ("manual", "excluded")):
+                ats_map.pop(company, None)
+        applied.append(m["id"])
+        done.append(m["id"])
+    if done:
+        save_json(applied_path, applied)
+    return done
 
 
 def load_leads() -> list[dict]:
@@ -224,6 +255,9 @@ def main(argv=None):
         print(f"  on-demand run for: {', '.join(l['company'] for l in leads) or '(nothing matched)'}", flush=True)
 
     ats_map = load_json(ATS_MAP, {})
+    if not args.fixtures:
+        for mid in apply_migrations(ats_map, DATA / "migrations_applied.json"):
+            print(f"  migrate applied one-time change to ats_map.json: {mid}", flush=True)
     history = load_json(HISTORY, {})
     history = {k: v for k, v in history.items()
                if passes_company_filter(v.get("company", ""), v.get("title", ""), v.get("location", ""), cfg)}
@@ -412,8 +446,30 @@ def main(argv=None):
     for r in company_rows:
         r["focus_open"] = sum(1 for j in all_jobs if j["company"] == r["company"] and j["role_group"])
 
-    # ---- 3b. verify every link; reopen "closed" roles whose posting is still live
+    # ---- 3b. check links.
+    #  A role that a job system's own feed no longer lists has closed: the feed is the authority.
+    #  Its posting page proves nothing either way, because most job systems answer a closed
+    #  posting's address with a normal-looking page. (Until Oct 2026 such roles were re-opened
+    #  whenever that page loaded, so on Workday, Ashby, Rippling and others nothing ever closed.)
+    #  Only where the list itself may be incomplete - a careers page, LinkedIn, a VC board, or a
+    #  read that was cut short - does a posting that still loads mean "we missed it, keep it open".
     scraper_misses = []
+    cut_short = {r["company"] for r in company_rows if "cut short" in (r.get("note") or "")}
+    def feed_decides(c) -> bool:
+        system = src(c["job_key"]).split(":")[0]
+        # Workday is the exception: its long lists are read 20 at a time and can skip a posting,
+        # and it has a reliable per-posting check (see verify.py), so each of its closures is checked.
+        return system in boards_mod.READERS and system != "workday" and c["company"] not in cut_short
+    # Roles the old link check had been holding open after they came down. They close now, quietly:
+    # they did not close this week, so they are not this week's news.
+    held_open = set()
+    last = load_json(DATA / "last_run.json", {})
+    prev_run = last.get("date", "")
+    prev_misses = OUT / prev_run / "scraper_misses.csv"
+    # Only for the first run after the change: from then on the misses file holds real misses.
+    if prev_run and prev_misses.exists() and not last.get("feed_decides"):
+        with prev_misses.open(newline="") as f:
+            held_open = {row.get("job_key", "") for row in csv.DictReader(f)}
     over_budget = (time.time() - run_start) > args.budget_minutes * 60
     if over_budget and not fixtures:
         print("  verify  SKIPPED - run is over its time budget; closed roles kept unverified", flush=True)
@@ -428,10 +484,11 @@ def main(argv=None):
         for co in {j["company"] for j in in_scope}:
             rows = [j for j in in_scope if j["company"] == co]
             sample += rows if len(rows) <= per_co else rng.sample(rows, per_co)
-        n = len(sample) + len(closed_jobs)
+        to_check = [c for c in closed_jobs if not feed_decides(c)]
+        n = len(sample) + len(to_check)
         print(f"  verify  checking {n} posting links" + ("" if adhoc else f" ({len(in_scope)} in-scope open, sampled {per_co}/company; all closed)") + "...", flush=True)
         t0 = time.time()
-        results = verify_mod.check_many([j["url"] for j in sample] + [c["url"] for c in closed_jobs])
+        results = verify_mod.check_many([j["url"] for j in sample] + [c["url"] for c in to_check])
         print(f"  verify  done in {time.time()-t0:.0f}s", flush=True)
         for j in all_jobs:
             st, code = results.get(j["url"], ("listed in ATS, not rechecked" if j["role_group"] else "not checked (out of scope)", 0))
@@ -442,6 +499,10 @@ def main(argv=None):
             j["link_status"], j["link_http"] = st, code
         still_closed = []
         for c in closed_jobs:
+            if feed_decides(c):
+                c["link_status"], c["link_http"] = "no longer listed by the job board", 0
+                still_closed.append(c)
+                continue
             st, code = results.get(c["url"], ("error", 0))
             c["link_status"], c["link_http"] = st, code
             if st == "live":
@@ -460,6 +521,15 @@ def main(argv=None):
     else:
         for j in all_jobs + closed_jobs:
             j.setdefault("link_status", "unchecked")
+    late = [c for c in closed_jobs if c["job_key"] in held_open]
+    for c in late:
+        history[c["job_key"]]["late"] = True          # came down earlier than its closed_on date
+        if c["company"] in by_company:
+            by_company[c["company"]]["closed"] -= 1
+    closed_jobs = [c for c in closed_jobs if c not in late]
+    if late and not fixtures:
+        print(f"  closed  {len(late)} roles that had already come down before this run were closed "
+              "without being reported as this week's closures", flush=True)
     save_json(HISTORY, history)
 
     # ---- 4. outputs
@@ -489,7 +559,7 @@ def main(argv=None):
               ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url", "note"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery)
     if not adhoc:
-      save_json(DATA / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
+      save_json(DATA / "last_run.json", {"date": today.isoformat(), "companies": len(leads), "feed_decides": True,
                                                  "ok": len(ok_companies), "open_in_scope": len(all_jobs), "open_all": len(all_open),
                                                  "new": len(new_jobs), "closed": len(closed_jobs)})
     if adhoc:

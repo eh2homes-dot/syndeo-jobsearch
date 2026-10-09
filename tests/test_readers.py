@@ -208,3 +208,24 @@ def test_paycom_and_paylocity_links_without_a_board_id_are_not_readable():
 def test_ordinary_words_can_be_company_boards(url, system, slug):
     board = B.classify(url)
     assert (board.system, board.slug) == (system, slug)
+
+
+def test_comeet_feed_and_its_address():
+    board = B.classify("https://www.comeet.co/careers-api/2.0/company/3E.006/positions?token=ABC123&details=false")
+    assert (board.system, board.slug, board.params) == ("comeet", "3E.006", {"key": "ABC123"})
+    with fakenet.serve(ROUTES):
+        jobs = B.read_board(board)
+    assert [(j["id"], j["title"], j["location"]) for j in jobs] == [("3E.275", "Account Executive (SMB)", "Miami (US)")]
+    assert jobs[0]["url"] == "https://www.acme.test/job-post?job=3E.275"
+
+
+def test_smartrecruiters_tells_a_missing_company_from_an_empty_one():
+    with fakenet.serve(ROUTES):
+        assert B.smartrecruiters("QuietCo") == []
+        with pytest.raises(NotFound):
+            B.smartrecruiters("NoSuchCo")
+
+
+def test_gems_own_embed_script_is_not_a_company_board():
+    assert B.classify("https://jobs.gem.com/gem/embed.js").system == "page"
+    assert B.classify("https://jobs.gem.com/lower-llc").slug == "lower-llc"

@@ -73,7 +73,7 @@ def to_weekly(job: dict, slug: str = "") -> dict:
     return out
 
 
-_READER_PARAMS = ("host", "site", "wd", "board", "cc", "origin", "search_terms", "max_pages")
+_READER_PARAMS = ("host", "site", "wd", "board", "cc", "origin", "key", "search_terms", "max_pages")
 
 
 def _shared(system: str) -> Callable[..., list]:

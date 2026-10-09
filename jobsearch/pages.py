@@ -442,6 +442,8 @@ def _candidates(evidence: list, page_url: str) -> list:
             continue
         if board.key == page_board.key:
             continue                     # the page is that board
+        if board.slug.lower() == board.system:
+            continue                     # the vendor's own board (jobs.lever.co/lever), reached via its branding
         best, count, _ = score.get(board.key, (0, 0, board))
         score[board.key] = (max(best, strength), count + 1, board)
     ranked = sorted(score.values(), key=lambda t: (-t[0], -t[1]))
@@ -573,11 +575,63 @@ def _visible_text(soup) -> str:
     return soup.get_text(" ", strip=True)
 
 
-def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
-              browser: Optional[Browser] = None, follow_boards: bool = True,
-              search_terms=None, workday_max_pages: int = 0,
-              label: str = "careers page") -> PageResult:
-    """Jobs listed on (or loaded by) one page. See the module docstring.
+# A link from a careers page to the page holding its full list of jobs.
+_FULL_LIST = re.compile(
+    r"^(view|see|search|browse|explore|show|find)\s+((all|our|open|current|available|more)\s+)*"
+    r"(jobs|positions|openings|roles|opportunities|job openings|open positions|open roles)$"
+    r"|^(all|open|current|available)\s+(jobs|positions|openings|roles|opportunities)$"
+    r"|^(job search|search jobs|job openings|career opportunities|current opportunities)$", re.I)
+
+
+def _full_list_link(soup, page_url: str) -> str:
+    """Where the page says its full list of jobs is ("View all jobs"), or ""."""
+    here = page_url.split("#")[0].rstrip("/")
+    for a in soup.find_all("a", href=True):
+        text = " ".join(a.get_text(" ", strip=True).split())
+        if not _FULL_LIST.match(text):
+            continue
+        target = _join(page_url, a["href"]).split("#")[0]
+        if (target.startswith("http") and target.rstrip("/") != here
+                and site_of(target) not in THIRD_PARTY):
+            return target
+    return ""
+
+
+def read_page(url: str, **kw) -> PageResult:
+    """Jobs listed on (or loaded by) one page. See the module docstring and _read_page.
+
+    One extra step on top of _read_page: many careers pages show a few featured
+    jobs, or none, and link to the full list ("View all jobs", "Search jobs").
+    When the page has such a link, the list it leads to is read too, and used
+    if it has more.
+    """
+    seen: dict = {}
+    first, problem = None, None
+    try:
+        first = _read_page(url, _seen=seen, **kw)
+    except NeedsLink as exc:
+        problem = exc
+    more = seen.get("full_list", "")
+    if more and not kw.get("link_regex") and (first is None or first.board is None):
+        try:
+            second = _read_page(more, _seen={}, **kw)
+        except FetchError:
+            second = None
+        if second is not None and len(second.jobs) > (len(first.jobs) if first else 0):
+            second.how += f"; found by following the page's link to its full list ({more})"
+            return second
+        if second is not None and first is None:
+            return second                    # the full list loaded and has nothing open
+    if first is None:
+        raise problem
+    return first
+
+
+def _read_page(url: str, *, trusted: bool = False, link_regex: str = "",
+               browser: Optional[Browser] = None, follow_boards: bool = True,
+               search_terms=None, workday_max_pages: int = 0,
+               label: str = "careers page", _seen: Optional[dict] = None) -> PageResult:
+    """Jobs listed on (or loaded by) exactly this page.
 
     `link_regex`     a job system's posting-address shape; when set, the page
                      is that system's own board, so only matching links count
@@ -639,6 +693,8 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
 
     if html:
         soup = BeautifulSoup(html, "lxml")
+        if _seen is not None and not system_board:
+            _seen["full_list"] = _full_list_link(soup, final)
         if follow:
             evidence = [(final, _LOADED)] if final != url else []
             evidence += _static_evidence(html, soup, final)
@@ -708,6 +764,8 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
                 return done
         else:
             result.final_url = page.final_url or final
+            if _seen is not None and not system_board and not _seen.get("full_list") and page.frames:
+                _seen["full_list"] = _full_list_link(BeautifulSoup(page.frames[0][1], "lxml"), page.frames[0][0])
             if page.status in (404, 410):
                 page_gone = True
             elif page.status in (401, 403, 429) or page.status >= 500:
@@ -764,8 +822,8 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
                 needs_browser.append(board.label())
                 continue
             try:
-                sub = read_page(board.listing_url, link_regex=B.RENDERED[board.system]["links"],
-                                browser=browser, follow_boards=False, label=f"{board.system} job board")
+                sub = _read_page(board.listing_url, link_regex=B.RENDERED[board.system]["links"],
+                                 browser=browser, follow_boards=False, label=f"{board.system} job board")
             except NeedsLink as exc:
                 tried[key] = ("gone", str(exc))
                 continue

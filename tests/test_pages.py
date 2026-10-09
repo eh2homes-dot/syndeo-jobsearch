@@ -352,3 +352,18 @@ def test_page_served_with_a_not_found_status_is_still_read(site, browser):
     with fakenet.serve(ROUTES):
         r = read_page(f"{site}/served-as-404/js_network", browser=browser)
     assert r.board.key == "ashby:acme:{}" and titles(r) == ["Forward Deployed Engineer"]
+
+
+def test_featured_jobs_page_follows_its_link_to_the_full_list(site):
+    """A landing page with one featured job and a "View All Jobs" link: the full list is read."""
+    with fakenet.serve(ROUTES):
+        r = read_page(f"{site}/careers/featured_jobs")
+    assert titles(r) == ["Vice President, Investments", "Director, Real Estate", "Sr. Manager, Marketing"]
+    assert "full list" in r.how
+
+
+def test_full_list_link_is_not_followed_when_it_has_no_more(site):
+    html = OWN_JOBS + "<a href='/elsewhere'>See open positions</a>"
+    with fakenet.serve({**ROUTES, **page_route(html)}):
+        r = read_page("https://www.acme.test/careers")
+    assert titles(r) == ["Asset Manager", "Financial Analyst"] and "full list" not in r.how

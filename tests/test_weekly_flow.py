@@ -210,3 +210,85 @@ def test_renaming_a_board_on_the_same_job_system_reports_nothing_false(tmp_path,
     saved = json.loads((data / "ats_map.json").read_text())["Acme"]
     assert saved["slug"] == "acme" and saved["previous"]["slug"] == "oldacme"
     assert "job board changed" in (d / "report.md").read_text()
+
+
+# --------------------------------------------- what closes, and what is checked
+def _history_role(key, title="Director of Sales", url="https://x.test/p"):
+    return {key: {"company": "Acme", "title": title, "location": "Remote", "url": url, "posted_at": "",
+                  "ats": key.split(":")[0], "focus": "sales", "first_seen": "2026-09-20",
+                  "last_seen": "2026-10-04", "status": "open"}}
+
+
+def test_a_role_the_job_boards_feed_no_longer_lists_is_closed_even_if_its_page_still_loads(tmp_path, monkeypatch):
+    """Most job systems answer a closed posting's address with a normal page. That must not re-open it."""
+    hist = _history_role("greenhouse:acme:999", url="https://job-boards.greenhouse.io/acme/jobs/999")
+    data, out = _setup(tmp_path, monkeypatch, hist)
+    (data / "ats_map.json").write_text(json.dumps({"Acme": {"ats": "greenhouse", "slug": "acme", "confidence": "html"}}))
+    still_loads = {"GET https://job-boards\\.greenhouse\\.io/acme/jobs/": {"text": "<html><body>" + "A job page. " * 500 + "</body></html>"}}
+    with fakenet.serve(routes(**still_loads)):
+        assert run.main(["--no-vc", "--no-browser", "--sleep", "0", "--date", "2026-10-11"]) == 0
+    d = out / "2026-10-11"
+    closed = _rows(d / "closed_this_week.csv")
+    assert [c["job_key"] for c in closed] == ["greenhouse:acme:999"]
+    assert closed[0]["link_status"] == "no longer listed by the job board"
+    assert _rows(d / "scraper_misses.csv") == []
+
+
+def test_a_role_missing_from_a_careers_page_stays_open_while_its_posting_still_loads(tmp_path, monkeypatch):
+    """A page read can miss a job; there, a posting that still loads means "we missed it"."""
+    hist = _history_role("page:acme:/careers/jobs/director-of-sales", url="https://www.acme.test/careers/jobs/director-of-sales")
+    data, out = _setup(tmp_path, monkeypatch, hist)
+    (data / "ats_map.json").write_text(json.dumps({"Acme": {"ats": "page", "slug": "acme", "url": "https://www.acme.test/careers", "confidence": "page"}}))
+    page = {"text": "<html><body><h1>Open Positions</h1><div><h3>Asset Manager</h3>"
+                    "<a href='/careers/jobs/asset-manager'>Learn more</a></div></body></html>"}
+    posting = {"text": "<html><body>" + "Director of Sales posting. " * 300 + "</body></html>"}
+    with fakenet.serve(routes(**{"GET https://www\\.acme\\.test/careers$": page,
+                                 "GET https://www\\.acme\\.test/careers/jobs/": posting})):
+        assert run.main(["--no-vc", "--no-browser", "--sleep", "0", "--date", "2026-10-11"]) == 0
+    d = out / "2026-10-11"
+    assert _rows(d / "closed_this_week.csv") == []
+    assert [m["job_key"] for m in _rows(d / "scraper_misses.csv")] == ["page:acme:/careers/jobs/director-of-sales"]
+
+
+def test_roles_the_old_link_check_had_been_holding_open_close_quietly_once(tmp_path, monkeypatch):
+    hist = {**_history_role("greenhouse:acme:777", "VP of Sales"), **_history_role("greenhouse:acme:888", "Head of Growth")}
+    data, out = _setup(tmp_path, monkeypatch, hist)
+    (data / "ats_map.json").write_text(json.dumps({"Acme": {"ats": "greenhouse", "slug": "acme", "confidence": "html"}}))
+    (data / "last_run.json").write_text(json.dumps({"date": "2026-10-04"}))          # written by the old code
+    prev = out / "2026-10-04"
+    prev.mkdir(parents=True)
+    (prev / "scraper_misses.csv").write_text("company,title,url,link_status,first_seen,ats,job_key\n"
+                                             "Acme,VP of Sales,u,live,2026-09-20,greenhouse,greenhouse:acme:777\n")
+    with fakenet.serve(ROUTES):
+        assert run.main(["--no-vc", "--no-browser", "--no-verify", "--sleep", "0", "--date", "2026-10-11"]) == 0
+    closed = [c["job_key"] for c in _rows(out / "2026-10-11" / "closed_this_week.csv")]
+    assert closed == ["greenhouse:acme:888"]                    # 777 came down weeks ago: closed, not reported
+    h = json.loads((data / "history.json").read_text())
+    assert h["greenhouse:acme:777"]["status"] == "closed" and h["greenhouse:acme:777"]["late"] is True
+    assert json.loads((data / "last_run.json").read_text())["feed_decides"] is True
+
+
+def test_workday_postings_are_checked_against_workdays_own_data():
+    from jobsearch import verify
+    base = "https://acme\\.wd5\\.myworkdayjobs\\.com/wday/cxs/acme/External/job/Remote/"
+    r = {f"GET {base}Open_R1$": {"json": {"jobPostingInfo": {"title": "Director", "posted": True}}},
+         f"GET {base}Gone_R2$": {"status": 403, "json": {"errorCode": "S22", "message": "permission denied"}},
+         "GET https://acme\\.wd5\\.myworkdayjobs\\.com/External/job/": {"text": "<html>app shell</html>"}}
+    with fakenet.serve(r) as calls:
+        assert verify.check("https://acme.wd5.myworkdayjobs.com/External/job/Remote/Open_R1") == ("live", 200)
+        assert verify.check("https://acme.wd5.myworkdayjobs.com/en-US/External/job/Remote/Gone_R2") == ("gone", 403)
+    assert all("/wday/cxs/" in c for c in calls)                # the always-200 public page is never asked
+
+
+def test_migration_is_applied_once_and_never_overwrites_later_edits(tmp_path):
+    ats_map = {"Placer.ai": {"ats": "builtin", "slug": "placerai"}, "Robin": {"ats": "builtin", "slug": "robin"},
+               "Mason": {"ats": "", "confidence": "manual"}, "Entrata": {"ats": "lever", "slug": "entrata"}}
+    applied = tmp_path / "applied.json"
+    assert run.apply_migrations(ats_map, applied) == ["2026-10-own-boards"]
+    assert ats_map["Placer.ai"]["ats"] == "greenhouse" and ats_map["Mynd"] == {**ats_map["Mynd"], "parent": "Roofstock"}
+    assert "Robin" not in ats_map                               # Built In entry dropped: read from its careers page
+    assert ats_map["Mason"]["confidence"] == "manual" and ats_map["Entrata"]["slug"] == "entrata"
+    assert not any(v.get("ats") == "builtin" for v in ats_map.values())
+    ats_map["Placer.ai"] = {"ats": "lever", "slug": "edited-by-hand"}
+    assert run.apply_migrations(ats_map, applied) == []
+    assert ats_map["Placer.ai"]["slug"] == "edited-by-hand"
