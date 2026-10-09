@@ -41,6 +41,12 @@ class NeedsLink(FetchError):
     """The link can't be read as it stands; the message says why."""
 
 
+class PageDown(FetchError):
+    """The page didn't load at all this run, for a reason that may pass (site
+    down, timeout, refused). Not proof the link is wrong: a caller that read
+    this page fine last time should keep last time's roles."""
+
+
 @dataclass
 class PageResult:
     jobs: list = field(default_factory=list)
@@ -706,14 +712,14 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
                 page_gone = True
             elif page.status in (401, 403, 429) or page.status >= 500:
                 render_problem = f"the site refused the browser (HTTP {page.status})"
-            elif _BLOCKED.search((page.text or "")[:800]) and not found:
+            elif len(page.text or "") < 2000 and _BLOCKED.search(page.text or "") and not found:
                 render_problem = "the site showed the browser a bot check instead of the page"
             else:
                 saw_page = True
                 m = _SAYS_NONE.search(page.text or "")
                 says_none = m.group(0) if m else ""      # what the page shows beats what its source contains
             rcands: list = []
-            if follow and not page_gone:
+            if follow:      # even on a "not found" status: some sites serve a working app with a 404
                 evidence = [(u, _LOADED) for u in page.requests]
                 evidence += [(fu, _EMBEDDED) for fu, _ in page.frames[1:]]
                 if page.final_url and page.final_url != url:
@@ -801,7 +807,10 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
     # (c) The link needs fixing.
     if not html:
         extra = f"; in a browser: {render_problem or 'not found'}" if (render_problem or page_gone) else ""
-        raise NeedsLink(f"the {label} doesn't load ({static_error or 'empty page'}{extra})")
+        why = f"the {label} doesn't load ({static_error or 'empty page'}{extra})"
+        if page_gone or re.search(r"HTTP (404|410)\b", static_error) or not static_error:
+            raise NeedsLink(why)
+        raise PageDown(why)
     if page_gone:
         raise NeedsLink(f"the {label} doesn't exist any more (not found)")
     found_msg = next((n for n in reversed(notes) if n.startswith("found ")), "")

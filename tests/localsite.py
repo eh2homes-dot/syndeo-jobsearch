@@ -16,6 +16,16 @@ class _Quiet(http.server.SimpleHTTPRequestHandler):
         pass
 
     def do_GET(self):
+        # /served-as-404/<name>: the page works, but the server labels it "not found"
+        # (single-page apps on static hosting often do this for deep links)
+        if self.path.startswith("/served-as-404/"):
+            body = (PAGES / (self.path.rsplit("/", 1)[-1] + ".html")).read_bytes()
+            self.send_response(404)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         # /careers/<name> serves <name>.html, so fixtures have careers-like addresses
         if self.path.startswith("/careers/") and not self.path.startswith("/careers/jobs/"):
             name = self.path.split("?")[0].rsplit("/", 1)[-1]

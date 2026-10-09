@@ -30,7 +30,7 @@ from . import boards as B
 from .adapters import ADAPTERS, to_weekly
 from .boards import Board, classify
 from .http import FetchError, NotFound
-from .pages import NeedsLink, read_page, read_rendered_board
+from .pages import NeedsLink, PageDown, read_page, read_rendered_board
 
 SUSPICIOUS_DROP = 5     # a company with this many open roles last run doesn't go to zero quietly...
 #                         ...once. If it reads as zero again on a later run, it is believed.
@@ -74,7 +74,7 @@ def _weekly(jobs, lead: dict, system: str = "", slug: str = "") -> B.JobList:
     return out
 
 
-def from_careers_page(lead: dict, browser, today: str, url: str = "") -> Read:
+def from_careers_page(lead: dict, browser, today: str, url: str = "", has_history: bool = False) -> Read:
     """Work out and read the company's board from its careers link."""
     url = (url or lead.get("careers_url") or "").strip()
     board = classify(url)
@@ -94,6 +94,9 @@ def from_careers_page(lead: dict, browser, today: str, url: str = "") -> Read:
         page = read_page(url, browser=browser, label="careers page", workday_max_pages=100)
     except NeedsLink as exc:
         return Read(status=f"needs-link: {exc}")
+    except PageDown as exc:
+        # Didn't load this run. A bad week if we have roles from it; a link to look at if we never have.
+        return Read(status=f"failed:{exc}" if has_history else f"needs-link: {exc}")
     except FetchError as exc:
         return Read(status=f"failed:{exc}")
     except Exception as exc:  # noqa: BLE001 - one company never sinks the run
@@ -192,7 +195,7 @@ def read_company(lead: dict, mapping: dict, *, fixtures: Optional[Path] = None, 
 
     if ats == "page" or ats in B.RENDERED:
         url = mapping.get("url", "") if ats == "page" else board_of(mapping).listing_url
-        fresh = from_careers_page(lead, browser, today, url=url)
+        fresh = from_careers_page(lead, browser, today, url=url, has_history=open_before > 0)
         # keep hand-written entries as they are; only record a board the page turned out to load
         if fresh.mapping is not None and (board_of(fresh.mapping).identity() == board_of(mapping).identity()
                                           or fresh.mapping.get("ats") == "page"):
@@ -212,4 +215,4 @@ def read_company(lead: dict, mapping: dict, *, fixtures: Optional[Path] = None, 
         return Read(status="unmapped", note="no job board on file; careers-page reading was off or out of time")
     if not (lead.get("careers_url") or "").strip():
         return Read(status="needs-link: no careers link on file")
-    return from_careers_page(lead, browser, today)
+    return from_careers_page(lead, browser, today, has_history=open_before > 0)

@@ -57,7 +57,7 @@ from jobsearch import boards as B                                      # noqa: E
 from jobsearch.boards import Board, classify as classify_link          # noqa: E402
 from jobsearch.browser import close_shared, shared as shared_browser   # noqa: E402
 from jobsearch.http import FetchError, NotFound, get                   # noqa: E402
-from jobsearch.pages import NeedsLink, read_page, read_rendered_board  # noqa: E402
+from jobsearch.pages import NeedsLink, PageDown, read_page, read_rendered_board  # noqa: E402
 
 log = logging.getLogger("opco")
 
@@ -269,6 +269,18 @@ def read_company(company, role_filter, baseline, browser=None, out_of_time: bool
             return {**base, "status": "unsupported",
                     "reason": f"{board.system} isn't supported yet ({exc})"}
         return {**base, "status": "needs-link", "reason": str(exc)}
+    except PageDown as exc:
+        # The page didn't load this run. If it was read fine last week, that's a
+        # bad week: keep last week's roles. If it has never been read, it's a
+        # link to look at.
+        if baseline._prev(name, board.key) is None:
+            return {**base, "status": "needs-link", "reason": str(exc)}
+        log.warning("  %s: read failed (%s)", name, exc)
+        result = {**base, **baseline.carry_forward(name, str(exc), board.key)}
+        result["filtered"] = [{**r, "company": name, "category": c, "status": result["status"]}
+                              for r in result["roles"] if (c := role_filter.categorize(r["title"], name))]
+        result["total"] = len(result["roles"])
+        return result
     except NotFound as exc:
         # The board Column D names doesn't exist (any more). That's a link to
         # fix, not a bad week, so it goes with the links rather than the failures.
@@ -800,7 +812,7 @@ def main() -> int:
     quick = [c for c in companies if classify(c.careers_url).readable or not classify(c.careers_url).system]
     slow = [c for c in companies if c not in quick]
     if slow:
-        turn = date.today().isocalendar()[1] % len(slow)
+        turn = (date.today().isocalendar()[1] * max(1, len(slow) // 4)) % len(slow)
         slow = slow[turn:] + slow[:turn]
     companies = quick + slow
 
@@ -821,6 +833,7 @@ def main() -> int:
                  result.get("system") or "-", result["status"],
                  result["total"], len(result["filtered"]))
 
+    results = dict(sorted(results.items()))          # stable order in the files, whatever order was read
     if browser is not None:
         log.info("headless browser: %d pages opened, %.0fs", browser.pages_rendered, browser.seconds)
     close_shared()

@@ -174,3 +174,14 @@ def test_closures_are_reported_when_a_page_read_through_a_board_goes_to_zero():
     r = read("Acme", "https://www.acme.test/careers", b, **{"GET https://www\\.acme\\.test/careers$": page})
     assert r["status"] == "ok" and r["roles"] == []
     assert len(O.compute_diff({"Acme": r}, b, O.RoleFilter(CONFIG))["closed"]) == 3
+
+
+def test_careers_page_that_is_down_keeps_last_weeks_roles_or_asks_for_a_link():
+    key = 'page::{"url": "https://www.acme.test/careers"}'
+    down = {"GET https://www\\.acme\\.test/careers$": {"status": 503, "text": "busy"}}
+    b = _baseline({"Acme": {"fetched_on": "2026-10-04", "board": key, "via": "",
+                            "roles": [{"id": "op-/x", "title": "Head of Sales", "url": "u"}]}})
+    seen_before = read("Acme", "https://www.acme.test/careers", b, **down)
+    assert seen_before["status"] == "stale" and len(seen_before["filtered"]) == 1
+    never_seen = read("Acme", "https://www.acme.test/careers", _baseline({}), **down)
+    assert never_seen["status"] == "needs-link" and "doesn't load" in never_seen["reason"]

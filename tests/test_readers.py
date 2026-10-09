@@ -197,3 +197,14 @@ def test_paycom_and_paylocity_links_without_a_board_id_are_not_readable():
                 "https://www.paycomonline.net/v4/ats/web.php/jobs"):
         board = B.classify(url)
         assert board.system in ("paylocity", "paycom") and not board.readable and not board.rendered
+
+
+@pytest.mark.parametrize("url,system,slug", [
+    ("https://job-boards.greenhouse.io/public", "greenhouse", "public"),
+    ("https://jobs.lever.co/go", "lever", "go"),
+    ("https://jobs.ashbyhq.com/build", "ashby", "build"),
+    ("https://sales.bamboohr.com/careers", "bamboohr", "sales"),
+])
+def test_ordinary_words_can_be_company_boards(url, system, slug):
+    board = B.classify(url)
+    assert (board.system, board.slug) == (system, slug)

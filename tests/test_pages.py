@@ -20,7 +20,7 @@ import localsite                                         # noqa: E402
 from jobsearch import boards as B                        # noqa: E402
 from jobsearch.browser import Browser, BrowserUnavailable  # noqa: E402
 from jobsearch.http import FetchError                    # noqa: E402
-from jobsearch.pages import NeedsLink, read_page, _SAYS_NONE, _posting_id   # noqa: E402
+from jobsearch.pages import NeedsLink, PageDown, read_page, _SAYS_NONE, _posting_id   # noqa: E402
 
 ROUTES = json.loads((ROOT / "tests/fixtures/readers/payloads.json").read_text())
 
@@ -335,3 +335,20 @@ def test_posting_id_looks_at_one_link_only(href, expected):
 ])
 def test_says_none(text, is_none):
     assert bool(_SAYS_NONE.search(text)) is is_none
+
+
+def test_site_that_is_down_is_couldnt_check_but_a_missing_page_is_a_link_to_fix():
+    down = {"GET https://www\\.acme\\.test/careers$": {"status": 503, "text": "busy"}}
+    with fakenet.serve({**ROUTES, **down}):
+        with pytest.raises(PageDown):
+            read_page("https://www.acme.test/careers")
+    with fakenet.serve(ROUTES):                       # unmatched address: the fake network answers 404
+        with pytest.raises(NeedsLink):
+            read_page("https://www.acme.test/careers")
+
+
+def test_page_served_with_a_not_found_status_is_still_read(site, browser):
+    """The server says 404 but the page works and loads its jobs from Ashby."""
+    with fakenet.serve(ROUTES):
+        r = read_page(f"{site}/served-as-404/js_network", browser=browser)
+    assert r.board.key == "ashby:acme:{}" and titles(r) == ["Forward Deployed Engineer"]
