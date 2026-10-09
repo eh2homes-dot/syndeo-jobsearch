@@ -2,7 +2,8 @@ name: OpCo Job Search
 
 # Reads the job board (or careers page) in Column D of the OpCo tab for every
 # company, lists the open roles with links to each posting, and writes the
-# weekly brief. Column D is the only input: nothing is guessed or discovered.
+# weekly brief. Column D is the only input. A careers page is read through the
+# job board it loads; nothing is guessed from a company's name.
 #
 # Runs Sundays at 6:00am ET. GitHub's schedule runs on UTC with no daylight
 # saving, so two times are listed (10:00 UTC = 6am EDT, 11:00 UTC = 6am EST) and
@@ -16,6 +17,10 @@ on:
       only:
         description: "Only these companies, comma-separated (leave blank for all)"
         default: ""
+      dry_run:
+        description: "Run and attach the brief, but don't save anything to the repo"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -27,7 +32,7 @@ concurrency:
 jobs:
   search:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - name: Skip if this is the wrong side of daylight saving
@@ -78,7 +83,14 @@ jobs:
 
       - name: Install dependencies
         if: steps.guard.outputs.run == 'true'
-        run: pip install "requests>=2.31" "beautifulsoup4>=4.12" "lxml>=5.0" "PyYAML>=6.0"
+        run: pip install "requests>=2.31" "beautifulsoup4>=4.12" "lxml>=5.0" "PyYAML>=6.0" "playwright>=1.45"
+
+      # Headless browser for careers pages that only show their jobs after scripts run.
+      # If this step fails the search still runs; those pages are reported instead of read.
+      - name: Install the headless browser
+        if: steps.guard.outputs.run == 'true'
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
 
       - name: Read jobs from each company's Column D
         if: steps.guard.outputs.run == 'true'
@@ -95,7 +107,7 @@ jobs:
       # The people-moves workflow also commits on Sundays, so retry the push.
       # -A stages removals too (the first run deletes the old version's state files).
       - name: Save results to the repo
-        if: steps.guard.outputs.run == 'true'
+        if: steps.guard.outputs.run == 'true' && inputs.dry_run != true
         env:
           DIR: ${{ steps.locate.outputs.dir }}
         run: |

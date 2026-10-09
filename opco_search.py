@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
 """OpCo weekly job search — Column D edition.
 
-Column D of the master sheet's OpCo tab is the only input. If it holds a
-job-board link (Workday, UKG, Dayforce, ADP, Greenhouse, Lever, Ashby,
-Workable, SmartRecruiters, Recruitee, Breezy, BambooHR), that board is read.
-If it holds an ordinary web page, only the jobs listed on that page are read.
-Nothing is discovered or guessed, and nothing is cached between runs except
-last week's roles, which the new/closed comparison needs.
+Column D of the master sheet's OpCo tab is the only input:
+
+  a job-board link     -> that board is read with its job system's reader
+                          (Workday, UKG, Dayforce, ADP, Greenhouse, Lever, Ashby,
+                          Workable, SmartRecruiters, Recruitee, Breezy, BambooHR,
+                          Rippling, Jobvite, Paylocity, iCIMS; Paycom, isolved and
+                          Gem by opening the board in a headless browser)
+  any other web page   -> the jobs on that page are read. If the page loads its
+                          jobs from a job board (most careers pages do), that
+                          board is read, and the brief says which one so the
+                          link can be pasted into Column D. Pages that only show
+                          their jobs after scripts run are opened in a headless
+                          browser, which also clicks "Load more" / "Next".
+  empty, or not a link -> "needs a job-board link"
+
+Nothing is guessed from a company's name and no third-party listing site is
+read. Nothing is cached between runs except last week's roles, which the
+new/closed comparison needs.
 
 Anything that can't be read lands in the brief's "Needs your attention"
 section with the reason, so Column D can be fixed.
@@ -14,16 +26,18 @@ section with the reason, so Column D can be fixed.
     python opco_search.py                 # weekly run
     python opco_search.py --discover      # check what each Column D is; read no jobs
     python opco_search.py --only "Greystar,Lamar Advertising Company" -v
+    python opco_search.py --no-browser    # never open the headless browser
 
 Files: opco_search.py (this), opco_config.yml (role filter, live-sheet link),
-opco.csv (the OpCo tab, unless the live-sheet link is set).
+opco.csv (the OpCo tab, unless the live-sheet link is set). The job-system
+readers and the page reader are shared with the weekly search: jobsearch/boards.py,
+jobsearch/pages.py, jobsearch/browser.py.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import io
 import json
 import logging
@@ -32,127 +46,27 @@ import re
 import sys
 import time
 import traceback
-from collections import defaultdict
-from dataclasses import asdict, dataclass, field
-from datetime import date, timedelta
+from dataclasses import asdict, dataclass
+from datetime import date
 from pathlib import Path
-from typing import Optional
-from urllib.parse import parse_qs, urljoin, urlparse
-
-import requests
 import yaml
-from bs4 import BeautifulSoup
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # so `jobsearch` imports from any working directory
+
+from jobsearch import boards as B                                      # noqa: E402
+from jobsearch.boards import Board, classify as classify_link          # noqa: E402
+from jobsearch.browser import close_shared, shared as shared_browser   # noqa: E402
+from jobsearch.http import FetchError, NotFound, get                   # noqa: E402
+from jobsearch.pages import NeedsLink, read_page, read_rendered_board  # noqa: E402
 
 log = logging.getLogger("opco")
 
-
-# ==========================================================================
-# HTTP
-# ==========================================================================
-
-"""Polite HTTP client.
-
-Every source in this module talks to a different host (seven ATS providers plus
-each company's own careers page), so throttling is per host. That is the
-structural fix for the Sept 30 failure: no single provider's rate limit can
-govern the whole run, the way Built In's did.
-"""
-
-
-import logging
-import time
-from collections import defaultdict
-from typing import Optional
-from urllib.parse import urlparse
-
-import requests
-
-log = logging.getLogger(__name__)
-
-UA = (
-    "Mozilla/5.0 (compatible; SyndeoJobSearch/1.0; +mailto:hello@syndeollc.com)"
-)
-DEFAULT_DELAY = 0.8
-_last: dict[str, float] = defaultdict(float)
-
-SESSION = requests.Session()
-SESSION.headers.update({"User-Agent": UA, "Accept-Encoding": "gzip, deflate"})
-
-
-class FetchError(Exception):
-    """Raised with a short human-readable reason for the coverage report."""
-
-
-def _throttle(url: str) -> None:
-    host = urlparse(url).netloc
-    wait = DEFAULT_DELAY - (time.time() - _last[host])
-    if wait > 0:
-        time.sleep(wait)
-    _last[host] = time.time()
-
-
-def _request(method: str, url: str, *, json_body=None, accept: Optional[str] = None,
-             timeout: int = 25, retries: int = 3, headers: Optional[dict] = None) -> requests.Response:
-    headers = dict(headers or {})
-    if accept:
-        headers["Accept"] = accept
-    if json_body is not None:
-        headers["Content-Type"] = "application/json"
-
-    last_reason = "no response"
-    for attempt in range(1, retries + 1):
-        _throttle(url)
-        try:
-            r = SESSION.request(method, url, json=json_body, headers=headers, timeout=timeout)
-        except requests.RequestException as exc:
-            last_reason = f"connection error ({type(exc).__name__})"
-            time.sleep(2 * attempt)
-            continue
-
-        if r.status_code == 200:
-            return r
-
-        if r.status_code == 429:
-            retry_after = r.headers.get("Retry-After", "")
-            delay = int(retry_after) if retry_after.isdigit() else 5 * attempt
-            last_reason = f"HTTP 429 rate limited (waited {delay}s)"
-            time.sleep(min(delay, 60))
-            continue
-
-        if r.status_code in (401, 403, 404, 410):
-            body = r.text[:300].lower()
-            if r.status_code == 403 and ("cloudflare" in body or "just a moment" in body):
-                raise FetchError("HTTP 403 bot protection (Cloudflare)")
-            raise FetchError(f"HTTP {r.status_code}")
-
-        last_reason = f"HTTP {r.status_code}"
-        time.sleep(3 * attempt)
-
-    raise FetchError(last_reason)
-
-
-def get(url: str, **kw) -> requests.Response:
-    return _request("GET", url, **kw)
-
-
-def post_json(url: str, body: dict, **kw) -> requests.Response:
-    return _request("POST", url, json_body=body, accept="application/json", **kw)
-
-
-def try_get(url: str, **kw) -> Optional[requests.Response]:
-    """GET that returns None instead of raising. For probing."""
-    try:
-        return get(url, **kw)
-    except FetchError:
-        return None
+READERS = B.READERS
 
 
 # ==========================================================================
-# JOB-SYSTEM READERS (unchanged from the previous version)
+# ROLES
 # ==========================================================================
-
-MAX_PAGES = 30  # hard stop so a runaway paginator can't eat the run
-
 
 @dataclass
 class Role:
@@ -164,839 +78,31 @@ class Role:
     posted: str = ""
 
     def __post_init__(self):
-        # Job systems send nulls, numbers, {"en": "..."} objects and lists where
-        # text belongs. Normalise here, once, so nothing downstream can trip on it.
         for f in ("id", "title", "url", "location", "department", "posted"):
-            setattr(self, f, _as_text(getattr(self, f)))
+            setattr(self, f, B.as_text(getattr(self, f)))
 
     def to_dict(self) -> dict:
         return asdict(self)
 
 
-def _as_text(v) -> str:
-    if v is None:
-        return ""
-    if isinstance(v, str):
-        return " ".join(v.split())
-    if isinstance(v, dict):
-        for x in v.values():
-            t = _as_text(x)
-            if t:
-                return t
-        return ""
-    if isinstance(v, (list, tuple)):
-        return ", ".join(t for t in (_as_text(x) for x in v) if t)
-    return str(v)
-
-
-def _records(seq, what: str = "job list") -> list:
-    """The job records in a response, skipping any that aren't records.
-
-    A response whose job list isn't a list at all is a real failure and says
-    so, rather than passing as "this company has no jobs".
-    """
-    if seq is None:
-        return []
-    if not isinstance(seq, list):
-        raise FetchError(f"the job system sent its {what} in an unexpected format")
-    return [x for x in seq if isinstance(x, dict)]
-
-
-def _rid(j: dict, *keys) -> str:
-    """A stable id for a record, even when the id field is missing."""
-    for k in keys:
-        if j.get(k) not in (None, ""):
-            return _as_text(j[k])
-    return hashlib.sha1(json.dumps(j, sort_keys=True, default=str).encode()).hexdigest()[:12]
-
-
-def _loc(*parts) -> str:
-    return ", ".join(p for p in parts if p and str(p).strip())
-
-
-class RoleList(list):
-    """A list of roles that can also say it was cut short."""
-    truncated: str = ""
-
-
-def greenhouse(slug: str, **_) -> list[Role]:
-    d = get(f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs").json()
-    return [
-        Role(id=f"gh-{_rid(j, 'id', 'absolute_url')}", title=j.get("title", ""), url=j.get("absolute_url", ""),
-             location=(j.get("location") or {}).get("name", ""),
-             posted=(j.get("updated_at") or "")[:10])
-        for j in _records(d.get("jobs"))
-    ]
-
-
-def lever(slug: str, **_) -> list[Role]:
-    d = get(f"https://api.lever.co/v0/postings/{slug}?mode=json").json()
-    out = []
-    for j in _records(d):
-        cats = j.get("categories") or {}
-        out.append(Role(id=f"lv-{_rid(j, 'id', 'hostedUrl')}", title=j.get("text", ""), url=j.get("hostedUrl", ""),
-                        location=cats.get("location", ""), department=cats.get("team", "")))
-    return out
-
-
-def ashby(slug: str, **_) -> list[Role]:
-    d = get(f"https://api.ashbyhq.com/posting-api/job-board/{slug}").json()
-    return [
-        Role(id=f"ab-{_rid(j, 'id', 'jobUrl')}", title=j.get("title", ""), url=j.get("jobUrl", ""),
-             location=j.get("location", ""), department=j.get("department", ""),
-             posted=(j.get("publishedAt") or "")[:10])
-        for j in _records(d.get("jobs")) if j.get("isListed", True)
-    ]
-
-
-def workable(slug: str, **_) -> list[Role]:
-    d = get(f"https://apply.workable.com/api/v1/widget/accounts/{slug}").json()
-    return [
-        Role(id=f"wk-{j.get('shortcode')}", title=j.get("title", ""),
-             url=j.get("url") or f"https://apply.workable.com/{slug}/j/{j.get('shortcode')}/",
-             location=_loc(j.get("city"), j.get("state")), department=j.get("department", ""),
-             posted=(j.get("published_on") or "")[:10])
-        for j in _records(d.get("jobs"))
-    ]
-
-
-def smartrecruiters(slug: str, **_) -> list[Role]:
-    out, offset = [], 0
-    for _ in range(MAX_PAGES):
-        d = get(f"https://api.smartrecruiters.com/v1/companies/{slug}/postings"
-                f"?limit=100&offset={offset}").json()
-        content = _records(d.get("content"))
-        for j in content:
-            loc = j.get("location") or {}
-            out.append(Role(id=f"sr-{_rid(j, 'id')}", title=j.get("name", ""),
-                            url=f"https://jobs.smartrecruiters.com/{slug}/{_rid(j, 'id')}",
-                            location=_loc(loc.get("city"), loc.get("region")),
-                            department=(j.get("department") or {}).get("label", ""),
-                            posted=(j.get("releasedDate") or "")[:10]))
-        offset += len(content)
-        if not content or offset >= int(d.get("totalFound") or 0):
-            break
-    return out
-
-
-def recruitee(slug: str, **_) -> list[Role]:
-    d = get(f"https://{slug}.recruitee.com/api/offers/").json()
-    return [
-        Role(id=f"rt-{_rid(j, 'id', 'careers_url')}", title=j.get("title", ""), url=j.get("careers_url", ""),
-             location=j.get("location", ""), department=j.get("department", ""),
-             posted=(j.get("published_at") or "")[:10])
-        for j in _records(d.get("offers"))
-    ]
-
-
-def breezy(slug: str, **_) -> list[Role]:
-    d = get(f"https://{slug}.breezy.hr/json").json()
-    return [
-        Role(id=f"bz-{_rid(j, 'id', 'url')}", title=j.get("name", ""), url=j.get("url", ""),
-             location=(j.get("location") or {}).get("name", ""),
-             department=j.get("department", ""), posted=(j.get("published_date") or "")[:10])
-        for j in _records(d)
-    ]
-
-
-WORKDAY_MAX_PAGES = 60  # 1,200 postings per search
-
-
-def workday(slug: str, host: str = "", site: str = "", search_terms=None, **_) -> list[Role]:
-    """Workday's public CXS API. `slug` is the tenant.
-
-    Workday caps pages at 20 and only reports `total` reliably on the first
-    page, so the first page's total drives pagination.
-
-    Big operators post thousands of site-level roles, and the corporate ones
-    sit far down the list. For those, set `search_terms` in opco_config.yml:
-    each term runs as its own Workday keyword search and the results merge.
-    """
-    if not host or not site:
-        raise FetchError("Workday needs host and site (resolve from careers page)")
-    endpoint = f"https://{host}/wday/cxs/{slug}/{site}/jobs"
-    out, seen, cut = RoleList(), set(), []
-    for term in (search_terms or [""]):
-        offset, total = 0, None
-        for _ in range(WORKDAY_MAX_PAGES):
-            d = post_json(endpoint, {"appliedFacets": {}, "limit": 20,
-                                     "offset": offset, "searchText": term}).json()
-            if total is None:
-                try:
-                    total = int(d.get("total") or 0)
-                except (TypeError, ValueError):
-                    total = 0
-            postings = _records(d.get("jobPostings"))
-            for j in postings:
-                path = j.get("externalPath", "")
-                ref = (j.get("bulletFields") or [path])[0]
-                rid = f"wd-{slug}-{ref}"
-                if rid in seen:
-                    continue
-                seen.add(rid)
-                out.append(Role(id=rid, title=j.get("title", ""),
-                                url=f"https://{host}/{site}{path}",
-                                location=j.get("locationsText", ""),
-                                posted=j.get("postedOn", "")))
-            offset += len(postings)
-            # An unknown total (0) means: keep going until a page comes back empty.
-            if not postings or (total and offset >= total):
-                break
-        if total and offset < total:
-            cut.append(f"'{term or 'all'}' stopped at {offset} of {total}")
-    if cut:
-        out.truncated = "; ".join(cut)
-    return out
-
-
-UKG_PAGE = 50
-
-
-def _ukg_place(loc) -> str:
-    """UKG locations nest an Address whose City and State are sometimes plain
-    text and sometimes {Name}/{Code} objects, depending on the tenant."""
-    if not isinstance(loc, dict):
-        return ""
-    addr = loc.get("Address") if isinstance(loc.get("Address"), dict) else loc
-    city, state = addr.get("City"), addr.get("State")
-    city = city.get("Name") if isinstance(city, dict) else city
-    state = (state.get("Code") or state.get("Name")) if isinstance(state, dict) else state
-    return _loc(_as_text(city), _as_text(state))
-
-
-def ukg(slug: str, board: str = "", host: str = "recruiting.ultipro.com", **_) -> list[Role]:
-    """UKG / UltiPro. `slug` is the tenant code (LAM1000LAC), `board` the GUID.
-
-    The host comes from the link because tenants live on different servers:
-    Lamar is on recruiting2.ultipro.com, not recruiting.ultipro.com.
-
-    Ported from the job board's working adapter, which learned two things the
-    hard way. First, the three empty filter entries below are required: some
-    tenants answer a request without them with a normal-looking empty list,
-    which reads as "not hiring" instead of as a malformed request. Second, an
-    empty board is never treated as a normal result, since a wrong board ID
-    and a company that isn't hiring look identical.
-    """
-    if not board:
-        raise FetchError("UKG needs the job-board GUID (resolve from careers page)")
-    base = f"https://{host}/{slug}/JobBoard/{board}"
-    out, skip, total = [], 0, None
-    for _ in range(MAX_PAGES):
-        body = {
-            "opportunitySearch": {
-                "Top": UKG_PAGE, "Skip": skip, "QueryString": "",
-                "OrderBy": [{"Value": "postedDateDesc", "PropertyName": "PostedDate",
-                             "Ascending": False}],
-                "Filters": [
-                    {"t": "TermsSearchFilterDto", "fieldName": 4, "extra": None, "values": []},
-                    {"t": "TermsSearchFilterDto", "fieldName": 5, "extra": None, "values": []},
-                    {"t": "TermsSearchFilterDto", "fieldName": 6, "extra": None, "values": []},
-                ],
-            },
-            "matchCriteria": {"PreferredJobs": [], "Educations": [],
-                              "LicenseAndCertifications": [], "Skills": [],
-                              "hasNoLicenses": False, "SkippedSkills": []},
-        }
-        d = post_json(f"{base}/JobBoardView/LoadSearchResults", body).json()
-        if not isinstance(d, dict) or not isinstance(d.get("opportunities"), list):
-            raise FetchError("UKG didn't return a job list (the board may have moved)")
-        opps = _records(d["opportunities"])
-        if total is None:
-            try:
-                total = int(d.get("totalCount") or 0)
-            except (TypeError, ValueError):
-                total = 0
-            if not opps and total == 0:
-                raise FetchError("UKG board reports no openings - check the board link, "
-                                 "or the company isn't hiring right now")
-        for j in opps:
-            locs = j.get("Locations")
-            out.append(Role(id=f"uk-{_rid(j, 'Id', 'RequisitionNumber')}",
-                            title=j.get("Title", ""),
-                            url=f"{base}/OpportunityDetail?opportunityId={_rid(j, 'Id')}",
-                            location=_ukg_place(locs[0] if isinstance(locs, list) and locs else None),
-                            posted=_as_text(j.get("PostedDate"))[:10]))
-        skip += len(opps)
-        if len(opps) < UKG_PAGE or (total and skip >= total):
-            break
-    return out
-
-
-ADP_PAGE = 20
-
-
-ADP_LIST = ("https://workforcenow.adp.com/mascsr/default/careercenter/public/events/"
-            "staffing/v1/job-requisitions")
-
-
-def _adp_place(locs) -> str:
-    if not isinstance(locs, list) or not locs or not isinstance(locs[0], dict):
-        return ""
-    loc = locs[0]
-    addr = loc.get("address") if isinstance(loc.get("address"), dict) else {}
-    region = addr.get("countrySubdivisionLevel1")
-    region = region.get("codeValue") if isinstance(region, dict) else region
-    place = _loc(_as_text(addr.get("cityName")), _as_text(region))
-    if not place and isinstance(loc.get("nameCode"), dict):
-        place = _as_text(loc["nameCode"].get("shortName") or loc["nameCode"].get("longName"))
-    return place
-
-
-def adp(slug: str, cc: str = "", **_) -> list[Role]:
-    """ADP Workforce Now career centers. `slug` is the client id (cid), `cc`
-    the career-center id (ccId) when the link carries one.
-
-    ADP hands back 20 openings per request and reports the full count in
-    meta.totalNumber, so this pages until it has them all. Its page offset
-    ($skip) counts from 1, not 0. A company can run several career centers
-    under one client id; the ccId picks the right one, which is why it's kept.
-    """
-    common = f"cid={slug}" + (f"&ccId={cc}" if cc else "") + "&lang=en_US&locale=en_US"
-    out, seen, total = RoleList(), set(), None
-    for page in range(MAX_PAGES):
-        d = get(f"{ADP_LIST}?{common}&$top={ADP_PAGE}&$skip={1 + page * ADP_PAGE}",
-                accept="application/json").json()
-        if not isinstance(d, dict):
-            raise FetchError("ADP didn't return a job list")
-        if total is None:
-            meta = d.get("meta") if isinstance(d.get("meta"), dict) else {}
-            try:
-                total = int(meta.get("totalNumber") or 0)
-            except (TypeError, ValueError):
-                total = 0
-        reqs = _records(d.get("jobRequisitions"))
-        new = 0
-        for j in reqs:
-            iid = _rid(j, "itemID", "clientRequisitionID")
-            if iid in seen:
-                continue
-            seen.add(iid)
-            new += 1
-            out.append(Role(
-                id=f"adp-{iid}", title=j.get("requisitionTitle", ""),
-                url=("https://workforcenow.adp.com/mascsr/default/mdf/recruitment/"
-                     f"recruitment.html?cid={slug}" + (f"&ccId={cc}" if cc else "")
-                     + f"&jobId={iid}&lang=en_US"),
-                location=_adp_place(j.get("requisitionLocations")),
-                posted=_as_text(j.get("postDate"))[:10]))
-        if not reqs or not new or (total and len(seen) >= total):
-            break
-    if not out:
-        raise FetchError("ADP career center reports no openings - if the company is hiring, "
-                         "put a job link that includes its ccId in Column D")
-    if total and len(out) < total:
-        out.truncated = f"read {len(out)} of the {total} ADP says are open"
-    return out
-
-
-def bamboohr(slug: str, **_) -> list[Role]:
-    d = get(f"https://{slug}.bamboohr.com/careers/list", accept="application/json").json()
-    return [
-        Role(id=f"bh-{_rid(j, 'id')}", title=j.get("jobOpeningName", ""),
-             url=f"https://{slug}.bamboohr.com/careers/{_rid(j, 'id')}",
-             location=_loc((j.get("location") or {}).get("city"),
-                           (j.get("location") or {}).get("state")),
-             department=j.get("departmentLabel", ""))
-        for j in _records(d.get("result"))
-    ]
-
-
-DAYFORCE = "https://jobs.dayforcehcm.com"
-
-
-DAYFORCE_PAGE = 25  # Dayforce returns 25 postings per request
-
-
-def dayforce(slug: str, board: str = "CANDIDATEPORTAL", **_) -> list[Role]:
-    """Dayforce's hosted job sites (jobs.dayforcehcm.com/{namespace}/{board}).
-
-    The job list on the page is loaded by JavaScript from a data endpoint, which
-    refuses requests without a session token. So: ask for the token first (the
-    shared session keeps the cookie that comes with it), then request the list
-    25 postings at a time, passing the token as a header. `slug` is the client
-    namespace (A&B's is "abhi"), `board` the job-board code.
-    """
-    try:
-        token = get(f"{DAYFORCE}/api/auth/csrf", accept="application/json").json().get("csrfToken")
-    except FetchError as exc:
-        raise FetchError(f"Dayforce didn't issue a session token ({exc})") from exc
-    except (ValueError, AttributeError):
-        token = None
-    if not token:
-        raise FetchError("Dayforce didn't issue a session token, so its job list can't be read")
-
-    endpoint = f"{DAYFORCE}/api/geo/{slug}/jobposting/search"
-    out, start, total = [], 0, None
-    for _ in range(MAX_PAGES):
-        d = post_json(endpoint, {"clientNamespace": slug, "jobBoardCode": board,
-                                 "cultureCode": "en-US", "distanceUnit": 0,
-                                 "paginationStart": start},
-                      headers={"x-csrf-token": token}).json()
-        if not isinstance(d, dict):
-            raise FetchError("the job system sent its job list in an unexpected format")
-        if total is None:
-            try:
-                total = int(d.get("maxCount") or 0)
-            except (TypeError, ValueError):
-                total = 0
-        postings = _records(d.get("jobPostings"))
-        for j in postings:
-            pid = _rid(j, "jobPostingId", "jobReqId", "id")
-            locs = j.get("postingLocations") or j.get("locations") or []
-            first = locs[0] if isinstance(locs, list) and locs and isinstance(locs[0], dict) else {}
-            where = (first.get("formattedAddress")
-                     or _loc(first.get("cityName") or first.get("city"),
-                             first.get("stateCode") or first.get("state")))
-            out.append(Role(id=f"df-{slug}-{pid}",
-                            title=j.get("jobTitle") or j.get("title"),
-                            url=f"{DAYFORCE}/en-US/{slug}/{board}/jobs/{pid}",
-                            location=where,
-                            posted=_as_text(j.get("postingStartTimestampUTC")
-                                            or j.get("postingStartTimestamp")
-                                            or j.get("datePosted"))[:10]))
-        start += len(postings)
-        if not postings or (total and start >= total):
-            break
-    return out
-
-
-def _walk_jsonld(node):
-    if isinstance(node, list):
-        for n in node:
-            yield from _walk_jsonld(n)
-    elif isinstance(node, dict):
-        types = node.get("@type")
-        types = types if isinstance(types, list) else [types]
-        if "JobPosting" in types:
-            yield node
-        for key in ("@graph", "itemListElement", "item"):
-            if key in node:
-                yield from _walk_jsonld(node[key])
-
-
-def jsonld(slug: str = "", url: str = "", **_) -> list[Role]:
-    """schema.org JobPosting markup on the careers page itself.
-
-    Covers Paradox, many WordPress job plugins, and hand-built careers pages.
-    """
-    if not url:
-        raise FetchError("JSON-LD fallback needs the careers URL")
-    soup = BeautifulSoup(get(url).text, "lxml")
-    out = []
-    for tag in soup.find_all(attrs={"type": "application/ld+json"}):
-        try:
-            data = json.loads(tag.string or "")
-        except (json.JSONDecodeError, TypeError):
+def to_roles(jobs) -> list[Role]:
+    """Shared-reader jobs as this search's roles. The id is built in the format
+    this search has always stored (see jobsearch.boards.opco_id), so last week's
+    baseline still lines up."""
+    out, seen = [], set()
+    for j in jobs:
+        rid = B.opco_id(j)
+        if rid in seen or not j.get("title"):
             continue
-        for j in _walk_jsonld(data):
-            locs = j.get("jobLocation") or {}
-            locs = locs[0] if isinstance(locs, list) and locs else locs
-            addr = (locs.get("address") or {}) if isinstance(locs, dict) else {}
-            ident = j.get("identifier")
-            ident = ident.get("value") if isinstance(ident, dict) else ident
-            link = j.get("url") or url
-            out.append(Role(id=f"ld-{ident or link}-{j.get('title','')}"[:200],
-                            title=j.get("title", ""), url=link,
-                            location=_loc(addr.get("addressLocality"), addr.get("addressRegion")),
-                            posted=(j.get("datePosted") or "")[:10]))
-    if not out:
-        raise FetchError("no JobPosting markup on careers page")
+        seen.add(rid)
+        out.append(Role(id=rid, title=j["title"], url=j.get("url", ""), location=j.get("location", ""),
+                        department=j.get("department", ""), posted=j.get("posted") or j.get("posted_rel", "")))
     return out
-
-
-# ==========================================================================
-# READING A PAGE'S OWN JOB LISTINGS (unchanged)
-# ==========================================================================
-
-# Paths that are unambiguously a single job's page.
-_JOB_PATH_STRONG = re.compile(
-    r"/(job-listings?|jobs?|job-openings?|positions?|openings?|opportunit(?:y|ies)|"
-    r"vacanc(?:y|ies)|postings?)/[^/?#]+/?$", re.I)
-
-
-# /careers/<slug> is a job page on many sites, but also a section page on many
-# others, so it only counts when several appear together, like a list.
-_JOB_PATH_WEAK = re.compile(r"/careers?/[^/?#]+/?$", re.I)
-
-
-_NOT_A_JOB = re.compile(
-    r"^(benefits|culture|team|teams|life|life-at-.*|values|faqs?|students?|interns?|"
-    r"internships?|early-careers|university|why-.*|about.*|perks|locations?|offices?|"
-    r"search|apply|login|sign-?in|privacy.*|terms.*|our-.*|meet-.*|diversity.*|"
-    r"inclusion.*|blog.*|news.*|events?|people|benefits-.*|how-we-hire|hiring-process|"
-    r"open-positions|openings|all-jobs|jobs|positions)$", re.I)
-
-
-_GENERIC_LINK_TEXT = re.compile(
-    r"^(learn more|read more|more info|view|view (job|details|role|position|posting)|"
-    r"apply|apply now|details|see (more|details)|open|[›»→>]+)$", re.I)
-
-
-# Headings that introduce a list of jobs rather than naming one.
-_SECTION_HEADING = re.compile(
-    r"^(open (positions|roles|jobs)|job (postings|openings|listings)|current (openings|"
-    r"opportunities|positions)|careers?|join (us|our team)|we.?re hiring|"
-    r"opportunities|available positions|now hiring)$", re.I)
-
-
-_LOCATION_HINT = re.compile(
-    r"(,\s*[A-Z]{2}\b|\bremote\b|\bhybrid\b|\bon-?site\b|\bUSA\b|\bUnited States\b|"
-    r"\b[A-Z]{2}\s+\d{5}\b|\b[A-Z][a-z]+,\s*[A-Z][a-z]+)", re.I)
-
-
-def _join(base: str, href) -> str:
-    """urljoin that returns "" for links Python can't parse (e.g. "http://[::1")."""
-    if not isinstance(href, str) or not href.strip():
-        return ""
-    try:
-        return urljoin(base, href.strip())
-    except ValueError:
-        return ""
-
-
-def _site(url_or_host: str) -> str:
-    """Registrable domain, roughly: jobs.kiterealty.com -> kiterealty.com."""
-    try:
-        host = urlparse(url_or_host).netloc if "//" in url_or_host else url_or_host
-    except ValueError:
-        return ""
-    host = host.lower().split(":")[0]
-    parts = [p for p in host.split(".") if p]
-    return ".".join(parts[-2:]) if len(parts) >= 2 else host
-
-
-def _job_href(href: str) -> str:
-    """'strong' / 'weak' if the URL looks like one job's page, else ''."""
-    try:
-        path = urlparse(href).path
-    except ValueError:
-        return ""
-    last = path.rstrip("/").rsplit("/", 1)[-1]
-    if not last or _NOT_A_JOB.match(last):
-        return ""
-    if _JOB_PATH_STRONG.search(path):
-        return "strong"
-    if _JOB_PATH_WEAK.search(path):
-        return "weak"
-    return ""
-
-
-# Words that name a person's role. Deliberately not domain words like
-# "development", "community" or "sales" on their own: "Growth & Development"
-# and "Community Impact" are culture-page cards, not jobs.
-_ROLE_NOUN = re.compile(
-    r"\b(manager|mgr|mngr|dir|director|engineer|engr|eng|developer|analyst|associate|specialist|coordinator|"
-    r"technician|tech|techs|agent|representative|rep|assistant|asst|assoc|lead|leader|officer|president|"
-    r"vp|svp|evp|avp|head of|chief|c[eftmrio]o|consultant|designer|accountant|"
-    r"administrator|admin|supervisor|intern|internship|executive|superintendent|clerk|"
-    r"controller|counsel|attorney|paralegal|scientist|architect|planner|recruiter|"
-    r"generalist|partner|principal|advisor|adviser|strategist|producer|writer|editor|"
-    r"operator|installer|worker|driver|porter|cook|nurse|caregiver|housekeeper|concierge|"
-    r"receptionist|teller|underwriter|closer|processor|appraiser|inspector|estimator|"
-    r"buyer|marketer|owner|foreman|mechanic|electrician|plumber|painter|janitor|"
-    r"custodian|programmer|tester|auditor|bookkeeper|cashier|server|bartender|guard|"
-    r"apprentice|trainee|fellow|ambassador|expert|professional|dispatcher|scheduler|"
-    r"merchandiser|therapist|aide|attendant|laborer|landscaper|groundskeeper|carpenter|"
-    r"welder|lineman|line worker|splicer|team member|crew member|staff accountant|"
-    r"trader|banker|broker|realtor|underwriting|actuary|economist|researcher)s?\b", re.I)
-
-
-def _plausible_jobs(titles: list[str], where: str) -> None:
-    """Refuse to publish a page-layout read that doesn't look like job listings.
-
-    Raises FetchError naming what was found, so the brief can show it. Reads
-    that come straight from a job system skip this; only pattern-based reads
-    (jobs written on a page, jobs found through a sitemap) are checked.
-    """
-    if not titles:
-        return
-    with_role = sum(1 for t in titles if _ROLE_NOUN.search(t))
-    if with_role * 3 < len(titles):
-        examples = ", ".join(f"'{t}'" for t in list(dict.fromkeys(titles))[:3])
-        raise FetchError(f"found {len(titles)} listings {where}, but they don't look like "
-                         f"job titles (e.g. {examples})")
-
-
-def _job_card(link, page_url: str) -> tuple[str, str]:
-    """Title and location for one job link, read from the card around it.
-
-    Walks up from the link until it finds a heading, but stops before the
-    container grows to hold a second job, so titles never bleed across cards.
-    """
-    link_text = link.get_text(" ", strip=True)
-    target = _join(page_url, link["href"]).split("#")[0].rstrip("/")
-    node, card = link, None
-    for _ in range(5):
-        node = node.parent
-        if node is None or node.name in ("body", "html"):
-            break
-        others = {_join(page_url, a["href"]).split("#")[0].rstrip("/")
-                  for a in node.find_all("a", href=True)
-                  if _job_href(_join(page_url, a["href"]))}
-        if len(others - {target}) > 0:
-            break
-        card = node
-        if node.find(["h1", "h2", "h3", "h4", "h5", "h6"]):
-            break
-
-    title, heading = "", None
-    if card is not None:
-        heading = card.find(["h1", "h2", "h3", "h4", "h5", "h6"])
-        if heading:
-            title = heading.get_text(" ", strip=True)
-    if not title and link_text and not _GENERIC_LINK_TEXT.match(link_text):
-        title = link_text
-
-    # Flat layouts: heading, details, "Apply" link, next heading... with no box
-    # around each job. Use the nearest heading before the link, but only if no
-    # other job link sits between them, so one job's title can't be borrowed by
-    # the next. Section headings ("Open Positions") never count as a title.
-    if not title:
-        h = link.find_previous(["h2", "h3", "h4", "h5", "h6"])
-        if h is not None and not _SECTION_HEADING.match(h.get_text(" ", strip=True)):
-            clean_run = True
-            for el in h.find_all_next("a", href=True):
-                if el is link:
-                    break
-                if _job_href(_join(page_url, el["href"])):
-                    clean_run = False
-                    break
-            if clean_run:
-                heading, title = h, h.get_text(" ", strip=True)
-                card = None
-                location = ""
-                for el in h.next_elements:
-                    if el is link:
-                        break
-                    if isinstance(el, str):
-                        text = el.strip()
-                        if text and text != title and len(text) <= 60 and _LOCATION_HINT.search(text):
-                            location = text
-                            break
-                if title and len(title) <= 140:
-                    return title, location
-    if not title or len(title) > 140 or _GENERIC_LINK_TEXT.match(title):
-        return "", ""
-
-    location = ""
-    if card is not None:
-        for text in card.stripped_strings:
-            if text in (title, link_text) or len(text) > 60:
-                continue
-            if _LOCATION_HINT.search(text):
-                location = text
-                break
-    return title, location
-
-
-ONPAGE_MAX_PAGES = 15
-
-
-# A next-page link must look like another page of the same list: ?page=2,
-# /page/2/, ?start=20... This is what keeps "Next post" and other "next" links
-# elsewhere on a site from being followed.
-_PAGE_URL = re.compile(r"([?&](page|pg|p|paged|pagenum|pageno|start|offset|skip)=\d+)|/page/\d+/?($|[?#])", re.I)
-
-
-_NEXT_TEXT = re.compile(r"^(next|next page|next ›|next »|next >|more|›|»|>|→|>>)$", re.I)
-
-
-def _next_page(soup, current: str) -> str:
-    """The URL of the next page of a paginated job list, or ""."""
-    candidates = []
-    for tag in soup.find_all(["link", "a"], href=True):
-        rel = [x.lower() for x in (tag.get("rel") or [])]
-        if "next" in rel:
-            candidates.append(tag["href"])
-    for a in soup.find_all("a", href=True):
-        text = a.get_text(" ", strip=True)
-        label = (a.get("aria-label") or "") + " " + " ".join(a.get("class") or [])
-        if _NEXT_TEXT.match(text) or re.search(r"\bnext\b", label, re.I):
-            candidates.append(a["href"])
-    for href in candidates:
-        nxt = _join(current, href)
-        if (nxt and _site(nxt) == _site(current) and _PAGE_URL.search(nxt)
-                and nxt.split("#")[0] != current.split("#")[0]):
-            return nxt.split("#")[0]
-    return ""
-
-
-def onpage(slug: str = "", url: str = "", trusted: bool = False, **_) -> list[Role]:
-    """Jobs written directly onto the company's own careers page.
-
-    For companies with no job system at all (MPT, many small operators): each
-    opening sits on the careers page with a link to its own page. Only links on
-    the company's own site count, and links that could be ordinary section
-    pages (/careers/benefits) are excluded, or only accepted as a group.
-    """
-    if not url:
-        raise FetchError("on-page listings need the careers URL")
-
-    found: dict[str, tuple[str, Role]] = {}
-    untitled = 0
-    page_url, visited, pages_read = url, set(), 0
-    while page_url and page_url not in visited and pages_read < ONPAGE_MAX_PAGES:
-        visited.add(page_url)
-        try:
-            r = get(page_url)
-        except FetchError:
-            if pages_read:
-                break          # a later page failing keeps what was already read
-            raise
-        pages_read += 1
-        visited.add(r.url.split("#")[0])
-        soup = BeautifulSoup(r.text, "lxml")
-        # Find the next page BEFORE stripping menus: pagination links usually
-        # sit inside a <nav>, which the next line removes.
-        next_url = _next_page(soup, r.url)
-        for tag in soup.find_all(["nav", "header", "footer"]):
-            tag.decompose()
-        before = len(found)
-        untitled += _read_listing_page(soup, r.url, found)
-        if pages_read > 1 and len(found) == before:
-            break              # a "next" page with nothing new: stop
-        page_url = next_url
-
-    strong = [role for kind, role in found.values() if kind == "strong"]
-    weak = [role for kind, role in found.values() if kind == "weak"]
-    roles = strong + (weak if len(weak) >= 2 else [])
-    if not roles:
-        if untitled:
-            raise FetchError(f"found {untitled} job links on the careers page "
-                             "but couldn't read their titles")
-        raise FetchError("no job listings found on the careers page")
-    if not trusted:
-        _plausible_jobs([r.title for r in roles], "on the careers page")
-    return roles
-
-
-def _read_listing_page(soup, page_url: str, found: dict) -> int:
-    """Add one page's job links to `found`; return how many had no title."""
-    untitled = 0
-    for a in soup.find_all("a", href=True):
-        href = _join(page_url, a["href"]).split("#")[0]
-        if not href.startswith("http") or _site(href) != _site(page_url):
-            continue
-        if href.rstrip("/") == page_url.rstrip("/").split("#")[0]:
-            continue
-        if _PAGE_URL.search(href) and not _job_href(href.split("?")[0]):
-            continue           # a pagination link, not a job
-        kind = _job_href(href)
-        if not kind or href in found:
-            continue
-        title, location = _job_card(a, page_url)
-        if title:
-            found[href] = (kind, Role(id=f"op-{urlparse(href).path.rstrip('/')}",
-                                      title=title, url=href, location=location))
-        elif kind == "strong":
-            untitled += 1
-    return untitled
-
-
-# ==========================================================================
-# RECOGNISING JOB-BOARD LINKS (unchanged)
-# ==========================================================================
-
-# (ats, compiled pattern). Named groups feed the adapter kwargs.
-PATTERNS = [
-    ("workday", re.compile(
-        r"https?://(?P<host>(?P<slug>[a-z0-9-]+)\.wd\d+\.myworkdayjobs\.com)"
-        r"/(?:[a-z]{2}-[A-Z]{2}/)?(?P<site>[A-Za-z0-9_\-]+)", re.I)),
-    ("workday", re.compile(
-        r"https?://(?P<host>wd\d+\.myworkdaysite\.com)/(?:[a-z]{2}-[A-Z]{2}/)?"
-        r"recruiting/(?P<slug>[a-z0-9_-]+)/(?P<site>[A-Za-z0-9_\-]+)", re.I)),
-    ("ukg", re.compile(
-        r"https?://(?P<host>recruiting\d?\.ultipro\.com)/(?P<slug>[A-Z0-9]+)"
-        r"/JobBoard/(?P<board>[0-9a-f-]{36})", re.I)),
-    # jobs.dayforcehcm.com/[en-US/]{namespace}/{board}[/jobs/123]
-    ("dayforce", re.compile(
-        r"jobs\.dayforcehcm\.com/(?:[a-z]{2}-[A-Z]{2}/)?(?P<slug>[a-z0-9_-]+)"
-        r"/(?P<board>[A-Za-z0-9_-]+)", re.I)),
-    # older format: dayforcehcm.com/CandidatePortal/en-US/{namespace}
-    ("dayforce", re.compile(
-        r"dayforcehcm\.com/CandidatePortal/(?:[a-z]{2}-[A-Z]{2}/)?(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("greenhouse", re.compile(
-        r"(?:boards|job-boards)(?:-api)?\.greenhouse\.io/(?:v1/boards/|embed/job_board(?:/js)?\?for=)?"
-        r"(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("greenhouse", re.compile(r"greenhouse\.io/embed/job_board(?:/js)?\?for=(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("lever", re.compile(r"jobs\.lever\.co/(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("ashby", re.compile(r"jobs\.ashbyhq\.com/(?P<slug>[a-z0-9_.-]+)", re.I)),
-    ("workable", re.compile(r"apply\.workable\.com/(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("smartrecruiters", re.compile(r"(?:jobs|careers)\.smartrecruiters\.com/(?P<slug>[A-Za-z0-9_-]+)", re.I)),
-    ("recruitee", re.compile(r"(?P<slug>[a-z0-9-]+)\.recruitee\.com", re.I)),
-    ("breezy", re.compile(r"(?P<slug>[a-z0-9-]+)\.breezy\.hr", re.I)),
-    ("bamboohr", re.compile(r"(?P<slug>[a-z0-9-]+)\.bamboohr\.com", re.I)),
-    ("adp", re.compile(r"workforcenow\.adp\.com/.*?[?&]cid=(?P<slug>[0-9a-f-]{36})", re.I)),
-    # Recognised, unsupported.
-    ("icims", re.compile(r"(?P<slug>[a-z0-9-]+)\.icims\.com", re.I)),
-    ("paylocity", re.compile(r"recruiting\.paylocity\.com", re.I)),
-    ("jobvite", re.compile(r"jobs\.jobvite\.com/(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("jazzhr", re.compile(r"(?P<slug>[a-z0-9-]+)\.applytojob\.com", re.I)),
-    ("rippling", re.compile(r"ats\.rippling\.com/(?P<slug>[a-z0-9_-]+)", re.I)),
-    ("paradox", re.compile(r"paradox\.ai", re.I)),
-    ("taleo", re.compile(r"taleo\.net", re.I)),
-    ("successfactors", re.compile(r"successfactors\.com|jobs\.sap\.com", re.I)),
-    ("applicantpro", re.compile(r"applicantpro\.com", re.I)),
-]
-
-
-# Slugs that are ATS infrastructure words, never a real company board.
-_BAD_SLUGS = {"embed", "js", "v1", "jobs", "api", "www", "careers", "job_board", "mydayforce",
-              "candidateportal", "en-us",
-              "boards", "en-us", "recruiting", "app", "static", "assets"}
 
 
 # ==========================================================================
 # COLUMN D
 # ==========================================================================
-#
-# The whole design in one place. Column D of the OpCo tab is the only input:
-#
-#   a job-board link      -> read that board with its system's reader
-#   any other web page    -> read only the jobs listed on that page itself
-#   empty, or not a link  -> "needs a job-board link"
-#
-# Nothing is discovered. No guessing boards from company names, no scanning
-# pages for links, no following links, no sitemaps, no cached detections. If
-# Column D is right, the result is right; if it isn't, the brief says so.
-
-READERS = {
-    "greenhouse": greenhouse, "lever": lever, "ashby": ashby, "workable": workable,
-    "smartrecruiters": smartrecruiters, "recruitee": recruitee, "breezy": breezy,
-    "workday": workday, "ukg": ukg, "dayforce": dayforce, "adp": adp, "bamboohr": bamboohr,
-}
-
-# Recognised in Column D, but no reader yet. Listed by name in the brief so it's
-# clear which readers would be worth building, and for how many companies.
-EXTRA_UNSUPPORTED = [
-    ("paycom", re.compile(r"paycomonline\.(net|com)", re.I)),
-    ("paycor", re.compile(r"recruitingbypaycor\.com", re.I)),
-    ("isolved", re.compile(r"isolvedhire\.com", re.I)),
-    ("hireology", re.compile(r"hireology\.com", re.I)),
-    ("apploi", re.compile(r"apploi\.com", re.I)),
-]
-
-
-class NeedsLink(FetchError):
-    """Column D can't be read as it stands; the message says why."""
-
-
-@dataclass
-class Board:
-    system: str = ""          # a READERS key, "page", an unsupported system name, or ""
-    slug: str = ""
-    params: dict = field(default_factory=dict)
-    problem: str = ""         # why Column D can't be used, when system is ""
-
-    @property
-    def readable(self) -> bool:
-        return self.system in READERS or self.system == "page"
-
-    @property
-    def key(self) -> str:
-        """Identity of the board, so a changed Column D starts a fresh baseline."""
-        return f"{self.system}:{self.slug}:{json.dumps(self.params, sort_keys=True)}"
-
 
 def classify(column_d: str) -> Board:
     """Decide what a Column D value is. Pure: no network, no memory."""
@@ -1005,79 +111,20 @@ def classify(column_d: str) -> Board:
         return Board(problem="Column D is empty")
     if not re.match(r"https?://", url, re.I):
         return Board(problem=f"Column D isn't a link ({url[:60]!r})")
-
-    for system, pattern in PATTERNS:
-        m = pattern.search(url)
-        if not m:
-            continue
-        groups = m.groupdict()
-        slug = (groups.pop("slug", "") or "").strip("/")
-        if slug.lower() in _BAD_SLUGS:
-            continue
-        if system in READERS and not slug:
-            continue
-        params = {k: v for k, v in groups.items() if v}
-        if system == "adp":
-            try:
-                cc = parse_qs(urlparse(url).query).get("ccId", [""])[0]
-            except ValueError:
-                cc = ""
-            if cc:
-                params["cc"] = cc
-        return Board(system=system, slug=slug, params=params)
-
-    for system, pattern in EXTRA_UNSUPPORTED:
-        if pattern.search(url):
-            return Board(system=system)
-
-    return Board(system="page", params={"url": url})
+    return classify_link(url)
 
 
-_CAREERS_HOST = re.compile(r"(careers?|jobs?|join|work|talent|hiring)\.", re.I)
-_LOOKS_LIKE_HTML = re.compile(
-    r"<\s*(html|head|body|div|a|p|h[1-6]|section|main|ul|span|meta|title|link|"
-    r"style|form|table|img|nav|header|footer|article|!doctype)\b", re.I)
-
-
-def read_page(url: str, trusted: bool = False) -> tuple[list[Role], str]:
-    """Jobs listed on the Column D page itself. Returns (roles, how they were read).
-
-    Reads structured job data on the page if there is any, otherwise the job
-    listings on the page (following its pagination). Never leaves the page to
-    look for a job system: if the jobs aren't on this page, Column D needs the
-    job board's link instead, and NeedsLink says so.
-    """
-    try:
-        r = get(url, timeout=25)
-    except FetchError as exc:
-        raise NeedsLink(f"the Column D page doesn't load ({exc})") from exc
-
-    body = (r.text or "").strip()
-    if not body:
-        raise NeedsLink("the Column D page is empty")
-    if not _LOOKS_LIKE_HTML.search(body[:300000]) and "application/ld+json" not in body[:300000]:
-        raise NeedsLink("the Column D link isn't a web page (it returned a file or raw data)")
-
-    asked, landed = urlparse(url), urlparse(r.url)
-    if asked.path in ("", "/") and not _CAREERS_HOST.match(asked.netloc):
-        raise NeedsLink("Column D is a homepage, not a careers page or job board")
-    if asked.path not in ("", "/") and landed.path in ("", "/") and not _CAREERS_HOST.match(landed.netloc):
-        raise NeedsLink("the Column D page redirects to the homepage, so it probably doesn't exist")
-    moved = (f"Column D now redirects to {landed.netloc} - worth updating; "
-             if _site(r.url) != _site(url) else "")
-
-    try:
-        return jsonld(url=r.url), moved + "read from structured job data on the page"
-    except FetchError:
-        pass
-    try:
-        return onpage(url=r.url, trusted=trusted), moved + "read from the jobs listed on the page"
-    except FetchError as exc:
-        msg = str(exc)
-        if msg.startswith("found "):
-            raise NeedsLink(f"{msg}, so nothing was published") from exc
-        raise NeedsLink("no jobs are listed on this page itself (it may load them with "
-                        "JavaScript) - put the job board's link in Column D") from exc
+def how_read(board: Board) -> str:
+    """What Column D is, for the --discover check."""
+    if not board.system:
+        return f"needs a link — {board.problem}"
+    if board.system == "page":
+        return "a web page — jobs are read from the page, or from the job board it loads"
+    if board.readable:
+        return f"{board.system} job board — ready"
+    if board.rendered:
+        return f"{board.system} job board — read by opening it in a headless browser"
+    return f"{board.system} — no reader yet; the page itself is tried"
 
 
 # ==========================================================================
@@ -1106,9 +153,20 @@ class Baseline:
         self.run_date = run_date or date.today().isoformat()
         self.data: dict = _read(BASELINE_PATH, {})
 
-    def _prev(self, company: str, board: str) -> dict | None:
+    def _prev(self, company: str, board: str, via: str | None = None) -> dict | None:
+        """Last week's read of this company, if it came from the same place.
+
+        `via` is the job board a Column D *page* was read through. When given,
+        it must match too: if a careers page switches job systems, every role
+        gets a new id, and comparing across that would report the whole list
+        as closed and reopened.
+        """
         prev = self.data.get(company)
-        return prev if prev and prev.get("board") == board else None
+        if not prev or prev.get("board") != board:
+            return None
+        if via is not None and prev.get("via", "") != via:
+            return None
+        return prev
 
     def carry_forward(self, company: str, reason: str, board: str) -> dict:
         prev = self._prev(company, board)
@@ -1118,17 +176,26 @@ class Baseline:
                 "stale_since": prev.get("fetched_on")}
 
     def is_suspicious_drop(self, company: str, count: int, board: str) -> bool:
+        """A company with 5+ roles last week that now shows none is treated as a
+        bad read - once. The zero is remembered, and if the next run is zero
+        too it is believed, so a company that really did stop hiring isn't
+        carried forward forever."""
         prev = self._prev(company, board)
-        return bool(prev) and count == 0 and len(prev.get("roles", [])) >= SUSPICIOUS_DROP
+        if not prev or count != 0 or len(prev.get("roles", [])) < SUSPICIOUS_DROP:
+            return False
+        if prev.get("zero_seen") and prev["zero_seen"] < self.run_date:
+            return False
+        prev.setdefault("zero_seen", self.run_date)
+        return True
 
-    def is_first_read(self, company: str, board: str) -> bool:
-        return self._prev(company, board) is None
+    def is_first_read(self, company: str, board: str, via: str | None = None) -> bool:
+        return self._prev(company, board, via) is None
 
     def save(self, results: dict) -> None:
         for company, r in results.items():
             if r["status"] == "ok":
                 self.data[company] = {"fetched_on": self.run_date, "board": r["board"],
-                                      "roles": r["roles"]}
+                                      "via": r.get("via", ""), "roles": r["roles"]}
             elif r["status"] in ("needs-link", "unsupported"):
                 self.data.pop(company, None)   # no board, so no trustworthy baseline
         _write(BASELINE_PATH, self.data)
@@ -1150,40 +217,71 @@ def remove_legacy_state() -> None:
 # ONE COMPANY
 # ==========================================================================
 
-def read_company(company, role_filter, baseline) -> dict:
+def read_company(company, role_filter, baseline, browser=None, out_of_time: bool = False) -> dict:
     """Read one company from its Column D. Always returns a result."""
     board = classify(company.careers_url)
     base = {"column_d": company.careers_url, "column_d_from": company.careers_from,
-            "system": board.system, "board": board.key, "note": "",
+            "system": board.system, "board": board.key, "via": "", "note": "",
             "roles": [], "filtered": [], "total": 0}
 
     if not board.system:
         return {**base, "status": "needs-link", "reason": board.problem}
-    if not board.readable:
-        return {**base, "status": "unsupported", "reason": f"{board.system} isn't supported yet"}
+    if out_of_time and not board.readable:
+        # Pages are the slow part (a browser, several boards to try). Past the
+        # run's time budget they are skipped and last week's roles kept, so the
+        # run always finishes and saves what it has.
+        result = {**base, **baseline.carry_forward(
+            company.name, "not read: the run's time budget was used up before this company", board.key)}
+        result["total"] = len(result["roles"])
+        result["filtered"] = [{**r, "company": company.name, "category": c, "status": result["status"]}
+                              for r in result["roles"]
+                              if (c := role_filter.categorize(r["title"], company.name))]
+        return result
 
     name = company.name
+    terms = role_filter.search_terms.get(name.lower())
+    truncated = ""
     try:
-        if board.system == "page":
-            fetched, how = read_page(board.params["url"],
-                                     trusted=name.lower() in role_filter.trusted_pages)
-            base["note"] = how
+        if board.readable:
+            jobs = B.read_board(board, **({"search_terms": terms} if terms and board.system == "workday" else {}))
+            truncated = getattr(jobs, "truncated", "")
+        elif board.rendered:
+            page = read_rendered_board(board, browser)
+            jobs, truncated = page.jobs, page.truncated
+            base["note"] = f"read by opening the {board.system} job board in a browser"
         else:
-            params = dict(board.params)
-            if board.system == "workday" and role_filter.search_terms.get(name.lower()):
-                params["search_terms"] = role_filter.search_terms[name.lower()]
-            fetched = READERS[board.system](board.slug, **params)
-        roles = [r.to_dict() for r in fetched if r.title]
+            # An ordinary web page - or a job system with no reader, where the
+            # page itself is still worth trying before giving up on it.
+            page = read_page(company.careers_url, trusted=name.lower() in role_filter.trusted_pages,
+                             browser=browser, search_terms=terms, label="Column D page")
+            jobs, truncated = page.jobs, page.truncated
+            base["note"] = page.how
+            if page.board is not None:
+                # The page loads its jobs from a job board. Those are the jobs
+                # reported, and the brief names the board so its link can go in
+                # Column D, which makes the read direct from then on.
+                base["via"] = page.board.key
+                base["via_label"] = page.board.label()
+                base["via_url"] = page.board.listing_url
+        roles = [r.to_dict() for r in to_roles(jobs)]
     except NeedsLink as exc:
+        if board.system != "page" and not (board.readable or board.rendered):
+            return {**base, "status": "unsupported",
+                    "reason": f"{board.system} isn't supported yet ({exc})"}
         return {**base, "status": "needs-link", "reason": str(exc)}
+    except NotFound as exc:
+        # The board Column D names doesn't exist (any more). That's a link to
+        # fix, not a bad week, so it goes with the links rather than the failures.
+        return {**base, "status": "needs-link",
+                "reason": f"Column D points at a job board that isn't there: {exc}"}
     except Exception as exc:  # noqa: BLE001 - one company never sinks the run
         reason = plain_error(exc)
         log.warning("  %s: read failed (%s)", name, reason)
         result = {**base, **baseline.carry_forward(name, reason, board.key)}
     else:
-        truncated = getattr(fetched, "truncated", "")
         if truncated:
             base["note"] = (base["note"] + "; " if base["note"] else "") + f"cut short: {truncated}"
+        via = base["via"]
         if baseline.is_suspicious_drop(name, len(roles), board.key):
             result = {**base, **baseline.carry_forward(
                 name, "dropped to 0 roles from 5+ last week; treated as a read failure", board.key)}
@@ -1192,7 +290,7 @@ def read_company(company, role_filter, baseline) -> dict:
             # First time this Column D is read: list it once so a person can
             # confirm the jobs really belong to this company. A wrong link in
             # Column D is the one way the wrong company's jobs can still appear.
-            if baseline.is_first_read(name, board.key) and roles:
+            if baseline.is_first_read(name, board.key, via) and roles:
                 result["spot_check"] = [f"{r['title']} ({r['location']})" if r.get("location")
                                         else r["title"] for r in roles[:3]]
 
@@ -1213,7 +311,7 @@ def compute_diff(results: dict, baseline: Baseline, role_filter) -> dict:
     for company, c in results.items():
         if c["status"] != "ok":
             continue
-        prev = baseline._prev(company, c["board"])
+        prev = baseline._prev(company, c["board"], c.get("via", ""))
         if not prev:
             continue
         prev_ids = {r["id"] for r in prev["roles"]}
@@ -1447,7 +545,8 @@ def _attention(results: dict) -> list[str]:
     cut = {n: c for n, c in results.items() if "cut short" in (c.get("note") or "")}
     moved = {n: c for n, c in results.items()
              if c["status"] == "ok" and "now redirects" in (c.get("note") or "")}
-    if not any((needs, unsupported, failed, spot, cut, moved)):
+    via = {n: c for n, c in results.items() if c["status"] == "ok" and c.get("via_url")}
+    if not any((needs, unsupported, failed, spot, cut, moved, via)):
         return []
 
     md = ["## Needs your attention", ""]
@@ -1485,6 +584,14 @@ def _attention(results: dict) -> list[str]:
             d = c.get("column_d") or ""
             md.append(f"- **{n}** — [{d.split('//')[-1][:50]}]({d}) · {c.get('total', 0)} jobs, "
                       f"e.g. {'; '.join(c['spot_check'])}")
+        md.append("")
+    if via:
+        md += [f"### Read through the page's job board — paste these into Column D ({len(via)})", "",
+               "*Column D is a careers page, and the jobs were read from the job board that page "
+               "loads. That works, but the board's own link is the sturdier thing to keep in "
+               "Column D: it keeps working if the careers page is redesigned.*", ""]
+        for n, c in sorted(via.items()):
+            md.append(f"- **{n}** — {c.get('via_label', '')}: {c['via_url']}")
         md.append("")
     if moved:
         md += [f"### Works, but Column D has moved ({len(moved)})", ""]
@@ -1603,15 +710,7 @@ def write_column_d_check(companies, out_dir: Path) -> Path:
     rows = []
     for c in companies:
         b = classify(c.careers_url)
-        if not b.system:
-            verdict = f"needs a link — {b.problem}"
-        elif b.system == "page":
-            verdict = "a web page — jobs will be read from the page itself"
-        elif b.readable:
-            verdict = f"{b.system} job board — ready"
-        else:
-            verdict = f"{b.system} — not supported yet"
-        rows.append((c.name, c.careers_url, verdict))
+        rows.append((c.name, c.careers_url, how_read(b)))
     md = ["# Column D check", "", "| Company | Column D | What it is |", "|---|---|---|"]
     md += [f"| {n} | {d[:70] or '— empty'} | {v} |" for n, d, v in rows]
     path = out_dir / "opco-columnd-check.md"
@@ -1635,6 +734,10 @@ def main() -> int:
                    help="check what each Column D is, without reading jobs")
     p.add_argument("--refresh-ats", action="store_true",
                    help="no longer does anything: nothing is cached between runs")
+    p.add_argument("--budget-minutes", type=float, default=35,
+                   help="after this long, careers pages still unread keep last week's roles")
+    p.add_argument("--no-browser", action="store_true",
+                   help="never open the headless browser (pages that need scripts are reported instead)")
     p.add_argument("--config", default=str(CONFIG_PATH))
     p.add_argument("--out", default=str(ROOT / "out"))
     p.add_argument("-v", "--verbose", action="store_true")
@@ -1687,10 +790,13 @@ def main() -> int:
     baseline = Baseline()
     first_run = not baseline.data
 
+    browser = None if args.no_browser else shared_browser()
+    started = time.time()
     results: dict = {}
     for i, company in enumerate(companies, 1):
         try:
-            result = read_company(company, role_filter, baseline)
+            result = read_company(company, role_filter, baseline, browser,
+                                  out_of_time=(time.time() - started) > args.budget_minutes * 60)
         except Exception as exc:  # noqa: BLE001 - recorded, never dropped
             log.error("  %s: crashed\n%s", company.name, traceback.format_exc())
             result = {"column_d": company.careers_url, "column_d_from": company.careers_from,
@@ -1701,6 +807,9 @@ def main() -> int:
                  result.get("system") or "-", result["status"],
                  result["total"], len(result["filtered"]))
 
+    if browser is not None:
+        log.info("headless browser: %d pages opened, %.0fs", browser.pages_rendered, browser.seconds)
+    close_shared()
     diff = {"new": [], "closed": []} if first_run else compute_diff(results, baseline, role_filter)
     baseline.save(results)
     try:

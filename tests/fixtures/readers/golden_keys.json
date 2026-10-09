@@ -1,0 +1,90 @@
+{
+ "opco": {
+  "adp": [
+   "adp-9200123456789_1",
+   "adp-9200123456790_1"
+  ],
+  "ashby": [
+   "ab-aaaa1111-0000-4000-8000-000000000001"
+  ],
+  "bamboohr": [
+   "bh-41",
+   "bh-42"
+  ],
+  "breezy": [
+   "bz-032515c48932"
+  ],
+  "dayforce": [
+   "df-acme-555"
+  ],
+  "greenhouse": [
+   "gh-4012345",
+   "gh-4012346"
+  ],
+  "lever": [
+   "lv-0a1b2c3d-1111-2222-3333-444455556666",
+   "lv-0a1b2c3d-1111-2222-3333-444455557777"
+  ],
+  "recruitee": [
+   "rt-2001"
+  ],
+  "smartrecruiters": [
+   "sr-744000081234567",
+   "sr-744000081234568"
+  ],
+  "ukg": [
+   "uk-2d51a2cb-27fc-42ad-b80a-dab70c61fb93",
+   "uk-33032d39-7fd8-4656-a8e8-dd638a787213"
+  ],
+  "workable": [
+   "wk-1F2E3D4C5B",
+   "wk-996A05186B"
+  ],
+  "workday": [
+   "wd-acme-R0012345",
+   "wd-acme-R0012346"
+  ]
+ },
+ "weekly": {
+  "ashby": [
+   "ashby:acme:aaaa1111-0000-4000-8000-000000000001"
+  ],
+  "bamboohr": [
+   "bamboohr:acme:41",
+   "bamboohr:acme:42"
+  ],
+  "breezy": [
+   "breezy:acme:032515c48932"
+  ],
+  "greenhouse": [
+   "greenhouse:acme:4012345",
+   "greenhouse:acme:4012346"
+  ],
+  "jobvite": [
+   "jobvite:acme-internal:oltHAfwP",
+   "jobvite:acme-internal:oo2uAfwe"
+  ],
+  "lever": [
+   "lever:acme:0a1b2c3d-1111-2222-3333-444455556666",
+   "lever:acme:0a1b2c3d-1111-2222-3333-444455557777"
+  ],
+  "recruitee": [
+   "recruitee:acme:2001"
+  ],
+  "rippling": [
+   "rippling:acme:316fb4fc-497a-4442-9b4d-ec61a696661c"
+  ],
+  "smartrecruiters": [
+   "smartrecruiters:Acme:744000081234567",
+   "smartrecruiters:Acme:744000081234568"
+  ],
+  "workable": [
+   "workable:acme:1F2E3D4C5B",
+   "workable:acme:996A05186B"
+  ],
+  "workday": [
+   "workday:acme:/job/Remote/Director--Investments_R0012345",
+   "workday:acme:/job/Seattle/Senior-Software-Engineer_R0012346"
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+  "AppFolio": {
+    "ats": "jobvite",
+    "slug": "appfolio-internal",
+    "confidence": "manual"
+  },
+  "SmartRent": {
+    "ats": "greenhouse",
+    "slug": "smartrent",
+    "confidence": "html"
+  },
+  "Entrata": {
+    "ats": "lever",
+    "slug": "entrata",
+    "confidence": "html"
+  },
+  "Belong": {
+    "ats": "workable",
+    "slug": "belong-6",
+    "confidence": "manual"
+  }
+}

@@ -3,12 +3,16 @@
     python -m jobsearch.run                 # full run (network)
     python -m jobsearch.run --tier A        # only tier-A companies
     python -m jobsearch.run --only Entrata,Kiavi
-    python -m jobsearch.run --detect        # also auto-detect ATS for unmapped companies
+    python -m jobsearch.run --detect        # also read unmapped companies from their careers page
+    python -m jobsearch.run --no-browser    # never open the headless browser
     python -m jobsearch.run --fixtures tests/fixtures   # offline test using recorded JSON
 
 Inputs
   leads/master_leads.csv      the master list (from the SYNDEO sheet)
-  data/ats_map.json           company -> {ats, slug, ...}; manual/verified entries win
+  data/ats_map.json           company -> {ats, slug, ...}: which job board each company is read from.
+                              A company with no entry is read from its careers page (what that page
+                              loads decides the board, and the result is saved here). {"parent": "X"}
+                              means "hires through X's board, which is on the list itself".
   data/history.json           every job ever seen, with first_seen / last_seen / status
   config.json                 focus keywords, min days for "likely filled", etc.
 
@@ -16,7 +20,7 @@ Outputs (output/YYYY-MM-DD/)
   open_roles.csv              every open role with a direct posting link
   new_this_week.csv           roles first seen this run
   closed_this_week.csv        roles that disappeared since last run  ("recently hired" signal)
-  company_status.csv          per-company: ats, open count, new, closed, scrape status
+  company_status.csv          per-company: ats, open count, new, closed, scrape status, note
   report.md / report.html     human-readable weekly report
 """
 from __future__ import annotations
@@ -32,23 +36,31 @@ import sys
 import time
 from pathlib import Path
 
-from .adapters import ADAPTERS
-from . import detect as detect_mod
+from . import browser as browser_mod
+from . import company as company_mod
 from . import verify as verify_mod
 from . import feeds as feeds_mod
 
 ROOT = Path(__file__).resolve().parent.parent
+# JOBSEARCH_DATA / JOBSEARCH_OUT point a test run at scratch folders, so tests never touch real history or reports.
+DATA = Path(os.environ.get("JOBSEARCH_DATA") or ROOT / "data")
+OUT = Path(os.environ.get("JOBSEARCH_OUT") or ROOT / "output")
 LEADS = ROOT / "leads" / "master_leads.csv"
-ATS_MAP = ROOT / "data" / "ats_map.json"
-HISTORY = ROOT / "data" / "history.json"
-NEEDS_MAP = ROOT / "data" / "needs_manual_mapping.csv"
+ATS_MAP = DATA / "ats_map.json"
+HISTORY = DATA / "history.json"
+NEEDS_MAP = DATA / "needs_manual_mapping.csv"
 CONFIG = ROOT / "config.json"
-OUT = ROOT / "output"
-
-UNSUPPORTED = {"icims", "paylocity", "ukg", "adp", "paradox", "jazzhr", "betterteam"}  # detected but no JSON adapter yet
 
 
 # ----------------------------------------------------------------- helpers
+def _rel(p: Path) -> str:
+    """Path as shown in logs: relative to the repo when it is inside it."""
+    try:
+        return str(p.relative_to(ROOT))
+    except ValueError:
+        return str(p)
+
+
 def load_json(p: Path, default):
     if p.exists():
         return json.loads(p.read_text())
@@ -178,48 +190,21 @@ def focus_tag(title: str, cfg: dict) -> str:
     return ""
 
 
-# ----------------------------------------------------------------- scraping
-def scrape_company(lead: dict, mapping: dict, fixtures: Path | None) -> tuple[list[dict], str]:
-    """Returns (jobs, status). status in: ok | unmapped | unsupported | failed:<reason>"""
-    ats = mapping.get("ats", "")
-    if mapping.get("confidence") == "excluded":
-        return [], "excluded"
-    if not ats:
-        return [], "unmapped"
-    if ats in UNSUPPORTED:
-        return [], f"unsupported:{ats}"
-    if fixtures:
-        fx = fixtures / f"{slugify(lead['company'])}.json"
-        if not fx.exists():
-            return [], "failed:no fixture"
-        raw = json.loads(fx.read_text())
-        jobs = raw if isinstance(raw, list) else raw.get("jobs", [])
-        return jobs, "ok"
-    try:
-        kwargs = {k: v for k, v in mapping.items() if k not in ("ats", "slug")}
-        kwargs.setdefault("careers_url", lead["careers_url"])
-        jobs = ADAPTERS[ats](mapping["slug"], **kwargs)
-        return jobs, "ok"
-    except Exception as e:  # noqa
-        return [], f"failed:{type(e).__name__}: {str(e)[:140]}"
-
-
-def slugify(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
-
-
 # --------------------------------------------------------------------- main
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--tier", default="")
     ap.add_argument("--only", default="", help="comma-separated company names")
-    ap.add_argument("--detect", action="store_true", help="auto-detect ATS for unmapped companies")
+    ap.add_argument("--detect", action="store_true",
+                    help="read companies with no job board on file from their careers page")
+    ap.add_argument("--no-browser", action="store_true", help="never open the headless browser")
     ap.add_argument("--fixtures", default="", help="dir of recorded JSON; no network")
     ap.add_argument("--date", default="", help="override run date (YYYY-MM-DD)")
     ap.add_argument("--sleep", type=float, default=0.5)
     ap.add_argument("--no-verify", action="store_true", help="skip link verification")
     ap.add_argument("--no-vc", action="store_true", help="skip VC portfolio job boards")
-    ap.add_argument("--detect-minutes", type=float, default=15, help="time budget for ATS detection")
+    ap.add_argument("--detect-minutes", type=float, default=30,
+                    help="stop reading careers pages once the run is this many minutes old")
     ap.add_argument("--budget-minutes", type=float, default=40, help="skip link verification if run is past this")
     args = ap.parse_args(argv)
 
@@ -243,50 +228,33 @@ def main(argv=None):
                if passes_company_filter(v.get("company", ""), v.get("title", ""), v.get("location", ""), cfg)}
     fixtures = Path(args.fixtures) if args.fixtures else None
 
-    # ---- 1. ATS mapping (manual/verified entries are never overwritten)
-    needs_manual = []
+    # ---- 1. read every company from its own job board
+    #      Board on file in ats_map.json -> read it. No board on file (or the one on file has gone
+    #      quiet or missing) -> work it out from the company's careers page and remember the answer.
+    browser = None if (fixtures or args.no_browser) else browser_mod.shared()
+    open_before = collections.Counter(h.get("company", "") for h in history.values() if h.get("status") == "open")
+    all_jobs, company_rows, needs_manual = [], [], []
     for lead in leads:
-        m = ats_map.get(lead["company"])
-        if m and (m.get("ats") or m.get("confidence") in ("excluded", "manual")):
-            continue
-        if args.detect and not fixtures and (time.time() - run_start) > args.detect_minutes * 60:
-            needs_manual.append({"company": lead["company"], "careers_url": lead["careers_url"],
-                                 "reason": "detection time budget used up this run; will retry next run"})
-            continue
-        if args.detect and not fixtures:
-            t0 = time.time()
-            hit = detect_mod.detect(lead)
-            print(f"  detect  {lead['company']:32} -> {hit.get('ats') or '-':15} {hit.get('slug',''):22} "
-                  f"({hit['confidence']}, {time.time()-t0:.0f}s)", flush=True)
-            hit["detected_on"] = today.isoformat()
-            ats_map[lead["company"]] = hit
-            time.sleep(args.sleep)
-            if hit["confidence"] == "none":
-                needs_manual.append({"company": lead["company"], "careers_url": lead["careers_url"],
-                                     "reason": hit["evidence"]})
-        else:
-            needs_manual.append({"company": lead["company"], "careers_url": lead["careers_url"],
-                                 "reason": "not in ats_map.json (run with --detect or map by hand)"})
-    save_json(ATS_MAP, ats_map)
-    if not adhoc:
-        write_csv(NEEDS_MAP, needs_manual, ["company", "careers_url", "reason"])
-
-    # ---- 2. scrape
-    all_jobs, company_rows = [], []
-    for lead in leads:
-        mapping = ats_map.get(lead["company"], {})
+        co = lead["company"]
+        mapping = ats_map.get(co, {})
         t0 = time.time()
-        jobs, status = scrape_company(lead, mapping, fixtures)
-        if mapping.get("ats") and not fixtures:
-            print(f"  scrape  {lead['company']:32} {len(jobs):5} jobs  {status[:60]}  ({time.time()-t0:.0f}s)", flush=True)
+        in_time = (time.time() - run_start) <= args.detect_minutes * 60
+        r = company_mod.read_company(lead, mapping, fixtures=fixtures, browser=browser, today=today.isoformat(),
+                                     allow_page=bool(args.detect or adhoc) and in_time, open_before=open_before[co])
+        if r.mapping is not None:
+            ats_map[co] = mapping = r.mapping
+        jobs, status = list(r.jobs), r.status
+        if not fixtures:
+            print(f"  read    {co:32} {mapping.get('ats') or '-':15} {len(jobs):5} jobs  {status[:70]}"
+                  f"  ({time.time()-t0:.0f}s)" + (f"  [{r.note[:110]}]" if r.note else ""), flush=True)
         _seen = set()
         jobs = [j for j in jobs if not (j["job_key"] in _seen or _seen.add(j["job_key"]))]
         _before = len(jobs)
-        jobs = [j for j in jobs if passes_company_filter(lead["company"], j["title"], j.get("location", ""), cfg)]
+        jobs = [j for j in jobs if passes_company_filter(co, j["title"], j.get("location", ""), cfg)]
         if _before != len(jobs) and not fixtures:
-            print(f"  filter  {lead['company']:32} kept {len(jobs)} of {_before} (company_filters rule)", flush=True)
+            print(f"  filter  {co:32} kept {len(jobs)} of {_before} (company_filters rule)", flush=True)
         for j in jobs:
-            j["company"] = lead["company"]
+            j["company"] = co
             j["segment"] = lead["segment"]
             j["state"] = lead["state"]
             j["tier"] = lead["tier"]
@@ -294,11 +262,26 @@ def main(argv=None):
                 j["posted_at"] = rel_to_date(j["_posted_rel"], today)
             j["focus"] = focus_tag(j["title"], cfg)
         all_jobs.extend(jobs)
-        company_rows.append({"company": lead["company"], "tier": lead["tier"], "ats": mapping.get("ats", ""),
+        company_rows.append({"company": co, "tier": lead["tier"], "ats": mapping.get("ats", ""),
                              "slug": mapping.get("slug", ""), "status": status, "open": len(jobs),
-                             "new": 0, "closed": 0, "careers_url": lead["careers_url"]})
+                             "new": 0, "closed": 0, "careers_url": lead["careers_url"], "note": r.note})
+        if status == "unmapped" or status.startswith("needs-link"):
+            needs_manual.append({"company": co, "careers_url": lead["careers_url"],
+                                 "reason": status.split(": ", 1)[-1] if ": " in status else (r.note or status)})
         if not fixtures:
             time.sleep(args.sleep)
+    status_of = {r["company"]: r["status"] for r in company_rows}
+    for row in company_rows:                 # a company covered by its parent is only covered if the parent was read
+        if row["status"].startswith("covered by parent: "):
+            parent = row["status"].split(": ", 1)[1]
+            if status_of.get(parent, "ok") != "ok":
+                row["note"] = f"{parent} itself was not read this run ({status_of[parent][:60]})"
+    if browser is not None:
+        print(f"  browser {browser.pages_rendered} pages opened in the headless browser, {browser.seconds:.0f}s", flush=True)
+    browser_mod.close_shared()
+    save_json(ATS_MAP, ats_map)
+    if not adhoc:
+        write_csv(NEEDS_MAP, needs_manual, ["company", "careers_url", "reason"])
     ok_companies = {r["company"] for r in company_rows if r["status"] == "ok"}
     by_company = {r["company"]: r for r in company_rows}
 
@@ -333,6 +316,8 @@ def main(argv=None):
                 co = lead["company"]
                 if co not in in_run or co in ok_companies:
                     continue  # not requested this run, or its own job board is the (better) source
+                if by_company[co]["status"].startswith(("covered by parent", "excluded")):
+                    continue  # deliberately not read on its own
                 title_key = _norm(vj["title"]) + "|" + _norm(vj["location"])
                 if any(_norm(j["title"]) + "|" + _norm(j.get("location", "")) == title_key
                        for j in all_jobs if j["company"] == co):
@@ -352,12 +337,35 @@ def main(argv=None):
     # ---- 3. diff against history
     seen_now = {j["job_key"] for j in all_jobs}
     new_jobs, closed_jobs = [], []
+    # Which job system each company was read from this run, and which it has history from.
+    # A company read from a system for the FIRST time (newly covered, or its board changed) is a
+    # baseline, not news: its roles were already open, we just couldn't see them. Only roles the
+    # board itself dates within the last week count as new. And its roles under the OLD system are
+    # retired quietly rather than reported as closed.
+    # A source is the job system AND the board on it ("greenhouse:acme"): a company that renames its
+    # board is a change of source just as much as one that changes job systems.
+    src = lambda key: ":".join(key.split(":", 2)[:2])
+    read_from = collections.defaultdict(set)
+    for j in all_jobs:
+        read_from[j["company"]].add(src(j["job_key"]))
+    for row in company_rows:   # read cleanly with nothing open: the source is still known from the board on file
+        if row["status"] == "ok" and not read_from[row["company"]] and row["ats"] not in ("", "page") and row["slug"]:
+            read_from[row["company"]].add(f"{row['ats']}:{row['slug']}")
+    known_from = collections.defaultdict(set)
+    for key, h in history.items():
+        known_from[h.get("company", "")].add(src(key))
+    week_ago = (today - dt.timedelta(days=7)).isoformat()
     for j in all_jobs:
         h = history.get(j["job_key"])
         if h is None:
+            baseline = src(j["job_key"]) not in known_from[j["company"]]
             history[j["job_key"]] = {**{k: j[k] for k in ("company", "title", "location", "url", "posted_at", "ats", "focus")},
                                      "first_seen": today.isoformat(), "last_seen": today.isoformat(), "status": "open"}
             j["first_seen"] = today.isoformat()
+            if baseline and not (j.get("posted_at") or "") >= week_ago:
+                history[j["job_key"]]["baseline"] = True
+                j["baseline"] = True
+                continue
             new_jobs.append(j)
             by_company[j["company"]]["new"] += 1
         else:
@@ -365,6 +373,8 @@ def main(argv=None):
             h["status"] = "open"
             h["title"], h["location"], h["url"] = j["title"], j["location"], j["url"]
             j["first_seen"] = h["first_seen"]
+            if h.get("baseline"):
+                j["baseline"] = True
     for key, h in history.items():
         # Only close roles for companies we scraped successfully this run.
         vc_src = key.split(":")[1] if key.startswith("getro:") else None
@@ -373,6 +383,11 @@ def main(argv=None):
             continue
         can_close = (h["company"] in ok_companies) if not vc_src else \
                     (vc_src in vc_ok_boards and h["company"] in {l["company"] for l in leads})
+        if (not vc_src and h["status"] == "open" and key not in seen_now and can_close
+                and read_from[h["company"]] and src(key) not in read_from[h["company"]]):
+            h["status"] = "retired"      # tracked under the company's previous job system; not a closure
+            h["retired_on"] = today.isoformat()
+            continue
         if h["status"] == "open" and key not in seen_now and can_close:
             h["status"] = "closed"
             h["closed_on"] = today.isoformat()
@@ -464,10 +479,10 @@ def main(argv=None):
     write_csv(out_dir / "scraper_misses.csv", scraper_misses,
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
-              ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url"])
+              ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url", "note"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery)
     if not adhoc:
-      save_json(ROOT / "data" / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
+      save_json(DATA / "last_run.json", {"date": today.isoformat(), "companies": len(leads),
                                                  "ok": len(ok_companies), "open_in_scope": len(all_jobs), "open_all": len(all_open),
                                                  "new": len(new_jobs), "closed": len(closed_jobs)})
     if adhoc:
@@ -475,10 +490,10 @@ def main(argv=None):
     else:
         careers = {l["company"]: l.get("careers_url", "") for l in leads}
         draft = write_jobs_newsletter(all_jobs, closed_jobs, careers, today, cfg)
-        print(f"  draft   newsletter section -> {draft.relative_to(ROOT)}", flush=True)
+        print(f"  draft   newsletter section -> {_rel(draft)}", flush=True)
         if os.environ.get("GITHUB_STEP_SUMMARY"):
             with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
-                f.write(f"# Now hiring - newsletter draft\n\nPaste-ready version: open `{draft.with_suffix('.html').relative_to(ROOT)}` "
+                f.write(f"# Now hiring - newsletter draft\n\nPaste-ready version: open `{_rel(draft.with_suffix('.html'))}` "
                         f"in a browser, select all, copy, paste into beehiiv.\n\n---\n\n"
                         + draft.read_text() + "\n---\n")
     print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open_in_scope={len(all_jobs)} open_all={len(all_open)} "
@@ -604,7 +619,7 @@ def _loc(loc: str) -> str:
 def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict, max_companies: int = 8) -> Path:
     """Paste-ready 'Now hiring' section: roles first seen in the last 7 days, most senior first."""
     week_ago = today - dt.timedelta(days=7)
-    fresh = [j for j in jobs if j.get("role_group") and j.get("first_seen") and
+    fresh = [j for j in jobs if j.get("role_group") and j.get("first_seen") and not j.get("baseline") and
              dt.date.fromisoformat(j["first_seen"]) >= week_ago]
     cos = {j["company"] for j in fresh}
     md = ["## Now hiring", "",
@@ -672,7 +687,7 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
     for j in all_jobs[:500]:
         lines.append(f"| {j['company']} | {j['title']} | {j.get('role_group','')} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
     if len(all_jobs) > 500:
-        lines.append(f"\n_First 500 of {len(all_jobs)} shown. Full list: `{out_dir.relative_to(ROOT)}/open_roles.csv`_")
+        lines.append(f"\n_First 500 of {len(all_jobs)} shown. Full list: `{_rel(out_dir)}/open_roles.csv`_")
     text = "\n".join(lines) + "\n"
     if path:
         with open(path, "a") as f:
@@ -733,10 +748,27 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
         for name, n in cos.most_common(25):
             md.append(f"| {name} | {n} | {next(d['board'] for d in discovery if d['org_name']==name)} |")
         md.append("")
-    md += ["## Companies needing attention", "", "| Company | Status | Careers page |", "|---|---|---|"]
+    moved = [c for c in ok if "job board changed" in (c.get("note") or "")]
+    if moved:
+        md += ["## Job board changed — worth a glance", "",
+               "_The board on file had gone quiet or missing, and the company's careers page now loads "
+               "its jobs from a different one. The new board was read and saved in data/ats_map.json._", ""]
+        md += [f"- **{c['company']}** — {c['note']}" for c in moved]
+        md.append("")
+    covered = [c for c in bad if c["status"].startswith(("covered by parent", "excluded"))]
+    bad = [c for c in bad if c not in covered]
+    md += ["## Companies needing attention", "",
+           "_`needs-link` means the careers link on file couldn't be read: put the company's job-board "
+           "link in data/ats_map.json or fix its careers link. `failed` means something went wrong this "
+           "run; last run's roles are kept and nothing is reported closed._", "",
+           "| Company | Status | Careers page |", "|---|---|---|"]
     for c in bad:
         md.append(f"| {c['company']} | {c['status']} | {c['careers_url']} |")
     md.append("")
+    if covered:
+        md += ["## Not read on their own", "", "| Company | Why | Note |", "|---|---|---|"]
+        md += [f"| {c['company']} | {c['status']} | {(c.get('note') or '').replace('|', '/')} |" for c in covered]
+        md.append("")
     (out_dir / "report.md").write_text("\n".join(md))
 
     # minimal HTML (same content, sortable-ish tables)

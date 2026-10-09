@@ -1,0 +1,66 @@
+name: Tests
+
+# Runs the offline test suite on every change that isn't on main yet, so a
+# change to the job search is checked before it is merged. No network: job
+# systems are answered from recorded samples in tests/fixtures.
+#
+# "Live check" additionally runs both searches for real, without saving
+# anything to the repo, and attaches what they found. It runs on branches whose
+# name starts with "rebuild", or when started by hand from the Actions tab.
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+    inputs:
+      live:
+        description: "Also run both searches for real (nothing is saved to the repo)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt pytest
+      - run: python -m playwright install --with-deps chromium
+      - run: python -m pytest -q tests
+
+  live-check:
+    needs: tests
+    if: startsWith(github.ref_name, 'rebuild') || (github.event_name == 'workflow_dispatch' && inputs.live)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Weekly search (nothing saved)
+        env: { PYTHONUNBUFFERED: "1" }
+        shell: bash
+        run: set -o pipefail; python -m jobsearch.run --detect 2>&1 | tee weekly.log
+      - name: OpCo search (nothing saved)
+        if: always()
+        shell: bash
+        run: set -o pipefail; python opco_search.py -v 2>&1 | tee opco.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-check
+          path: |
+            weekly.log
+            opco.log
+            output/
+            out/
+            data/ats_map.json
+            data/needs_manual_mapping.csv
+          retention-days: 30
