@@ -35,6 +35,8 @@ jobs:
 
   live-check:
     needs: tests
+    permissions:
+      contents: write      # only to publish results to the live-check-results branch (never main)
     if: startsWith(github.ref_name, 'rebuild') || (github.event_name == 'workflow_dispatch' && inputs.live)
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -52,6 +54,29 @@ jobs:
         if: always()
         shell: bash
         run: set -o pipefail; python opco_search.py -v 2>&1 | tee opco.log
+      # The same results as the attachment below, on a branch of their own so they
+      # can be read without downloading anything. Replaced on every live check.
+      - name: Publish results to the live-check-results branch
+        if: always()
+        shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          today=$(date -u +%F)
+          mkdir -p /tmp/results/weekly /tmp/results/opco
+          cp weekly.log opco.log /tmp/results/ 2>/dev/null || true
+          cp -r "output/$today"/. /tmp/results/weekly/ 2>/dev/null || true
+          cp output/newsletter/now-hiring-"$today".md /tmp/results/weekly/ 2>/dev/null || true
+          cp out/opco-jobs-latest.md out/opco-jobs-latest.json out/opco-jobs-all-"$today".csv /tmp/results/opco/ 2>/dev/null || true
+          cp data/ats_map.json data/needs_manual_mapping.csv /tmp/results/ 2>/dev/null || true
+          cd /tmp/results
+          git init -q -b live-check-results
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Live check of ${GITHUB_SHA::7} on $today (nothing here is used by the searches)"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}" live-check-results
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
