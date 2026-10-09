@@ -164,3 +164,13 @@ def test_out_of_time_skips_pages_but_still_reads_job_boards():
         board = O.read_company(company("B", "https://job-boards.greenhouse.io/acme"), O.RoleFilter(CONFIG), b, out_of_time=True)
     assert page["status"] == "stale" and len(page["filtered"]) == 1 and "time budget" in page["reason"]
     assert board["status"] == "ok" and not any("acme.test" in c for c in calls)
+
+
+def test_closures_are_reported_when_a_page_read_through_a_board_goes_to_zero():
+    key = 'page::{"url": "https://www.acme.test/careers"}'
+    roles = [{"id": f"gh-{i}", "title": "Director of Sales", "url": "u"} for i in range(3)]
+    b = _baseline({"Acme": {"fetched_on": "2026-10-04", "board": key, "via": "greenhouse:acme:{}", "roles": roles}})
+    page = {"text": "<html><body><h1>Careers</h1><p>We have no open positions right now.</p></body></html>"}
+    r = read("Acme", "https://www.acme.test/careers", b, **{"GET https://www\\.acme\\.test/careers$": page})
+    assert r["status"] == "ok" and r["roles"] == []
+    assert len(O.compute_diff({"Acme": r}, b, O.RoleFilter(CONFIG))["closed"]) == 3

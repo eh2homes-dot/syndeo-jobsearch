@@ -312,6 +312,10 @@ def compute_diff(results: dict, baseline: Baseline, role_filter) -> dict:
         if c["status"] != "ok":
             continue
         prev = baseline._prev(company, c["board"], c.get("via", ""))
+        if not prev and not c["roles"]:
+            # Nothing open this week, so there are no new ids to mix up with last
+            # week's: whatever board last week's roles came through, they closed.
+            prev = baseline._prev(company, c["board"])
         if not prev:
             continue
         prev_ids = {r["id"] for r in prev["roles"]}
@@ -789,6 +793,16 @@ def main() -> int:
     role_filter = RoleFilter(config)
     baseline = Baseline()
     first_run = not baseline.data
+
+    # Job boards first (quick, and never skipped), then careers pages. The pages
+    # start from a different company each week, so if the time budget ever runs
+    # out it isn't the same companies at the end of the sheet that miss out.
+    quick = [c for c in companies if classify(c.careers_url).readable or not classify(c.careers_url).system]
+    slow = [c for c in companies if c not in quick]
+    if slow:
+        turn = date.today().isocalendar()[1] % len(slow)
+        slow = slow[turn:] + slow[:turn]
+    companies = quick + slow
 
     browser = None if args.no_browser else shared_browser()
     started = time.time()

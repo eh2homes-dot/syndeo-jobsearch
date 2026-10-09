@@ -200,11 +200,36 @@ def test_single_posting_on_a_job_systems_board_keeps_its_own_title(site, browser
     assert titles(r) == ["Compliance Specialist - Affordable Housing"]
 
 
-def test_job_systems_board_with_nothing_listed_is_a_real_zero(site, browser):
+def test_job_systems_board_that_says_nothing_is_open_is_a_real_zero(site, browser):
     with fakenet.serve(ROUTES):
         r = read_page(f"{site}/empty_board.html", link_regex=B.RENDERED["isolved"]["links"],
                       browser=browser, follow_boards=False)
-    assert r.jobs == [] and "no openings" in r.how
+    assert r.jobs == [] and "says nothing is open" in r.how
+
+
+def test_board_with_no_recognisable_postings_is_not_assumed_empty(site, browser):
+    """No postings found and no "nothing open" message: the layout may have changed, so this
+    must not be read as "not hiring" (which would report every tracked role as closed)."""
+    with fakenet.serve(ROUTES):
+        with pytest.raises(NeedsLink) as exc:
+            read_page(f"{site}/blank_board.html", link_regex=B.RENDERED["isolved"]["links"],
+                      browser=browser, follow_boards=False)
+    assert "layout may have changed" in str(exc.value)
+
+
+def test_board_that_is_not_found_is_not_assumed_empty(site, browser):
+    with fakenet.serve(ROUTES):
+        with pytest.raises(NeedsLink) as exc:
+            read_page(f"{site}/no_such_board.html", link_regex=B.RENDERED["isolved"]["links"],
+                      browser=browser, follow_boards=False)
+    assert "doesn't load" in str(exc.value)
+
+
+def test_own_list_shown_by_scripts_beats_a_stray_link(site, browser):
+    with fakenet.serve(ROUTES) as calls:
+        r = read_page(f"{site}/careers/js_list_with_stray_link", browser=browser)
+    assert r.board is None and titles(r) == ["Leasing Director", "Regional Manager"]
+    assert not any("lever.co" in c for c in calls)        # the linked board was never needed
 
 
 # --------------------------------- nothing open / couldn't check / fix the link
@@ -243,6 +268,16 @@ def test_an_embedded_board_with_nothing_on_it_is_not_hiring():
 def test_page_that_says_nothing_is_open():
     html = "<h1>Team and careers</h1><p>No open roles right now. Check back soon!</p>"
     with fakenet.serve({**ROUTES, **page_route(html)}):
+        r = read_page("https://www.acme.test/careers")
+    assert r.jobs == [] and "says nothing is open" in r.how
+
+
+def test_a_failing_stray_link_does_not_block_nothing_open():
+    """The page says nothing is open and also links to some old board that errors."""
+    html = ("<h1>Careers</h1><p>We have no open positions right now.</p>"
+            "<a href='https://oldacme.bamboohr.com/careers'>Previous job site</a>")
+    broken = {"GET https://oldacme\\.bamboohr\\.com/careers/list": {"text": "<html>moved</html>"}}
+    with fakenet.serve({**ROUTES, **page_route(html), **broken}):
         r = read_page("https://www.acme.test/careers")
     assert r.jobs == [] and "says nothing is open" in r.how
 
@@ -288,9 +323,15 @@ def test_posting_id_looks_at_one_link_only(href, expected):
 @pytest.mark.parametrize("text,is_none", [
     ("No open roles right now", True), ("There are currently no openings.", True),
     ("We are not currently hiring", True), ("We don't have any open positions", True),
-    ("No positions available at this time", True),
+    ("No positions available at this time", True), ("We have no open positions right now.", True),
+    ("There are no open positions at this time. Please check back.", True),
     ("No role is too small here", False), ("no jobs are beneath us", False),
     ("We are hiring! See open roles below", False), ("no experience required", False),
+    ("There is no limit to the opportunities you'll find here", False),
+    ("If no positions match your skills, send us your resume", False),
+    ("No openings fit? Join our talent network", False),
+    ("We are not currently hiring for interns, but we have many other roles", False),
+    ("No open positions match your search", False), ("No results found", False),
 ])
 def test_says_none(text, is_none):
     assert bool(_SAYS_NONE.search(text)) is is_none

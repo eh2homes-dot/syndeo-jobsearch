@@ -871,7 +871,8 @@ _BAD_SLUGS = {"embed", "js", "v1", "jobs", "api", "www", "careers", "job_board",
               "cdn", "widget", "widgets", "accounts", "postings", "sso", "auth", "login", "support",
               "help", "info", "go", "get", "try", "resources", "hire", "status", "developers",
               "docs", "apply", "c", "j", "o", "share", "oneclick-ui", "wday", "public", "dist",
-              "build", "images", "img", "fonts", "css", "scripts", "favicon.ico", "robots.txt"}
+              "build", "images", "img", "fonts", "css", "scripts", "favicon.ico", "robots.txt", "sr-jobs",
+              "company", "search", "job", "o"}
 
 # The vendors' own marketing, help and asset hosts (assets-cdn.breezy.hr,
 # images4.bamboohr.com, community.icims.com): they sit where a company's name
@@ -880,7 +881,8 @@ _VENDOR_HOST = re.compile(
     r"^(www\d*|api|app|cdn\d*|assets?(-cdn)?|static\d*|images?\d*|img\d*|media|files|attachments?|"
     r"marketing|blog|partners?|community|help|support|docs?|developers?|status|learn|academy|"
     r"info|resources|email|mail|secure|login|sso|auth|accounts?|go|get|try|hire|track|click|"
-    r"links?|share|news|press|events?|webinars?|university|training|demo|trial|pages|lp)$", re.I)
+    r"links?|share|news|press|events?|webinars?|university|training|demo|trial|pages|lp|"
+    r"documentation|careers?|jobs|c-\d+|[a-z]-\d+|web|portal|platform|customers?|sales)$", re.I)
 _HOST_NAMED = {"recruitee", "breezy", "bamboohr", "icims", "isolved", "applicantpro", "jazzhr",
                "teamtailor", "pinpoint"}
 _NOT_A_SITE = {"static", "assets", "wday", "dist", "build", "public", "api", "js", "css", "images"}

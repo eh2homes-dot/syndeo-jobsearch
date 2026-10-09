@@ -15,6 +15,7 @@ need it are reported as needing a job-board link instead.
 from __future__ import annotations
 
 import logging
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Callable, Optional
@@ -34,6 +35,7 @@ class Rendered:
     final_url: str = ""
     frames: list = field(default_factory=list)      # [(frame_url, html)], main frame first
     text: str = ""                                   # what a visitor can read on the page (all frames)
+    status: int = 0                                  # HTTP status of the page itself (0 if unknown)
     requests: list = field(default_factory=list)    # every address the page called
     clicks: int = 0                                  # "load more" / "next" clicks made
     stopped: str = ""                                # why paging stopped, when it was cut short
@@ -139,7 +141,8 @@ class Browser:
                           else route.continue_())
             page = context.new_page()
             page.on("request", lambda req: out.requests.append(req.url))
-            page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+            response = page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+            out.status = response.status if response is not None else 0
             self._settle(page, 10_000)
             for _ in range(3):                  # nudge lists that load as you scroll
                 try:
@@ -159,7 +162,7 @@ class Browser:
                 for control in range(MAX_CONTROLS):      # the first "Next" found may belong to a carousel
                     if not self._click_more(page, control):
                         break
-                    self._settle(page, 6_000)
+                    self._settle(page, 4_000)
                     frames, text = self._snapshot(page)
                     seen = collect(frames)
                     if seen > count:
@@ -176,7 +179,7 @@ class Browser:
             raise
         except Exception as exc:  # noqa: BLE001 - a page that won't load is a normal outcome
             reason = str(exc).splitlines()[0][:140] if str(exc) else ""
-            if context is None or "closed" in reason.lower():
+            if context is None or re.search(r"(browser|context|target)\b.{0,40}\bclosed", reason, re.I):
                 self.close()                    # the browser itself died: start a fresh one next time
             raise BrowserUnavailable(f"the page didn't load in the browser ({type(exc).__name__}: {reason})") from exc
         finally:

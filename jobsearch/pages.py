@@ -497,11 +497,11 @@ def _try_boards(cands: list, tried: dict, strong: bool, reader_extra: dict) -> t
             tried[board.key] = ("gone", str(exc))
             continue
         except FetchError as exc:
-            tried[board.key] = ("error", str(exc))
+            tried[board.key] = ("error", str(exc), strength)
             log.debug("    candidate %s failed: %s", board.label(), exc)
             continue
         except Exception as exc:  # noqa: BLE001 - an odd payload from a candidate is not fatal
-            tried[board.key] = ("error", f"{type(exc).__name__}: {exc}"[:160])
+            tried[board.key] = ("error", f"{type(exc).__name__}: {exc}"[:160], strength)
             continue
         if jobs:
             tried[board.key] = ("jobs", str(len(jobs)))
@@ -534,14 +534,25 @@ _LOOKS_LIKE_HTML = re.compile(
     r"style|form|table|img|nav|header|footer|article|!doctype)\b", re.I)
 
 # A page telling its visitors there is nothing open right now.
+# Deliberately narrow: careers copy is full of sentences like "no limit to the
+# opportunities here" and "if no positions match your skills...", and reading
+# one of those as "not hiring" would quietly close a company's roles.
+_NOT_THIS = r"(?!\s+(match|fit|suit|that|which|for you|listed below)\b)"
 _SAYS_NONE = re.compile(
-    r"\bno (current|open|available|active)(ly)? (job )?(openings?|positions?|roles?|opportunities|vacancies|jobs)\b"
-    r"|\bno (job )?(openings?|positions|vacancies)\b"
-    r"|\bno (roles|jobs|opportunities) (are |is )?(currently |presently )?(available|open|posted|listed|at this time|right now)\b"
-    r"|\b(not|aren.t|are not) (currently |actively )hiring\b"
-    r"|\bthere (are|is) (currently )?no\b[^.]{0,40}\b(openings?|positions?|roles?|jobs|opportunities)\b"
-    r"|\b(we )?(don.t|do not) (currently )?have any (open |current )?(openings?|positions?|roles?|jobs)\b"
-    r"|\bno results found\b|\b0 (jobs|results|openings|positions) (found|available|match)", re.I)
+    r"\b(there are|there.re|we have|we currently have|we.ve got) (currently |presently )?no "
+    r"(open |current |available |active )?(job )?(openings|positions|roles|vacancies|jobs)\b" + _NOT_THIS +
+    r"|\bno (current|open|available|active)(ly)? (job )?(openings|positions|roles|vacancies|jobs)\b" + _NOT_THIS +
+    r"|\bno (job )?(openings|positions|roles|vacancies|jobs) (are )?(currently |presently )?"
+    r"(available|open|posted)?\s*(at this time|right now|at the moment|currently)\b"
+    r"|\b(not|aren.t|are not) (currently|actively) hiring\b(?!\s+for\b)"
+    r"|\b(don.t|do not) (currently )?have any (open |current |available )?(job )?(openings|positions|roles|vacancies|jobs)\b"
+    + _NOT_THIS, re.I)
+
+# A page that answered with a bot check instead of its content.
+_BLOCKED = re.compile(
+    r"just a moment|verif(y|ying) (that )?you are (a )?human|checking your browser|access denied|"
+    r"attention required|unusual traffic|are you a robot|request (was )?blocked|pardon our interruption|"
+    r"enable javascript and cookies to continue", re.I)
 
 
 def _visible_text(soup) -> str:
@@ -651,20 +662,28 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
         except FetchError as exc:
             notes.append(str(exc))
 
-        # ---- 5. a job board the page merely links to or mentions. Tried after the page's own
-        #         list, and only believed if it has jobs: one stray link is weak evidence.
-        if follow:
-            hit, _ = _try_boards(cands, tried, False, reader_extra)
-            if hit:
-                return finish(hit[1], _how_board(hit[0], hit[2]), board=hit[0])
         m = _SAYS_NONE.search(_visible_text(soup))
         says_none = m.group(0) if m else ""
 
-    # ---- 6. the same, in a headless browser
-    render_problem = ""       # the browser couldn't be used (not the page's fault)
-    if browser is not None:
+    def weak_boards(candidates, rendered):
+        """A job board the page merely links to or mentions. Tried only after the page's own
+        list (as a visitor sees it), and only believed if it has jobs: one stray link is weak
+        evidence, and an empty board behind a stray link says nothing about this company."""
+        if not follow:
+            return None
+        hit, _ = _try_boards(candidates, tried, False, reader_extra)
+        return finish(hit[1], _how_board(hit[0], hit[2]), board=hit[0], rendered=rendered) if hit else None
+
+    # ---- 5. the same, in a headless browser
+    render_problem = ""       # the browser couldn't be used, or the site refused it (not the link's fault)
+    page_gone = False         # the browser got a "not found" for the page itself
+    untitled = [0]
+    if browser is None:
+        done = weak_boards(cands, False)
+        if done:
+            return done
+    else:
         found: dict = {}
-        untitled = [0]
 
         def collect(frames) -> int:
             for frame_url, frame_html in frames:
@@ -678,13 +697,23 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
             page = browser.render(final if html else url, collect=collect)
         except BrowserUnavailable as exc:
             render_problem = str(exc)
+            done = weak_boards(cands, False)
+            if done:
+                return done
         else:
-            saw_page = True
             result.final_url = page.final_url or final
-            m = _SAYS_NONE.search(page.text or "")
-            says_none = m.group(0) if m else ""      # what the page shows beats what its source contains
+            if page.status in (404, 410):
+                page_gone = True
+            elif page.status in (401, 403, 429) or page.status >= 500:
+                render_problem = f"the site refused the browser (HTTP {page.status})"
+            elif _BLOCKED.search((page.text or "")[:800]) and not found:
+                render_problem = "the site showed the browser a bot check instead of the page"
+            else:
+                saw_page = True
+                m = _SAYS_NONE.search(page.text or "")
+                says_none = m.group(0) if m else ""      # what the page shows beats what its source contains
             rcands: list = []
-            if follow:
+            if follow and not page_gone:
                 evidence = [(u, _LOADED) for u in page.requests]
                 evidence += [(fu, _EMBEDDED) for fu, _ in page.frames[1:]]
                 if page.final_url and page.final_url != url:
@@ -712,19 +741,22 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
                     notes.append(f"found {untitled[0]} job links on the {label} but couldn't read their titles")
             except FetchError as exc:
                 notes.append(str(exc))
-            if follow:
-                hit, _ = _try_boards(rcands, tried, False, reader_extra)
-                if hit:
-                    return finish(hit[1], _how_board(hit[0], hit[2]), board=hit[0], rendered=True)
-                cands = cands + rcands
+            cands = cands + rcands
+            done = weak_boards(cands, True)
+            if done:
+                return done
 
-    # ---- 7. a job board the page points at that has no data feed (Paycom, isolved, Gem...):
+    # ---- 6. a job board the page points at that has no data feed (Paycom, isolved, Gem...):
     #         open that board itself.
+    needs_browser = []
     if follow:
         for key, state in list(tried.items()):
             if state[0] != "browser":
                 continue
             board, strength = state[1], state[2]
+            if browser is None:
+                needs_browser.append(board.label())
+                continue
             try:
                 sub = read_page(board.listing_url, link_regex=B.RENDERED[board.system]["links"],
                                 browser=browser, follow_boards=False, label=f"{board.system} job board")
@@ -732,7 +764,7 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
                 tried[key] = ("gone", str(exc))
                 continue
             except FetchError as exc:
-                tried[key] = ("error", str(exc))
+                tried[key] = ("error", str(exc), strength)
                 continue
             if sub.jobs:
                 return finish(sub.jobs, _how_board(board, strength), board=board,
@@ -741,39 +773,52 @@ def read_page(url: str, *, trusted: bool = False, link_regex: str = "",
             if strength >= _EMBEDDED and empty_board is None:
                 empty_board = (board, [], strength)
 
-    # ---- nothing found. Say which of the three outcomes this is.
-    errors = [f"{k.split(':')[0]} ({v[1]})" for k, v in tried.items() if v[0] == "error"]
-    gone = [f"{k.split(':')[0]} ({v[1]})" for k, v in tried.items() if v[0] == "gone"]
+    # ---- nothing found. Which of the three outcomes is this?
+    def name(key):
+        return key.split(":{")[0].rstrip(":")
+    # Only a board the page really loads or embeds counts as "the board didn't answer". A stray
+    # link to some board that errors must not hold a company in "couldn't check" forever.
+    board_down = [f"{name(k)} ({v[1]})" for k, v in tried.items() if v[0] == "error" and v[2] >= _EMBEDDED]
+    gone = [f"{name(k)} ({v[1]})" for k, v in tried.items() if v[0] == "gone"]
 
-    # (a) Nothing open right now.
+    # (b) Couldn't check this run: the board the page loads didn't answer.
+    if board_down:
+        raise FetchError(f"the job board behind the {label} didn't answer: " + "; ".join(board_down[:3]))
+
+    # (a) Nothing open right now. Always on a positive sign, never on mere absence: a board the
+    #     page loads that answered with an empty list, or the page's own words.
     if empty_board is not None:
         board = empty_board[0]
         return finish(JobList(), f"the job board this page loads lists no openings ({board.label()})", board=board)
-    if says_none and (saw_page or browser is None) and not errors:
+    if says_none and (saw_page or browser is None) and not notes and not page_gone:
         return finish(JobList(), f"the page says nothing is open (\"{says_none.strip()}\")", rendered=saw_page)
-    if system_board and saw_page and not untitled[0]:
-        return finish(JobList(), "the job board lists no openings", rendered=True)
 
-    # (b) Couldn't check this run.
-    if errors:
-        raise FetchError(f"the job board behind the {label} didn't answer: " + "; ".join(errors[:3]))
+    # (b) Couldn't check this run: the browser couldn't be used on a page that needs it.
     if render_problem and html:
         raise FetchError(f"the {label} needs a browser to show its jobs, and the browser couldn't be "
                          f"used this run ({render_problem})")
 
     # (c) The link needs fixing.
     if not html:
-        extra = f"; in a browser: {render_problem}" if render_problem else ""
+        extra = f"; in a browser: {render_problem or 'not found'}" if (render_problem or page_gone) else ""
         raise NeedsLink(f"the {label} doesn't load ({static_error or 'empty page'}{extra})")
+    if page_gone:
+        raise NeedsLink(f"the {label} doesn't exist any more (not found)")
     found_msg = next((n for n in reversed(notes) if n.startswith("found ")), "")
     if found_msg:
         raise NeedsLink(f"{found_msg}, so nothing was published")
     if gone:
         raise NeedsLink(f"the {label} points at a job board that isn't there: " + "; ".join(gone[:3]))
-    weak_empty = [k for k, v in tried.items() if v[0] == "empty"]
+    weak_empty = [name(k) for k, v in tried.items() if v[0] == "empty"]
     if weak_empty:
-        raise NeedsLink(f"the {label} links to a job board that lists nothing ({weak_empty[0].split(':{')[0]}); "
+        raise NeedsLink(f"the {label} links to a job board that lists nothing ({weak_empty[0]}); "
                         "if that is the company's board, use its link directly")
+    if needs_browser:
+        raise NeedsLink(f"the {label} points at a job board that needs a browser to read "
+                        f"({needs_browser[0]}), and none was used")
+    if system_board and saw_page:
+        raise NeedsLink(f"the {label} opened, but no postings were recognised on it and it doesn't say "
+                        "there are none - its layout may have changed")
     if browser is None:
         raise NeedsLink(f"no jobs are listed on the {label} itself; it may need a browser to show them, "
                         "and none was used - use the job board's link instead")

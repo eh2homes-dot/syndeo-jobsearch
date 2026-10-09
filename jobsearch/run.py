@@ -40,6 +40,7 @@ from . import browser as browser_mod
 from . import company as company_mod
 from . import verify as verify_mod
 from . import feeds as feeds_mod
+from .company import slugify
 
 ROOT = Path(__file__).resolve().parent.parent
 # JOBSEARCH_DATA / JOBSEARCH_OUT point a test run at scratch folders, so tests never touch real history or reports.
@@ -349,8 +350,14 @@ def main(argv=None):
     for j in all_jobs:
         read_from[j["company"]].add(src(j["job_key"]))
     for row in company_rows:   # read cleanly with nothing open: the source is still known from the board on file
-        if row["status"] == "ok" and not read_from[row["company"]] and row["ats"] not in ("", "page") and row["slug"]:
-            read_from[row["company"]].add(f"{row['ats']}:{row['slug']}")
+        if row["status"] != "ok" or read_from[row["company"]] or not row["ats"]:
+            continue
+        if row["ats"] == "page":           # jobs read off a page are keyed by the company, either way they were read
+            read_from[row["company"]] |= {f"page:{slugify(row['company'])}", f"jsonld:{slugify(row['company'])}"}
+        else:
+            ident = row["slug"] or ats_map.get(row["company"], {}).get("key", "")
+            if ident:
+                read_from[row["company"]].add(f"{row['ats']}:{ident}")
     known_from = collections.defaultdict(set)
     for key, h in history.items():
         known_from[h.get("company", "")].add(src(key))
