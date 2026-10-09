@@ -1,6 +1,204 @@
 {
-  "run_date": "2026-10-06",
+  "run_date": "2026-10-09",
   "roles": [
+    {
+      "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4392123",
+      "title": "Business Development Manager",
+      "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392123",
+      "location": "Kansas City, KS",
+      "department": "",
+      "posted": "2026-08-04",
+      "company": "Atlas Real Estate",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4392063",
+      "title": "Business Development Manager",
+      "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392063",
+      "location": "Atlanta, GA",
+      "department": "",
+      "posted": "2026-08-04",
+      "company": "Atlas Real Estate",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4391920",
+      "title": "Business Development Manager",
+      "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4391920",
+      "location": "Las Vegas, NV",
+      "department": "",
+      "posted": "2026-08-04",
+      "company": "Atlas Real Estate",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "wd-pretiumenterpriseservices-JR117037",
+      "title": "Marketing Strategist, Digital & Paid Media",
+      "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/Remote---Open/Marketing-Strategist--Digital---Paid-Media_JR117037",
+      "location": "Remote - Open",
+      "department": "",
+      "posted": "Posted 8 Days Ago",
+      "company": "BH Management Services",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "wk-996A05186B",
+      "title": "Growth Advisor, Leasing",
+      "url": "https://apply.workable.com/belong-6/j/996A05186B/",
+      "location": "Buenos Aires, Buenos Aires, Argentina",
+      "department": "",
+      "posted": "2026-09-30",
+      "company": "Belong",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4724622005",
+      "title": "Associate, SFR Revenue Management & Underwriting",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4724622005",
+      "location": "New York City, NY",
+      "department": "",
+      "posted": "2026-08-20",
+      "company": "Evergreen Residential",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4685535005",
+      "title": "VP of Field Services (Construction)",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4685535005",
+      "location": "Dallas, TX",
+      "department": "",
+      "posted": "2026-04-15",
+      "company": "Evergreen Residential",
+      "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4719723005",
+      "title": "Full Stack Software Engineer",
+      "url": "https://job-boards.greenhouse.io/flockhomes/jobs/4719723005",
+      "location": "San Franciso or Denver",
+      "department": "",
+      "posted": "2026-07-29",
+      "company": "Flock Homes",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "ab-a750a9f3-7a16-4e0e-ae14-0260eabd3e07",
+      "title": "Tech Lead, DevOps Engineer",
+      "url": "https://jobs.ashbyhq.com/industrious/a750a9f3-7a16-4e0e-ae14-0260eabd3e07",
+      "location": "NYC - 12 E 49th St (Tower 49)",
+      "department": "Engineering",
+      "posted": "2026-09-09",
+      "company": "Industrious",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "ab-7490c8f9-5cc8-4493-875b-864d9c96b33f",
+      "title": "Assistant Regional Sales Manager",
+      "url": "https://jobs.ashbyhq.com/industrious/7490c8f9-5cc8-4493-875b-864d9c96b33f",
+      "location": "Los Angeles - 1925 Century Park E (Century City)",
+      "department": "Sales",
+      "posted": "2026-09-08",
+      "company": "Industrious",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "ab-04849166-225c-4330-822a-297776431f83",
+      "title": "Senior Backend Engineer",
+      "url": "https://jobs.ashbyhq.com/industrious/04849166-225c-4330-822a-297776431f83",
+      "location": "NYC - 12 E 49th St (Tower 49)",
+      "department": "All Departments",
+      "posted": "2026-09-11",
+      "company": "Industrious",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "ab-28a7e2ab-955f-4f62-a09e-db8561a1fd23",
+      "title": "Senior Community and Marketing Manager",
+      "url": "https://jobs.ashbyhq.com/industrious/28a7e2ab-955f-4f62-a09e-db8561a1fd23",
+      "location": "New York City",
+      "department": "Experience by Industrious (Roles employed by CBRE)",
+      "posted": "2026-10-05",
+      "company": "Industrious",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "gh-7985822003",
+      "title": "Area Sales Manager - West",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/7985822003",
+      "location": "Remote (United States)",
+      "department": "",
+      "posted": "2026-09-08",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-7978071003",
+      "title": "Associate Director, National & Regional Sales",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/7978071003",
+      "location": "Remote (United States)",
+      "department": "",
+      "posted": "2026-09-02",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-7978069003",
+      "title": "National Sales Manager",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/7978069003",
+      "location": "Remote",
+      "department": "",
+      "posted": "2026-09-03",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-7811738003",
+      "title": "Portfolio Revenue Manager",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/7811738003",
+      "location": "Remote",
+      "department": "",
+      "posted": "2026-07-22",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-8002784003",
+      "title": "Sales Manager",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/8002784003",
+      "location": "Los Angeles, CA",
+      "department": "",
+      "posted": "2026-09-25",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-c703d37c-6f0c-4ab0-b1d2-09073e9cb76f",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c703d37c-6f0c-4ab0-b1d2-09073e9cb76f",
+      "location": "MUSKEGON, MI",
+      "department": "",
+      "posted": "2026-10-08",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
     {
       "id": "uk-55c24115-e3bf-4607-805c-a5a4512cff99",
       "title": "Sales Account Executive",
@@ -134,17 +332,6 @@
       "status": "ok"
     },
     {
-      "id": "uk-476c9760-173c-44cc-9567-977e5e5da76b",
-      "title": "Sales Manager",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=476c9760-173c-44cc-9567-977e5e5da76b",
-      "location": "BUFFALO, NY",
-      "department": "",
-      "posted": "2026-09-17",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "uk-c15abcdf-9847-4b16-8bf5-e72b7e947657",
       "title": "Sales and Campaign Coordinator",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c15abcdf-9847-4b16-8bf5-e72b7e947657",
@@ -211,34 +398,12 @@
       "status": "ok"
     },
     {
-      "id": "uk-9cdb22d1-686a-47d3-aaea-bf70164a27fd",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9cdb22d1-686a-47d3-aaea-bf70164a27fd",
-      "location": "OCALA, FL",
-      "department": "",
-      "posted": "2026-09-02",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "uk-506b5c0d-25d3-4174-b408-451f1bf8dd95",
       "title": "Sales Account Executive",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=506b5c0d-25d3-4174-b408-451f1bf8dd95",
       "location": "MONTGOMERY, AL",
       "department": "",
       "posted": "2026-08-27",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "uk-c703d37c-6f0c-4ab0-b1d2-09073e9cb76f",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c703d37c-6f0c-4ab0-b1d2-09073e9cb76f",
-      "location": "MUSKEGON, MI",
-      "department": "",
-      "posted": "2026-08-24",
       "company": "Lamar Advertising Company",
       "category": "sales",
       "status": "ok"
@@ -332,17 +497,6 @@
       "status": "ok"
     },
     {
-      "id": "uk-2cc3fb39-526b-4980-ace1-6efdc18e4b07",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2cc3fb39-526b-4980-ace1-6efdc18e4b07",
-      "location": "Buffalo, NY",
-      "department": "",
-      "posted": "2026-05-13",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "uk-9218fa9a-24ad-40b4-85a1-0d8a7e6b6b6c",
       "title": "Sales Account Executive",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9218fa9a-24ad-40b4-85a1-0d8a7e6b6b6c",
@@ -398,58 +552,58 @@
       "status": "ok"
     },
     {
-      "id": "wk-996A05186B",
-      "title": "Growth Advisor, Leasing",
-      "url": "https://apply.workable.com/j/996A05186B",
-      "location": "Buenos Aires, Buenos Aires",
+      "id": "op-/jobs/3627454",
+      "title": "Licensed Real Estate Agent & Business Development Manager",
+      "url": "https://property-mangement-inc-careers.careerplug.com/jobs/3627454?embed=1",
+      "location": "Hybrid - US",
       "department": "",
-      "posted": "2026-09-30",
-      "company": "Belong",
-      "category": "gtm",
-      "status": "ok"
-    },
-    {
-      "id": "wd-wework-JR-0064210",
-      "title": "Lead, Email Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Lead--Email-Marketing_JR-0064210",
-      "location": "Mexico City, Mexico",
-      "department": "",
-      "posted": "Posted 5 Days Ago",
-      "company": "WeWork",
-      "category": "gtm",
-      "status": "ok"
-    },
-    {
-      "id": "wd-wework-JR-0064161",
-      "title": "Lead, Integrated Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/New-York-NY-United-States-of-America/Lead--Integrated-Marketing_JR-0064161-1",
-      "location": "New York, NY United States of America",
-      "department": "",
-      "posted": "Posted 8 Days Ago",
-      "company": "WeWork",
-      "category": "gtm",
-      "status": "ok"
-    },
-    {
-      "id": "wd-wework-JR-0064152",
-      "title": "Sales Development Representative - SEA & Australia (Vietnamese Speaking)",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Singapore/Sales-Development-Representative---SEA---Australia--Vietnamese-Speaking-_JR-0064152",
-      "location": "Singapore",
-      "department": "",
-      "posted": "Posted 19 Days Ago",
-      "company": "WeWork",
+      "posted": "",
+      "company": "PMI",
       "category": "sales",
       "status": "ok"
     },
     {
-      "id": "wd-wework-JR-0064060",
-      "title": "Senior Manager, Field Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Senior-Manager--Field-Marketing_JR-0064060-1",
-      "location": "Mexico City, Mexico",
+      "id": "op-/jobs/2782406",
+      "title": "Business Development Manager",
+      "url": "https://property-mangement-inc-careers.careerplug.com/jobs/2782406?embed=1",
+      "location": "",
       "department": "",
-      "posted": "Posted 30+ Days Ago",
-      "company": "WeWork",
+      "posted": "",
+      "company": "PMI",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/2666489",
+      "title": "Independent Marketing Agent",
+      "url": "https://property-mangement-inc-careers.careerplug.com/jobs/2666489?embed=1",
+      "location": "Hybrid - US",
+      "department": "",
+      "posted": "",
+      "company": "PMI",
       "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/2478204",
+      "title": "Independent Marketing Agent/Business Development Manager",
+      "url": "https://property-mangement-inc-careers.careerplug.com/jobs/2478204?embed=1",
+      "location": "Hybrid - US",
+      "department": "",
+      "posted": "",
+      "company": "PMI",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/3154907",
+      "title": "Future Opening: Business Development Representative",
+      "url": "https://property-mangement-inc-careers.careerplug.com/jobs/3154907?embed=1",
+      "location": "",
+      "department": "",
+      "posted": "",
+      "company": "PMI",
+      "category": "sales",
       "status": "ok"
     },
     {
@@ -473,423 +627,1426 @@
       "company": "Real Property Management",
       "category": "sales",
       "status": "ok"
+    },
+    {
+      "id": "adp-73284483_1",
+      "title": "BUSINESS DEVELOPMENT MANAGER",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=73284483_1&lang=en_US",
+      "location": "Tempe, AZ",
+      "department": "",
+      "posted": "2026-10-08",
+      "company": "Renters Warehouse",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "adp-25863430_1",
+      "title": "BUSINESS DEVELOPMENT MANAGER",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=25863430_1&lang=en_US",
+      "location": "Minneapolis, MN",
+      "department": "",
+      "posted": "2026-06-25",
+      "company": "Renters Warehouse",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "jobvite-starwoodcapitalgroup-oVCVAfwM",
+      "title": "Vice President, Commercial Asset Management",
+      "url": "https://jobs.jobvite.com/starwoodcapitalgroup/job/oVCVAfwM",
+      "location": "New York, New York",
+      "department": "",
+      "posted": "",
+      "company": "Starwood Property Trust",
+      "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "jobvite-starwoodcapitalgroup-oWpdAfwS",
+      "title": "VP, Investor Relations",
+      "url": "https://jobs.jobvite.com/starwoodcapitalgroup/job/oWpdAfwS",
+      "location": "2 Locations",
+      "department": "",
+      "posted": "",
+      "company": "Starwood Property Trust",
+      "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34434-mobile-al",
+      "title": "Sales Support Analyst",
+      "url": "https://careers.uniti.com/jobs/34434-mobile-al",
+      "location": "Uniti | Mobile, AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34406-huntsville-al",
+      "title": "Enterprise Account Executive",
+      "url": "https://careers.uniti.com/jobs/34406-huntsville-al",
+      "location": "Uniti | Huntsville, AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34332-lexington-ky",
+      "title": "Outside Plant Engineer I",
+      "url": "https://careers.uniti.com/jobs/34332-lexington-ky",
+      "location": "Uniti | Lexington, KY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34192-nc",
+      "title": "Sr Sales Engineer-KB",
+      "url": "https://careers.uniti.com/jobs/34192-nc",
+      "location": "Uniti | NC, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34187-lincoln-ne",
+      "title": "Government Account Executive - SLED",
+      "url": "https://careers.uniti.com/jobs/34187-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34091-crockett-tx",
+      "title": "Lead Specialist Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/34091-crockett-tx",
+      "location": "Uniti | Crockett, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34087-dawson-ga",
+      "title": "Lead Specialist Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/34087-dawson-ga",
+      "location": "Uniti | Dawson, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34116-ridgway-pa",
+      "title": "Lead Specialist -Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/34116-ridgway-pa",
+      "location": "Uniti | Ridgway, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34118-summerfield-nc",
+      "title": "Lead Specialist -Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/34118-summerfield-nc",
+      "location": "Uniti | Summerfield, NC, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33904-state-college-pa",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33904-state-college-pa",
+      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33905-muncy-pa",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33905-muncy-pa",
+      "location": "Uniti | Muncy, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33905-lansford-pa",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33905-lansford-pa",
+      "location": "Uniti | Lansford, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33906-lexington-nc",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33906-lexington-nc",
+      "location": "Uniti | Lexington, NC, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33907-summerville-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33907-summerville-ga",
+      "location": "Uniti | Summerville, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33907-dalton-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33907-dalton-ga",
+      "location": "Uniti | Dalton, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33908-jamestown-ny",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33908-jamestown-ny",
+      "location": "Uniti | Jamestown, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33909-fulton-ny",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33909-fulton-ny",
+      "location": "Uniti | Fulton, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33909-cazenovia-ny",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33909-cazenovia-ny",
+      "location": "Uniti | Cazenovia, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33910-ridgway-pa",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33910-ridgway-pa",
+      "location": "Uniti | Ridgway, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33830-mobile-al",
+      "title": "Sales Support Analyst",
+      "url": "https://careers.uniti.com/jobs/33830-mobile-al",
+      "location": "Uniti | Mobile, AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33788-al",
+      "title": "RVP-Sales-UF",
+      "url": "https://careers.uniti.com/jobs/33788-al",
+      "location": "Uniti | AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33794-columbus-oh",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33794-columbus-oh",
+      "location": "Uniti | Columbus, OH, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33709-des-moines-ia",
+      "title": "Account Manager (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33709-des-moines-ia",
+      "location": "Uniti | Des Moines, IA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33701-lexington-ky",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33701-lexington-ky",
+      "location": "Uniti | Lexington, KY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33683-nm",
+      "title": "Gov't Account Executive (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33683-nm",
+      "location": "Uniti | NM, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33693-ne",
+      "title": "Account Manager (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33693-ne",
+      "location": "Uniti | NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33582-london-ky",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33582-london-ky",
+      "location": "Uniti | London, KY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-little-rock-ar",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-little-rock-ar",
+      "location": "Uniti | Little Rock, AR, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-bolivar-mo",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-bolivar-mo",
+      "location": "Uniti | Bolivar, MO, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-sheridan-ar",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-sheridan-ar",
+      "location": "Uniti | Sheridan, AR, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-fulton-ny",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-fulton-ny",
+      "location": "Uniti | Fulton, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-cazenovia-ny",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-cazenovia-ny",
+      "location": "Uniti | Cazenovia, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33616-jamestown-ny",
+      "title": "Account Executive (MDU)",
+      "url": "https://careers.uniti.com/jobs/33616-jamestown-ny",
+      "location": "Uniti | Jamestown, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33567-ms",
+      "title": "Outside Plant Engineer",
+      "url": "https://careers.uniti.com/jobs/33567-ms",
+      "location": "Uniti | MS, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33476-des-moines-ia",
+      "title": "Account Manager (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33476-des-moines-ia",
+      "location": "Uniti | Des Moines, IA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33030-perry-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33030-perry-ga",
+      "location": "Uniti | Perry, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33030-milledgeville-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33030-milledgeville-ga",
+      "location": "Uniti | Milledgeville, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33030-gray-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33030-gray-ga",
+      "location": "Uniti | Gray, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33031-blakely-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33031-blakely-ga",
+      "location": "Uniti | Blakely, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33031-dawson-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33031-dawson-ga",
+      "location": "Uniti | Dawson, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33031-bainbridge-ga",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33031-bainbridge-ga",
+      "location": "Uniti | Bainbridge, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33032-clyde-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33032-clyde-tx",
+      "location": "Uniti | Clyde, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33032-seymour-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33032-seymour-tx",
+      "location": "Uniti | Seymour, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33034-whitney-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33034-whitney-tx",
+      "location": "Uniti | Whitney, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33036-trinity-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33036-trinity-tx",
+      "location": "Uniti | Trinity, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33036-crockett-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33036-crockett-tx",
+      "location": "Uniti | Crockett, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33037-kerrville-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33037-kerrville-tx",
+      "location": "Uniti | Kerrville, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33038-texarkana-tx",
+      "title": "Outside Sales Specialist (Residential)",
+      "url": "https://careers.uniti.com/jobs/33038-texarkana-tx",
+      "location": "Uniti | Texarkana, TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33145-al",
+      "title": "Enterprise Account Manager-UF",
+      "url": "https://careers.uniti.com/jobs/33145-al",
+      "location": "Uniti | AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/33145-augusta-ga",
+      "title": "Enterprise Account Manager-UF",
+      "url": "https://careers.uniti.com/jobs/33145-augusta-ga",
+      "location": "Uniti | Augusta, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32998-atlanta-ga",
+      "title": "Account Manager II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/32998-atlanta-ga",
+      "location": "Uniti | Atlanta, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32527",
+      "title": "Sr Principal Revenue Enablement",
+      "url": "https://careers.uniti.com/jobs/32527",
+      "location": "Uniti | United States (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32580-cleveland-oh",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/32580-cleveland-oh",
+      "location": "Uniti | Cleveland, OH, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32297-jamestown-ny",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/32297-jamestown-ny",
+      "location": "Uniti | Jamestown, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32247-lexington-ky",
+      "title": "Manager Field Sales",
+      "url": "https://careers.uniti.com/jobs/32247-lexington-ky",
+      "location": "Uniti | Lexington, KY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32164-fl",
+      "title": "Wholesale Sales Director",
+      "url": "https://careers.uniti.com/jobs/32164-fl",
+      "location": "Uniti | FL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/32174-fl",
+      "title": "Channel Account Manager",
+      "url": "https://careers.uniti.com/jobs/32174-fl",
+      "location": "Uniti | FL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31769-lincoln-ne",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/31769-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31500-co",
+      "title": "Major Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/31500-co",
+      "location": "Uniti | CO, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31500",
+      "title": "Major Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/31500",
+      "location": "Uniti | United States (Virtual) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31384",
+      "title": "Software Engineer",
+      "url": "https://careers.uniti.com/jobs/31384",
+      "location": "Uniti | United States (Virtual) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31398-muncy-pa",
+      "title": "Manager-Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/31398-muncy-pa",
+      "location": "Uniti | Muncy, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31398-state-college-pa",
+      "title": "Manager-Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/31398-state-college-pa",
+      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31209-savannah-ga",
+      "title": "Sales Director Uniti Fiber",
+      "url": "https://careers.uniti.com/jobs/31209-savannah-ga",
+      "location": "Uniti | Savannah, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31213-birmingham-al",
+      "title": "Sales Director-Uniti Fiber",
+      "url": "https://careers.uniti.com/jobs/31213-birmingham-al",
+      "location": "Uniti | Birmingham, AL, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/31328-mount-pleasant-ia",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/31328-mount-pleasant-ia",
+      "location": "Uniti | Mount Pleasant, IA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "wd-wework-JR-0064210",
+      "title": "Lead, Email Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Lead--Email-Marketing_JR-0064210",
+      "location": "Mexico City, Mexico",
+      "department": "",
+      "posted": "Posted 8 Days Ago",
+      "company": "WeWork",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "wd-wework-JR-0064161",
+      "title": "Lead, Integrated Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/New-York-NY-United-States-of-America/Lead--Integrated-Marketing_JR-0064161-1",
+      "location": "New York, NY United States of America",
+      "department": "",
+      "posted": "Posted 11 Days Ago",
+      "company": "WeWork",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "wd-wework-JR-0064152",
+      "title": "Sales Development Representative - SEA & Australia (Vietnamese Speaking)",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Singapore/Sales-Development-Representative---SEA---Australia--Vietnamese-Speaking-_JR-0064152",
+      "location": "Singapore",
+      "department": "",
+      "posted": "Posted 22 Days Ago",
+      "company": "WeWork",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "wd-wework-JR-0064060",
+      "title": "Senior Manager, Field Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Senior-Manager--Field-Marketing_JR-0064060-1",
+      "location": "Mexico City, Mexico",
+      "department": "",
+      "posted": "Posted 30+ Days Ago",
+      "company": "WeWork",
+      "category": "gtm",
+      "status": "ok"
     }
   ],
   "new": [],
-  "closed": [],
+  "closed": [
+    {
+      "department": "",
+      "id": "uk-476c9760-173c-44cc-9567-977e5e5da76b",
+      "location": "BUFFALO, NY",
+      "posted": "2026-09-17",
+      "title": "Sales Manager",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=476c9760-173c-44cc-9567-977e5e5da76b",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-9cdb22d1-686a-47d3-aaea-bf70164a27fd",
+      "location": "OCALA, FL",
+      "posted": "2026-09-02",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9cdb22d1-686a-47d3-aaea-bf70164a27fd",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-2cc3fb39-526b-4980-ace1-6efdc18e4b07",
+      "location": "Buffalo, NY",
+      "posted": "2026-05-13",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2cc3fb39-526b-4980-ace1-6efdc18e4b07",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    }
+  ],
   "coverage": {
-    "Flock Homes": {
-      "column_d": "https://www.flockhomes.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.flockhomes.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Divvy Homes": {
-      "column_d": "https://www.divvyhomes.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.divvyhomes.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Kasa Living": {
-      "column_d": "https://www.kasa.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.kasa.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Medical Properties Trust": {
-      "column_d": "https://www.medicalpropertiestrust.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.medicalpropertiestrust.com/careers\"}",
-      "note": "read from the jobs listed on the page",
-      "total": 3,
-      "status": "ok"
-    },
-    "Uniti Group": {
-      "column_d": "https://careers.uniti.com/",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://careers.uniti.com/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Starwood Property Trust": {
-      "column_d": "https://www.starwoodcapital.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.starwoodcapital.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
     "Alexander & Baldwin": {
       "column_d": "https://jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL",
       "column_d_from": "Column D",
       "system": "dayforce",
       "board": "dayforce:abhi:{\"board\": \"CANDIDATEPORTAL\"}",
+      "via": "",
       "note": "",
       "total": 3,
       "status": "ok"
-    },
-    "Kite Realty Group Trust": {
-      "column_d": "https://www.kiterealty.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.kiterealty.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "the Column D page doesn't load (connection error (ReadTimeout))"
-    },
-    "Lamar Advertising Company": {
-      "column_d": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/?q=&o=postedDateDesc",
-      "column_d_from": "Column D",
-      "system": "ukg",
-      "board": "ukg:LAM1000LAC:{\"board\": \"82898216-ca7a-4621-b01b-bf3410c919b2\", \"host\": \"recruiting2.ultipro.com\"}",
-      "note": "",
-      "total": 108,
-      "status": "ok"
-    },
-    "EastGroup Properties": {
-      "column_d": "https://phx.us-west.paycomonline.net/v4/ats/web.php/portal/FF95F1D079994D46C22FCB801D0A2C8F/career-page",
-      "column_d_from": "Column D",
-      "system": "paycom",
-      "board": "paycom::{}",
-      "note": "",
-      "total": 0,
-      "status": "unsupported",
-      "reason": "paycom isn't supported yet"
-    },
-    "EPR Properties": {
-      "column_d": "https://eprproperties.bamboohr.com/careers",
-      "column_d_from": "Column D",
-      "system": "bamboohr",
-      "board": "bamboohr:eprproperties:{}",
-      "note": "",
-      "total": 1,
-      "status": "ok"
-    },
-    "Veris Residential": {
-      "column_d": "https://www.rhoresidential.com/careers/#careers-positions",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.rhoresidential.com/careers/#careers-positions\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Highwoods Properties": {
-      "column_d": "https://www.highwoods.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.highwoods.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Greystar": {
-      "column_d": "https://jobs.greystar.com/",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://jobs.greystar.com/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Easterly Government Properties": {
-      "column_d": "https://www.easterlyre.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.easterlyre.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "the Column D page doesn't load (connection error (SSLError))"
-    },
-    "Cohen-Esrey Communities": {
-      "column_d": "https://www.cohenesrey.com/careers.html",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.cohenesrey.com/careers.html\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Case & Associates": {
-      "column_d": "https://www.caseandassociates.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.caseandassociates.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Oakbrook Corporation": {
-      "column_d": "https://oakbrookcorp.isolvedhire.com/jobs/",
-      "column_d_from": "Column D",
-      "system": "isolved",
-      "board": "isolved::{}",
-      "note": "",
-      "total": 0,
-      "status": "unsupported",
-      "reason": "isolved isn't supported yet"
-    },
-    "BH Management Services": {
-      "column_d": "https://livebh.com/careers/job-search/",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://livebh.com/careers/job-search/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Atria Senior Living": {
-      "column_d": "https://www.atriaseniorliving.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.atriaseniorliving.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Picerne Real Estate Group": {
-      "column_d": "https://www.picerne.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.picerne.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "The Lund Company": {
-      "column_d": "https://lundco.com/join-our-team/",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://lundco.com/join-our-team/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Tamarack Property Management": {
-      "column_d": "https://www.tamarackproperty.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.tamarackproperty.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Mountain Property Management": {
-      "column_d": "https://jacksonholeproperties.net/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://jacksonholeproperties.net/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 404)"
-    },
-    "Redstone": {
-      "column_d": "https://www.redstonevt.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.redstonevt.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Doorstead": {
-      "column_d": "https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Belong": {
-      "column_d": "https://apply.workable.com/belong-6",
-      "column_d_from": "Column D",
-      "system": "workable",
-      "board": "workable:belong-6:{}",
-      "note": "",
-      "total": 5,
-      "status": "ok"
-    },
-    "Mynd": {
-      "column_d": "https://www.mynd.co/talent-and-culture",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.mynd.co/talent-and-culture\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "WeWork": {
-      "column_d": "https://wework.wd1.myworkdayjobs.com/WeWork",
-      "column_d_from": "Column D",
-      "system": "workday",
-      "board": "workday:wework:{\"host\": \"wework.wd1.myworkdayjobs.com\", \"site\": \"WeWork\"}",
-      "note": "",
-      "total": 73,
-      "status": "ok"
-    },
-    "Industrious": {
-      "column_d": "https://www.industriousoffice.com/careers#open-positions",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.industriousoffice.com/careers#open-positions\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Northpoint Asset Manamgement": {
-      "column_d": "https://northpointam.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://northpointam.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
     },
     "Atlas Real Estate": {
       "column_d": "https://realatlas.com/careers/#positions",
       "column_d_from": "Column D",
       "system": "page",
       "board": "page::{\"url\": \"https://realatlas.com/careers/#positions\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 202)"
+      "via": "paylocity:5e5fc082-a90b-4d93-8b73-46f77d40e081:{}",
+      "note": "read from the job board this page loads its jobs from (paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081: https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081)",
+      "total": 16,
+      "via_label": "paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081",
+      "via_url": "https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081",
+      "status": "ok",
+      "spot_check": [
+        "Assistant Portfolio Manager (Kansas City, MO)",
+        "Licensed Senior Portfolio Manager (Denver, CO)",
+        "1099 Maintenance Technician (Denver, CO)"
+      ]
     },
-    "Evernest Property Management": {
-      "column_d": "https://www.evernest.co/careers",
+    "Atria Senior Living": {
+      "column_d": "https://www.atriaseniorliving.com/careers",
       "column_d_from": "Column D",
       "system": "page",
-      "board": "page::{\"url\": \"https://www.evernest.co/careers\"}",
+      "board": "page::{\"url\": \"https://www.atriaseniorliving.com/careers\"}",
+      "via": "",
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
     },
-    "PURE Homeriver Group": {
-      "column_d": "https://purehomeriver.com/company/careers/",
+    "BH Management Services": {
+      "column_d": "https://livebh.com/careers/job-search/",
       "column_d_from": "Column D",
       "system": "page",
-      "board": "page::{\"url\": \"https://purehomeriver.com/company/careers/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
+      "board": "page::{\"url\": \"https://livebh.com/careers/job-search/\"}",
+      "via": "workday:pretiumenterpriseservices:{\"host\": \"pretiumenterpriseservices.wd1.myworkdayjobs.com\", \"site\": \"livebhcareers\"}",
+      "note": "read from the job board this page embeds (workday: pretiumenterpriseservices: https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers)",
+      "total": 150,
+      "via_label": "workday: pretiumenterpriseservices",
+      "via_url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers",
+      "status": "ok",
+      "spot_check": [
+        "Leasing Consultant (Charlotte, NC)",
+        "Leasing Consultant (Cedar Park, TX)",
+        "Service Technician II (EPA) (Walker Ranch Apartment Homes-BH)"
+      ]
     },
-    "NARPM (National Association of Residential Property Managers) Job Board": {
-      "column_d": "",
-      "column_d_from": "",
-      "system": "",
-      "board": "::{}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "Column D is empty"
-    },
-    "Rhome Property Management": {
-      "column_d": "https://www.rhomepm.com/employment",
+    "Belong": {
+      "column_d": "https://apply.workable.com/belong-6",
       "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.rhomepm.com/employment\"}",
+      "system": "workable",
+      "board": "workable:belong-6:{}",
+      "via": "",
       "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Key Renter Property Managment": {
-      "column_d": "https://keyrenter.com/",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://keyrenter.com/\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 202)"
-    },
-    "PMI": {
-      "column_d": "https://www.propertymanagementinc.com/careers",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://www.propertymanagementinc.com/careers\"}",
-      "note": "",
-      "total": 0,
-      "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
-    },
-    "Real Property Management": {
-      "column_d": "https://jobs.realpropertymgt.com/jobs",
-      "column_d_from": "Column D",
-      "system": "page",
-      "board": "page::{\"url\": \"https://jobs.realpropertymgt.com/jobs\"}",
-      "note": "read from the jobs listed on the page",
-      "total": 45,
+      "total": 4,
       "status": "ok"
     },
-    "Renters Warehouse": {
-      "column_d": "https://www.renterswarehouse.com/careers",
+    "Case & Associates": {
+      "column_d": "https://www.caseandassociates.com/careers",
       "column_d_from": "Column D",
       "system": "page",
-      "board": "page::{\"url\": \"https://www.renterswarehouse.com/careers\"}",
+      "board": "page::{\"url\": \"https://www.caseandassociates.com/careers\"}",
+      "via": "",
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
     },
-    "Evergreen Residential": {
-      "column_d": "https://evergreenresi.com/careers/openings/",
+    "Cohen-Esrey Communities": {
+      "column_d": "https://www.cohenesrey.com/careers.html",
       "column_d_from": "Column D",
       "system": "page",
-      "board": "page::{\"url\": \"https://evergreenresi.com/careers/openings/\"}",
+      "board": "page::{\"url\": \"https://www.cohenesrey.com/careers.html\"}",
+      "via": "",
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "no jobs are listed on this page itself (it may load them with JavaScript) - put the job board's link in Column D"
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+    },
+    "Divvy Homes": {
+      "column_d": "https://www.divvyhomes.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.divvyhomes.com/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "the Column D page points at a job board that isn't there: greenhouse:divvyhomes (Greenhouse has no board named 'divvyhomes' (it may have moved))"
+    },
+    "Doorstead": {
+      "column_d": "https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw\"}",
+      "via": "breezy:jobs.doorstead.com:{\"origin\": \"https://jobs.doorstead.com\"}",
+      "note": "read from the job board this page loads its jobs from (breezy: jobs.doorstead.com: https://jobs.doorstead.com)",
+      "total": 97,
+      "via_label": "breezy: jobs.doorstead.com",
+      "via_url": "https://jobs.doorstead.com",
+      "status": "ok",
+      "spot_check": [
+        "Field Associate - Rental Property Showings (Charleston, SC)",
+        "Field Associate - Rental Property Showings (Columbia, SC)",
+        "Field Associate - Rental Property Showings (Greenville, SC)"
+      ]
+    },
+    "EPR Properties": {
+      "column_d": "https://eprproperties.bamboohr.com/careers",
+      "column_d_from": "Column D",
+      "system": "bamboohr",
+      "board": "bamboohr:eprproperties:{}",
+      "via": "",
+      "note": "",
+      "total": 1,
+      "status": "ok"
+    },
+    "EastGroup Properties": {
+      "column_d": "https://phx.us-west.paycomonline.net/v4/ats/web.php/portal/FF95F1D079994D46C22FCB801D0A2C8F/career-page",
+      "column_d_from": "Column D",
+      "system": "paycom",
+      "board": "paycom::{\"host\": \"phx.us-west.paycomonline.net\", \"key\": \"FF95F1D079994D46C22FCB801D0A2C8F\"}",
+      "via": "",
+      "note": "read by opening the paycom job board in a browser",
+      "total": 2,
+      "status": "ok",
+      "spot_check": [
+        "Property Manager (Atlanta Office - Atlanta, GA 30305)",
+        "Property Manager (Dallas Office - Irving, TX 75039)"
+      ]
+    },
+    "Easterly Government Properties": {
+      "column_d": "https://www.easterlyre.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.easterlyre.com/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CONNECTION_CLOSED at https://www.easterlyre.com/careers))"
     },
     "Evergreen Live": {
       "column_d": "",
       "column_d_from": "",
       "system": "",
       "board": "::{}",
+      "via": "",
       "note": "",
       "total": 0,
       "status": "needs-link",
       "reason": "Column D is empty"
+    },
+    "Evergreen Residential": {
+      "column_d": "https://evergreenresi.com/careers/openings/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://evergreenresi.com/careers/openings/\"}",
+      "via": "greenhouse:evergreenresidentialemployeeservicescorp:{}",
+      "note": "read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp)",
+      "total": 43,
+      "via_label": "greenhouse: evergreenresidentialemployeeservicescorp",
+      "via_url": "https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp",
+      "status": "ok",
+      "spot_check": [
+        "Acquisitions Closing Analyst (Dallas, TX)",
+        "Analyst, SFR Asset Management (Dallas, TX)",
+        "Associate, SFR Revenue Management & Underwriting (New York City, NY)"
+      ]
+    },
+    "Evernest Property Management": {
+      "column_d": "https://www.evernest.co/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.evernest.co/careers\"}",
+      "via": "lever:evernest:{}",
+      "note": "read from the job board this page loads its jobs from (lever: evernest: https://jobs.lever.co/evernest)",
+      "total": 15,
+      "via_label": "lever: evernest",
+      "via_url": "https://jobs.lever.co/evernest",
+      "status": "ok",
+      "spot_check": [
+        "Assistant Property Manager (Philippines)",
+        "Assistant Property Manager (Mexico)",
+        "Director of Property Accounting (United States)"
+      ]
+    },
+    "Flock Homes": {
+      "column_d": "https://www.flockhomes.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.flockhomes.com/careers\"}",
+      "via": "greenhouse:flockhomes:{}",
+      "note": "read from the job board this page loads its jobs from (greenhouse: flockhomes: https://job-boards.greenhouse.io/flockhomes)",
+      "total": 2,
+      "via_label": "greenhouse: flockhomes",
+      "via_url": "https://job-boards.greenhouse.io/flockhomes",
+      "status": "ok",
+      "spot_check": [
+        "Exchange Director (Multifamily + Single Family) (Denver, New York, or San Francisco)",
+        "Full Stack Software Engineer (San Franciso or Denver)"
+      ]
+    },
+    "Greystar": {
+      "column_d": "https://jobs.greystar.com/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://jobs.greystar.com/\"}",
+      "via": "",
+      "note": "read from the jobs the page shows in a browser",
+      "total": 3,
+      "status": "ok",
+      "spot_check": [
+        "Community Manager (Alpharetta, Georgia)",
+        "Multi-Site Maintenance Technician ($1,000 Sign-On Bonus) (Salt Lake City, Utah)",
+        "Maintenance Technician - 120 & 220 Bend (Vineyard, Utah)"
+      ]
+    },
+    "Highwoods Properties": {
+      "column_d": "https://www.highwoods.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.highwoods.com/careers\"}",
+      "via": "ukg:HIG1001HIW:{\"board\": \"cf2a3a89-ceb7-4bb7-aa13-3167c6417621\", \"host\": \"recruiting.ultipro.com\"}",
+      "note": "read from the job board this page links to (ukg: HIG1001HIW: https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/)",
+      "total": 5,
+      "via_label": "ukg: HIG1001HIW",
+      "via_url": "https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/",
+      "status": "ok",
+      "spot_check": [
+        "Parking Operations Specialist (Raleigh, NC)",
+        "Senior Maintenance Technician (Tampa, FL)",
+        "Maintenance Technician (Nashville, TN)"
+      ]
+    },
+    "Industrious": {
+      "column_d": "https://www.industriousoffice.com/careers#open-positions",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.industriousoffice.com/careers#open-positions\"}",
+      "via": "ashby:industrious:{}",
+      "note": "read from the job board this page loads its jobs from (ashby: industrious: https://jobs.ashbyhq.com/industrious)",
+      "total": 61,
+      "via_label": "ashby: industrious",
+      "via_url": "https://jobs.ashbyhq.com/industrious",
+      "status": "ok",
+      "spot_check": [
+        "Member Experience Manager - San Francisco (San Francisco)",
+        "Member Experience Associate - San Francisco (San Francisco)",
+        "Member Experience Manager - Plano (Plano - 7250 Dallas Parkway)"
+      ]
+    },
+    "Kasa Living": {
+      "column_d": "https://www.kasa.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.kasa.com/careers\"}",
+      "via": "greenhouse:kasa:{}",
+      "note": "read from the job board this page loads its jobs from (greenhouse: kasa: https://job-boards.greenhouse.io/kasa)",
+      "total": 15,
+      "via_label": "greenhouse: kasa",
+      "via_url": "https://job-boards.greenhouse.io/kasa",
+      "status": "ok",
+      "spot_check": [
+        "Area Sales Manager - West (Remote (United States))",
+        "Associate Director, National & Regional Sales (Remote (United States))",
+        "Billing Specialist (Remote (Philippines))"
+      ]
+    },
+    "Key Renter Property Managment": {
+      "column_d": "https://keyrenter.com/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://keyrenter.com/\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "the Column D page doesn't load (HTTP 403)"
+    },
+    "Kite Realty Group Trust": {
+      "column_d": "https://www.kiterealty.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.kiterealty.com/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "the Column D page doesn't load (connection error (ReadTimeout); in a browser: the page didn't load in the browser (TimeoutError: Page.goto: Timeout 30000ms exceeded.))"
+    },
+    "Lamar Advertising Company": {
+      "column_d": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/?q=&o=postedDateDesc",
+      "column_d_from": "Column D",
+      "system": "ukg",
+      "board": "ukg:LAM1000LAC:{\"board\": \"82898216-ca7a-4621-b01b-bf3410c919b2\", \"host\": \"recruiting2.ultipro.com\"}",
+      "via": "",
+      "note": "",
+      "total": 102,
+      "status": "ok"
+    },
+    "Medical Properties Trust": {
+      "column_d": "https://www.medicalpropertiestrust.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.medicalpropertiestrust.com/careers\"}",
+      "via": "",
+      "note": "read from the jobs listed on the page",
+      "total": 3,
+      "status": "ok"
+    },
+    "Mountain Property Management": {
+      "column_d": "https://jacksonholeproperties.net/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://jacksonholeproperties.net/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "the Column D page doesn't load (HTTP 404; in a browser: not found)"
+    },
+    "Mynd": {
+      "column_d": "https://www.mynd.co/talent-and-culture",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.mynd.co/talent-and-culture\"}",
+      "via": "greenhouse:roofstock:{}",
+      "note": "read from the job board this page links to (greenhouse: roofstock: https://job-boards.greenhouse.io/roofstock)",
+      "total": 9,
+      "via_label": "greenhouse: roofstock",
+      "via_url": "https://job-boards.greenhouse.io/roofstock",
+      "status": "ok",
+      "spot_check": [
+        "Accounting Manager (Oakland, California, United States)",
+        "Account Resolution Specialist (Dallas, Texas, United States)",
+        "Assistant Property Manager (Portland, Oregon, United States; Salt Lake City, Utah, United States)"
+      ]
+    },
+    "NARPM (National Association of Residential Property Managers) Job Board": {
+      "column_d": "",
+      "column_d_from": "",
+      "system": "",
+      "board": "::{}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "Column D is empty"
+    },
+    "Northpoint Asset Manamgement": {
+      "column_d": "https://northpointam.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://northpointam.com/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+    },
+    "Oakbrook Corporation": {
+      "column_d": "https://oakbrookcorp.isolvedhire.com/jobs/",
+      "column_d_from": "Column D",
+      "system": "isolved",
+      "board": "isolved:oakbrookcorp:{}",
+      "via": "",
+      "note": "read by opening the isolved job board in a browser",
+      "total": 10,
+      "status": "ok",
+      "spot_check": [
+        "Commercial Building Maintenance",
+        "Compliance Specialist - Affordable Housing",
+        "Maintenance Technician"
+      ]
+    },
+    "PMI": {
+      "column_d": "https://www.propertymanagementinc.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.propertymanagementinc.com/careers\"}",
+      "via": "",
+      "note": "read from the jobs the page shows in a browser",
+      "total": 24,
+      "status": "ok",
+      "spot_check": [
+        "Leasing Services Coordinator",
+        "Community Association Manager (Hybrid - US)",
+        "Community Association Manager (Hybrid - US)"
+      ]
+    },
+    "PURE Homeriver Group": {
+      "column_d": "https://purehomeriver.com/company/careers/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://purehomeriver.com/company/careers/\"}",
+      "via": "adp:eea42ed6-3dcf-47f3-b99b-29a304948b2b:{\"cc\": \"9200441095595_2\"}",
+      "note": "read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2)",
+      "total": 8,
+      "via_label": "adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b",
+      "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2",
+      "status": "ok",
+      "spot_check": [
+        "Inside Client Advisor II (Remote)",
+        "Multifamily Leasing Specialist - Charlotte, NC (Cornelius, NC)",
+        "PHR Way Projects & Programs Manager - Nationwide, US (Remote)"
+      ]
+    },
+    "Picerne Real Estate Group": {
+      "column_d": "https://www.picerne.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.picerne.com/careers\"}",
+      "via": "jazzhr:picerne:{}",
+      "note": "read from the job board this page embeds (jazzhr: picerne: https://picerne.applytojob.com/apply/)",
+      "total": 29,
+      "via_label": "jazzhr: picerne",
+      "via_url": "https://picerne.applytojob.com/apply/",
+      "status": "ok",
+      "spot_check": [
+        "Maintenance Technician at The Cantera by Picerne",
+        "Porter at The Cantera by Picerne",
+        "Apartment Community - Maintenance Technician"
+      ]
+    },
+    "Real Property Management": {
+      "column_d": "https://jobs.realpropertymgt.com/jobs",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://jobs.realpropertymgt.com/jobs\"}",
+      "via": "",
+      "note": "read from the jobs listed on the page (5 pages)",
+      "total": 47,
+      "status": "ok"
+    },
+    "Redstone": {
+      "column_d": "https://www.redstonevt.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.redstonevt.com/careers\"}",
+      "via": "paylocity:48034f13-35cd-42bc-a80e-1480b6ae5d26:{}",
+      "note": "the link now redirects to recruiting.paylocity.com - worth updating; read from the job board this page loads its jobs from (paylocity: 48034f13-35cd-42bc-a80e-1480b6ae5d26: https://recruiting.paylocity.com/recruiting/jobs/All/48034f13-35cd-42bc-a80e-1480b6ae5d26)",
+      "total": 3,
+      "via_label": "paylocity: 48034f13-35cd-42bc-a80e-1480b6ae5d26",
+      "via_url": "https://recruiting.paylocity.com/recruiting/jobs/All/48034f13-35cd-42bc-a80e-1480b6ae5d26",
+      "status": "ok",
+      "spot_check": [
+        "Redstone Maintenance Technician - $2,500 Sign On Bonus (Burlington, VT)",
+        "Maintenance Scheduler - Residential Properties (Burlington, VT)",
+        "Maintenance Scheduler (Burlington, VT)"
+      ]
+    },
+    "Renters Warehouse": {
+      "column_d": "https://www.renterswarehouse.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.renterswarehouse.com/careers\"}",
+      "via": "adp:0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da:{}",
+      "note": "read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da)",
+      "total": 13,
+      "via_label": "adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
+      "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
+      "status": "ok",
+      "spot_check": [
+        "BUSINESS DEVELOPMENT MANAGER (Tempe, AZ)",
+        "PROPERTY ACCOUNTING MANAGER (Minneapolis, MN)",
+        "Payroll and Accounts Payable Specialist (Minneapolis, MN)"
+      ]
+    },
+    "Rhome Property Management": {
+      "column_d": "https://www.rhomepm.com/employment",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.rhomepm.com/employment\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+    },
+    "Starwood Property Trust": {
+      "column_d": "https://www.starwoodcapital.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.starwoodcapital.com/careers\"}",
+      "via": "jobvite:starwoodcapitalgroup:{}",
+      "note": "read from the job board this page loads its jobs from (jobvite: starwoodcapitalgroup: https://jobs.jobvite.com/starwoodcapitalgroup/jobs); found by following the page's link to its full list (https://www.starwoodcapital.com/careers/open-positions/)",
+      "total": 10,
+      "via_label": "jobvite: starwoodcapitalgroup",
+      "via_url": "https://jobs.jobvite.com/starwoodcapitalgroup/jobs",
+      "status": "ok",
+      "spot_check": [
+        "2027 Fund Accounting Summer Intern (Greenwich, Connecticut)",
+        "2027 Management Company Accounting Summer Intern (Greenwich, Connecticut)",
+        "Co-Op Accounting Internship (40 hours/week) (Greenwich, Connecticut)"
+      ]
+    },
+    "Tamarack Property Management": {
+      "column_d": "https://www.tamarackproperty.com/careers",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.tamarackproperty.com/careers\"}",
+      "via": "",
+      "note": "",
+      "total": 0,
+      "status": "needs-link",
+      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+    },
+    "The Lund Company": {
+      "column_d": "https://lundco.com/join-our-team/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://lundco.com/join-our-team/\"}",
+      "via": "",
+      "note": "read from the jobs the page shows in a browser",
+      "total": 1,
+      "status": "ok",
+      "spot_check": [
+        "Commercial Asset Manager (Omaha, NE 68114)"
+      ]
+    },
+    "Uniti Group": {
+      "column_d": "https://careers.uniti.com/",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://careers.uniti.com/\"}",
+      "via": "",
+      "note": "read from the jobs the page shows in a browser (12 pages of results)",
+      "total": 171,
+      "status": "ok",
+      "spot_check": [
+        "Buried Drop Tech (Uniti | Merkel, TX, US (Onsite) | Full-Time)",
+        "Construction-Line Worker (Uniti | Rural Hall, NC, US (Onsite) | Full-Time)",
+        "Customer Service Tech I/II-FO (Uniti | Concord, NC, US (Onsite) | Full-Time)"
+      ]
+    },
+    "Veris Residential": {
+      "column_d": "https://www.rhoresidential.com/careers/#careers-positions",
+      "column_d_from": "Column D",
+      "system": "page",
+      "board": "page::{\"url\": \"https://www.rhoresidential.com/careers/#careers-positions\"}",
+      "via": "adp:28860e2c-1615-47c9-9444-c35ba9f7d7d1:{\"cc\": \"19000101_000003\"}",
+      "note": "read from the job board this page loads its jobs from (adp: 28860e2c-1615-47c9-9444-c35ba9f7d7d1: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003)",
+      "total": 19,
+      "via_label": "adp: 28860e2c-1615-47c9-9444-c35ba9f7d7d1",
+      "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003",
+      "status": "ok",
+      "spot_check": [
+        "Operations Manager (East Boston, MA)",
+        "Leasing Specialist (East Boston, MA)",
+        "Director Operations (Bayonne, NJ)"
+      ]
+    },
+    "WeWork": {
+      "column_d": "https://wework.wd1.myworkdayjobs.com/WeWork",
+      "column_d_from": "Column D",
+      "system": "workday",
+      "board": "workday:wework:{\"host\": \"wework.wd1.myworkdayjobs.com\", \"site\": \"WeWork\"}",
+      "via": "",
+      "note": "",
+      "total": 67,
+      "status": "ok"
     }
   }
 }
