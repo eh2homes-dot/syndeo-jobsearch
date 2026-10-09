@@ -586,13 +586,23 @@ _FULL_LIST = re.compile(
 def _full_list_link(soup, page_url: str) -> str:
     """Where the page says its full list of jobs is ("View all jobs"), or ""."""
     here = page_url.split("#")[0].rstrip("/")
-    for a in soup.find_all("a", href=True):
-        text = " ".join(a.get_text(" ", strip=True).split())
-        if not _FULL_LIST.match(text):
-            continue
-        target = _join(page_url, a["href"]).split("#")[0]
-        if (target.startswith("http") and target.rstrip("/") != here
-                and site_of(target) not in THIRD_PARTY):
+    body = BeautifulSoup(str(soup), "lxml")
+    _strip_chrome(body)
+    # Anywhere on the page for a link within the same site; only in the body of the page for a
+    # link to another site (a company's careers site often lives on its own domain, but a menu
+    # or footer link elsewhere is as likely to be a parent or partner).
+    for scope, same_site_only in ((soup, True), (body, False)):
+        for a in scope.find_all("a", href=True):
+            text = " ".join(a.get_text(" ", strip=True).split())
+            if not _FULL_LIST.match(text):
+                continue
+            target = _join(page_url, a["href"]).split("#")[0]
+            if not target.startswith("http") or target.rstrip("/") == here:
+                continue
+            if site_of(target) in THIRD_PARTY or classify(target).system != "page":
+                continue                 # job boards are found and read as boards, not as pages
+            if same_site_only and site_of(target) != site_of(page_url):
+                continue
             return target
     return ""
 
@@ -615,13 +625,14 @@ def read_page(url: str, **kw) -> PageResult:
     if more and not kw.get("link_regex") and (first is None or first.board is None):
         try:
             second = _read_page(more, _seen={}, **kw)
-        except FetchError:
-            second = None
-        if second is not None and len(second.jobs) > (len(first.jobs) if first else 0):
+        except NeedsLink:
+            second = None                    # the link led nowhere useful: stay with this page
+        # Any other failure propagates. The full list exists and couldn't be read this run, so the
+        # few jobs featured here are NOT the whole list, and passing them off as it would report
+        # every other role as closed.
+        if second is not None and (first is None or len(second.jobs) >= len(first.jobs)):
             second.how += f"; found by following the page's link to its full list ({more})"
             return second
-        if second is not None and first is None:
-            return second                    # the full list loaded and has nothing open
     if first is None:
         raise problem
     return first

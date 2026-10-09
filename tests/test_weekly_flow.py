@@ -284,7 +284,9 @@ def test_migration_is_applied_once_and_never_overwrites_later_edits(tmp_path):
     ats_map = {"Placer.ai": {"ats": "builtin", "slug": "placerai"}, "Robin": {"ats": "builtin", "slug": "robin"},
                "Mason": {"ats": "", "confidence": "manual"}, "Entrata": {"ats": "lever", "slug": "entrata"}}
     applied = tmp_path / "applied.json"
-    assert run.apply_migrations(ats_map, applied) == ["2026-10-own-boards"]
+    done = run.apply_migrations(ats_map, applied)
+    assert done == ["2026-10-own-boards"] and not applied.exists()   # only recorded once the map is saved
+    run.record_migrations(done, applied)
     assert ats_map["Placer.ai"]["ats"] == "greenhouse" and ats_map["Mynd"] == {**ats_map["Mynd"], "parent": "Roofstock"}
     assert "Robin" not in ats_map                               # Built In entry dropped: read from its careers page
     assert ats_map["Mason"]["confidence"] == "manual" and ats_map["Entrata"]["slug"] == "entrata"

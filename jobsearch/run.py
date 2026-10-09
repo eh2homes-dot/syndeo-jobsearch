@@ -77,6 +77,12 @@ def save_json(p: Path, obj):
 MIGRATIONS = Path(__file__).resolve().parent / "migrations"
 
 
+def record_migrations(done: list, applied_path: Path) -> None:
+    """Remember applied migrations. Called only once ats_map.json itself has been saved."""
+    if done:
+        save_json(applied_path, load_json(applied_path, []) + done)
+
+
 def apply_migrations(ats_map: dict, applied_path: Path) -> list:
     """One-time changes to data/ats_map.json that ship with the code (jobsearch/migrations/*.json).
 
@@ -97,10 +103,7 @@ def apply_migrations(ats_map: dict, applied_path: Path) -> list:
             if cur.get("ats") == "builtin" or (not cur.get("ats") and not cur.get("parent")
                                                and cur.get("confidence") not in ("manual", "excluded")):
                 ats_map.pop(company, None)
-        applied.append(m["id"])
         done.append(m["id"])
-    if done:
-        save_json(applied_path, applied)
     return done
 
 
@@ -255,9 +258,9 @@ def main(argv=None):
         print(f"  on-demand run for: {', '.join(l['company'] for l in leads) or '(nothing matched)'}", flush=True)
 
     ats_map = load_json(ATS_MAP, {})
-    if not args.fixtures:
-        for mid in apply_migrations(ats_map, DATA / "migrations_applied.json"):
-            print(f"  migrate applied one-time change to ats_map.json: {mid}", flush=True)
+    migrated = [] if args.fixtures else apply_migrations(ats_map, DATA / "migrations_applied.json")
+    for mid in migrated:
+        print(f"  migrate applied one-time change to ats_map.json: {mid}", flush=True)
     history = load_json(HISTORY, {})
     history = {k: v for k, v in history.items()
                if passes_company_filter(v.get("company", ""), v.get("title", ""), v.get("location", ""), cfg)}
@@ -315,6 +318,7 @@ def main(argv=None):
         print(f"  browser {browser.pages_rendered} pages opened in the headless browser, {browser.seconds:.0f}s", flush=True)
     browser_mod.close_shared()
     save_json(ATS_MAP, ats_map)
+    record_migrations(migrated, DATA / "migrations_applied.json")
     if not adhoc:
         write_csv(NEEDS_MAP, needs_manual, ["company", "careers_url", "reason"])
     ok_companies = {r["company"] for r in company_rows if r["status"] == "ok"}
@@ -459,7 +463,10 @@ def main(argv=None):
         system = src(c["job_key"]).split(":")[0]
         # Workday is the exception: its long lists are read 20 at a time and can skip a posting,
         # and it has a reliable per-posting check (see verify.py), so each of its closures is checked.
-        return system in boards_mod.READERS and system != "workday" and c["company"] not in cut_short
+        # iCIMS and Jobvite are read off web pages, several pages long, with no total to check
+        # against, so a short read can't be told from a complete one: their closures are checked too.
+        return (system in boards_mod.READERS and system not in ("workday", "icims", "jobvite")
+                and c["company"] not in cut_short)
     # Roles the old link check had been holding open after they came down. They close now, quietly:
     # they did not close this week, so they are not this week's news.
     held_open = set()
@@ -469,7 +476,8 @@ def main(argv=None):
     # Only for the first run after the change: from then on the misses file holds real misses.
     if prev_run and prev_misses.exists() and not last.get("feed_decides"):
         with prev_misses.open(newline="") as f:
-            held_open = {row.get("job_key", "") for row in csv.DictReader(f)}
+            held_open = {row.get("job_key", "") for row in csv.DictReader(f)
+                         if src(row.get("job_key", "")).split(":")[0] in boards_mod.READERS}
     over_budget = (time.time() - run_start) > args.budget_minutes * 60
     if over_budget and not fixtures:
         print("  verify  SKIPPED - run is over its time budget; closed roles kept unverified", flush=True)

@@ -367,3 +367,20 @@ def test_full_list_link_is_not_followed_when_it_has_no_more(site):
     with fakenet.serve({**ROUTES, **page_route(html)}):
         r = read_page("https://www.acme.test/careers")
     assert titles(r) == ["Asset Manager", "Financial Analyst"] and "full list" not in r.how
+
+
+def test_full_list_that_is_down_is_couldnt_check_not_a_shorter_list():
+    """Featured jobs plus a "View all jobs" link whose page is down this week: returning just the
+    featured few would report the rest as closed."""
+    html = OWN_JOBS + "<p><a href='/careers/all'>View all jobs</a></p>"
+    down = {"GET https://www\\.acme\\.test/careers/all$": {"status": 503, "text": "busy"}}
+    with fakenet.serve({**ROUTES, **page_route(html), **down}):
+        with pytest.raises(PageDown):
+            read_page("https://www.acme.test/careers")
+
+
+def test_full_list_link_in_a_menu_to_another_site_is_not_followed():
+    html = ("<nav><a href='https://careers.parentco.test/jobs'>View all jobs</a></nav>" + OWN_JOBS)
+    with fakenet.serve({**ROUTES, **page_route(html)}) as calls:
+        r = read_page("https://www.acme.test/careers")
+    assert titles(r) == ["Asset Manager", "Financial Analyst"] and not any("parentco" in c for c in calls)

@@ -220,6 +220,8 @@ def _workable_v3(slug: str) -> JobList:
         token = data.get("nextPage")
         if not token:
             break
+    else:
+        out.truncated = f"stopped after {MAX_PAGES} pages"
     return out
 
 

@@ -61,7 +61,13 @@ def _check_workday(m) -> tuple[str, int]:
         except ValueError:
             return "error", 200
     if r.status_code in (403, 404, 410):
-        return "gone", r.status_code
+        # Workday refuses a posting that has come down with a small data answer of its own
+        # ("permission denied"). A refusal that isn't that is the runner being blocked.
+        try:
+            refused_by_workday = bool(r.json().get("errorCode"))
+        except (ValueError, AttributeError):
+            refused_by_workday = False
+        return ("gone" if refused_by_workday or r.status_code != 403 else "blocked"), r.status_code
     return ("blocked" if r.status_code == 429 else "error"), r.status_code
 
 
