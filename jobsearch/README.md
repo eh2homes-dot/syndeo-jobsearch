@@ -25,6 +25,8 @@ are never used as a source.
    4. the same in a headless browser, for pages that only show jobs after their
       scripts run. The browser also clicks "Load more" / "Next" until the list
       stops growing.
+   A page that shows only a few featured jobs and links to its full list
+   ("View all jobs") has that list read instead.
 3. Whatever was worked out is saved (weekly: in `data/ats_map.json`; OpCo: the
    brief lists the board's link so it can be pasted into Column D).
 
@@ -32,7 +34,7 @@ are never used as a source.
 
 Read from their data feed: Greenhouse, Lever, Ashby, Workable, SmartRecruiters,
 Recruitee, Breezy, BambooHR, Rippling, Workday, UKG, ADP, Dayforce, Jobvite,
-Paylocity, iCIMS.
+Paylocity, iCIMS, Comeet.
 
 Read by opening the board in the headless browser: Paycom, isolved,
 ApplicantPro, Gem, JazzHR, Teamtailor, TriNet Hire, Pinpoint.
@@ -65,13 +67,24 @@ attention"):
 - **covered by parent** — the company hires through its parent's board, which
   is on the list itself (`{"parent": "RealPage"}` in `ats_map.json`).
 
+"Not hiring" is only ever concluded from a positive sign: a job board that
+answers with an empty list, or a page that says nothing is open. A page where
+no jobs could be found is a link to fix, never a company that stopped hiring.
+
 A company that had 5+ open roles and suddenly shows none is treated as a
-failed read, not as "filled everything".
+failed read the first time; if the next run agrees, it is believed.
 
 ## New and closed
 
 A role is **new** the first run it appears, and **closed** the first run it is
 gone from a company that was read cleanly.
+
+What a job system's own feed no longer lists has closed, whether or not the
+posting's page still loads: most job systems answer a closed posting's address
+with a normal-looking page. Only where the list itself may be incomplete (a
+careers page, LinkedIn, a VC board, a read that was cut short) does a posting
+that still loads keep the role open, as a "scraper miss". Workday closures are
+each checked against Workday's own data.
 
 Two cases are deliberately *not* news:
 
@@ -95,6 +108,11 @@ A company with no entry is read from its `careers_url`, and the result is
 saved here. An entry whose board has gone quiet or missing is re-checked
 against the careers page; if the page now loads a different board, that board
 is read and saved, with the old one kept under `previous`.
+
+One-time changes to this file that ship with a code change live in
+`jobsearch/migrations/*.json` and are applied once by the next run (recorded in
+`data/migrations_applied.json`). That keeps a code branch from colliding with
+the weekly run's own commit of this file.
 
 ## Code
 
