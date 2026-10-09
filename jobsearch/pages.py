@@ -588,10 +588,10 @@ def _full_list_link(soup, page_url: str) -> str:
     here = page_url.split("#")[0].rstrip("/")
     body = BeautifulSoup(str(soup), "lxml")
     _strip_chrome(body)
-    # Anywhere on the page for a link within the same site; only in the body of the page for a
-    # link to another site (a company's careers site often lives on its own domain, but a menu
-    # or footer link elsewhere is as likely to be a parent or partner).
-    for scope, same_site_only in ((soup, True), (body, False)):
+    # Preference: a link within the same site; then one in the body of the page to another site
+    # (a company's careers site often lives on its own domain); last, one in a menu or footer to
+    # another site. The result always names the page that was followed, so it can be checked.
+    for scope, same_site in ((soup, True), (body, False), (soup, False)):
         for a in scope.find_all("a", href=True):
             text = " ".join(a.get_text(" ", strip=True).split())
             if not _FULL_LIST.match(text):
@@ -601,7 +601,7 @@ def _full_list_link(soup, page_url: str) -> str:
                 continue
             if site_of(target) in THIRD_PARTY or classify(target).system != "page":
                 continue                 # job boards are found and read as boards, not as pages
-            if same_site_only and site_of(target) != site_of(page_url):
+            if same_site and site_of(target) != site_of(page_url):
                 continue
             return target
     return ""

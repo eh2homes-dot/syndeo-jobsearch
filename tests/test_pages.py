@@ -379,8 +379,13 @@ def test_full_list_that_is_down_is_couldnt_check_not_a_shorter_list():
             read_page("https://www.acme.test/careers")
 
 
-def test_full_list_link_in_a_menu_to_another_site_is_not_followed():
-    html = ("<nav><a href='https://careers.parentco.test/jobs'>View all jobs</a></nav>" + OWN_JOBS)
-    with fakenet.serve({**ROUTES, **page_route(html)}) as calls:
-        r = read_page("https://www.acme.test/careers")
-    assert titles(r) == ["Asset Manager", "Financial Analyst"] and not any("parentco" in c for c in calls)
+def test_full_list_link_prefers_the_same_site():
+    from bs4 import BeautifulSoup
+    from jobsearch.pages import _full_list_link
+    html = ("<nav><a href='https://careers.parentco.test/jobs'>View all jobs</a></nav>"
+            "<main><a href='/careers/all'>See open positions</a></main>")
+    assert _full_list_link(BeautifulSoup(html, "lxml"), "https://www.acme.test/careers") == "https://www.acme.test/careers/all"
+    only_menu = "<nav><a href='https://www.lcs.test/careers'>View open positions</a></nav><main>Not found</main>"
+    assert _full_list_link(BeautifulSoup(only_menu, "lxml"), "https://www.acme.test/careers") == "https://www.lcs.test/careers"
+    board = "<main><a href='https://jobs.lever.co/acme'>View all jobs</a></main>"      # a board: read as a board instead
+    assert _full_list_link(BeautifulSoup(board, "lxml"), "https://www.acme.test/careers") == ""
