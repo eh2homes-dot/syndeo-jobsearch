@@ -1,18 +1,19 @@
 company,careers_url,reason
-Yardi Systems,https://www.yardi.com/careers,no ATS pattern in HTML
-Hemlane,https://www.hemlane.com/careers,no ATS pattern in HTML
-RentSpree,https://www.rentspree.com/careers,no ATS pattern in HTML
-Ojo Labs,https://www.ojolabs.com/careers,no ATS pattern in HTML
-Opcity (Realtor.com),https://www.move.com/careers,no ATS pattern in HTML
-Bilt Rewards,https://www.biltrewards.com/careers,no ATS pattern in HTML
-Agora,https://www.agorareal.com/careers,no ATS pattern in HTML
-Better.com,https://better.com/careers,no ATS pattern in HTML
-GetCovered,https://getcovered.io/careers,no ATS pattern in HTML
-Rentec Direct,https://www.rentecdirect.com/careers,no ATS pattern in HTML
-Knock CRM,https://www.knockrentals.com/careers,no ATS pattern in HTML
-Rent Manager (LCS),https://www.rentmanager.com/careers,no ATS pattern in HTML
-Bright MLS,https://www.brightmls.com/careers,no ATS pattern in HTML
-Renters Warehouse,https://www.renterswarehouse.com/careers,no ATS pattern in HTML
-PURE HomeRiver Group,https://purehomeriver.com/company/careers/,no ATS pattern in HTML
-Northpoint Asset Management,https://northpointam.com/careers,no ATS pattern in HTML
-Evergreen Residential,https://evergreenresi.com/careers/,no ATS pattern in HTML
+Procore Technologies,https://www.procore.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Matterport,https://matterport.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+Hemlane,https://www.hemlane.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+HouseCanary,https://www.housecanary.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Realtor.com (Move Inc.),https://www.move.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+Guesty,https://www.guesty.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Cadre,https://www.cadre.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+SquareFoot,https://www.squarefoot.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Agora,https://www.agorareal.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Better.com,https://better.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Robin,https://www.robinpowered.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Cecilian Partners,https://www.cecilianpartners.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+CoStar Group,https://www.costargroup.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+Rocket Companies,https://www.rocketcompanies.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+LeaseLock,https://www.leaselock.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Northpoint Asset Management,https://northpointam.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Mason,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)
+PropertyManagement.com,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan
