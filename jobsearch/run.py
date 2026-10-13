@@ -632,13 +632,55 @@ def draft_html(md_text: str, title: str) -> str:
 
 
 # ------------------------------------------------------- newsletter draft: Now hiring
-SENIOR = [r"\bchief\b|\bc[a-z]o\b|\bpresident\b", r"\bsvp\b|\bevp\b", r"\bvp\b|vice president", r"\bhead of\b|general manager",
+SENIOR = [r"\bchief\b|\bc[a-z]o\b|(?<!vice )\bpresident\b", r"\bsvp\b|\bevp\b", r"\bvp\b|vice president", r"\bhead of\b|general manager",
           r"\bdirector\b", r"\bprincipal\b|\bstaff\b", r"\bsenior\b|\bsr\.?\b|\blead\b|\bmanager\b", r"."]
+DIRECTOR_LEVEL = SENIOR.index(r"\bdirector\b")
+# Regional / area / district VPs are field sales leaders, not executives: rank them with Directors.
+FIELD_VP = r"\b(regional|area|district|zone|territory)\s+(vice president|vp)\b|\b(rvp|avp)\b"
 
 
 def _seniority(title: str) -> int:
     t = (title or "").lower()
+    if re.search(FIELD_VP, t):
+        return DIRECTOR_LEVEL
     return next(i for i, p in enumerate(SENIOR) if re.search(p, t))
+
+
+# Roles outside the US stay in the CSVs but are left out of the newsletter draft.
+US_MARK = r"\b(usa|united states|u\.s\.|us)\b"
+NON_US = (r"\b(canada|toronto|vancouver|ottawa|montreal|calgary|ontario|british columbia|mexico city|(?<!new )mexico|"
+          r"latin america|latam|india|bengaluru|bangalore|hyderabad|pune|gurugram|gurgaon|baroda|chennai|noida|mumbai|"
+          r"delhi|united kingdom|uk|england|london|scotland|belfast|ireland|dublin|germany|berlin|munich|poland|"
+          r"krak[oó]w|warsaw|warszawa|serbia|belgrade|spain|madrid|barcelona|portugal|lisbon|france|paris|netherlands|"
+          r"amsterdam|israel|tel aviv|ramat gan|south africa|cape town|philippines|manila|australia|sydney|melbourne|"
+          r"new zealand|singapore|japan|tokyo|taiwan|taoyuan|thailand|bangkok|brazil|s[aã]o paulo|colombia|bogot[aá]|"
+          r"argentina|buenos aires|costa rica|emea|apac)\b")
+
+
+def _is_us(loc: str) -> bool:
+    """True unless the location names only places outside the US. Blank or unclear locations count as US."""
+    l = (loc or "").lower()
+    return bool(re.search(US_MARK, l)) or not re.search(NON_US, l)
+
+
+def _tier_rank(tier: str) -> int:
+    return {"A": 0, "B": 1, "C": 2}.get((tier or "").strip().upper(), 3)
+
+
+def _issue_cutoff(today: dt.date, send_weekday: int) -> dt.date:
+    """The last send day on or before today. Roles first seen on or after it haven't been in an issue yet."""
+    return today - dt.timedelta(days=(today.weekday() - send_weekday) % 7)
+
+
+def _last_issue_companies(nl_dir: Path, cutoff: dt.date) -> set:
+    """Companies named in the draft that fed the last issue (the newest draft dated before the cutoff)."""
+    drafts = sorted(p for p in nl_dir.glob("now-hiring-*.md")
+                    if re.fullmatch(r"now-hiring-\d{4}-\d{2}-\d{2}", p.stem) and p.stem[11:] < cutoff.isoformat())
+    if not drafts:
+        return set()
+    text = drafts[-1].read_text()
+    return ({m.strip() for m in re.findall(r"^- \*\*(.+?)\*\*:", text, re.M)}
+            | {m.split(" (")[0].strip() for m in re.findall(r"^- \*\*.+?\*\*, ([^.\n]+?)(?: \(|, \d+ openings|\. \[)", text, re.M)})
 
 
 SPLIT = r",|\s[-–—]\s|-\s|\("
@@ -702,20 +744,40 @@ def _loc(loc: str) -> str:
 
 
 def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict, max_companies: int = 8) -> Path:
-    """Paste-ready 'Now hiring' section: roles first seen in the last 7 days, most senior first."""
-    week_ago = today - dt.timedelta(days=7)
-    fresh = [j for j in jobs if j.get("role_group") and j.get("first_seen") and not j.get("baseline") and
-             dt.date.fromisoformat(j["first_seen"]) >= week_ago]
+    """Paste-ready 'Now hiring' section for the next Wednesday issue.
+
+    - Only roles first seen since the last issue went out (send day set by newsletter.send_weekday, 0=Mon; default Wed).
+    - US roles only; the count of roles left out is noted at the bottom.
+    - Companies are ordered by tier (A first), then whether they were in the last issue (new faces first), then
+      seniority. How many roles a company has posted doesn't move it up, and each line shows at most 2 roles.
+    """
+    ncfg = cfg.get("newsletter", {}) if isinstance(cfg, dict) else {}
+    per_line = int(ncfg.get("roles_per_company", 2))
+    per_co_lead = int(ncfg.get("leadership_lines_per_company", 2))
+    nl = OUT / "newsletter"
+    cutoff = _issue_cutoff(today, int(ncfg.get("send_weekday", 2)))
+    last_issue = _last_issue_companies(nl, cutoff)
+
+    new = [j for j in jobs if j.get("role_group") and j.get("first_seen") and not j.get("baseline") and
+           dt.date.fromisoformat(j["first_seen"]) >= cutoff]
+    fresh = [j for j in new if _is_us(j.get("location", ""))]
+    offshore = len(new) - len(fresh)
+    tier = {j["company"]: _tier_rank(j.get("tier", "")) for j in jobs}
     cos = {j["company"] for j in fresh}
     md = ["## Now hiring", "",
           f"_{len(fresh)} new Sales, GTM, Engineering and leadership {'role' if len(fresh) == 1 else 'roles'} this week at "
           f"{len(cos)} {'company' if len(cos) == 1 else 'companies'} "
           f"across proptech and scattered site rental operations._", ""]
 
-    lead = sorted([j for j in fresh if j["role_group"] == "executive"], key=lambda j: (_seniority(j["title"]), j["company"]))
+    lead = sorted([j for j in fresh if j["role_group"] == "executive"],
+                  key=lambda j: (_seniority(j["title"]), tier.get(j["company"], 3), j["company"] in last_issue, j["company"]))
     if lead:
         md += ["**Leadership roles**", ""]
+        lines_per_co = collections.Counter()
         for j, n, places in _collapse(lead, by_base=True):
+            if lines_per_co[j["company"]] >= per_co_lead:
+                continue
+            lines_per_co[j["company"]] += 1
             where = (f" ({', '.join(places[:4])}{', +' + str(len(places) - 4) + ' more' if len(places) > 4 else ''})"
                      if places else "")
             md.append(f"- **{j['title']}**, {j['company']}{where}" + (f", {n} openings" if n > 1 else "")
@@ -729,16 +791,18 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         by_co = collections.defaultdict(list)
         for j in pool:
             by_co[j["company"]].append(j)
-        # companies with the most senior openings first, then the most openings
-        order = sorted(by_co, key=lambda c: (min(_seniority(j["title"]) for j in by_co[c]), -len(by_co[c]), c))
+        # tier A first, then companies that weren't in the last issue, then the most senior opening
+        order = sorted(by_co, key=lambda c: (tier.get(c, 3), c in last_issue,
+                                             min(_seniority(j["title"]) for j in by_co[c]), c))
         md += [f"**{label}**", ""]
         for c in order[:max_companies]:
             roles = [j for j, _, _ in _collapse(sorted(by_co[c], key=lambda j: _seniority(j["title"])), by_base=False)]
-            shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:3])
+            shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:per_line])
             md.append(f"- **{c}**: {shown}")
         md.append("")
 
-    filled = sorted([c for c in closed if _seniority(c.get("title", "")) <= 4 and c.get("role_group")],
+    filled = sorted([c for c in closed if _seniority(c.get("title", "")) <= 4 and c.get("role_group")
+                     and _is_us(c.get("location", ""))],
                     key=lambda c: (_seniority(c["title"]), c["company"]))
     if filled:
         md += ["**Seats filled**", "",
@@ -747,8 +811,9 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         md.append("")
     if not fresh and not filled:
         md.append("_No new roles in scope this week._")
+    print(f"  draft   newsletter window: first seen since {cutoff.isoformat()}; {offshore} new roles outside the US left out "
+          f"(still in the CSVs); last issue's companies sorted down: {len(last_issue)}", flush=True)
 
-    nl = OUT / "newsletter"
     nl.mkdir(parents=True, exist_ok=True)
     path = nl / f"now-hiring-{today.isoformat()}.md"
     path.write_text("\n".join(md))
