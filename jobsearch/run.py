@@ -198,22 +198,30 @@ def passes_company_filter(company: str, title: str, location: str, cfg: dict) ->
     return any(w in t for w in f.get("keep_if_title_has", [])) or any(w in loc for w in f.get("keep_if_location_has", []))
 
 
+ROLE_GROUPS = ("executive", "gtm", "product_engineering")
+GROUP_LABEL = {"executive": "Leadership", "gtm": "GTM & Sales", "product_engineering": "Product & Engineering"}
+
+
 def classify_role(title: str, cfg: dict) -> str:
-    """Role group from config.json -> role_filter: executive | sales | gtm | engineering | "" (out of scope).
-    Seniority wins first (a 'VP of Maintenance' is still an executive); then the exclude list;
-    then sales, gtm, engineering in that order."""
+    """Role group from config.json -> role_filter: executive | gtm | product_engineering | "" (out of scope).
+    1. Leadership (VP+, Head of, GM) wins first, so a 'VP of Maintenance' is still leadership - except field VPs
+       (regional/area/district), who are sales leaders and fall through to their function.
+    2. The exclude list (recruiting, legal, coordinators, hardware/IT, generic analysts, ...).
+    3. gtm_first: titles that sound technical but are GTM (Sales Engineer, Product Marketing).
+    4. product_engineering, then 5. gtm."""
     rf = cfg.get("role_filter") or {}
     if not rf.get("enabled"):
         return "all"
     t = (title or "").lower()
     groups = rf.get("groups", {})
-    if any(re.search(p, t) for p in groups.get("executive", [])):
+    field_vp = rf.get("field_vp")
+    if any(re.search(p, t) for p in groups.get("executive", [])) and not (field_vp and re.search(field_vp, t)):
         return "executive"
     if any(re.search(p, t) for p in rf.get("exclude", [])):
         return ""
-    for g in ("sales", "gtm", "engineering"):
-        if any(re.search(p, t) for p in groups.get(g, [])):
-            return g
+    for key, group in (("gtm_first", "gtm"), ("product_engineering", "product_engineering"), ("gtm", "gtm")):
+        if any(re.search(p, t) for p in groups.get(key, [])):
+            return group
     return ""
 
 
@@ -553,7 +561,10 @@ def main(argv=None):
     new_jobs = [j for j in new_jobs if j.get("role_group")]
     closed_jobs = [j for j in closed_jobs if j.get("role_group")]
     write_csv(out_dir / "all_open_roles.csv", all_open, job_cols)   # unfiltered, for data/analysis
-    write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)       # Sales / GTM / Engineering / VP+
+    write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)       # all three buckets together
+    for g, fname in (("executive", "leadership_roles.csv"), ("gtm", "gtm_sales_roles.csv"),
+                     ("product_engineering", "product_engineering_roles.csv")):
+        write_csv(out_dir / fname, [j for j in all_jobs if j.get("role_group") == g], job_cols)
     write_csv(out_dir / "new_this_week.csv", new_jobs, job_cols)
     write_csv(out_dir / "closed_this_week.csv", closed_jobs,
               ["company", "title", "location", "url", "link_status", "link_http", "first_seen", "closed_on", "days_open", "role_group", "ats", "job_key"])
@@ -750,10 +761,14 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     - US roles only; the count of roles left out is noted at the bottom.
     - Companies are ordered by tier (A first), then whether they were in the last issue (new faces first), then
       seniority. How many roles a company has posted doesn't move it up, and each line shows at most 2 roles.
+    - Three sections, one per bucket (Leadership, GTM & Sales, Product & Engineering), each with its own cap
+      (newsletter.section_limits), so a busy week in one bucket can't push another off the page.
     """
     ncfg = cfg.get("newsletter", {}) if isinstance(cfg, dict) else {}
     per_line = int(ncfg.get("roles_per_company", 2))
     per_co_lead = int(ncfg.get("leadership_lines_per_company", 2))
+    limits = {"executive": 10, "gtm": max_companies, "product_engineering": max_companies,
+              **ncfg.get("section_limits", {})}
     nl = OUT / "newsletter"
     cutoff = _issue_cutoff(today, int(ncfg.get("send_weekday", 2)))
     last_issue = _last_issue_companies(nl, cutoff)
@@ -765,7 +780,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     tier = {j["company"]: _tier_rank(j.get("tier", "")) for j in jobs}
     cos = {j["company"] for j in fresh}
     md = ["## Now hiring", "",
-          f"_{len(fresh)} new Sales, GTM, Engineering and leadership {'role' if len(fresh) == 1 else 'roles'} this week at "
+          f"_{len(fresh)} new leadership, GTM & sales, and product & engineering {'role' if len(fresh) == 1 else 'roles'} this week at "
           f"{len(cos)} {'company' if len(cos) == 1 else 'companies'} "
           f"across proptech and scattered site rental operations._", ""]
 
@@ -775,7 +790,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         md += ["**Leadership roles**", ""]
         lines_per_co = collections.Counter()
         for j, n, places in _collapse(lead, by_base=True):
-            if lines_per_co[j["company"]] >= per_co_lead:
+            if lines_per_co[j["company"]] >= per_co_lead or sum(lines_per_co.values()) >= int(limits["executive"]):
                 continue
             lines_per_co[j["company"]] += 1
             where = (f" ({', '.join(places[:4])}{', +' + str(len(places) - 4) + ' more' if len(places) > 4 else ''})"
@@ -784,8 +799,8 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
                       + f". [Apply]({j['url']})")
         md.append("")
 
-    for label, groups in (("Sales & GTM", ("sales", "gtm")), ("Engineering", ("engineering",))):
-        pool = [j for j in fresh if j["role_group"] in groups]
+    for label, group in (("GTM & Sales", "gtm"), ("Product & Engineering", "product_engineering")):
+        pool = [j for j in fresh if j["role_group"] == group]
         if not pool:
             continue
         by_co = collections.defaultdict(list)
@@ -795,7 +810,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         order = sorted(by_co, key=lambda c: (tier.get(c, 3), c in last_issue,
                                              min(_seniority(j["title"]) for j in by_co[c]), c))
         md += [f"**{label}**", ""]
-        for c in order[:max_companies]:
+        for c in order[:int(limits[group])]:
             roles = [j for j, _, _ in _collapse(sorted(by_co[c], key=lambda j: _seniority(j["title"])), by_base=False)]
             shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:per_line])
             md.append(f"- **{c}**: {shown}")
@@ -835,7 +850,7 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
         lines.append(f"- Not in the master leads list: {', '.join(unmatched)}")
     lines += ["", "| Company | Role | Type | Location | Link check | Link |", "|---|---|---|---|---|---|"]
     for j in all_jobs[:500]:
-        lines.append(f"| {j['company']} | {j['title']} | {j.get('role_group','')} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
+        lines.append(f"| {j['company']} | {j['title']} | {GROUP_LABEL.get(j.get('role_group',''), j.get('role_group',''))} | {j['location']} | {j.get('link_status','')} | [open posting]({j['url']}) |")
     if len(all_jobs) > 500:
         lines.append(f"\n_First 500 of {len(all_jobs)} shown. Full list: `{_rel(out_dir)}/open_roles.csv`_")
     text = "\n".join(lines) + "\n"
@@ -940,7 +955,7 @@ th{{background:#f6f6f6;position:sticky;top:0}}h2{{margin-top:2.5rem}}.kpi{{displ
 <h2>Closed since last run — likely filled</h2>{table(["Company","Role","Location","Days open","Link check","Was at"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),j.get('days_open',''),j.get('link_status',''),link(j['url'],'posting')] for j in closed_jobs]) if closed_jobs else '<p><i>No history yet — closures appear from the second run onward.</i></p>'}
 <h2>New roles this week</h2>{table(["Company","Role","Location","Focus","Link"], [[H.escape(j['company']),H.escape(j['title']),H.escape(j['location']),H.escape(j.get('focus','')),link(j['url'])] for j in new_jobs])}
 <h2>Most active companies</h2>{table(["Company","Tier","ATS","Open","New","Closed"], [[H.escape(c['company']),c['tier'],c['ats'],c['open'],c['new'],c['closed']] for c in top])}
-<h2>All open roles in scope</h2>{table(["Company","Role","Type","Location","Posted","Link check","Link"], [[H.escape(j['company']),H.escape(j['title']),j.get('role_group',''),H.escape(j['location']),j.get('posted_at',''),j.get('link_status',''),link(j['url'])] for j in all_jobs])}
+<h2>All open roles in scope</h2>{table(["Company","Role","Type","Location","Posted","Link check","Link"], [[H.escape(j['company']),H.escape(j['title']),GROUP_LABEL.get(j.get('role_group',''), j.get('role_group','')),H.escape(j['location']),j.get('posted_at',''),j.get('link_status',''),link(j['url'])] for j in all_jobs])}
 <h2>Companies needing attention</h2>{table(["Company","Status","Careers page"], [[H.escape(c['company']),H.escape(c['status']),link(c['careers_url'],'careers')] for c in bad])}
 </body></html>"""
     (out_dir / "report.html").write_text(page)

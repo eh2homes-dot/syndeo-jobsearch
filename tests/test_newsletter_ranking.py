@@ -29,7 +29,7 @@ def test_issue_window_starts_at_last_wednesday():
     assert run._issue_cutoff(dt.date(2026, 10, 13), wed) == dt.date(2026, 10, 7)   # Tuesday
 
 
-def _job(company, title, tier="B", loc="Remote-USA", group="sales", first_seen="2026-10-11", n=0):
+def _job(company, title, tier="B", loc="Remote-USA", group="gtm", first_seen="2026-10-11", n=0):
     return {"company": company, "title": title, "tier": tier, "location": loc, "role_group": group,
             "first_seen": first_seen, "url": f"https://x.test/{company}/{n}"}
 
@@ -51,3 +51,30 @@ def test_draft_ranks_by_tier_and_rotation_not_volume(tmp_path, monkeypatch):
     text = path.read_text()
     assert "OldCo" not in text and "Mexico" not in text
     assert "_22 new" in text                             # 20 BigCo US + SmallCo + MidCo
+
+
+def test_three_buckets_follow_evans_rules():
+    import json
+    from pathlib import Path
+    cfg = json.loads((Path(__file__).parent.parent / "config.json").read_text())
+    expect = {
+        # Leadership: VP and up, Head of, GM. Directors stay in their function; field VPs are sales.
+        "VP, Engineering": "executive", "Head of Product": "executive", "Chief Revenue Officer": "executive",
+        "Director of Engineering": "product_engineering", "Director of Sales": "gtm",
+        "Regional Vice President of Sales, East Region": "gtm",
+        # GTM & Sales, including technical-sounding GTM titles and GTM analysts
+        "Sales Engineer": "gtm", "Product Marketing Manager": "gtm", "Customer Success Manager": "gtm",
+        "Senior Data Analyst, GTM Analytics": "gtm", "Senior Analyst, Growth & Marketing Analytics": "gtm",
+        # Product & Engineering: software, product, design, data builders
+        "Senior Software Engineer": "product_engineering", "Senior Product Manager": "product_engineering",
+        "Product Designer": "product_engineering", "Staff Data Scientist": "product_engineering",
+        "Senior Analytics Engineer": "product_engineering", "Sr. Manager, Data Science (Marketing)": "product_engineering",
+        "Sr. Software Engineer - Accounting Payables": "product_engineering",
+        # Out: hardware/IT/AV, recruiting, legal, coordinators, part-time, generic analysts
+        "Senior Device Engineer": "", "Firmware Engineer": "", "Mechanical Engineer": "", "AV Engineer": "",
+        "Senior Network Engineer": "", "Lead Senior Talent Acquisition(GTM)": "", "Associate Counsel, Business & Growth": "",
+        "Marketing Coordinator": "", "Part-Time Social Media Content Specialist": "", "Data Analyst": "",
+        "Senior Financial Analyst, GTM": "", "Senior Accountant": "",
+    }
+    got = {t: run.classify_role(t, cfg) for t in expect}
+    assert got == expect
