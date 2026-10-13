@@ -17,6 +17,10 @@ on:
         description: "Also run both searches for real (nothing is saved to the repo)"
         type: boolean
         default: true
+      only_linkedin:
+        description: "Live check: only look for company LinkedIn pages (skip both job searches)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -39,7 +43,7 @@ jobs:
       contents: write      # only to publish results to the live-check-results branch (never main)
     if: startsWith(github.ref_name, 'rebuild') || (github.event_name == 'workflow_dispatch' && inputs.live)
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -47,13 +51,19 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m playwright install --with-deps chromium
       - name: Weekly search (nothing saved)
+        if: ${{ !inputs.only_linkedin }}
         env: { PYTHONUNBUFFERED: "1" }
         shell: bash
         run: set -o pipefail; python -m jobsearch.run --detect 2>&1 | tee weekly.log
       - name: OpCo search (nothing saved)
-        if: always()
+        if: ${{ always() && !inputs.only_linkedin }}
         shell: bash
         run: set -o pipefail; python opco_search.py -v 2>&1 | tee opco.log
+      - name: Company LinkedIn pages (nothing saved)
+        if: always()
+        env: { PYTHONUNBUFFERED: "1" }
+        shell: bash
+        run: set -o pipefail; python -m jobsearch.linkedin --all --minutes 30 2>&1 | tee linkedin.log
       # The same results as the attachment below, on a branch of their own so they
       # can be read without downloading anything. Replaced on every live check.
       - name: Publish results to the live-check-results branch
@@ -64,7 +74,8 @@ jobs:
         run: |
           today=$(date -u +%F)
           mkdir -p /tmp/results/weekly /tmp/results/opco
-          cp weekly.log opco.log /tmp/results/ 2>/dev/null || true
+          cp weekly.log opco.log linkedin.log /tmp/results/ 2>/dev/null || true
+          cp output/linkedin-review.csv data/linkedin_found.json /tmp/results/ 2>/dev/null || true
           cp -r "output/$today"/. /tmp/results/weekly/ 2>/dev/null || true
           cp output/newsletter/now-hiring-"$today".md /tmp/results/weekly/ 2>/dev/null || true
           cp out/opco-jobs-latest.md out/opco-jobs-latest.json out/opco-jobs-all-"$today".csv /tmp/results/opco/ 2>/dev/null || true
@@ -84,6 +95,8 @@ jobs:
           path: |
             weekly.log
             opco.log
+            linkedin.log
+            data/linkedin_found.json
             output/
             out/
             data/ats_map.json
