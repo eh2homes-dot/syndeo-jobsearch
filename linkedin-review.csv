@@ -1,0 +1,151 @@
+action,company,linkedin_found,what_to_check,found_on,in_list_now,website,list,checked
+"check, then add",BH Management Services,https://www.linkedin.com/company/liveatbh/,"page name 'liveatbh' doesn't look like BH Management Services: check it isn't a parent, an old name or another company",homepage footer,,https://www.bhmanagement.com,OpCo,2026-10-13
+"check, then add",Bowery Valuation,https://www.linkedin.com/company/bowery-valuation/,the site also links to https://www.linkedin.com/company/12898053/,homepage (the site describes itself),,https://www.boweryvaluation.com,Weekly,2026-10-13
+"check, then add",Chamberlain Group,https://www.linkedin.com/company/chamberlain-group-llc/,"found on the careers page, not the main site",careers page footer,,https://www.chamberlaingroup.com,Weekly,2026-10-13
+"check, then add",EastGroup Properties,https://www.linkedin.com/company/5805496/,"page address is a number, not a name: open it to check it's the right company",homepage footer,,https://www.eastgroup.net,OpCo,2026-10-13
+"check, then add",Envoy,https://www.linkedin.com/company/envoy-inc/,the site also links to https://www.linkedin.com/company/3554116/,homepage (the site describes itself),,https://envoy.com,Weekly,2026-10-13
+"check, then add",Evernest,https://www.linkedin.com/company/evernest/,the site also links to https://www.linkedin.com/company/evernestpm/; same page found for Evernest Property Management: one of them is probably the parent's,homepage (the site describes itself),,https://www.evernest.co,Weekly,2026-10-13
+"check, then add",Evernest Property Management,https://www.linkedin.com/company/evernest/,"found on the careers page, not the main site; the site also links to https://www.linkedin.com/company/evernestpm/; same page found for Evernest: one of them is probably the parent's",careers page (the site describes itself),,,OpCo,2026-10-13
+"check, then add",GreenLite,https://www.linkedin.com/company/bretton-ai/,"page name 'bretton-ai' doesn't look like GreenLite: check it isn't a parent, an old name or another company",homepage footer,,https://www.greenlite.ai,Weekly,2026-10-13
+"check, then add",HouseCanary,https://www.linkedin.com/company/housecanary/,the site also links to https://www.linkedin.com/company/housecanary-inc/,homepage (the site describes itself),,https://www.housecanary.com,Weekly,2026-10-13
+"check, then add",Kasa Living,https://www.linkedin.com/company/kasaliving/,"found on the careers page, not the main site",careers page (body),,https://www.kasa.com,OpCo,2026-10-13
+"check, then add",Knock CRM,https://www.linkedin.com/company/realpage/,"page name 'realpage' doesn't look like Knock CRM: check it isn't a parent, an old name or another company; same page found for RealPage: one of them is probably the parent's",homepage footer,,https://www.knockrentals.com,Weekly,2026-10-13
+"check, then add",Lamar Advertising Company,https://www.linkedin.com/company/10365/,"page address is a number, not a name: open it to check it's the right company",homepage footer,,https://www.lamar.com,OpCo,2026-10-13
+"check, then add",Latch,https://www.linkedin.com/company/door-technology-inc/,"page name 'door-technology-inc' doesn't look like Latch: check it isn't a parent, an old name or another company",homepage footer,,https://www.latch.com,Weekly,2026-10-13
+"check, then add",Matterport,https://www.linkedin.com/company/matterport/,"found in the page code, not a visible link","homepage (in the page code, not a visible link)",,https://matterport.com,Weekly,2026-10-13
+"check, then add",Northpoint Asset Management,https://www.linkedin.com/company/northpointam/,same page found for Northpoint Asset Manamgement: one of them is probably the parent's,homepage (the site describes itself),,https://northpointam.com,Weekly,2026-10-13
+"check, then add",Northpoint Asset Manamgement,https://www.linkedin.com/company/northpointam/,"found on the careers page, not the main site; same page found for Northpoint Asset Management: one of them is probably the parent's",careers page (the site describes itself),,,OpCo,2026-10-13
+"check, then add",Obligo,https://www.linkedin.com/company/depositfree/,"page name 'depositfree' doesn't look like Obligo: check it isn't a parent, an old name or another company",homepage (the site describes itself),,https://www.myobligo.com,Weekly,2026-10-13
+"check, then add",Ojo Labs,https://www.linkedin.com/company/movoto/,"page name 'movoto' doesn't look like Ojo Labs: check it isn't a parent, an old name or another company",homepage footer,,https://www.ojolabs.com,Weekly,2026-10-13
+"check, then add",Opcity (Realtor.com),https://www.linkedin.com/company/realtor-com/,"page name 'realtor-com' doesn't look like Opcity (Realtor.com): check it isn't a parent, an old name or another company",homepage footer,,https://www.opcity.com,Weekly,2026-10-13
+"check, then add",PMI,https://www.linkedin.com/company/pmicorp/,"found on the careers page, not the main site; the site also links to https://www.linkedin.com/company/property-management-inc-/",careers page footer,,,OpCo,2026-10-13
+"check, then add",Point,https://www.linkedin.com/company/point-digital-finance/,the site also links to https://www.linkedin.com/company/point/,homepage (the site describes itself),,https://www.point.com,Weekly,2026-10-13
+"check, then add",Real Property Management,https://www.linkedin.com/company/realpropertymanagement/,"found on the careers page, not the main site",careers page footer,,,OpCo,2026-10-13
+"check, then add",RealPage,https://www.linkedin.com/company/realpage/,same page found for Knock CRM: one of them is probably the parent's,homepage (the site describes itself),,https://www.realpage.com,Weekly,2026-10-13
+"check, then add",Rent Manager (LCS),https://www.linkedin.com/company/rent-manager-property-management-software/,the site also links to https://www.linkedin.com/showcase/rentmanager/,homepage (the site describes itself),,https://www.rentmanager.com,Weekly,2026-10-13
+"check, then add",Renters Warehouse,https://www.linkedin.com/company/renosy-us/,"page name 'renosy-us' doesn't look like Renters Warehouse: check it isn't a parent, an old name or another company",homepage (the site describes itself),,https://www.renterswarehouse.com,Weekly + OpCo,2026-10-13
+"check, then add",SmartRent,https://www.linkedin.com/company/smartrent.com/,the site also links to https://www.linkedin.com/company/smartrentdotcom/,homepage (the site describes itself),,https://smartrent.com,Weekly,2026-10-13
+"check, then add",SquareFoot,https://www.linkedin.com/company/2220452/,"page address is a number, not a name: open it to check it's the right company",homepage (the site describes itself),,https://www.squarefoot.com,Weekly,2026-10-13
+"check, then add",Updater,https://www.linkedin.com/company/updater/,"found on the careers page, not the main site",careers page footer,,https://www.updater.com,Weekly,2026-10-13
+add to list,Agora,https://www.linkedin.com/company/agora-re/,,homepage (the site describes itself),,https://www.agorareal.com,Weekly,2026-10-13
+add to list,Alarm.com,https://www.linkedin.com/company/alarm-com/,,homepage (the site describes itself),,https://www.alarm.com,Weekly,2026-10-13
+add to list,Apartment List,https://www.linkedin.com/company/apartment-list/,,homepage (the site describes itself),,https://www.apartmentlist.com,Weekly,2026-10-13
+add to list,AppFolio,https://www.linkedin.com/company/appfolio/,,homepage (the site describes itself),,https://www.appfolio.com,Weekly,2026-10-13
+add to list,Auction.com,https://www.linkedin.com/company/auction/,,homepage (the site describes itself),,https://www.auction.com,Weekly,2026-10-13
+add to list,Avail (Realtor.com),https://www.linkedin.com/company/helloavail/,,homepage (body),,https://www.avail.co,Weekly,2026-10-13
+add to list,Belong,https://www.linkedin.com/company/belonghq/,,homepage (the site describes itself),,https://belonghome.com,Weekly + OpCo,2026-10-13
+add to list,Better.com,https://www.linkedin.com/company/betterdotcom/,,homepage footer,,https://better.com,Weekly,2026-10-13
+add to list,Bilt Rewards,https://www.linkedin.com/company/biltrewards/,,homepage footer,,https://www.biltrewards.com,Weekly,2026-10-13
+add to list,Blend Labs,https://www.linkedin.com/company/blend-/,,homepage (the site describes itself),,https://www.blend.com,Weekly,2026-10-13
+add to list,Boom,https://www.linkedin.com/company/boom-pay/,,homepage footer,,https://www.boompay.app,Weekly,2026-10-13
+add to list,Bright MLS,https://www.linkedin.com/company/brightmls/,,homepage (the site describes itself),,https://www.brightmls.com,Weekly,2026-10-13
+add to list,Buildium (RealPage),https://www.linkedin.com/company/buildium-llc/,,homepage footer,,https://www.buildium.com,Weekly,2026-10-13
+add to list,ButterflyMX,https://www.linkedin.com/company/butterflymx/,,homepage (the site describes itself),,https://www.butterflymx.com,Weekly,2026-10-13
+add to list,Cecilian Partners,https://www.linkedin.com/company/cecilianpartners/,,homepage (the site describes itself),,https://www.cecilianpartners.com,Weekly,2026-10-13
+add to list,CertifID,https://www.linkedin.com/company/certifid/,,homepage footer,,https://www.certifid.com,Weekly,2026-10-13
+add to list,Cherre,https://www.linkedin.com/company/cherre-co/,,homepage footer,,https://www.cherre.com,Weekly,2026-10-13
+add to list,Closinglock,https://www.linkedin.com/company/closinglock/,,homepage (the site describes itself),,https://www.closinglock.com,Weekly,2026-10-13
+add to list,Cohen-Esrey Communities,https://www.linkedin.com/company/cohen-esrey-real-estate-services-llc/,,homepage footer,,https://www.cohenesrey.com,OpCo,2026-10-13
+add to list,CompStak,https://www.linkedin.com/company/compstak/,,homepage footer,,https://www.compstak.com,Weekly,2026-10-13
+add to list,Convene,https://www.linkedin.com/company/convene-venues/,,homepage (the site describes itself),,https://convene.com,Weekly,2026-10-13
+add to list,Density,https://www.linkedin.com/company/density-inc-/,,homepage footer,,https://www.density.io,Weekly,2026-10-13
+add to list,Digible,https://www.linkedin.com/company/digibleinc/,,homepage footer,,https://www.digible.com,Weekly,2026-10-13
+add to list,DoorLoop,https://www.linkedin.com/company/doorloop/,,homepage (the site describes itself),,https://www.doorloop.com,Weekly,2026-10-13
+add to list,Doorstead,https://www.linkedin.com/company/doorstead/,,homepage (the site describes itself),,https://www.doorstead.com,Weekly + OpCo,2026-10-13
+add to list,Enertiv,https://www.linkedin.com/company/enertiv/,,homepage (the site describes itself),,https://www.enertiv.com,Weekly,2026-10-13
+add to list,Entrata,https://www.linkedin.com/company/entratasoftware/,,homepage footer,,https://www.entrata.com,Weekly,2026-10-13
+add to list,EPR Properties,https://www.linkedin.com/company/epr-properties/,,homepage footer,,https://www.eprkc.com,OpCo,2026-10-13
+add to list,Evergreen Residential,https://www.linkedin.com/company/evergreenresi/,,homepage footer,,https://evergreenresi.com,Weekly + OpCo,2026-10-13
+add to list,Flock Homes,https://www.linkedin.com/company/flock-homes/,,homepage (the site describes itself),,https://www.flockhomes.com,Weekly + OpCo,2026-10-13
+add to list,Funnel Leasing,https://www.linkedin.com/company/funnelleasing/,,homepage footer,,https://www.funnelleasing.com,Weekly,2026-10-13
+add to list,Greystar,https://www.linkedin.com/company/greystar/,,homepage footer,,https://www.greystar.com,Weekly + OpCo,2026-10-13
+add to list,Guesty,https://www.linkedin.com/company/guesty/,,homepage footer,,https://www.guesty.com,Weekly,2026-10-13
+add to list,Haven,https://www.linkedin.com/company/havenai/,,homepage footer,,https://www.usehaven.ai,Weekly,2026-10-13
+add to list,Hemlane,https://www.linkedin.com/company/hemlane/,,homepage footer,,https://www.hemlane.com,Weekly,2026-10-13
+add to list,Highwoods Properties,https://www.linkedin.com/company/highwoods-properties/,,homepage footer,,https://www.highwoods.com,OpCo,2026-10-13
+add to list,Home365,https://www.linkedin.com/company/home365/,,homepage (the site describes itself),,https://www.home365.co,Weekly,2026-10-13
+add to list,Homebot,https://www.linkedin.com/company/homebot/,,homepage footer,,https://www.homebot.ai,Weekly,2026-10-13
+add to list,HomeLight,https://www.linkedin.com/company/homelight/,,homepage (the site describes itself),,https://www.homelight.com,Weekly,2026-10-13
+add to list,Homeward,https://www.linkedin.com/company/thehomewardway/,,homepage footer,,https://www.homeward.com,Weekly,2026-10-13
+add to list,HqO,https://www.linkedin.com/company/hqo/,,homepage footer,,https://www.hqo.com,Weekly,2026-10-13
+add to list,Industrious,https://www.linkedin.com/company/industrioushq/,,homepage (the site describes itself),,https://www.industriousoffice.com,OpCo,2026-10-13
+add to list,Kiavi,https://www.linkedin.com/company/kiavi/,,homepage (the site describes itself),,https://www.kiavi.com,Weekly,2026-10-13
+add to list,Kite Realty Group Trust,https://www.linkedin.com/company/kite-realty-group/,,homepage footer,,https://www.kiterealty.com,OpCo,2026-10-13
+add to list,LeaseLock,https://www.linkedin.com/company/leaselock/,,homepage (the site describes itself),,https://www.leaselock.com,Weekly,2026-10-13
+add to list,Lineage,https://www.linkedin.com/company/lineagehq/,,homepage (the site describes itself),,https://lineage.finance,Weekly,2026-10-13
+add to list,Livly,https://www.linkedin.com/company/morelivly/,,homepage (the site describes itself),,https://www.livly.io,Weekly,2026-10-13
+add to list,Luxury Presence,https://www.linkedin.com/company/luxurypresence/,,homepage (the site describes itself),,https://www.luxurypresence.com,Weekly,2026-10-13
+add to list,Mason,https://www.linkedin.com/company/this-is-mason/,,homepage header,,https://www.thisismason.com,Weekly,2026-10-13
+add to list,Measurabl,https://www.linkedin.com/company/measurabl/,,homepage footer,,https://measurabl.com,Weekly,2026-10-13
+add to list,Medical Properties Trust,https://www.linkedin.com/company/medical-properties-trust-inc/,,homepage footer,,https://www.medicalpropertiestrust.com,OpCo,2026-10-13
+add to list,MRI Software,https://www.linkedin.com/company/mri-software-llc/,,homepage (the site describes itself),,https://www.mrisoftware.com,Weekly,2026-10-13
+add to list,Mynd,https://www.linkedin.com/company/mynd-management/,,homepage footer,,https://www.mynd.co,Weekly + OpCo,2026-10-13
+add to list,NetVendor,https://www.linkedin.com/company/netvendor/,,homepage footer,,https://www.netvendor.com,Weekly,2026-10-13
+add to list,Notarize (Proof),https://www.linkedin.com/company/notarize/,,homepage footer,,https://www.proof.com,Weekly,2026-10-13
+add to list,Offerpad,https://www.linkedin.com/company/offerpad/,,homepage (the site describes itself),,https://www.offerpad.com,Weekly,2026-10-13
+add to list,Opendoor,https://www.linkedin.com/company/opendoor-com/,,homepage (the site describes itself),,https://www.opendoor.com,Weekly,2026-10-13
+add to list,Orchard,https://www.linkedin.com/company/orchardhomes/,,homepage (the site describes itself),,https://www.orchard.com,Weekly,2026-10-13
+add to list,Ownwell,https://www.linkedin.com/company/ownwell/,,homepage (the site describes itself),,https://www.ownwell.com,Weekly,2026-10-13
+add to list,Pacaso,https://www.linkedin.com/company/pacasohomes/,,homepage (the site describes itself),,https://www.pacaso.com,Weekly,2026-10-13
+add to list,Placer.ai,https://www.linkedin.com/company/placer/,,homepage footer,,https://www.placer.ai,Weekly,2026-10-13
+add to list,Placester,https://www.linkedin.com/company/placester-inc/,,homepage footer,,https://placester.com,Weekly,2026-10-13
+add to list,PointCentral,https://www.linkedin.com/company/pointcentral/,,homepage footer,,https://www.pointcentral.com,Weekly,2026-10-13
+add to list,Procore Technologies,https://www.linkedin.com/company/procore-technologies/,,homepage (the site describes itself),,https://www.procore.com,Weekly,2026-10-13
+add to list,Property Meld,https://www.linkedin.com/company/property-meld/,,homepage footer,,https://propertymeld.com,Weekly,2026-10-13
+add to list,PropertyManagement.com,https://www.linkedin.com/company/propertymanagement-com/,,homepage (the site describes itself),,https://www.propertymanagement.com,Weekly,2026-10-13
+add to list,Redstone,https://www.linkedin.com/company/redstone-commercial-group/,,homepage (the site describes itself),,https://www.redstonevt.com,OpCo,2026-10-13
+add to list,Reffie,https://www.linkedin.com/company/joinreffie/,,homepage footer,,https://reffie.com,Weekly,2026-10-13
+add to list,Rentec Direct,https://www.linkedin.com/company/rentec-direct/,,homepage (the site describes itself),,https://www.rentecdirect.com,Weekly,2026-10-13
+add to list,RentSpree,https://www.linkedin.com/company/rentspree/,,homepage (the site describes itself),,https://www.rentspree.com,Weekly,2026-10-13
+add to list,ResMan,https://www.linkedin.com/company/resman-cloud/,,homepage footer,,https://myresman.com,Weekly,2026-10-13
+add to list,Rhino,https://www.linkedin.com/company/rhino-labs/,,homepage footer,,https://www.sayrhino.com,Weekly,2026-10-13
+add to list,Robin,https://www.linkedin.com/company/robin-powered/,,homepage (the site describes itself),,https://www.robinpowered.com,Weekly,2026-10-13
+add to list,Roofstock,https://www.linkedin.com/company/roofstock/,,homepage footer,,https://www.roofstock.com,Weekly,2026-10-13
+add to list,Second Nature,https://www.linkedin.com/company/secondnaturenow/,,homepage (the site describes itself),,https://www.secondnature.com,Weekly,2026-10-13
+add to list,Series Homes,https://www.linkedin.com/company/serieshomes/,,homepage footer,,https://www.serieshomes.com,Weekly,2026-10-13
+add to list,Side,https://www.linkedin.com/company/siderealestate/,,homepage (the site describes itself),,https://www.side.com,Weekly,2026-10-13
+add to list,Snapdocs,https://www.linkedin.com/company/snapdocs/,,homepage footer,,https://www.snapdocs.com,Weekly,2026-10-13
+add to list,Starwood Property Trust,https://www.linkedin.com/company/starwoodproperty/,,homepage header,,https://www.starwoodpropertytrust.com,OpCo,2026-10-13
+add to list,Steadily,https://www.linkedin.com/company/steadily/,,homepage (the site describes itself),,https://www.steadily.com,Weekly,2026-10-13
+add to list,Super,https://www.linkedin.com/company/hiresuper/,,homepage (the site describes itself),,https://www.hiresuper.com,Weekly,2026-10-13
+add to list,The Lund Company,https://www.linkedin.com/company/the-lund-company/,,homepage header,,https://www.lundco.com,OpCo,2026-10-13
+add to list,TheGuarantors,https://www.linkedin.com/company/the-guarantors/,,homepage (the site describes itself),,https://www.theguarantors.com,Weekly,2026-10-13
+add to list,TurboTenant,https://www.linkedin.com/company/turbotenant/,,homepage (the site describes itself),,https://www.turbotenant.com,Weekly,2026-10-13
+add to list,Two Dots,https://www.linkedin.com/company/two-dots-financial/,,homepage (the site describes itself),,https://www.twodots.com,Weekly,2026-10-13
+add to list,Uniti Group,https://www.linkedin.com/company/uniti-fiber/,,homepage footer,,https://www.uniti.com,OpCo,2026-10-13
+add to list,Veris Residential,https://www.linkedin.com/company/verisresidential/,,homepage footer,,https://www.verisresidential.com,OpCo,2026-10-13
+add to list,WeWork,https://www.linkedin.com/company/wework/,,homepage (the site describes itself),,https://www.wework.com,OpCo,2026-10-13
+couldn't check,Atlas Real Estate,,homepage: HTTP 202; careers page: HTTP 202,,,https://realatlas.com,Weekly + OpCo,2026-10-13
+couldn't check,CoStar Group,,homepage: HTTP 403; careers page: HTTP 403,,,https://www.costargroup.com,Weekly,2026-10-13
+couldn't check,Easterly Government Properties,,homepage: connection error (SSLError); careers page: connection error (SSLError),,,https://www.easterlyre.com,OpCo,2026-10-13
+couldn't check,Evergreen Live,,no website or careers page in the list,,,,OpCo,2026-10-13
+couldn't check,Key Renter Property Managment,,careers page: HTTP 202,,,,OpCo,2026-10-13
+couldn't check,NARPM (National Association of Residential Property Managers) Job Board,,no website or careers page in the list,,,,OpCo,2026-10-13
+couldn't check,Realtor.com (Move Inc.),,homepage: HTTP 429 rate limited (waited 10s); careers page: HTTP 403,,,https://www.realtor.com,Weekly,2026-10-13
+couldn't check,Redfin,,homepage: HTTP 405; careers page: HTTP 403,,,https://www.redfin.com,Weekly,2026-10-13
+couldn't check,Rocket Companies,,homepage: HTTP 403; careers page: HTTP 403,,,https://www.rocketcompanies.com,Weekly,2026-10-13
+couldn't check,VTS,,homepage: HTTP 403 bot protection (Cloudflare); careers page: HTTP 403 bot protection (Cloudflare),,,https://www.vts.com,Weekly,2026-10-13
+couldn't check,Yardi Systems,,homepage: HTTP 403 bot protection (Cloudflare); careers page: HTTP 403 bot protection (Cloudflare),,,https://www.yardi.com,Weekly,2026-10-13
+not found,AbodeMine,,,,,https://www.abodemine.com,Weekly,2026-10-13
+not found,Alexander & Baldwin,,,,,https://www.alexanderbaldwin.com,OpCo,2026-10-13
+not found,Atria Senior Living,,,,,https://www.atriaseniorliving.com,OpCo,2026-10-13
+not found,Cadre,,,,,https://www.cadre.com,Weekly,2026-10-13
+not found,Case & Associates,,,,,https://www.caseandassociates.com,OpCo,2026-10-13
+not found,Compass,,,,,https://www.compass.com,Weekly,2026-10-13
+not found,Crexi,,,,,https://www.crexi.com,Weekly,2026-10-13
+not found,Divvy Homes,,,,,https://www.divvyhomes.com,Weekly + OpCo,2026-10-13
+not found,Doma,,,,,https://www.doma.com,Weekly,2026-10-13
+not found,Footprint,,,,,https://www.onefootprint.com,Weekly,2026-10-13
+not found,GetCovered,,,,,https://getcovered.io,Weekly,2026-10-13
+not found,HiredHelpr,,,,,https://www.hiredhelpr.com,Weekly,2026-10-13
+not found,Mountain Property Management,,,,,https://jacksonholeproperties.net,OpCo,2026-10-13
+not found,Nutiliti,,,,,https://www.nutiliti.com,Weekly,2026-10-13
+not found,Oakbrook Corporation,,,,,https://www.oakbrookcorp.com,OpCo,2026-10-13
+not found,Obie,,,,,https://www.obieinsurance.com,Weekly,2026-10-13
+not found,Picerne Real Estate Group,,,,,https://www.picerne.com,OpCo,2026-10-13
+not found,PURE HomeRiver Group,,,,,https://purehomeriver.com,Weekly + OpCo,2026-10-13
+not found,Rhome Property Management,,,,,,OpCo,2026-10-13
+not found,Tamarack Property Management,,,,,https://www.tamarackproperty.com,OpCo,2026-10-13
+not found,Worksmith,,,,,https://www.worksmith.com,Weekly,2026-10-13
+not found,Zillow Group,,,,,https://www.zillow.com,Weekly,2026-10-13
+not found,Zumper,,,,,https://www.zumper.com,Weekly,2026-10-13
