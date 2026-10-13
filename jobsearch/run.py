@@ -41,6 +41,7 @@ from . import browser as browser_mod
 from . import company as company_mod
 from . import verify as verify_mod
 from . import feeds as feeds_mod
+from . import linkedin as linkedin_mod
 from .company import slugify
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -302,7 +303,8 @@ def main(argv=None):
         all_jobs.extend(jobs)
         company_rows.append({"company": co, "tier": lead["tier"], "ats": mapping.get("ats", ""),
                              "slug": mapping.get("slug", ""), "status": status, "open": len(jobs),
-                             "new": 0, "closed": 0, "careers_url": lead["careers_url"], "note": r.note})
+                             "new": 0, "closed": 0, "careers_url": lead["careers_url"], "note": r.note,
+                             "linkedin": linkedin_mod.approved_from_row(lead)})
         if status == "unmapped" or status.startswith("needs-link"):
             needs_manual.append({"company": co, "careers_url": lead["careers_url"],
                                  "reason": status.split(": ", 1)[-1] if ": " in status else (r.note or status)})
@@ -543,7 +545,11 @@ def main(argv=None):
     # ---- 4. outputs
     out_dir = OUT / (f"on-demand/{today.isoformat()}_{time.strftime('%H%M')}" if adhoc else today.isoformat())
     job_cols = ["company", "title", "location", "url", "link_status", "link_http", "posted_at", "first_seen", "days_open", "focus",
-                "ats", "segment", "state", "tier", "job_key"]
+                "ats", "segment", "state", "tier", "job_key", "company_linkedin"]
+    # each company's LinkedIn page, once it's approved into the master list (see jobsearch/linkedin.py)
+    li = {l["company"]: linkedin_mod.approved_from_row(l) for l in leads}
+    for j in all_jobs + new_jobs:
+        j["company_linkedin"] = li.get(j.get("company", ""), "")
     all_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     new_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     closed_jobs.sort(key=lambda j: (j["company"], j["title"]))
@@ -564,7 +570,8 @@ def main(argv=None):
     write_csv(out_dir / "scraper_misses.csv", scraper_misses,
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
-              ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url", "note"])
+              ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url", "note",
+               "linkedin"])
     write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery)
     if not adhoc:
       save_json(DATA / "last_run.json", {"date": today.isoformat(), "companies": len(leads), "feed_decides": True,

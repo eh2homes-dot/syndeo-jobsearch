@@ -30,6 +30,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 60        # hard stop - never another 6-hour run
+    outputs:
+      run: ${{ steps.et.outputs.run }}
     steps:
       - name: Check it's 4am Eastern
         id: et
@@ -87,3 +89,35 @@ jobs:
         with:
           name: job-search-report
           path: output/
+
+  # Each company's LinkedIn page, read from the company's own website (never from LinkedIn),
+  # written to output/linkedin-review.csv for review. A separate job after the search, so it can
+  # never slow down or break the job search itself. Full runs only.
+  linkedin:
+    needs: run
+    if: ${{ !cancelled() && needs.run.outputs.run == 'true' && !github.event.inputs.companies }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}   # latest, including the search's own commit
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Install the headless browser
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
+      - name: Find LinkedIn pages on company websites
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python -m jobsearch.linkedin --minutes 15
+      - name: Commit results
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/linkedin_found.json output/linkedin-review.csv
+          git commit -m "LinkedIn pages for review $(date -u +%F)" || echo "nothing to commit"
+          git pull --rebase --autostash || true
+          git push

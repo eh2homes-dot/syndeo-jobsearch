@@ -21,4 +21,7 @@ def _scratch_state(tmp_path, monkeypatch):
     for name, value in (("DATA", data), ("OUT", out), ("ATS_MAP", data / "ats_map.json"),
                         ("HISTORY", data / "history.json"), ("NEEDS_MAP", data / "needs_manual_mapping.csv")):
         monkeypatch.setattr(run, name, value)
+    from jobsearch import linkedin
+    monkeypatch.setattr(linkedin, "FOUND", data / "linkedin_found.json")
+    monkeypatch.setattr(linkedin, "REVIEW", out / "linkedin-review.csv")
     yield
