@@ -83,6 +83,14 @@ def test_cooldown_holds_companies_out_for_three_issues(tmp_path, monkeypatch):
     assert issues["2026-10-21"] == {"source": "draft", "companies": ["Zillow Group"]}
 
 
+def test_cooldown_exempt_company_is_never_held_back(tmp_path, monkeypatch):
+    _ledger(tmp_path, monkeypatch, {"2026-10-07": {"source": "published", "companies": ["Second Nature", "Entrata"]}})
+    jobs = [_job("Second Nature", "VP, Product", tier="A", group="executive"), _job("Entrata", "Account Manager")]
+    cfg = {"newsletter": {"cooldown_exempt": ["Second Nature"]}}
+    text = run.write_jobs_newsletter(jobs, [], {}, dt.date(2026, 10, 11), cfg).read_text()
+    assert "Second Nature" in text and "Entrata" not in text
+
+
 def test_three_buckets_follow_evans_rules():
     import json
     from pathlib import Path

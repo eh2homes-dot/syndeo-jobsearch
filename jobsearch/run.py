@@ -795,6 +795,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     - Only roles first seen since the last issue went out (send day set by newsletter.send_weekday, 0=Mon; default Wed).
     - US roles only.
     - Cooldown: a company featured in an issue sits out the next newsletter.cooldown_weeks issues (default 3), read
+      (companies in newsletter.cooldown_exempt never sit out and keep their normal spot in the order),
       from data/featured_companies.json. Companies held back are listed on the run page, not in the draft.
     - Companies are ordered by tier (A first), then the longest since they were last featured (never first), then
       seniority. How many roles a company has posted doesn't move it up, and each line shows at most 2 roles.
@@ -813,8 +814,9 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     issue_date = cutoff + dt.timedelta(days=7)
     ledger = _load_featured()
     last_seen = _last_featured(ledger, issue_date)
+    exempt = {_norm_co(c) for c in ncfg.get("cooldown_exempt", [])}
     cooling = {n for n, day in last_seen.items()
-               if (issue_date - dt.date.fromisoformat(day)).days <= cooldown_days}
+               if (issue_date - dt.date.fromisoformat(day)).days <= cooldown_days and n not in exempt}
 
     new = [j for j in jobs if j.get("role_group") and j.get("first_seen") and not j.get("baseline") and
            dt.date.fromisoformat(j["first_seen"]) >= cutoff]
@@ -823,7 +825,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
     held = sorted({j["company"] for j in fresh if _norm_co(j["company"]) in cooling})
     eligible = [j for j in fresh if _norm_co(j["company"]) not in cooling]
     tier = {j["company"]: _tier_rank(j.get("tier", "")) for j in jobs}
-    since = lambda c: last_seen.get(_norm_co(c), "")          # "" (never featured) sorts first
+    since = lambda c: "" if _norm_co(c) in exempt else last_seen.get(_norm_co(c), "")   # "" (never featured) sorts first
     cos = {j["company"] for j in fresh}
     featured = []
     md = ["## Now hiring", "",

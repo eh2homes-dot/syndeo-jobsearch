@@ -117,9 +117,10 @@
     }
   },
   "newsletter": {
-    "note": "Now hiring draft. send_weekday 0=Mon (2=Wed). A company featured in an issue sits out the next cooldown_weeks issues (history in data/featured_companies.json). section_limits = max companies per section.",
+    "note": "Now hiring draft. send_weekday 0=Mon (2=Wed). A company featured in an issue sits out the next cooldown_weeks issues (history in data/featured_companies.json). Companies in cooldown_exempt never sit out (Evan 2026-10-14: Second Nature). section_limits = max companies per section.",
     "send_weekday": 2,
     "cooldown_weeks": 3,
+    "cooldown_exempt": ["Second Nature"],
     "roles_per_company": 2,
     "section_limits": {"executive": 10, "gtm": 8, "product_engineering": 8}
   },
