@@ -590,7 +590,8 @@ def main(argv=None):
         if os.environ.get("GITHUB_STEP_SUMMARY"):
             with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
                 f.write(f"# Now hiring - newsletter draft\n\nPaste-ready version: open `{_rel(draft.with_suffix('.html'))}` "
-                        f"in a browser, select all, copy, paste into beehiiv.\n\n---\n\n"
+                        f"in a browser, select all, copy, paste into beehiiv.\n\n"
+                        + "".join(f"- {n}\n" for n in LAST_DRAFT_NOTES) + "\n---\n\n"
                         + draft.read_text() + "\n---\n")
     print(f"[{today}] companies={len(leads)} scraped_ok={len(ok_companies)} open_in_scope={len(all_jobs)} open_all={len(all_open)} "
           f"new={len(new_jobs)} closed={len(closed_jobs)} -> {out_dir}")
@@ -683,15 +684,46 @@ def _issue_cutoff(today: dt.date, send_weekday: int) -> dt.date:
     return today - dt.timedelta(days=(today.weekday() - send_weekday) % 7)
 
 
-def _last_issue_companies(nl_dir: Path, cutoff: dt.date) -> set:
-    """Companies named in the draft that fed the last issue (the newest draft dated before the cutoff)."""
-    drafts = sorted(p for p in nl_dir.glob("now-hiring-*.md")
-                    if re.fullmatch(r"now-hiring-\d{4}-\d{2}-\d{2}", p.stem) and p.stem[11:] < cutoff.isoformat())
-    if not drafts:
-        return set()
-    text = drafts[-1].read_text()
-    return ({m.strip() for m in re.findall(r"^- \*\*(.+?)\*\*:", text, re.M)}
-            | {m.split(" (")[0].strip() for m in re.findall(r"^- \*\*.+?\*\*, ([^.\n]+?)(?: \(|, \d+ openings|\. \[)", text, re.M)})
+# ------------------------------------------------------- featured-company cooldown
+# data/featured_companies.json records which companies each issue featured, keyed by send date:
+#   {"issues": {"2026-10-14": {"source": "published", "companies": ["Obligo", ...]}}}
+# "published" entries come from the real beehiiv issue and are never overwritten by a draft; "draft" entries are
+# what the Sunday draft proposed. Edit the file by hand to correct it (add a company you featured, drop one you cut).
+_CO_SUFFIX = r"\b(group|technologies|technology|labs|inc|llc|co|corp|company)\b"
+
+
+def _norm_co(name: str) -> str:
+    """'Zillow Group' / 'Zillow' -> 'zillow'; 'Procore Technologies' -> 'procore'."""
+    return re.sub(r"[^a-z0-9]", "", re.sub(_CO_SUFFIX, "", (name or "").lower()))
+
+
+def _featured_path() -> Path:
+    return DATA / "featured_companies.json"
+
+
+def _load_featured() -> dict:
+    led = load_json(_featured_path(), {})
+    return led if isinstance(led.get("issues"), dict) else {"issues": {}}
+
+
+def _last_featured(led: dict, before: dt.date) -> dict:
+    """norm company -> the most recent issue date (ISO) it was featured in, for issues before `before`."""
+    out = {}
+    for day, entry in led["issues"].items():
+        if day < before.isoformat():
+            for c in entry.get("companies", []):
+                n = _norm_co(c)
+                out[n] = max(out.get(n, ""), day)
+    return out
+
+
+def _record_featured(led: dict, issue_date: dt.date, companies: list) -> None:
+    day = issue_date.isoformat()
+    if led["issues"].get(day, {}).get("source") == "published":
+        return
+    led["issues"][day] = {"source": "draft", "companies": sorted(set(companies))}
+    led["issues"] = dict(sorted(led["issues"].items()))
+    save_json(_featured_path(), led)
 
 
 SPLIT = r",|\s[-–—]\s|-\s|\("
@@ -754,38 +786,53 @@ def _loc(loc: str) -> str:
     return loc[:40]
 
 
+LAST_DRAFT_NOTES: list = []   # lines for the run page: what the cooldown held back
+
+
 def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict, max_companies: int = 8) -> Path:
     """Paste-ready 'Now hiring' section for the next Wednesday issue.
 
     - Only roles first seen since the last issue went out (send day set by newsletter.send_weekday, 0=Mon; default Wed).
-    - US roles only; the count of roles left out is noted at the bottom.
-    - Companies are ordered by tier (A first), then whether they were in the last issue (new faces first), then
+    - US roles only.
+    - Cooldown: a company featured in an issue sits out the next newsletter.cooldown_weeks issues (default 3), read
+      from data/featured_companies.json. Companies held back are listed on the run page, not in the draft.
+    - Companies are ordered by tier (A first), then the longest since they were last featured (never first), then
       seniority. How many roles a company has posted doesn't move it up, and each line shows at most 2 roles.
     - Three sections, one per bucket (Leadership, GTM & Sales, Product & Engineering), each with its own cap
       (newsletter.section_limits), so a busy week in one bucket can't push another off the page.
+    - The companies this draft features are recorded for the coming issue date (as source "draft").
     """
     ncfg = cfg.get("newsletter", {}) if isinstance(cfg, dict) else {}
     per_line = int(ncfg.get("roles_per_company", 2))
     per_co_lead = int(ncfg.get("leadership_lines_per_company", 2))
     limits = {"executive": 10, "gtm": max_companies, "product_engineering": max_companies,
               **ncfg.get("section_limits", {})}
+    cooldown_days = 7 * int(ncfg.get("cooldown_weeks", 3))
     nl = OUT / "newsletter"
     cutoff = _issue_cutoff(today, int(ncfg.get("send_weekday", 2)))
-    last_issue = _last_issue_companies(nl, cutoff)
+    issue_date = cutoff + dt.timedelta(days=7)
+    ledger = _load_featured()
+    last_seen = _last_featured(ledger, issue_date)
+    cooling = {n for n, day in last_seen.items()
+               if (issue_date - dt.date.fromisoformat(day)).days <= cooldown_days}
 
     new = [j for j in jobs if j.get("role_group") and j.get("first_seen") and not j.get("baseline") and
            dt.date.fromisoformat(j["first_seen"]) >= cutoff]
     fresh = [j for j in new if _is_us(j.get("location", ""))]
     offshore = len(new) - len(fresh)
+    held = sorted({j["company"] for j in fresh if _norm_co(j["company"]) in cooling})
+    eligible = [j for j in fresh if _norm_co(j["company"]) not in cooling]
     tier = {j["company"]: _tier_rank(j.get("tier", "")) for j in jobs}
+    since = lambda c: last_seen.get(_norm_co(c), "")          # "" (never featured) sorts first
     cos = {j["company"] for j in fresh}
+    featured = []
     md = ["## Now hiring", "",
           f"_{len(fresh)} new leadership, GTM & sales, and product & engineering {'role' if len(fresh) == 1 else 'roles'} this week at "
           f"{len(cos)} {'company' if len(cos) == 1 else 'companies'} "
           f"across proptech and scattered site rental operations._", ""]
 
-    lead = sorted([j for j in fresh if j["role_group"] == "executive"],
-                  key=lambda j: (_seniority(j["title"]), tier.get(j["company"], 3), j["company"] in last_issue, j["company"]))
+    lead = sorted([j for j in eligible if j["role_group"] == "executive"],
+                  key=lambda j: (_seniority(j["title"]), tier.get(j["company"], 3), since(j["company"]), j["company"]))
     if lead:
         md += ["**Leadership roles**", ""]
         lines_per_co = collections.Counter()
@@ -793,6 +840,7 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
             if lines_per_co[j["company"]] >= per_co_lead or sum(lines_per_co.values()) >= int(limits["executive"]):
                 continue
             lines_per_co[j["company"]] += 1
+            featured.append(j["company"])
             where = (f" ({', '.join(places[:4])}{', +' + str(len(places) - 4) + ' more' if len(places) > 4 else ''})"
                      if places else "")
             md.append(f"- **{j['title']}**, {j['company']}{where}" + (f", {n} openings" if n > 1 else "")
@@ -800,19 +848,20 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         md.append("")
 
     for label, group in (("GTM & Sales", "gtm"), ("Product & Engineering", "product_engineering")):
-        pool = [j for j in fresh if j["role_group"] == group]
+        pool = [j for j in eligible if j["role_group"] == group]
         if not pool:
             continue
         by_co = collections.defaultdict(list)
         for j in pool:
             by_co[j["company"]].append(j)
-        # tier A first, then companies that weren't in the last issue, then the most senior opening
-        order = sorted(by_co, key=lambda c: (tier.get(c, 3), c in last_issue,
+        # tier A first, then the longest since last featured, then the most senior opening
+        order = sorted(by_co, key=lambda c: (tier.get(c, 3), since(c),
                                              min(_seniority(j["title"]) for j in by_co[c]), c))
         md += [f"**{label}**", ""]
         for c in order[:int(limits[group])]:
             roles = [j for j, _, _ in _collapse(sorted(by_co[c], key=lambda j: _seniority(j["title"])), by_base=False)]
             shown = ", ".join(f"[{j['title']}]({j['url']})" for j in roles[:per_line])
+            featured.append(c)
             md.append(f"- **{c}**: {shown}")
         md.append("")
 
@@ -826,8 +875,18 @@ def write_jobs_newsletter(jobs, closed, careers: dict, today: dt.date, cfg: dict
         md.append("")
     if not fresh and not filled:
         md.append("_No new roles in scope this week._")
-    print(f"  draft   newsletter window: first seen since {cutoff.isoformat()}; {offshore} new roles outside the US left out "
-          f"(still in the CSVs); last issue's companies sorted down: {len(last_issue)}", flush=True)
+    elif fresh and not eligible:
+        md.append("_Every company with new roles this week was featured in the last few issues._")
+
+    LAST_DRAFT_NOTES[:] = [
+        f"Draft for the {issue_date.isoformat()} issue: roles first seen since {cutoff.isoformat()}; "
+        f"{offshore} new roles outside the US left out (still in the CSVs).",
+        (f"Held back by the {cooldown_days // 7}-week cooldown ({len(held)}): " + ", ".join(
+            f"{c} (last featured {last_seen[_norm_co(c)]})" for c in held)) if held else "Nothing held back by the cooldown.",
+    ]
+    for line in LAST_DRAFT_NOTES:
+        print(f"  draft   {line}", flush=True)
+    _record_featured(ledger, issue_date, featured)
 
     nl.mkdir(parents=True, exist_ok=True)
     path = nl / f"now-hiring-{today.isoformat()}.md"

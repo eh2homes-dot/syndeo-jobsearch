@@ -116,6 +116,13 @@
       ]
     }
   },
+  "newsletter": {
+    "note": "Now hiring draft. send_weekday 0=Mon (2=Wed). A company featured in an issue sits out the next cooldown_weeks issues (history in data/featured_companies.json). section_limits = max companies per section.",
+    "send_weekday": 2,
+    "cooldown_weeks": 3,
+    "roles_per_company": 2,
+    "section_limits": {"executive": 10, "gtm": 8, "product_engineering": 8}
+  },
   "role_filter": {
     "enabled": true,
     "note": "Evan 2026-10-13: three buckets that never overlap. Order of checks: (1) leadership = VP and up, Head of, GM, except field VPs (regional/area/district), who fall through to their function; (2) exclude list; (3) gtm_first (titles that sound technical but are sales/marketing, e.g. Sales Engineer, Product Marketing); (4) product_engineering; (5) gtm. Directors stay in their function bucket. Software only: hardware, IT and AV engineering are excluded. Data: builders (data engineers, analytics engineers, ML, data scientists) are Product & Engineering; marketing/growth/revenue analysts are GTM; generic business/BI/finance analysts are out. All roles are still stored in history and all_open_roles.csv; only reports are filtered. Patterns are regexes matched against the lowercased title.",
