@@ -25,12 +25,17 @@
     "slug": "apartment-list"
   },
   "AppFolio": {
-    "ats": "jobvite",
-    "confidence": "manual",
-    "evidence": "jobs.jobvite.com/appfolio-internal/jobs fetched live, 31 roles; sheet said Greenhouse (wrong)",
-    "slug": "appfolio-internal",
-    "verified_by": "Claude",
-    "verified_on": "2026-09-23"
+    "ats": "ashby",
+    "confidence": "page-moved",
+    "detected_on": "2026-10-18",
+    "evidence": "read from the job board this page embeds (ashby: 13a892fa-5b4f-4539-a264-3a0452bbead3: https://jobs.ashbyhq.com/13a892fa-5b4f-4539-a264-3a0452bbead3); found by following the page's link to its full list (https://www.appfolio.com/open-roles)",
+    "moved_on": "2026-10-18",
+    "previous": {
+      "ats": "jobvite",
+      "confidence": "manual",
+      "slug": "appfolio-internal"
+    },
+    "slug": "13a892fa-5b4f-4539-a264-3a0452bbead3"
   },
   "Atlas Real Estate": {
     "ats": "paylocity",

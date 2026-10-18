@@ -1,8 +1,6 @@
 {
-  "note": "Companies each Origins issue featured in its job sections, keyed by send date. Drives the cooldown in jobsearch/run.py (newsletter.cooldown_weeks in config.json). 'published' = read from the sent beehiiv issue; 'draft' = what the Sunday draft proposed. Edit by hand to add a company you featured or drop one you cut.",
   "issues": {
     "2026-09-30": {
-      "source": "published",
       "companies": [
         "Apartment List",
         "Boom",
@@ -17,10 +15,10 @@
         "Steadily",
         "TheGuarantors",
         "Two Dots"
-      ]
+      ],
+      "source": "published"
     },
     "2026-10-07": {
-      "source": "published",
       "companies": [
         "2B Living",
         "AppFolio",
@@ -35,10 +33,10 @@
         "Steadily",
         "TheGuarantors",
         "Zillow Group"
-      ]
+      ],
+      "source": "published"
     },
     "2026-10-14": {
-      "source": "published",
       "companies": [
         "Alarm.com",
         "DoorLoop",
@@ -54,7 +52,25 @@
         "Second Nature",
         "Zillow Group",
         "Zumper"
-      ]
+      ],
+      "source": "published"
+    },
+    "2026-10-21": {
+      "companies": [
+        "Bilt Rewards",
+        "Chamberlain Group",
+        "Compass",
+        "Envoy",
+        "Footprint",
+        "Greystar",
+        "Notarize (Proof)",
+        "PURE HomeRiver Group",
+        "Pacaso",
+        "RealPage",
+        "VTS"
+      ],
+      "source": "draft"
     }
-  }
+  },
+  "note": "Companies each Origins issue featured in its job sections, keyed by send date. Drives the cooldown in jobsearch/run.py (newsletter.cooldown_weeks in config.json). 'published' = read from the sent beehiiv issue; 'draft' = what the Sunday draft proposed. Edit by hand to add a company you featured or drop one you cut."
 }
