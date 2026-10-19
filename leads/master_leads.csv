@@ -1,8 +1,8 @@
 company,website,state,careers_url,segment,tier,sheet_verified,notes
 AppFolio,https://www.appfolio.com,California,https://www.appfolio.com/company/careers,Property Management Software,A,TRUE,"30+ open roles; ATS is Jobvite (appfolio-internal), NOT Greenhouse; 30 live roles 2026-09-23"
-Yardi Systems,https://www.yardi.com,California,https://www.yardi.com/careers,Property Management Software,A,TRUE,
-Procore Technologies,https://www.procore.com,California,https://www.procore.com/careers,Construction Tech,B,TRUE,
-Matterport,https://matterport.com,California,https://matterport.com/careers,3D Space Capture / Real Estate Media,B,TRUE,
+Yardi Systems,https://www.yardi.com,California,https://careers.yardi.com/openings/,Property Management Software,A,TRUE,
+Procore Technologies,https://www.procore.com,California,https://careers.procore.com/jobs/search,Construction Tech,B,TRUE,
+Matterport,https://matterport.com,California,https://careers.costargroup.com/careers,3D Space Capture / Real Estate Media,B,TRUE,
 Measurabl,https://measurabl.com,California,https://measurabl.com/careers,ESG/Sustainability Data for CRE,B,TRUE,
 Placer.ai,https://www.placer.ai,California,https://www.placer.ai/careers,Foot Traffic / Location Analytics,B,TRUE,
 Roofstock,https://www.roofstock.com,California,https://www.roofstock.com/careers,SFR Investment Marketplace,A,FALSE,
@@ -11,12 +11,12 @@ Blend Labs,https://www.blend.com,California,https://blend.com/careers,Mortgage/L
 Point,https://www.point.com,California,https://www.point.com/careers,Home Equity Fintech,B,FALSE,
 Zumper,https://www.zumper.com,California,https://www.zumper.com/careers,Rental Marketplace,A,FALSE,
 Apartment List,https://www.apartmentlist.com,California,https://www.apartmentlist.com/careers,Rental Marketplace,A,FALSE,
-Hemlane,https://www.hemlane.com,California,https://www.hemlane.com/careers,Property Management Software,A,FALSE,
+Hemlane,https://www.hemlane.com,California,https://www.hemlane.com/about-us/#careers,Property Management Software,A,FALSE,
 Pacaso,https://www.pacaso.com,California,https://www.pacaso.com/careers,Co-Ownership / Second Homes,B,FALSE,
 Crexi,https://www.crexi.com,California,https://www.crexi.com/careers,CRE Marketplace & Data,B,FALSE,
 Kiavi,https://www.kiavi.com,California,https://www.kiavi.com/careers,Real Estate Investor Lending,A,TRUE,"now a Figure Technology Solutions subsidiary (per kiavi.com footer, 9/2026)"
 Side,https://www.side.com,California,https://www.side.com/careers,Real Estate Brokerage Platform,B,FALSE,
-HouseCanary,https://www.housecanary.com,California,https://www.housecanary.com/careers,Real Estate Valuation/AVM Data,A,FALSE,
+HouseCanary,https://www.housecanary.com,California,https://www.housecanary.com/resources/careers,Real Estate Valuation/AVM Data,A,FALSE,
 HomeLight,https://www.homelight.com,California,https://www.homelight.com/careers,Agent Matching / Real Estate Marketplace,B,FALSE,
 Snapdocs,https://www.snapdocs.com,California,https://www.snapdocs.com/careers,Digital Mortgage Closing Platform,B,FALSE,
 RentSpree,https://www.rentspree.com,California,https://www.rentspree.com/careers,Tenant Screening Software,A,FALSE,
@@ -37,14 +37,14 @@ Opcity (Realtor.com),https://www.opcity.com,Texas,https://www.move.com/careers,R
 Compass,https://www.compass.com,New York,https://www.compass.com/careers,Real Estate Brokerage Tech,B,TRUE,
 VTS,https://www.vts.com,New York,https://www.vts.com/careers,Commercial Real Estate Leasing Platform,B,TRUE,
 ButterflyMX,https://www.butterflymx.com,New York,https://www.butterflymx.com/careers,Smart Access / Intercom Systems,A,TRUE,
-Guesty,https://www.guesty.com,New York,https://www.guesty.com/careers,Short-Term Rental Management Software,A,TRUE,
+Guesty,https://www.guesty.com,New York,https://www.guesty.com/careers/#open-positions,Short-Term Rental Management Software,A,TRUE,
 Rhino,https://www.sayrhino.com,New York,https://careers.sayrhino.com,Security Deposit Insurance,A,TRUE,careers page moved to careers.sayrhino.com (sheet URL 403s)
 Bilt Rewards,https://www.biltrewards.com,New York,https://www.biltrewards.com/careers,Rent Rewards / Resident Fintech,A,FALSE,
 CompStak,https://www.compstak.com,New York,https://www.compstak.com/careers,CRE Comparable Data Platform,B,TRUE,
 Cadre,https://www.cadre.com,New York,https://www.cadre.com/careers,CRE Investment Platform,B,FALSE,
-SquareFoot,https://www.squarefoot.com,New York,https://www.squarefoot.com/careers,Commercial Office Brokerage Tech,B,FALSE,
+SquareFoot,https://www.squarefoot.com,New York,https://www.squarefoot.com/jobs/,Commercial Office Brokerage Tech,B,FALSE,
 Latch,https://www.latch.com,New York,https://www.latch.com/careers,Smart Access for Multifamily,A,FALSE,
-Agora,https://www.agorareal.com,New York,https://www.agorareal.com/careers,Real Estate Investment Management SaaS,B,FALSE,sheet URL agora-re.com had DNS error
+Agora,https://www.agorareal.com,New York,https://agorareal.com/careers/,Real Estate Investment Management SaaS,B,FALSE,sheet URL agora-re.com had DNS error
 Cherre,https://www.cherre.com,New York,https://www.cherre.com/careers,Real Estate Data Integration Platform,A,TRUE,
 Enertiv,https://www.enertiv.com,New York,https://www.enertiv.com/careers,Building Energy Management,B,FALSE,
 Bowery Valuation,https://www.boweryvaluation.com,New York,https://www.boweryvaluation.com/careers,AI-Powered Appraisal Software,B,FALSE,
@@ -53,16 +53,16 @@ TheGuarantors,https://www.theguarantors.com,New York,https://www.theguarantors.c
 Funnel Leasing,https://www.funnelleasing.com,New York,https://www.funnelleasing.com/careers,Multifamily Leasing CRM,A,FALSE,
 Convene,https://convene.com,New York,https://convene.com/careers,Flexible Workspace / Meeting Venues,B,TRUE,
 Orchard,https://www.orchard.com,New York,https://www.orchard.com/careers,Home Trade-In / Mortgage Fintech,B,FALSE,
-Better.com,https://better.com,New York,https://better.com/careers,Digital Mortgage Platform,B,FALSE,
+Better.com,https://better.com,New York,https://jobs.ashbyhq.com/better-mortgage,Digital Mortgage Platform,B,FALSE,
 Updater,https://www.updater.com,New York,https://www.updater.com/careers,Moving/Relocation Tech for Property Managers,A,FALSE,
 Livly,https://www.livly.io,Illinois,https://www.livly.io/careers,Resident Experience Platform,A,FALSE,
 Chamberlain Group,https://www.chamberlaingroup.com,Illinois,https://www.chamberlaingroup.com/careers,Smart Access (myQ/LiftMaster),B,FALSE,
 Obie,https://www.obieinsurance.com,Illinois,https://www.obieinsurance.com/careers,Landlord Insurance / Insurtech,A,FALSE,
 Avail (Realtor.com),https://www.avail.co,Illinois,https://www.avail.co/careers,DIY Landlord Software,A,FALSE,
-HqO,https://www.hqo.com,Massachusetts,https://www.hqo.com/careers,Tenant/Workplace Experience Platform,B,FALSE,
-Buildium (RealPage),https://www.buildium.com,Massachusetts,https://www.buildium.com/careers,Property Management Software,A,FALSE,
+HqO,https://www.hqo.com,Massachusetts,https://ats.rippling.com/embed/hqo/jobs,Tenant/Workplace Experience Platform,B,FALSE,
+Buildium (RealPage),https://www.buildium.com,Massachusetts,https://careers-realpagepms.icims.com/jobs/search?ss=1,Property Management Software,A,FALSE,
 Placester,https://placester.com,Massachusetts,https://placester.com/careers,Real Estate Agent Website Platform,B,FALSE,
-Robin,https://www.robinpowered.com,Massachusetts,https://www.robinpowered.com/careers,Workplace Experience Platform,B,TRUE,
+Robin,https://www.robinpowered.com,Massachusetts,https://careers.kula.ai/robin,Workplace Experience Platform,B,TRUE,
 GetCovered,https://getcovered.io,Colorado,https://getcovered.io/careers,Renters Insurance / PropTech-Insurtech,A,FALSE,
 TurboTenant,https://www.turbotenant.com,Colorado,https://www.turbotenant.com/careers,Landlord/DIY Property Management Software,A,FALSE,
 Homebot,https://www.homebot.ai,Colorado,https://www.homebot.ai/careers,Homeowner Engagement Platform,B,FALSE,
@@ -77,13 +77,13 @@ Rentec Direct,https://www.rentecdirect.com,Oregon,https://www.rentecdirect.com/c
 Second Nature,https://www.secondnature.com,Tennessee,https://www.secondnature.com/careers,Resident Benefits / Property Management SaaS,A,FALSE,Evan's former company; JazzHR board (secondnature.applytojob.com) live but empty; real roles elsewhere - JS embed; also on Evan's list 2026-09-24
 Home365,https://www.home365.co,Nevada,https://www.home365.co/careers,SFR Full-Service Property Management,A,FALSE,
 Cecilian Partners,https://www.cecilianpartners.com,Pennsylvania,https://www.cecilianpartners.com/careers,New Home Community Development Software,B,FALSE,
-CoStar Group,https://www.costargroup.com,Virginia,https://www.costargroup.com/careers,Real Estate Data & Analytics,B,TRUE,
+CoStar Group,https://www.costargroup.com,Virginia,https://careers.costargroup.com/careers,Real Estate Data & Analytics,B,TRUE,
 Alarm.com,https://www.alarm.com,Virginia,https://www.alarm.com/careers,Smart Property / Security Platform,B,TRUE,
 Notarize (Proof),https://www.proof.com,Virginia,https://www.proof.com/careers,Remote Online Notarization,B,TRUE,name collision with ProofServe on Greenhouse
 Zillow Group,https://www.zillow.com,Washington,https://www.zillow.com/careers,Real Estate Marketplace,B,TRUE,
-Redfin,https://www.redfin.com,Washington,https://www.redfin.com/careers,Real Estate Brokerage Tech,B,TRUE,
-Knock CRM,https://www.knockrentals.com,Washington,https://www.knockrentals.com/careers,Multifamily Leasing CRM,A,FALSE,
-Rocket Companies,https://www.rocketcompanies.com,Michigan,https://www.rocketcompanies.com/careers,Mortgage / Real Estate Fintech,B,TRUE,
+Redfin,https://www.redfin.com,Washington,https://careers.rocket.com/us/en/search-results?qkcompany=Redfin%20Corporation,Real Estate Brokerage Tech,B,TRUE,
+Knock CRM,https://www.knockrentals.com,Washington,https://careers-realpagepms.icims.com/jobs/search?ss=1,Multifamily Leasing CRM,A,FALSE,
+Rocket Companies,https://www.rocketcompanies.com,Michigan,https://careers.rocket.com/us/en/search-results,Mortgage / Real Estate Fintech,B,TRUE,
 Rent Manager (LCS),https://www.rentmanager.com,Ohio,https://www.rentmanager.com/careers,Property Management Software,A,FALSE,
 MRI Software,https://www.mrisoftware.com,Ohio,https://www.mrisoftware.com/careers,Real Estate/Property Management Software,A,TRUE,
 Density,https://www.density.io,Ohio,https://www.density.io/careers,Occupancy Sensing for Buildings,B,FALSE,
@@ -96,7 +96,7 @@ Divvy Homes,https://www.divvyhomes.com,California,https://www.divvyhomes.com/car
 Greystar,https://www.greystar.com,South Carolina,https://www.greystar.com/careers,Multifamily Property Manager,A,TRUE,OpCo sheet
 Doorstead,https://www.doorstead.com,California,https://www.doorstead.com/careers,Guaranteed-Rent Property Management,A,FALSE,OpCo sheet
 Belong,https://belonghome.com,California,https://belonghome.com/careers,SFR Property Management,A,FALSE,OpCo sheet
-Mynd,https://www.mynd.co,California,https://www.mynd.co/careers,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
+Mynd,https://www.mynd.co,California,https://job-boards.greenhouse.io/roofstock,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
 Renters Warehouse,https://www.renterswarehouse.com,Minnesota,https://www.renterswarehouse.com/careers,SFR Property Management Franchise,A,FALSE,OpCo sheet
 Evernest,https://www.evernest.co,Alabama,https://www.evernest.co/careers,SFR Property Management,A,FALSE,OpCo sheet; name collision with Evernest GmbH (Germany) on Greenhouse
 Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/,SFR Property Management,A,FALSE,OpCo sheet
