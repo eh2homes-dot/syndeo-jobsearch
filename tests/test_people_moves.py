@@ -187,3 +187,22 @@ def test_news_adds_real_estate_context_for_one_word_names(monkeypatch):
     monkeypatch.setattr(news_rss, "get", lambda url, **kw: asked.append(url) or None)
     news_rss.collect([C.Company(name="Compass"), C.Company(name="Bilt Rewards")], 8, state_lib.SeenStore())
     assert "real+estate" in asked[0] and "real+estate" not in asked[1]
+
+
+@pytest.mark.parametrize("company,headline,expected", [
+    ("Chamberlain Group", "Rechat appoints Audie Chamberlain as chief industry officer. Chamberlain will lead.", False),
+    ("Chamberlain Group", "Chamberlain Group names Jane Roe Chief Financial Officer", True),
+    ("Homeward", "Groups Recover Together Appoints Former Homeward Health Executive Alexandre Thome as President", False),
+    ("Compass", "Compass Lexecon Names Adel Turki President", False),
+    ("Compass", "Compass adds Google AI vet to board 'at pivotal time'", True),
+    ("Compass", "Real, Compass, SERHANT. add teams; Baird & Warner picks COO", True),
+    ("Compass", "Former Zillow Exec Joins Compass As Chief Product Officer", True),
+    ("Super", "Super Micro appoints Mark Long as chief financial officer", False),
+    ("Point", "Focal Point Names Michaela Dempsey CMO", False),
+    ("Mason", "Analysys Mason appoints Musheg Bakhshinyan as Principal", False),
+    ("Lineage", "Lineage Appoints Jane Roe Chief Financial Officer", True),
+])
+def test_real_headlines_from_the_first_live_run(company, headline, expected):
+    from lib.people import extract_from_text
+    named = [p.name for p in extract_from_text(headline)]
+    assert C.Company(name=company).mentioned_outside_names(headline, named) is expected

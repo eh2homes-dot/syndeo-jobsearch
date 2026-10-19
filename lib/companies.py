@@ -89,10 +89,58 @@ class Company:
         Audie Chamberlain" is not news about Chamberlain Group, and "Occams
         Advisory appoints Robin Green" is not news about Robin."""
         own = {normalize(self.name), *(normalize(a) for a in self.aliases)}
+        # The full multi-word name spelled out ("Chamberlain Group") is the company.
+        if len(self.name.split()) > 1 and re.search(rf"\b{re.escape(self.name)}\b", text, re.I):
+            return True
         for name in names or []:
+            # The name finder sometimes returns headline words ("Joins Compass");
+            # those aren't people, so leave them alone.
+            if any(self._PREV_OK.match(w) or self._NEXT_OK.match(w) for w in (name or "").split()):
+                continue
             if name and normalize(name) not in own:
                 text = re.sub(re.escape(name), " ", text, flags=re.I)
-        return self.mentioned_in(text)
+                # Articles go on to use the surname alone ("Chamberlain will lead..."),
+                # and a surname can be the company's own name.
+                last = name.split()[-1] if len(name.split()) > 1 else ""
+                if len(last) >= 4:
+                    text = re.sub(rf"\b{re.escape(last)}\b", " ", text, flags=re.I)
+        if not self.mentioned_in(text):
+            return False
+        if self.ambiguous and not self._named_as_itself(text):
+            return False
+        return True
+
+    # Words that can follow a company name in a headline without making it a
+    # different company: "Compass Names...", "Compass CEO...", "Compass, Inc."
+    _NEXT_OK = re.compile(
+        r"^(?:appoints?|names?|hires?|adds?|taps?|promotes?|welcomes?|announces?|elevates?|"
+        r"selects?|picks?|brings?|expands?|launches?|loses?|ceo|cfo|coo|cto|cmo|cro|"
+        r"president|chief|founder|co-founder|board|executive|exec|leadership|inc|llc|corp|"
+        r"group|holdings|real|homes?|realty|technologies|announcement|to|and|has|is|said|"
+        r"says|will|after|as|in|on|for|with)\b", re.I)
+
+    _PREV_OK = re.compile(
+        r"^(?:joins?|rejoins?|leaves?|exits?|at|from|of|by|to|for|with|and|former|new|ex|"
+        r"named|appointed|hired|says|said|the|after)$", re.I)
+
+    def _named_as_itself(self, text: str) -> bool:
+        """For one-word names: at least one mention is the company itself, not
+        the first word of another name ("Homeward Health", "Compass Lexecon",
+        "Super Micro"). A capitalised word right after it means another name."""
+        word = self.name.split()[0]
+        for m in re.finditer(rf"\b{re.escape(word)}\b", text, flags=re.I):
+            # A capitalised word right before it, with no punctuation between,
+            # also means another name ("Analysys Mason", "Focal Point").
+            before = re.search(r"([A-Za-z][\w.&-]*)[ \t]+$", text[:m.start()])
+            if before and before.group(1)[0].isupper() and not self._PREV_OK.match(before.group(1)):
+                continue
+            rest = text[m.end():]
+            nxt = re.match(r"[\s’'s]*([A-Za-z][\w.&-]*)", rest)
+            if not nxt or not nxt.group(1)[0].isupper() or self._NEXT_OK.match(nxt.group(1)):
+                return True
+            if nxt.group(1).lower() in normalize(self.name).split():
+                return True
+        return False
 
     @property
     def ambiguous(self) -> bool:
