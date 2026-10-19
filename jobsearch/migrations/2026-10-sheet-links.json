@@ -1,0 +1,19 @@
+{
+  "about": "One-time change to data/ats_map.json from the 2026-10-19 browser pass over the careers links (Column D of the Master File tab in the SYNDEO sheet). HqO left Ashby for Rippling, and Matterport now hires through CoStar Group's careers site, so it is read under CoStar Group instead of a second time on its own.",
+  "id": "2026-10-sheet-links",
+  "set": {
+    "HqO": {
+      "ats": "rippling",
+      "confidence": "unconfirmed",
+      "evidence": "careers link is ats.rippling.com/embed/hqo/jobs (2026-10-19 browser pass); the Ashby board 'hqo' no longer exists. Feed not read from here. If it is wrong the careers page is used instead",
+      "slug": "hqo",
+      "verified_on": "2026-10-19"
+    },
+    "Matterport": {
+      "confidence": "manual",
+      "evidence": "Matterport is part of CoStar Group; its careers link goes to careers.costargroup.com (2026-10-19 browser pass), which is read under CoStar Group",
+      "parent": "CoStar Group",
+      "verified_on": "2026-10-19"
+    }
+  }
+}

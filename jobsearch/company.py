@@ -215,4 +215,9 @@ def read_company(lead: dict, mapping: dict, *, fixtures: Optional[Path] = None, 
         return Read(status="unmapped", note="no job board on file; careers-page reading was off or out of time")
     if not (lead.get("careers_url") or "").strip():
         return Read(status="needs-link: no careers link on file")
-    return from_careers_page(lead, browser, today, has_history=open_before > 0)
+    fresh = from_careers_page(lead, browser, today, has_history=open_before > 0)
+    if fresh.status == "ok":             # roles tracked from an earlier source don't vanish on one empty page read
+        status, save = _zero_guard(fresh.jobs, mapping, open_before, today)
+        if status:
+            return Read(status=status, mapping=save)
+    return fresh
