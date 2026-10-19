@@ -1,0 +1,20 @@
+{
+  "run_date": "2026-10-19",
+  "count": 1,
+  "moves": [
+    {
+      "company": "CoStar Group",
+      "source": "Google News",
+      "confidence": "probable",
+      "kind": "arrival",
+      "person": null,
+      "title": null,
+      "previous_title": null,
+      "summary": "News | CBRE hires South Florida leader from Related Ross; Cushman & Wakefield boosts Chicago teams; Clarion launches energy markets group - CoStar",
+      "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOSG1XZF9oV2IwVFhwR0ZlRFBVdlFVZk5tcUtjOEM4b2cwdDZfWlFmNkVMZXlLcUFOUzMwekZnUEdOR01UXzN2NzRpYm9fbERaUDd0Q1NvSmpHeDZoOXJHRFFMdGo5eS1QUjVZdUFreFg0dVFObTFjWlBuNC1UNEMtamVPeXRNMm9hbE1YaGFUUmFvSklqbERkQko3cEstZEk3ZWtDMHZ0dVROeTJ0Ni1SN0dHZnE1alhiLWs0U1hhS2cxS0packUzZlFaM2w4ek5kNlRGa0NwT0o?oc=5",
+      "observed": "2026-10-19",
+      "published": "2026-10-15",
+      "score": 13
+    }
+  ]
+}
