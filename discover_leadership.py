@@ -181,6 +181,8 @@ def main() -> int:
     p.add_argument("--apply", action="store_true", help="write found URLs into config/companies.csv")
     p.add_argument("--min-people", type=int, default=3, help="people a page must list to count (default 3)")
     p.add_argument("--limit", type=int, default=0, help="only check the first N companies (testing)")
+    p.add_argument("--max-minutes", type=float, default=70,
+                   help="stop starting new companies after this long (default 70; the workflow allows 150)")
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
@@ -200,18 +202,27 @@ def main() -> int:
         todo = todo[: args.limit]
     log.info("checking %d companies without a leadership URL", len(todo))
 
+    import time
+    started = time.time()
     results = []
-    for i, row in enumerate(todo, 1):
-        res = discover(row, args.min_people)
-        results.append(res)
-        log.info("[%d/%d] %-35s %s %s", i, len(todo), row["Company Name"][:35],
-                 res["status"], res["leadership_url"])
-
+    columns = ["company", "website", "status", "leadership_url", "people_found",
+               "sample_people", "candidates_checked"]
     REPORT.parent.mkdir(parents=True, exist_ok=True)
+    # Written row by row, so a run cut short still leaves a usable review file.
     with REPORT.open("w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(results[0].keys()) if results else ["company"])
+        w = csv.DictWriter(fh, fieldnames=columns)
         w.writeheader()
-        w.writerows(results)
+        for i, row in enumerate(todo, 1):
+            if time.time() - started > args.max_minutes * 60:
+                log.warning("time budget used up after %d of %d companies; run again for the rest",
+                            i - 1, len(todo))
+                break
+            res = discover(row, args.min_people)
+            results.append(res)
+            w.writerow(res)
+            fh.flush()
+            log.info("[%d/%d] %-35s %s %s", i, len(todo), row["Company Name"][:35],
+                     res["status"], res["leadership_url"])
 
     try:
         from jobsearch.browser import close_shared

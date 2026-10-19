@@ -31,6 +31,13 @@ QUERY_TEMPLATE = (
     '"{company}" (hires OR appoints OR names OR joins OR promotes OR '
     '"steps down" OR "chief executive" OR "vice president" OR "head of")'
 )
+# Added for one-word company names, so "Compass" finds the brokerage rather than
+# Compass Lexecon, and "Super" doesn't find Super Micro. Google matches it
+# against the article text, not just the headline.
+CONTEXT = (
+    ' ("real estate" OR property OR properties OR proptech OR rental OR rentals OR '
+    'housing OR homes OR mortgage OR apartment OR multifamily OR landlord OR leasing)'
+)
 
 _DEPARTURE = re.compile(r"steps? down|resign|depart|exits?|retires?|out as", re.I)
 _PROMOTION = re.compile(r"promot|elevat|expands? role|takes? over as", re.I)
@@ -60,6 +67,8 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
 
     for company in companies:
         query = QUERY_TEMPLATE.format(company=company.name)
+        if company.ambiguous:
+            query += CONTEXT
         r = get(FEED_URL.format(query=quote_plus(query)), accept="application/rss+xml")
         if not r:
             continue
@@ -78,7 +87,8 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
             # a company through just for being the publisher (any CoStar
             # article matched CoStar Group).
             headline = title.rsplit(" - ", 1)[0]
-            if not company.mentioned_in(headline):
+            named = [p.name for p in extract_from_text(headline)]
+            if not company.mentioned_outside_names(headline, named):
                 continue
 
             link = getattr(entry, "link", "") or ""

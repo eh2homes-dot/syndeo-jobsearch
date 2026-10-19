@@ -65,7 +65,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--top", type=int, default=0,
                    help="cap the report at N items (0 = no cap)")
     p.add_argument("--jobs-file", default=None,
-                   help="job-search results JSON for inference signals")
+                   help="job-search outputs for inference signals, comma-separated (CSV or JSON); default: $JOBS_RESULTS_PATH")
     p.add_argument("--backfill", action="store_true",
                    help="one-off Wayback baseline instead of a weekly run")
     p.add_argument("--backfill-days", type=int, default=120,

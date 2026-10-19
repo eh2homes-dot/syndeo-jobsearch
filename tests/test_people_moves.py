@@ -45,7 +45,29 @@ def test_watches_the_real_lists_not_the_sample():
     assert sum(1 for c in companies if c.leadership_url) >= 13
 
 
-def test_lists_merge_dedupe_and_enrichment_only_adds_details(tmp_path):
+@pytest.fixture
+def _sheet(monkeypatch):
+    """Stand-in for the live sheet: no real network in tests."""
+    import requests
+    reply = {"text": None}
+
+    def fake_get(url, **kw):
+        if reply["text"] is None:
+            raise requests.ConnectionError("offline")
+        return SimpleNamespace(content=reply["text"].encode(), raise_for_status=lambda: None)
+    monkeypatch.setattr(requests, "get", fake_get)
+    return reply
+
+
+@pytest.mark.parametrize("sheet_reply", [None, "<html><body>Sign in</body></html>", "Company Name\n"])
+def test_bad_or_empty_sheet_falls_back_to_the_repo_copy(tmp_path, _sheet, sheet_reply):
+    _sheet["text"] = sheet_reply
+    opco = _csv(tmp_path / "o.csv", [{"Company Name": "Gamma Property Management"}])
+    got = C.load_lists([("https://sheet.test/pub.csv", opco)])
+    assert [c.name for c in got] == ["Gamma Property Management"]
+
+
+def test_lists_merge_dedupe_and_enrichment_only_adds_details(tmp_path, _sheet):
     master = _csv(tmp_path / "m.csv", [
         {"company": "Acme Homes", "website": "https://acme.test", "careers_url": ""},
         {"company": "Beta Rentals", "website": "", "careers_url": ""},
@@ -58,7 +80,7 @@ def test_lists_merge_dedupe_and_enrichment_only_adds_details(tmp_path):
         {"Company Name": "Acme Homes", "Ticker": "ACME", "Leadership URL": "https://acme.test/team", "Aliases": "Acme"},
         {"Company Name": "Not On Any List", "Ticker": "NOPE", "Leadership URL": "", "Aliases": ""},
     ])
-    got = C.load_lists([master, ("https://unreachable.invalid/sheet.csv", opco)], enrich=enrich)
+    got = C.load_lists([master, ("https://sheet.test/pub.csv", opco)], enrich=enrich)
     assert [c.name for c in got] == ["Acme Homes", "Beta Rentals", "Gamma Property Management"]
     acme = got[0]
     assert acme.ticker == "ACME" and acme.leadership_url == "https://acme.test/team"
@@ -143,3 +165,25 @@ def test_leadership_skips_the_browser_when_the_plain_page_works(monkeypatch):
     monkeypatch.setattr(leadership, "_rendered_html", no_browser)
     _, people = leadership._read_people(C.Company(name="Acme", leadership_url="https://acme.test/team"))
     assert len(people) >= 2
+
+
+def test_person_names_and_one_word_companies():
+    from lib.people import extract_from_text
+    cases = [
+        ("Chamberlain Group", "Rechat appoints Audie Chamberlain as chief industry officer", False),
+        ("Robin", "Occams Advisory Appoints Robin Green as Chief Revenue Officer", False),
+        ("Bilt Rewards", "Bilt Rewards hires Dan Moore as SVP of Partnerships", True),
+        ("Compass", "Compass names Jane Doe Chief Operating Officer", True),
+    ]
+    for name, headline, expected in cases:
+        named = [p.name for p in extract_from_text(headline)]
+        assert C.Company(name=name).mentioned_outside_names(headline, named) is expected, name
+    assert C.Company(name="Compass").ambiguous and not C.Company(name="Bilt Rewards").ambiguous
+
+
+def test_news_adds_real_estate_context_for_one_word_names(monkeypatch):
+    from sources import news_rss
+    asked = []
+    monkeypatch.setattr(news_rss, "get", lambda url, **kw: asked.append(url) or None)
+    news_rss.collect([C.Company(name="Compass"), C.Company(name="Bilt Rewards")], 8, state_lib.SeenStore())
+    assert "real+estate" in asked[0] and "real+estate" not in asked[1]

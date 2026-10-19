@@ -84,6 +84,23 @@ class Company:
         haystack = normalize(text)
         return any(f" {t} " in f" {haystack} " for t in self.match_terms)
 
+    def mentioned_outside_names(self, text: str, names) -> bool:
+        """Like mentioned_in, but a person's name doesn't count: "Rechat appoints
+        Audie Chamberlain" is not news about Chamberlain Group, and "Occams
+        Advisory appoints Robin Green" is not news about Robin."""
+        own = {normalize(self.name), *(normalize(a) for a in self.aliases)}
+        for name in names or []:
+            if name and normalize(name) not in own:
+                text = re.sub(re.escape(name), " ", text, flags=re.I)
+        return self.mentioned_in(text)
+
+    @property
+    def ambiguous(self) -> bool:
+        """One-word names ("Compass", "Super", "Point", "Mason") are ordinary
+        words or belong to other companies too, so news searches add
+        real-estate context for them."""
+        return len(normalize(self.name).split()) <= 1
+
 
 def _canonical_headers(fieldnames: list[str]) -> dict[str, str]:
     mapping: dict[str, str] = {}
@@ -182,19 +199,25 @@ def load_lists(sources: list[str | tuple[str, str]], enrich: str | Path | None =
     seen: dict[str, Company] = {}
     for source in sources:
         options = source if isinstance(source, tuple) else (source,)
-        rows, label = None, ""
+        parsed, label = None, ""
         for option in options:
             if not option:
                 continue
             try:
                 label, rows = _read_source(option)
+                # A sheet link can answer 200 with a sign-in page or nothing at
+                # all; treat that like an outage and use the next option.
+                parsed = _rows_to_companies(label, rows)
+                if not parsed:
+                    raise ValueError("no companies in it")
                 break
             except Exception as exc:  # noqa: BLE001 - fall through to the next option
                 log.warning("could not read company list %s (%s)", option, exc)
-        if rows is None:
+                parsed = None
+        if parsed is None:
             raise FileNotFoundError(f"none of these company lists could be read: {options}")
         added = 0
-        for c in _rows_to_companies(label, rows):
+        for c in parsed:
             key = normalize(c.name)
             if not key or key in seen:
                 continue

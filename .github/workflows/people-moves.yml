@@ -40,7 +40,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150      # includes up to 40 minutes waiting for the OpCo results
 
     steps:
       # Checkout comes first (it is cheap) so the guard can see the latest output.
@@ -74,10 +74,29 @@ jobs:
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
 
-      # The module can sit at people-moves/, outputs/people-moves/, or loose at
-      # the repo root depending on how it was uploaded. Find it rather than
-      # assume. sources/edgar.py is the marker: it only exists inside this
-      # module, so its grandparent directory is the module root.
+      # The OpCo search runs at the same 6am slot and its results feed the job
+      # signals. On scheduled runs, wait (up to 40 minutes) for this week's OpCo
+      # results to land on the branch, then pull them, so the signals don't run
+      # a week behind. Manual runs use whatever is there.
+      - name: Wait for this week's OpCo results
+        if: steps.guard.outputs.run == 'true' && github.event_name == 'schedule'
+        run: |
+          today=$(date -u +%F)
+          for i in $(seq 1 40); do
+            git fetch -q --depth 1 origin "${GITHUB_REF_NAME}"
+            got=$(git show "origin/${GITHUB_REF_NAME}:out/opco-jobs-latest.json" 2>/dev/null \
+                  | python3 -c "import json,sys; print(json.load(sys.stdin).get('run_date',''))" 2>/dev/null)
+            if [ -n "$got" ] && ! [[ "$got" < "$(date -u -d "$today -1 day" +%F)" ]]; then
+              echo "OpCo results from $got are in."
+              # Nothing has been written yet, so just move to the newest commit.
+              git reset -q --hard "origin/${GITHUB_REF_NAME}"
+              exit 0
+            fi
+            echo "OpCo results on the branch are from ${got:-never}; waiting a minute ($i/40)"
+            sleep 60
+          done
+          echo "::warning::This week's OpCo results never arrived; job signals use the last ones on file."
+
       # The module runs from the repo root, next to the job searches. Older
       # copies under people-moves/ are not used (a "find the first copy" lookup
       # used to land on a 13-company sample list).
@@ -108,6 +127,8 @@ jobs:
           [ -n "$LATEST" ] && [ -f "${LATEST}all_open_roles.csv" ] && JOBS="${GITHUB_WORKSPACE}/${LATEST}all_open_roles.csv"
           [ -f out/opco-jobs-latest.json ] && JOBS="${JOBS:+$JOBS,}${GITHUB_WORKSPACE}/out/opco-jobs-latest.json"
           echo "Job-search outputs: ${JOBS:-none found}"
+          [ -f out/opco-jobs-latest.json ] && python3 -c "import json; print('  OpCo results dated', json.load(open('out/opco-jobs-latest.json')).get('run_date'))" || true
+          [ -n "$LATEST" ] && echo "  weekly search folder: $LATEST"
           echo "jobs=$JOBS" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v5
