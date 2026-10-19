@@ -74,9 +74,11 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
                 continue
 
             # Google News titles end in " - Publisher"; keep it for provenance
-            # but match against the headline only.
+            # but match against the headline only. Matching the full title let
+            # a company through just for being the publisher (any CoStar
+            # article matched CoStar Group).
             headline = title.rsplit(" - ", 1)[0]
-            if not company.mentioned_in(headline) and not company.mentioned_in(title):
+            if not company.mentioned_in(headline):
                 continue
 
             link = getattr(entry, "link", "") or ""

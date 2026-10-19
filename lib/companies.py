@@ -136,6 +136,94 @@ def load(path: str | Path) -> list[Company]:
     return companies
 
 
+def _read_source(source: str | Path) -> tuple[str, list[dict]]:
+    """Rows from a CSV file, or from a published Google Sheet CSV link."""
+    src = str(source)
+    if src.startswith(("http://", "https://")):
+        import io
+        import requests
+        r = requests.get(src, timeout=30)
+        r.raise_for_status()
+        text = r.content.decode("utf-8-sig")
+        return src.split("?")[0], list(csv.DictReader(io.StringIO(text)))
+    path = Path(src)
+    if not path.exists():
+        raise FileNotFoundError(f"{path} not found.")
+    with path.open(newline="", encoding="utf-8-sig") as fh:
+        return str(path), list(csv.DictReader(fh))
+
+
+def _rows_to_companies(label: str, rows: list[dict]) -> list[Company]:
+    if not rows:
+        return []
+    headers = _canonical_headers(list(rows[0].keys()))
+    if "name" not in headers.values():
+        raise ValueError(f"{label} has no recognisable company-name column. Found: {list(rows[0].keys())}")
+    out = []
+    for row in rows:
+        data = {canon: (row.get(raw) or "").strip() for raw, canon in headers.items()}
+        if not data.get("name"):
+            continue
+        aliases = [a.strip() for a in data.pop("aliases", "").split(";") if a.strip()]
+        out.append(Company(aliases=aliases, **data))
+    return out
+
+
+def load_lists(sources: list[str | tuple[str, str]], enrich: str | Path | None = None) -> list[Company]:
+    """The company universe: every company on the given lists, once each.
+
+    `sources` are tried in order; an entry may be a (primary, fallback) pair,
+    e.g. the live OpCo sheet with opco.csv in the repo as the fallback. The
+    lists decide WHO is watched. `enrich` (config/companies.csv) only adds
+    details to companies already on a list: ticker, SEC CIK, leadership page,
+    aliases. A company that is only in the enrichment file is not watched.
+    """
+    companies: list[Company] = []
+    seen: dict[str, Company] = {}
+    for source in sources:
+        options = source if isinstance(source, tuple) else (source,)
+        rows, label = None, ""
+        for option in options:
+            if not option:
+                continue
+            try:
+                label, rows = _read_source(option)
+                break
+            except Exception as exc:  # noqa: BLE001 - fall through to the next option
+                log.warning("could not read company list %s (%s)", option, exc)
+        if rows is None:
+            raise FileNotFoundError(f"none of these company lists could be read: {options}")
+        added = 0
+        for c in _rows_to_companies(label, rows):
+            key = normalize(c.name)
+            if not key or key in seen:
+                continue
+            seen[key] = c
+            companies.append(c)
+            added += 1
+        log.info("loaded %d companies from %s", added, label)
+
+    if enrich and Path(enrich).exists():
+        label, rows = _read_source(enrich)
+        extra = {normalize(c.name): c for c in _rows_to_companies(label, rows)}
+        for c in companies:
+            e = extra.get(normalize(c.name))
+            if e is None:
+                for alias in c.aliases:
+                    e = extra.get(normalize(alias))
+                    if e:
+                        break
+            if e is None:
+                continue
+            for f in ("ticker", "cik", "leadership_url", "website", "careers_url"):
+                if not getattr(c, f) and getattr(e, f):
+                    setattr(c, f, getattr(e, f))
+            c.aliases = sorted(set(c.aliases) | set(e.aliases))
+        log.info("enriched from %s: %d with a ticker or CIK, %d with a leadership page",
+                 label, len(public_companies(companies)), len(with_leadership_page(companies)))
+    return companies
+
+
 def public_companies(companies: list[Company]) -> list[Company]:
     return [c for c in companies if c.ticker or c.cik]
 
