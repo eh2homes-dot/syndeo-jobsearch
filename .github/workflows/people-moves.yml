@@ -143,6 +143,12 @@ jobs:
           # Absolute path, so it resolves the same wherever the module sits.
           # Point this at whatever the job-search workflow writes.
           JOBS_RESULTS_PATH: ${{ github.workspace }}/out/jobs-latest.json
+          # Database sinks: each is skipped with a warning if its secrets are
+          # missing, and a sink failure never stops the run or loses the brief.
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           if [ "${{ inputs.backfill }}" = "true" ]; then
             python run.py --backfill --backfill-days 120
