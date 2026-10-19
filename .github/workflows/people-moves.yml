@@ -1,6 +1,7 @@
 name: People Moves
 
-# Sundays at 6:00am ET, same cadence as the job search.
+# Sundays at 6:00am ET, with Sunday-afternoon and early-Monday backups that run
+# only if that week's output is still missing (see the guard step).
 #
 # GitHub cron is UTC and does not observe daylight saving, so a single UTC time
 # drifts by an hour twice a year. Two schedules are declared (10:00 UTC = 6am
@@ -8,8 +9,10 @@ name: People Moves
 # actually 6am in New York. One real run per Sunday, all year.
 on:
   schedule:
-    - cron: "0 10 * * 0"
-    - cron: "0 11 * * 0"
+    - cron: "0 10 * * 0"      # 6am EDT Sunday (main run, roughly March to November)
+    - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
+    - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
+    - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
   workflow_dispatch:
     inputs:
       backfill:
@@ -36,25 +39,36 @@ jobs:
     timeout-minutes: 90
 
     steps:
-      # Decide by WHICH schedule fired, not by the clock. GitHub often starts
-      # scheduled runs hours late (Oct 11 started ~noon ET), and the old
-      # "is it 6am right now?" check then skipped both triggers silently.
-      - name: Skip if this is the wrong side of daylight saving
+      # Checkout comes first (it is cheap) so the guard can see the latest output.
+      - uses: actions/checkout@v4
+
+      # Decide by WHICH schedule fired, never by the clock: GitHub often starts
+      # scheduled runs hours late, and a clock check then skips the week.
+      #  - Sunday 6am slots: the one matching the current daylight-saving side runs.
+      #  - Backup slots (Sunday afternoon, early Monday): run only if this week's
+      #    People Moves output is still missing, i.e. GitHub dropped or failed the 6am run.
+      #    The Monday backup lands before the browser pass and the newsletter build.
+      - name: Decide whether this trigger should run
         id: guard
         env:
           EVENT: ${{ github.event_name }}
           FIRED: ${{ github.event.schedule }}
         run: |
           offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          today=$(TZ=America/New_York date +%F)
+          sunday=$(date -d "$today -$(TZ=America/New_York date +%w) days" +%F)   # this week's Sunday
+          latest=$(find . -path ./.git -prune -o -type f -name 'people-moves-20*.json' -print | sed -E 's/.*people-moves-([0-9-]{10})\.json/\1/' | sort | tail -1)
+          echo "Latest People Moves output: ${latest:-none} (this week's Sunday: $sunday)"
           if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
           elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
           elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
+            if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
+              run=true; echo "::warning::Backup run: this week's 6am run left no output."
+            else run=false; fi
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
-
-      - uses: actions/checkout@v4
-        if: steps.guard.outputs.run == 'true'
 
       # The module can sit at people-moves/, outputs/people-moves/, or loose at
       # the repo root depending on how it was uploaded. Find it rather than
@@ -151,9 +165,14 @@ jobs:
             echo "Nothing changed this week."
           else
             git commit -m "People moves: $(date -u +%Y-%m-%d)"
-            # Another workflow may have pushed while we ran.
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
-            git push
+            # Another workflow may have pushed while we ran; retry like OpCo does.
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+              echo "Push attempt $attempt failed; retrying in 15s"
+              sleep 15
+            done
+            echo "::error::Could not push results after 3 attempts."
+            exit 1
           fi
 
       - name: Upload brief

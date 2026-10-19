@@ -7,11 +7,14 @@ name: OpCo Job Search
 #
 # Runs Sundays at 6:00am ET. GitHub's schedule runs on UTC with no daylight
 # saving, so two times are listed (10:00 UTC = 6am EDT, 11:00 UTC = 6am EST) and
-# the first step skips whichever one isn't 6am in New York.
+# the guard step keeps whichever matches. Two backup times (Sunday afternoon,
+# early Monday) run only if that week's output is still missing.
 on:
   schedule:
-    - cron: "0 10 * * 0"
-    - cron: "0 11 * * 0"
+    - cron: "0 10 * * 0"      # 6am EDT Sunday (main run, roughly March to November)
+    - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
+    - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
+    - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
   workflow_dispatch:
     inputs:
       only:
@@ -35,25 +38,36 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      # Decide by WHICH schedule fired, not by the clock. GitHub often starts
-      # scheduled runs hours late (Oct 11 started ~noon ET), and the old
-      # "is it 6am right now?" check then skipped both triggers silently.
-      - name: Skip if this is the wrong side of daylight saving
+      # Checkout comes first (it is cheap) so the guard can see the latest output.
+      - uses: actions/checkout@v4
+
+      # Decide by WHICH schedule fired, never by the clock: GitHub often starts
+      # scheduled runs hours late, and a clock check then skips the week.
+      #  - Sunday 6am slots: the one matching the current daylight-saving side runs.
+      #  - Backup slots (Sunday afternoon, early Monday): run only if this week's
+      #    OpCo output is still missing, i.e. GitHub dropped or failed the 6am run.
+      #    The Monday backup lands before the browser pass and the newsletter build.
+      - name: Decide whether this trigger should run
         id: guard
         env:
           EVENT: ${{ github.event_name }}
           FIRED: ${{ github.event.schedule }}
         run: |
           offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          today=$(TZ=America/New_York date +%F)
+          sunday=$(date -d "$today -$(TZ=America/New_York date +%w) days" +%F)   # this week's Sunday
+          latest=$(python3 -c "import json,glob;p=sorted(glob.glob('**/out/opco-jobs-latest.json',recursive=True));print(json.load(open(p[0])).get('run_date','') if p else '')" 2>/dev/null)
+          echo "Latest OpCo output: ${latest:-none} (this week's Sunday: $sunday)"
           if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
           elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
           elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
+            if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
+              run=true; echo "::warning::Backup run: this week's 6am run left no output."
+            else run=false; fi
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
-
-      - uses: actions/checkout@v4
-        if: steps.guard.outputs.run == 'true'
 
       - name: Find the script, its config and the company list
         if: steps.guard.outputs.run == 'true'
