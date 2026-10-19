@@ -31,7 +31,7 @@ jobs:
 
       - name: Scrape NARPM affiliate directory
         run: |
-          python scrapers/narpm_affiliates.py \
+          python narpm_affiliates.py \
             --out data/narpm_affiliates.csv \
             --type "${{ github.event.inputs.business_type }}"
 
