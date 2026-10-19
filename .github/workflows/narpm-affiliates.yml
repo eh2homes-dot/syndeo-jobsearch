@@ -1,0 +1,50 @@
+name: NARPM affiliates scrape
+
+# Run from GitHub: Actions tab -> "NARPM affiliates scrape" -> Run workflow.
+# Output: data/narpm_affiliates.csv committed to the repo, plus a downloadable artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      business_type:
+        description: 'Optional business type filter (e.g. Software). Leave blank for all.'
+        required: false
+        default: ''
+  # Uncomment to refresh automatically on the 1st of each month:
+  # schedule:
+  #   - cron: '17 11 1 * *'
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Scrape NARPM affiliate directory
+        run: |
+          python scrapers/narpm_affiliates.py \
+            --out data/narpm_affiliates.csv \
+            --type "${{ github.event.inputs.business_type }}"
+
+      - name: Upload CSV as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: narpm-affiliates
+          path: data/narpm_affiliates.csv
+
+      - name: Commit CSV if it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add data/narpm_affiliates.csv
+          git diff --cached --quiet || git commit -m "NARPM affiliates refresh $(date -u +%F)"
+          git push
