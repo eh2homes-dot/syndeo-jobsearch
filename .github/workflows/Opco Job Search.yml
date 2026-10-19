@@ -35,16 +35,22 @@ jobs:
     timeout-minutes: 60
 
     steps:
+      # Decide by WHICH schedule fired, not by the clock. GitHub often starts
+      # scheduled runs hours late (Oct 11 started ~noon ET), and the old
+      # "is it 6am right now?" check then skipped both triggers silently.
       - name: Skip if this is the wrong side of daylight saving
         id: guard
+        env:
+          EVENT: ${{ github.event_name }}
+          FIRED: ${{ github.event.schedule }}
         run: |
-          HOUR=$(TZ=America/New_York date +%-H)
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HOUR" != "6" ]; then
-            echo "It is ${HOUR}:00 in New York, not 6am. Skipping this trigger."
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          fi
+          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
+          if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
+          elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          else run=false; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
 
       - uses: actions/checkout@v4
         if: steps.guard.outputs.run == 'true'
