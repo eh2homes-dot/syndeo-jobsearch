@@ -407,6 +407,13 @@ def to_airtable(row: dict, scraped_on: str) -> dict:
     return f
 
 
+def _report(level: str, msg: str) -> None:
+    """Log to stderr; on GitHub Actions also surface it as a run annotation."""
+    print(f"airtable: {msg}", file=sys.stderr)
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        print(f"::{level} title=Airtable sync::{msg}", flush=True)
+
+
 def sync_airtable(rows: list[dict], dry_run: bool = False) -> int:
     token = os.environ.get("AIRTABLE_TOKEN", "").strip()
     base = os.environ.get("AIRTABLE_BASE_ID", "").strip() or AIRTABLE_DEFAULT_BASE
@@ -420,15 +427,20 @@ def sync_airtable(rows: list[dict], dry_run: bool = False) -> int:
         print(json.dumps(payload[:2], indent=2))
         return 0
     if not token:
-        print("airtable: AIRTABLE_TOKEN not set; skipping sync (CSV still written)", file=sys.stderr)
+        _report("warning", "AIRTABLE_TOKEN is empty in this run, so the sync was skipped "
+                           "(CSV still written). Check it is a repository secret under Actions.")
         return 0
 
     at = AirtableSync(token, base, table)
-    locked = at.locked_ids()
+    try:
+        locked = at.locked_ids()
+    except RuntimeError as e:
+        _report("error", str(e))
+        raise
     todo = [p for p in payload if p["NARPM ID"] not in locked]
     created, updated = at.upsert(todo)
-    print(f"airtable: {created} created, {updated} updated, "
-          f"{len(payload) - len(todo)} skipped (Skip Sync)", file=sys.stderr)
+    _report("notice", f"{created} created, {updated} updated, "
+                      f"{len(payload) - len(todo)} skipped (Skip Sync) in {base}/{table}")
     return 0
 
 
