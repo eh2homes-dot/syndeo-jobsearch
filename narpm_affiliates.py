@@ -14,6 +14,15 @@ Usage:
   python narpm_affiliates.py --out data/narpm.csv
   python narpm_affiliates.py --type "Software"        # one business type only
   python narpm_affiliates.py --delay 3                # seconds between page requests
+  python narpm_affiliates.py --airtable               # also upsert rows into Airtable
+  python narpm_affiliates.py --airtable --dry-run     # show what would be sent, write nothing
+
+Airtable sync (--airtable):
+  Upserts into the "NARPM Affiliates" table, matched on the NARPM ID field, so
+  re-runs update rows instead of duplicating them. Needs AIRTABLE_TOKEN and
+  AIRTABLE_BASE_ID in the environment (the same repo secrets People Moves uses).
+  Rows with "Skip Sync" checked in Airtable are never overwritten, so hand-edits
+  stick. Empty scraped values are not sent, so they never blank out a field.
 
 How parsing works:
   The page is flattened into an ordered stream of text/link/image tokens.
@@ -36,12 +45,28 @@ import sys
 import time
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
-from urllib.parse import urlparse, parse_qs, urlencode
+import os
+from urllib.parse import urlparse, parse_qs, urlencode, urljoin
 
 import requests
 from bs4 import BeautifulSoup, Comment, NavigableString
 
 BASE_URL = "https://www.narpm.org/find/affiliate-members"
+SITE_ROOT = "https://www.narpm.org"
+
+AIRTABLE_API = "https://api.airtable.com/v0"
+AIRTABLE_DEFAULT_BASE = "appnWM0QuCZS3xgYN"   # Syndeo Job Search (Trial)
+AIRTABLE_DEFAULT_TABLE = "tblgDW94DrkbTaDFs"  # NARPM Affiliates
+
+# CSV column -> Airtable field name
+AIRTABLE_FIELDS = {
+    "company": "Company", "mls_id": "NARPM ID", "business_type": "Business Type",
+    "contact_name": "Contact Name", "phone": "Phone", "fax": "Fax",
+    "website": "Website", "website_domain": "Website Domain",
+    "street": "Street", "city": "City", "state": "State", "zip": "Zip",
+    "description": "Description", "photo_url": "Photo URL",
+    "contact_form_url": "NARPM Contact Form",
+}
 PER_PAGE = 30  # the site's fixed page size
 
 HEADERS = {
@@ -170,6 +195,10 @@ def _is_external_site(href: str) -> bool:
     if not href.lower().startswith(("http://", "https://")):
         return False
     host = urlparse(href).netloc.lower()
+    # Members sometimes type a street address into the website box
+    # ("https://789%20Meeting%20Street"); a real host has a dot and no spaces.
+    if "." not in host or "%20" in host or " " in host:
+        return False
     return not any(h in host for h in ("narpm.org", "maps.google", "google.com/maps",
                                         "internetmemberservices.com"))
 
@@ -237,6 +266,11 @@ def parse_listing(seg: list[Tok], company: str, btype: str) -> dict:
     while desc and re.fullmatch(r"[\d>< ]+|Pages:?|,", desc[-1]):  # trailing pager crumbs
         desc.pop()
     rec["description"] = "\n".join(desc).strip()
+
+    # NARPM uses site-relative links ("/members/contact_member?..."); make them absolute.
+    for k in ("contact_form_url", "referral_url", "map_url", "photo_url"):
+        if rec[k]:
+            rec[k] = urljoin(SITE_ROOT + "/", rec[k])
 
     if rec["website"]:
         rec["website_domain"] = re.sub(r"^www\.", "", urlparse(rec["website"]).netloc.lower())
@@ -307,22 +341,119 @@ def scrape(business_type: str = "", delay: float = 2.0) -> list[dict]:
     return out
 
 
+# --------------------------------------------------------------------------- #
+# Airtable sync
+# --------------------------------------------------------------------------- #
+
+class AirtableSync:
+    """Upserts rows into the NARPM Affiliates table, keyed on NARPM ID.
+
+    Airtable allows 10 records per write and 5 requests per second per base.
+    """
+
+    def __init__(self, token: str, base_id: str, table: str):
+        self.url = f"{AIRTABLE_API}/{base_id}/{table}"
+        self.s = requests.Session()
+        self.s.headers.update({
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        })
+
+    def _call(self, method: str, **kw) -> dict:
+        for attempt in range(1, 4):
+            r = self.s.request(method, self.url, timeout=30, **kw)
+            if r.status_code == 429:  # Airtable asks for a 30s back-off
+                print("  airtable: rate limited, waiting 30s", file=sys.stderr)
+                time.sleep(30)
+                continue
+            if r.status_code >= 400:
+                raise RuntimeError(f"Airtable {method} -> HTTP {r.status_code}: {r.text[:500]}")
+            time.sleep(0.25)
+            return r.json()
+        raise RuntimeError("Airtable: still rate limited after 3 attempts")
+
+    def locked_ids(self) -> set[str]:
+        """NARPM IDs of rows marked Skip Sync (hand-edited; never overwrite)."""
+        ids, offset = set(), None
+        while True:
+            params = {"filterByFormula": "{Skip Sync}", "fields[]": "NARPM ID", "pageSize": 100}
+            if offset:
+                params["offset"] = offset
+            data = self._call("GET", params=params)
+            ids |= {r["fields"].get("NARPM ID", "") for r in data.get("records", [])}
+            offset = data.get("offset")
+            if not offset:
+                return ids - {""}
+
+    def upsert(self, records: list[dict]) -> tuple[int, int]:
+        created = updated = 0
+        for i in range(0, len(records), 10):
+            body = {
+                "performUpsert": {"fieldsToMergeOn": ["NARPM ID"]},
+                "typecast": True,  # lets a brand-new Business Type become a select option
+                "records": [{"fields": f} for f in records[i:i + 10]],
+            }
+            data = self._call("PATCH", json=body)
+            created += len(data.get("createdRecords", []))
+            updated += len(data.get("updatedRecords", []))
+        return created, updated
+
+
+def to_airtable(row: dict, scraped_on: str) -> dict:
+    """CSV row -> Airtable fields. Empty values are left out so they never blank a field."""
+    f = {AIRTABLE_FIELDS[k]: row[k].strip() for k in AIRTABLE_FIELDS if str(row.get(k, "")).strip()}
+    f["Source"] = "NARPM Affiliate"
+    f["Last Scraped"] = scraped_on
+    return f
+
+
+def sync_airtable(rows: list[dict], dry_run: bool = False) -> int:
+    token = os.environ.get("AIRTABLE_TOKEN", "").strip()
+    base = os.environ.get("AIRTABLE_BASE_ID", "").strip() or AIRTABLE_DEFAULT_BASE
+    table = os.environ.get("AIRTABLE_NARPM_TABLE", "").strip() or AIRTABLE_DEFAULT_TABLE
+    scraped_on = (rows[0]["scraped_at"][:10] if rows else datetime.now(timezone.utc).strftime("%Y-%m-%d"))
+    payload = [to_airtable(r, scraped_on) for r in rows if r.get("mls_id")]
+
+    if dry_run:
+        print(f"airtable (dry run): would upsert {len(payload)} rows into {base}/{table}", file=sys.stderr)
+        import json
+        print(json.dumps(payload[:2], indent=2))
+        return 0
+    if not token:
+        print("airtable: AIRTABLE_TOKEN not set; skipping sync (CSV still written)", file=sys.stderr)
+        return 0
+
+    at = AirtableSync(token, base, table)
+    locked = at.locked_ids()
+    todo = [p for p in payload if p["NARPM ID"] not in locked]
+    created, updated = at.upsert(todo)
+    print(f"airtable: {created} created, {updated} updated, "
+          f"{len(payload) - len(todo)} skipped (Skip Sync)", file=sys.stderr)
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Scrape the NARPM affiliate member directory")
     ap.add_argument("--out", default="narpm_affiliates.csv", help="CSV output path")
     ap.add_argument("--type", default="", help='Filter to one business type, e.g. "Software"')
     ap.add_argument("--delay", type=float, default=2.0, help="Seconds between page requests")
+    ap.add_argument("--airtable", action="store_true", help="Also upsert rows into Airtable")
+    ap.add_argument("--dry-run", action="store_true", help="With --airtable: print, don't write")
     args = ap.parse_args()
 
     rows = scrape(args.type, args.delay)
-    import os
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     with open(args.out, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)
         w.writeheader()
         w.writerows(rows)
     print(f"Wrote {len(rows)} rows to {args.out}", file=sys.stderr)
-    return 0 if rows else 1
+    if not rows:
+        return 1
+
+    if args.airtable:
+        return sync_airtable(rows, args.dry_run)
+    return 0
 
 
 if __name__ == "__main__":
