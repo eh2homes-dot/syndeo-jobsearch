@@ -18,13 +18,13 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 - **Divvy Homes** — the Column D page points at a job board that isn't there: greenhouse:divvyhomes (Greenhouse has no board named 'divvyhomes' (it may have moved))
 - **Easterly Government Properties** — the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CONNECTION_CLOSED at https://www.easterlyre.com/careers))
 - **Evergreen Live** — Column D is empty
-- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 202)
+- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 403)
 - **Kite Realty Group Trust** — the Column D page doesn't load (connection error (ReadTimeout); in a browser: the page didn't load in the browser (TimeoutError: Page.goto: Timeout 30000ms exceeded.))
 - **Mountain Property Management** — the Column D page doesn't load (HTTP 404; in a browser: not found)
 - **NARPM (National Association of Residential Property Managers) Job Board** — Column D is empty
 - **Northpoint Asset Manamgement** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 - **Rhome Property Management** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
-- **Tamarack Property Management** — the Column D page doesn't load (connection error (SSLError))
+- **Tamarack Property Management** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 
 ### Read through the page's job board — paste these into Column D (16)
 
@@ -51,88 +51,15 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 
 - **Redstone** — the link now redirects to recruiting.paylocity.com - worth updating
 
-## New this week (40)
+## New this week (0)
 
-- **Highwoods Properties** · Sales · [CX Workplace and Revenue Manager](https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/OpportunityDetail?opportunityId=435a0b29-fbae-44cc-9cd5-922c9f248866) — Raleigh, NC
-- **Industrious** · GTM · [Community Placemaking and Marketing Manager](https://jobs.ashbyhq.com/industrious/9b2e98b7-1860-4b7b-8d09-98479d75e37f) — New York City
-- **Lamar Advertising Company** · Sales · [Sales and Campaign Coordinator](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=96ec9585-5e67-4d32-b6a0-959e6c8ded4b) — Crown Point, IN
-- **Lamar Advertising Company** · Sales · [Sales and Campaign Coordinator](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=246aa23d-e50b-40ff-b5ca-5d2284b7263c) — NASHVILLE, TN
-- **Lamar Advertising Company** · Sales · [Sales and Campaign Coordinator](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=d9fa203f-d9e8-4b4d-836f-c1c7be26d8c3) — LAKE CHARLES, LA
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-glennville-ga) — Uniti | Glennville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-springfield-ga) — Uniti | Springfield, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-fitzgerald-ga) — Uniti | Fitzgerald, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-douglas-ga) — Uniti | Douglas, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-ocilla-ga) — Uniti | Ocilla, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-valdosta-ga) — Uniti | Valdosta, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Consumer Direct Sales Manager](https://careers.uniti.com/jobs/34672-tifton-ga) — Uniti | Tifton, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Enterprise Account Executive](https://careers.uniti.com/jobs/34554-jacksonville-fl) — Uniti | Jacksonville, FL, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Field Account Executive I (Hybrid)](https://careers.uniti.com/jobs/34708-granville-oh) — Uniti | Granville, OH, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Field Account Executive II (Hybrid)](https://careers.uniti.com/jobs/34702-lexington-ky) — Uniti | Lexington, KY, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Field Account Executive II (Hybrid)](https://careers.uniti.com/jobs/34679-valdosta-ga) — Uniti | Valdosta, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34755-whitney-tx) — Uniti | Whitney, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34761-clyde-tx) — Uniti | Clyde, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34761-seymour-tx) — Uniti | Seymour, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34768-trinity-tx) — Uniti | Trinity, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34768-crockett-tx) — Uniti | Crockett, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34779-kerrville-tx) — Uniti | Kerrville, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34793-texarkana-tx) — Uniti | Texarkana, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34799-glennville-ga) — Uniti | Glennville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34799-fitzgerald-ga) — Uniti | Fitzgerald, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34799-douglas-ga) — Uniti | Douglas, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34807-perry-ga) — Uniti | Perry, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34807-milledgeville-ga) — Uniti | Milledgeville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34807-gray-ga) — Uniti | Gray, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34813-summerville-ga) — Uniti | Summerville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34813-dalton-ga) — Uniti | Dalton, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34820-fulton-ny) — Uniti | Fulton, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34820-cazenovia-ny) — Uniti | Cazenovia, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34826-jamestown-ny) — Uniti | Jamestown, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34832-ridgway-pa) — Uniti | Ridgway, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34838-state-college-pa) — Uniti | State College, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34844-lexington-nc) — Uniti | Lexington, NC, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34850-muncy-pa) — Uniti | Muncy, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34850-lansford-pa) — Uniti | Lansford, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Sales · [Outside Sales Representative](https://careers.uniti.com/jobs/34855-dawson-ga) — Uniti | Dawson, GA, US (Onsite) | Full-Time
+No new matching roles.
 
-## Recently closed (35)
+## Recently closed (0)
 
 *Open last week, gone now — the "recently hired" signal. Closed usually means filled, but can mean pulled. Companies that failed this week are left out.*
 
-- **BH Management Services** · Marketing Strategist, Digital & Paid Media — Remote - Open
-- **Belong** · Growth Advisor, Leasing — Buenos Aires, Buenos Aires, Argentina
-- **Evergreen Residential** · Associate, SFR Revenue Management & Underwriting — New York City, NY
-- **Evergreen Residential** · VP of Field Services (Construction) — Dallas, TX
-- **Industrious** · Senior Community and Marketing Manager — New York City
-- **Lamar Advertising Company** · Assistant Sales Manager — PITTSBURGH, PA
-- **Lamar Advertising Company** · Sales Account Executive — WOLFFORTH, TX
-- **Lamar Advertising Company** · Sales and Campaign Coordinator — COLUMBIA, SC
-- **Uniti Group** · Account Manager II (Hybrid) — Uniti | Atlanta, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Enterprise Account Executive — Uniti | Huntsville, AL, US (Onsite) | Full-Time
-- **Uniti Group** · Lead Specialist -Consumer Direct Sales — Uniti | Summerfield, NC, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | State College, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Muncy, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Lansford, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Lexington, NC, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Summerville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Dalton, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Jamestown, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Fulton, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Cazenovia, NY, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Ridgway, PA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Perry, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Milledgeville, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Gray, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Blakely, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Dawson, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Bainbridge, GA, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Clyde, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Seymour, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Whitney, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Trinity, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Crockett, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Kerrville, TX, US (Onsite) | Full-Time
-- **Uniti Group** · Outside Sales Specialist (Residential) — Uniti | Texarkana, TX, US (Onsite) | Full-Time
-- **WeWork** · Sales Development Representative - SEA & Australia (Vietnamese Speaking) — Singapore
+No matching roles closed.
 
 ## All open roles
 
@@ -254,12 +181,12 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 | Divvy Homes | [www.divvyhomes.com/careers](https://www.divvyhomes.com/careers) | page | needs-link | 0 / 0 | the Column D page points at a job board that isn't there: greenhouse:divvyhomes (Greenhouse has no board named 'divvyhomes' (it may have moved)) |
 | Easterly Government Properties | [www.easterlyre.com/careers](https://www.easterlyre.com/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CONNECTION_CLOSED at https://www.easterlyre.com/careers)) |
 | Evergreen Live | — empty | — | needs-link | 0 / 0 | Column D is empty |
-| Key Renter Property Managment | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 202) |
+| Key Renter Property Managment | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 403) |
 | Kite Realty Group Trust | [www.kiterealty.com/careers](https://www.kiterealty.com/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (connection error (ReadTimeout); in a browser: the page didn't load in the browser (TimeoutError: Page.goto: Timeout 30000ms exceeded.)) |
 | Mountain Property Management | [jacksonholeproperties.net/careers](https://jacksonholeproperties.net/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 404; in a browser: not found) |
 | NARPM (National Association of Residential Property Managers) Job Board | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | Northpoint Asset Manamgement | [northpointam.com/careers](https://northpointam.com/careers) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 | Rhome Property Management | [www.rhomepm.com/employment](https://www.rhomepm.com/employment) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
-| Tamarack Property Management | [www.tamarackproperty.com/careers](https://www.tamarackproperty.com/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (connection error (SSLError)) |
+| Tamarack Property Management | [www.tamarackproperty.com/careers](https://www.tamarackproperty.com/careers) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 
 **Status:** ok 29, needs-link 13
