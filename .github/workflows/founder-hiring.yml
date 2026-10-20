@@ -1,0 +1,101 @@
+name: Founder hiring
+
+# The founder-led hiring draft: the small-company slice of what the weekly job search and
+# the OpCo search already found. Reads data/history.json + out/opco-jobs-latest.json and
+# leads/founders.csv; writes output/founders/. Does no scraping of its own.
+#
+# TWO TOGGLES, both off by default, so this never runs by accident:
+#   1. Repo variable FOUNDER_HIRING = true   (Settings > Secrets and variables > Actions > Variables)
+#      gates the scheduled run. Without it the Sunday schedule exits immediately.
+#   2. config.json -> founder_hiring.enabled  gates the script itself. A manual run from the
+#      Actions tab passes --force, so you can try it without flipping either toggle.
+#
+# Sundays ~7:10am ET, after the weekly search (4am) and People Moves (6am) have committed.
+# GitHub cron is UTC; two schedules + the guard step give one run per Sunday all year.
+on:
+  schedule:
+    - cron: "10 11 * * 0"     # 07:10 UTC-4 = 7:10am EDT
+    - cron: "10 12 * * 0"     # 07:10 UTC-5 = 7:10am EST
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Window: roles first seen in the last N days"
+        default: "7"
+      max_headcount:
+        description: "A company at or under this headcount counts as founder-led"
+        default: "50"
+      record:
+        description: "Log the picked companies to data/founder_featured.json (cooldown). Leave off for a dry look."
+        type: boolean
+        default: false
+      dry_run:
+        description: "Attach the draft, but don't save anything to the repo"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: founder-hiring
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Decide whether this trigger should run
+        id: guard
+        env:
+          EVENT: ${{ github.event_name }}
+          FIRED: ${{ github.event.schedule }}
+          ENABLED: ${{ vars.FOUNDER_HIRING }}
+        run: |
+          offset=$(TZ=America/New_York date +%z)
+          if [ "$EVENT" != "schedule" ]; then run=true
+          elif [ "$ENABLED" != "true" ]; then run=false; echo "FOUNDER_HIRING repo variable is not 'true'; skipping."
+          elif [ "$FIRED" = "10 11 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "10 12 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          else run=false; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "event=$EVENT schedule='$FIRED' offset=$offset enabled='$ENABLED' -> run=$run"
+
+      - uses: actions/checkout@v5
+        if: steps.guard.outputs.run == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.guard.outputs.run == 'true'
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+        if: steps.guard.outputs.run == 'true'
+
+      - name: Build the founder-led hiring draft
+        if: steps.guard.outputs.run == 'true'
+        env:
+          PYTHONUNBUFFERED: "1"
+          DAYS: ${{ github.event.inputs.days || '7' }}
+          MAX_HC: ${{ github.event.inputs.max_headcount || '50' }}
+          RECORD: ${{ github.event.inputs.record || 'false' }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          ARGS="--days $DAYS --max-headcount $MAX_HC"
+          if [ "$RECORD" = "true" ]; then ARGS="$ARGS --record"; fi
+          # A manual run is an explicit ask, so it goes ahead even with config.json's toggle off.
+          if [ "$EVENT" = "workflow_dispatch" ]; then ARGS="$ARGS --force"; fi
+          python -m jobsearch.founders $ARGS
+
+      - name: Commit results
+        if: steps.guard.outputs.run == 'true' && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add output/founders data/founder_featured.json 2>/dev/null || git add output/founders
+          git commit -m "founder hiring $(date -u +%F)" || echo "nothing to commit"
+          git pull --rebase --autostash || true
+          git push
+
+      - uses: actions/upload-artifact@v4
+        if: steps.guard.outputs.run == 'true'
+        with:
+          name: founder-hiring-draft
+          path: output/founders/

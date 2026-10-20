@@ -143,3 +143,33 @@ merged; if it fails, tracked roles would look closed-and-reopened.
 The **Tests** workflow runs this on every branch and pull request. Its "Live
 check" job runs both searches for real without saving anything, and attaches
 what they found.
+
+## Founder-led hiring (off by default)
+
+The small-company slice of what the two searches already found, drafted in the
+founder-item format for the founder newsletter. No scraping of its own.
+
+```
+python -m jobsearch.founders --force          # try it without flipping the toggle
+python -m jobsearch.founders --days 14 --max-headcount 75 --force
+python -m jobsearch.founders --record         # log the picked companies for the cooldown
+```
+
+| | |
+|---|---|
+| Reads | `data/history.json`, `out/opco-jobs-latest.json`, `leads/founders.csv` |
+| Rule | a role first seen in the last `window_days` at a company with `headcount ≤ max_headcount`, or `founder_led = TRUE`, is founder-led |
+| Writes | `output/founders/founder-roles-<date>.md` (draft), `.csv` / `.json` (every eligible role, scored), `needs-review-<date>.csv` |
+| Cooldown | `data/founder_featured.json`, its own ledger — Origins' `featured_companies.json` is untouched |
+| Toggles | `config.json → founder_hiring.enabled` (the script) and the `FOUNDER_HIRING` repo variable (the Sunday schedule). Manual runs from the Actions tab pass `--force`. |
+
+**`leads/founders.csv` is the only source of headcount, stage and founder details.**
+It is seeded with every company name from the master list and the OpCo tab, all
+blank. A company with fresh roles and no headcount on file is listed under "Needs
+review" in the draft rather than guessed at; fill in `headcount` (or set
+`founder_led` to TRUE/FALSE) and it is in or out next run. Anything still blank
+when an item is drafted shows up as `[VERIFY …]`, never as a value.
+
+Columns: `company, headcount, stage, founder_name, founder_linkedin, founder_x, founder_led, notes`.
+`stage` places the item in a bucket (pre-seed/seed → Build -1→0; Series A–C → 0→1;
+growth/established/operator → 1→beyond).
