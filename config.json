@@ -354,7 +354,7 @@
     }
   },
   "founder_hiring": {
-    "enabled": false,
+    "enabled": true,
     "note": "Founder-led hiring draft (jobsearch/founders.py). Separate from the Origins 'Now hiring' draft. A role posted at a company with headcount <= max_headcount (or founder_led = TRUE) in leads/founders.csv counts as founder-led. enabled=false means `python -m jobsearch.founders` writes nothing unless --force; the Founder hiring workflow also checks the FOUNDER_HIRING repo variable. Cooldown ledger: data/founder_featured.json (separate from Origins').",
     "window_days": 7,
     "max_headcount": 50,
