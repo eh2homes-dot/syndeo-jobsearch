@@ -84,19 +84,19 @@ def _norm_org(o: dict, board: str, board_url: str) -> dict:
     if isinstance(domain, str) and domain.startswith("http"):
         domain = urlparse(domain).netloc
     domain = (domain or "").lower().replace("www.", "")
-    hc = _first(o, "head_count", "headcount", "size", "employee_count", "company_size")
+    hc = _first(o, "headCount", "head_count", "headcount", "size", "employee_count", "company_size")
     if isinstance(hc, dict):
         hc = _first(hc, "name", "label", "value")
     stage = _first(o, "stage", "funding_stage", "company_stage")
     if isinstance(stage, dict):
         stage = _first(stage, "name", "label", "value")
-    tags = _first(o, "industry_tags", "industries", "topics", "tags", default=[])
+    tags = _first(o, "industryTags", "industry_tags", "visibleIndustryTags", "industries", "topics", "tags", default=[])
     if isinstance(tags, list):
         tags = "; ".join(t.get("name", t) if isinstance(t, dict) else str(t) for t in tags)
     locs = _first(o, "locations", "location", default=[])
     if isinstance(locs, list):
         locs = "; ".join(l.get("name", l) if isinstance(l, dict) else str(l) for l in locs)
-    jobs = _first(o, "active_jobs_count", "jobs_count", "open_jobs", "job_count", default="")
+    jobs = _first(o, "activeJobsCount", "active_jobs_count", "jobs_count", "open_jobs", "job_count", default="")
     return {"company": _first(o, "name", "title"), "domain": domain, "headcount": str(hc or ""),
             "stage": str(stage or ""), "industry_tags": str(tags or ""), "locations": str(locs or ""),
             "board": board, "board_url": board_url, "open_jobs": str(jobs)}
@@ -127,27 +127,45 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
     else:
         _diag(board, "no __NEXT_DATA__ on /companies or /jobs")
     if net_id:
-        try:
-            for page in range(max_pages):
-                resp = feeds_mod._post(f"https://api.getro.com/api/v2/collections/{net_id}/search/organizations",
-                                       {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""})
-                if page == 0:
-                    _diag(board, f"net_id={net_id} status={getattr(resp, 'status_code', '?')} body[:600]={resp.text[:600]!r}")
-                r = resp.json()
-                res = r.get("results") or r
-                if page == 0:
-                    _diag(board, "organizations API keys: " + ", ".join(sorted(res.keys()))[:300]
-                          if isinstance(res, dict) else f"organizations API returned {type(res).__name__}")
-                batch = (res.get("organizations") or res.get("companies") or res.get("hits") or res.get("items") or []) \
-                    if isinstance(res, dict) else (res if isinstance(res, list) else [])
-                orgs += batch
-                total = int(res.get("count") or res.get("total") or res.get("nbHits") or 0) if isinstance(res, dict) else 0
-                if not batch or (total and len(orgs) >= total):
+        host = p.netloc
+        endpoints = [
+            ("POST", f"https://api.getro.com/api/v2/collections/{net_id}/search/companies"),
+            ("POST", f"https://api.getro.com/api/v2/collections/{net_id}/search/organizations"),
+            ("POST", f"https://api.getro.com/api/v2/networks/{net_id}/search/companies"),
+            ("GET", f"https://api.getro.com/api/v2/collections/{net_id}/companies?per_page=100&page=0"),
+            ("GET", f"https://api.getro.com/api/v2/networks/{net_id}/organizations?per_page=100&page=0"),
+            ("GET", f"https://{host}/api/v2/collections/{net_id}/companies?per_page=100&page=0"),
+        ]
+        for method, url in endpoints:
+            try:
+                for page in range(max_pages):
+                    u = url.replace("page=0", f"page={page}") if method == "GET" else url
+                    if method == "POST":
+                        resp = feeds_mod._post(u, {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""})
+                    else:
+                        resp = feeds_mod._get(u)
+                    if page == 0:
+                        _diag(board, f"{method} {u} -> {resp.status_code} body[:300]={resp.text[:300]!r}")
+                    r = resp.json()
+                    res = r.get("results") or r
+                    batch = []
+                    if isinstance(res, dict):
+                        for k in ("companies", "organizations", "hits", "items", "found", "data"):
+                            if isinstance(res.get(k), list):
+                                batch = res[k]
+                                break
+                    elif isinstance(res, list):
+                        batch = res
+                    orgs += batch
+                    total = int(res.get("count") or res.get("total") or res.get("nbHits") or 0) if isinstance(res, dict) else 0
+                    if not batch or (total and len(orgs) >= total):
+                        break
+                if orgs:
+                    note = f"{method} {url.split('/api/')[1].split('?')[0]}, {len(orgs)} companies"
                     break
-            note = f"search API, {len(orgs)} companies"
-        except Exception as e:
-            orgs, note = [], f"search API failed ({type(e).__name__}: {str(e)[:200]})"
-            _diag(board, note)
+            except Exception as e:
+                _diag(board, f"{method} {u} failed ({type(e).__name__}: {str(e)[:120]})")
+                orgs = []
     if not orgs and data:
         st = ((data.get("props") or {}).get("pageProps") or {}).get("initialState") or {}
         for key in ("allCompanies", "companies"):
@@ -178,7 +196,7 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
             found = 0
             for d in feeds_mod._walk(json.loads(m.group(1))):
                 if isinstance(d, dict) and d.get("name") and (d.get("domain") or d.get("website")) \
-                        and any(k in d for k in ("head_count", "headcount", "stage", "industry_tags", "active_jobs_count", "slug")):
+                        and any(k in d for k in ("headCount", "head_count", "headcount", "stage", "industryTags", "activeJobsCount", "slug")):
                     key = str(d.get("id") or d.get("slug") or d.get("name"))
                     if key not in seen:
                         seen.add(key)
