@@ -60,7 +60,10 @@ def getro(board_url: str, board: str, max_pages: int = 40) -> tuple[list[dict], 
     first_page = [d for d in _walk(data) if _is_job(d)]
     # The board's network/collection id is what the search API is keyed on
     net_id = None
-    for d in _walk(data):
+    _net = ((data.get("props") or {}).get("pageProps") or {}).get("network") or {}
+    if isinstance(_net, dict) and _net.get("id"):
+        net_id = int(_net["id"])
+    for d in ([] if net_id else _walk(data)):
         n = d.get("network")
         if isinstance(n, dict) and n.get("id"):
             net_id = n["id"]
@@ -72,8 +75,16 @@ def getro(board_url: str, board: str, max_pages: int = 40) -> tuple[list[dict], 
     if net_id:
         try:
             for page in range(max_pages):
-                r = _post(f"https://api.getro.com/api/v2/collections/{net_id}/search/jobs",
-                          {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""}).json()
+                # Getro's API answers 406 without an explicit JSON Accept header (seen 2026-10-20), and the
+                # reader then fell back to the first page only. Headers are set here rather than in _post so
+                # the other readers keep their behaviour.
+                import requests as _rq
+                from .adapters import UA as _UA, TIMEOUT as _TO, _retry as _rt
+                _hdrs = {**_UA, "Accept": "application/json", "Content-Type": "application/json",
+                         "Origin": base, "Referer": f"{base}/jobs"}
+                _url = f"https://api.getro.com/api/v2/collections/{net_id}/search/jobs"
+                r = _rt(lambda: _rq.post(_url, headers=_hdrs, timeout=_TO,
+                                         json={"hitsPerPage": 100, "page": page, "filters": {}, "query": ""}), _url).json()
                 res = r.get("results") or r
                 batch = res.get("jobs") or []
                 jobs += batch

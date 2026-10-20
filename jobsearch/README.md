@@ -173,3 +173,12 @@ when an item is drafted shows up as `[VERIFY …]`, never as a value.
 Columns: `company, headcount, stage, founder_name, founder_linkedin, founder_x, founder_led, notes`.
 `stage` places the item in a bucket (pre-seed/seed → Build -1→0; Series A–C → 0→1;
 growth/established/operator → 1→beyond).
+
+### VC portfolio companies
+
+`python -m jobsearch.vc_companies` (or the "VC portfolio companies" workflow) lists every
+company on the Getro boards in `config.json → vc_boards` into `leads/vc_portfolio_companies.csv`
+with headcount bucket, stage and tags. The founder-led draft reads `leads/founders.csv`, which
+carries those companies with a `domain` column, so VC-board roles in `worth_adding.csv` match
+them even though they aren't on the master list. Getro's API needs `Accept: application/json`
+or it answers 406; both the jobs and companies readers send it.
