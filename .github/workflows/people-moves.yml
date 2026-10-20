@@ -157,6 +157,12 @@ jobs:
           PEOPLE_MOVES_UA: "Syndeo People-Moves Research (hello@syndeollc.com)"
           # The weekly and OpCo job-search outputs, found in "Locate the module".
           JOBS_RESULTS_PATH: ${{ steps.locate.outputs.jobs }}
+          # Database sinks: each is skipped with a warning if its secrets are
+          # missing, and a sink failure never stops the run or loses the brief.
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           if [ "${{ inputs.discover_leadership }}" = "true" ]; then
             python discover_leadership.py
