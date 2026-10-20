@@ -27,8 +27,14 @@ from urllib.parse import urlparse
 from . import feeds as feeds_mod
 from . import run
 
+DEBUG_PATH = run.ROOT / "out" / "vc_companies_debug.txt"
+
+
 def _diag(board: str, msg: str) -> None:
     print(f"  vc  {board:14} {msg}", flush=True)
+    DEBUG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(DEBUG_PATH, "a") as f:
+        f.write(f"[{board}] {msg}\n")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a") as f:
@@ -94,11 +100,19 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
     net_id, data = _network_id(base)
     orgs: list[dict] = []
     note = ""
+    if data:
+        props = (data.get("props") or {}).get("pageProps") or {}
+        _diag(board, "pageProps keys: " + ", ".join(sorted(props.keys()))[:400])
+    else:
+        _diag(board, "no __NEXT_DATA__ on /companies or /jobs")
     if net_id:
         try:
             for page in range(max_pages):
-                r = feeds_mod._post(f"https://api.getro.com/api/v2/collections/{net_id}/search/organizations",
-                                    {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""}).json()
+                resp = feeds_mod._post(f"https://api.getro.com/api/v2/collections/{net_id}/search/organizations",
+                                       {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""})
+                if page == 0:
+                    _diag(board, f"net_id={net_id} status={getattr(resp, 'status_code', '?')} body[:600]={resp.text[:600]!r}")
+                r = resp.json()
                 res = r.get("results") or r
                 if page == 0:
                     _diag(board, "organizations API keys: " + ", ".join(sorted(res.keys()))[:300]

@@ -31,6 +31,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
           BOARD: ${{ github.event.inputs.board }}
         run: |
+          rm -f out/vc_companies_debug.txt
           if [ -n "$BOARD" ]; then python -m jobsearch.vc_companies --board "$BOARD"; else python -m jobsearch.vc_companies; fi
           echo "## VC portfolio companies" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"; head -40 leads/vc_portfolio_companies.csv >> "$GITHUB_STEP_SUMMARY"; echo '```' >> "$GITHUB_STEP_SUMMARY"
@@ -39,7 +40,7 @@ jobs:
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add leads/vc_portfolio_companies.csv
+          git add leads/vc_portfolio_companies.csv out/vc_companies_debug.txt
           git commit -m "vc portfolio companies $(date -u +%F)" || echo "nothing to commit"
           git pull --rebase --autostash || true
           git push
