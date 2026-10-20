@@ -68,6 +68,14 @@
     "verified_by": "Evan (prior session)",
     "verified_on": "2026-09"
   },
+  "Betterbot": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-10-20",
+    "evidence": "the page says nothing is open (\"No open positions\")",
+    "slug": "betterbot",
+    "url": "https://www.betterbot.com/careers/"
+  },
   "Bilt Rewards": {
     "ats": "gem",
     "confidence": "verified",
@@ -109,6 +117,14 @@
     "detected_on": "2026-10-09",
     "evidence": "read from the job board this page links to (adp: c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693&ccId=19000101_000001)",
     "slug": "c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693"
+  },
+  "Brynson": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-10-20",
+    "evidence": "read from the jobs listed on the page",
+    "slug": "brynson",
+    "url": "https://www.brynson.com/careers"
   },
   "Buildium (RealPage)": {
     "confidence": "manual",
@@ -502,6 +518,14 @@
     "url": "https://www.opendoor.com/careers/open-positions",
     "verified_by": "Claude",
     "verified_on": "2026-10-09"
+  },
+  "Orange Charger": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-10-20",
+    "evidence": "read from the jobs listed on the page",
+    "slug": "orange-charger",
+    "url": "https://www.orangecharger.com/careers"
   },
   "Orchard": {
     "ats": "greenhouse",
