@@ -43,7 +43,7 @@ from . import run
 FOUNDERS = run.ROOT / "leads" / "founders.csv"
 OPCO_LATEST = run.ROOT / "out" / "opco-jobs-latest.json"
 
-FOUNDER_COLS = ["company", "headcount", "stage", "founder_name", "founder_linkedin", "founder_x", "founder_led", "notes"]
+FOUNDER_COLS = ["company", "headcount", "stage", "founder_name", "founder_linkedin", "founder_x", "founder_led", "notes", "domain"]
 
 DEFAULTS = {
     "enabled": False,
@@ -60,11 +60,11 @@ DEFAULTS = {
 # Stage labels in leads/founders.csv -> newsletter bucket. Matching is loose and lowercased.
 BUCKETS = [
     ("Build -1 → 0", "Get on the ground floor with the founding team of a pre-seed or seed-stage company.",
-     r"pre-?seed|seed|angel|bootstrap|stealth"),
+     r"pre[-_ ]?seed|seed|angel|bootstrap|stealth"),
     ("Build 0 → 1", "Accelerate a Series A–C company with early momentum.",
-     r"series ?[abc]\b|early|growth-?stage a|\ba\b|\bb\b|\bc\b"),
+     r"series[ _]?[abc]\b|early|growth-?stage a|\ba\b|\bb\b|\bc\b"),
     ("Build 1 → beyond", "Join an established company scaling to its next horizon.",
-     r"series ?[d-z]|growth|late|established|public|scaled|operator"),
+     r"series[ _]?[d-z]|growth|late|established|public|scaled|operator|acquisition|private[ _]equity"),
 ]
 UNKNOWN_BUCKET = ("Stage unknown [VERIFY]", "Fill in `stage` in leads/founders.csv to place these.")
 
@@ -117,7 +117,18 @@ def load_founders(path: Path | None = None) -> dict:
             r["headcount_n"] = _int(r["headcount"])
             r["founder_led_b"] = _bool(r["founder_led"])
             out[run._norm_co(name)] = r
+            dom = (r.get("domain") or "").lower().replace("www.", "").strip("/")
+            if dom:
+                out.setdefault("domain:" + dom, r)
     return out
+
+
+def lookup(registry: dict, company: str, domain: str = "") -> dict | None:
+    """Registry row by company name, else by domain (VC-board roles carry a domain, not a master-list name)."""
+    r = registry.get(run._norm_co(company))
+    if r is None and domain:
+        r = registry.get("domain:" + domain.lower().replace("www.", "").strip("/"))
+    return r
 
 
 def eligible(reg_row: dict | None, max_headcount: int) -> tuple[bool, str]:
@@ -154,8 +165,22 @@ def _parse_date(s: str) -> dt.date | None:
         return None
 
 
-def fresh_roles(history: dict, opco: dict, today: dt.date, window_days: int) -> list[dict]:
-    """Open roles first seen (or posted) within the window, from both searches, deduplicated by URL."""
+def latest_worth_adding(today: dt.date) -> Path | None:
+    """The most recent output/<date>/worth_adding.csv within 7 days: VC-board roles at companies not on the master list."""
+    best = None
+    for p in run.OUT.glob("20??-??-??/worth_adding.csv"):
+        try:
+            day = dt.date.fromisoformat(p.parent.name)
+        except ValueError:
+            continue
+        if 0 <= (today - day).days <= 7 and (best is None or day > best[0]):
+            best = (day, p)
+    return best[1] if best else None
+
+
+def fresh_roles(history: dict, opco: dict, today: dt.date, window_days: int, worth_adding: Path | None = None) -> list[dict]:
+    """Open roles first seen (or posted) within the window, from both searches plus the VC boards' discovery list,
+    deduplicated by URL."""
     cutoff = today - dt.timedelta(days=window_days)
     seen_urls, out = set(), []
 
@@ -191,6 +216,18 @@ def fresh_roles(history: dict, opco: dict, today: dt.date, window_days: int) -> 
         add({"company": r.get("company", ""), "title": r.get("title", ""), "url": r.get("url", ""),
              "location": r.get("location", ""), "first_seen": when.isoformat(), "ats": r.get("ats", ""),
              "key": r.get("id", "")}, "opco")
+
+    if worth_adding and worth_adding.exists():
+        with open(worth_adding, newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                posted = _parse_date(r.get("posted_at", ""))
+                when = posted or _parse_date(worth_adding.parent.name)
+                if when is None or when < cutoff:
+                    continue
+                add({"company": r.get("org_name", ""), "domain": r.get("org_domain", ""), "title": r.get("title", ""),
+                     "url": r.get("apply_url") or r.get("url", ""), "location": r.get("location", ""),
+                     "first_seen": when.isoformat(), "ats": "getro:" + (r.get("board") or ""), "key": r.get("url", "")},
+                    "vc-board")
     return out
 
 
@@ -242,7 +279,7 @@ def select(roles: list[dict], registry: dict, cfg_s: dict, today: dt.date, role_
     eligible_roles, review, dropped = [], {}, []
     for r in roles:
         n = run._norm_co(r["company"])
-        reg = registry.get(n)
+        reg = lookup(registry, r["company"], r.get("domain", ""))
         ok, why = eligible(reg, cfg_s["max_headcount"])
         if not ok:
             if reg is None or reg.get("headcount_n") is None and reg.get("founder_led_b") is None:
@@ -380,7 +417,7 @@ def main(argv=None) -> int:
     registry = load_founders()
     led = _load_ledger()
 
-    roles = fresh_roles(history, opco, today, int(s["window_days"]))
+    roles = fresh_roles(history, opco, today, int(s["window_days"]), latest_worth_adding(today))
     items, scored, review = select(roles, registry, s, today, cfg, led)
 
     out_dir = run.OUT / "founders"
