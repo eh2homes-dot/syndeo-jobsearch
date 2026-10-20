@@ -24,6 +24,9 @@ import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
+import requests
+
+from . import adapters as _ad
 from . import feeds as feeds_mod
 from . import run
 
@@ -42,6 +45,8 @@ def _diag(board: str, msg: str) -> None:
 
 
 OUT_CSV = run.ROOT / "leads" / "vc_portfolio_companies.csv"
+HEADCOUNT_BUCKETS = {"1": "1-10", "2": "11-50", "3": "51-200", "4": "201-500", "5": "501-1,000",
+                     "6": "1,001-5,000", "7": "5,001-10,000", "8": "10,001+"}
 COLS = ["company", "domain", "headcount", "stage", "industry_tags", "locations", "board", "board_url", "open_jobs"]
 
 
@@ -87,6 +92,7 @@ def _norm_org(o: dict, board: str, board_url: str) -> dict:
     hc = _first(o, "headCount", "head_count", "headcount", "size", "employee_count", "company_size")
     if isinstance(hc, dict):
         hc = _first(hc, "name", "label", "value")
+    hc = HEADCOUNT_BUCKETS.get(str(hc), hc)
     stage = _first(o, "stage", "funding_stage", "company_stage")
     if isinstance(stage, dict):
         stage = _first(stage, "name", "label", "value")
@@ -140,10 +146,13 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
             try:
                 for page in range(max_pages):
                     u = url.replace("page=0", f"page={page}") if method == "GET" else url
+                    hdrs = {**_ad.UA, "Accept": "application/json", "Content-Type": "application/json",
+                            "Origin": base, "Referer": f"{base}/companies"}
                     if method == "POST":
-                        resp = feeds_mod._post(u, {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""})
+                        resp = _ad._retry(lambda: requests.post(u, headers=hdrs, timeout=_ad.TIMEOUT,
+                                                                json={"hitsPerPage": 100, "page": page, "filters": {}, "query": ""}), u)
                     else:
-                        resp = feeds_mod._get(u)
+                        resp = _ad._retry(lambda: requests.get(u, headers=hdrs, timeout=_ad.TIMEOUT), u)
                     if page == 0:
                         _diag(board, f"{method} {u} -> {resp.status_code} body[:300]={resp.text[:300]!r}")
                     r = resp.json()
