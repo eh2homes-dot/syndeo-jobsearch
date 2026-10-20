@@ -54,6 +54,10 @@ def _network_id(base: str) -> tuple[int | None, dict]:
     if not m:
         return None, {}
     data = json.loads(m.group(1))
+    props = (data.get("props") or {}).get("pageProps") or {}
+    net = props.get("network") or {}
+    if isinstance(net, dict) and net.get("id"):
+        return int(net["id"]), data
     for d in feeds_mod._walk(data):
         n = d.get("network")
         if isinstance(n, dict) and n.get("id"):
@@ -102,7 +106,10 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
     note = ""
     if data:
         props = (data.get("props") or {}).get("pageProps") or {}
-        _diag(board, "pageProps keys: " + ", ".join(sorted(props.keys()))[:400])
+        net = props.get("network") or {}
+        _diag(board, "network: " + json.dumps({k: net.get(k) for k in ("id", "name", "slug", "collection_id", "collectionId") if k in net}))
+        st = props.get("initialState") or {}
+        _diag(board, "initialState keys: " + ", ".join(sorted(st.keys()))[:400] if isinstance(st, dict) else "initialState not a dict")
     else:
         _diag(board, "no __NEXT_DATA__ on /companies or /jobs")
     if net_id:
@@ -125,7 +132,7 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
                     break
             note = f"search API, {len(orgs)} companies"
         except Exception as e:
-            orgs, note = [], f"search API failed ({type(e).__name__}: {str(e)[:80]})"
+            orgs, note = [], f"search API failed ({type(e).__name__}: {str(e)[:200]})"
             _diag(board, note)
     if not orgs:
         # Fall back to the server-rendered directory: /companies?page=N, each page a dozen or so cards.
@@ -174,7 +181,7 @@ def main(argv=None) -> int:
         try:
             rows, note = read_board(b["url"], b["name"])
         except Exception as e:
-            print(f"  vc  {b['name']:14} FAILED: {type(e).__name__}: {str(e)[:120]}", flush=True)
+            _diag(b["name"], f"FAILED: {type(e).__name__}: {str(e)[:200]}")
             continue
         print(f"  vc  {b['name']:14} {note}", flush=True)
         for r in rows:
