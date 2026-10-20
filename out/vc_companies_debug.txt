@@ -15,3 +15,7 @@
 [RET Ventures] POST https://api.getro.com/api/v2/collections/216/search/companies -> 200 body[:300]='{"results":{"companies":[{"active_jobs_count":2,"stage":"series_unknown","logo_url":"https://cdn.getro.com/companies/8c799834-ce55-47a7-bfc4-e1136a81cac0-1762220586","topics":[],"domain":"applausehq.com","name":"Applause","description":"Applause tracks technician performance in real time and helps t'
 [Camber Creek] no __NEXT_DATA__ on /companies or /jobs
 [Camber Creek] /companies?page=1 failed: HTTPError
+[MetaProp] jobs reader: 170 jobs (search API, 170 jobs)
+[Fifth Wall] jobs reader: 800 jobs (search API, 800 jobs)
+[RET Ventures] jobs reader: 458 jobs (search API, 458 jobs)
+[Camber Creek] jobs reader FAILED: HTTPError: 404 Client Error: Not Found for url: https://careers.cambercreek.com/not-found
