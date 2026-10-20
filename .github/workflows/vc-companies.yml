@@ -32,7 +32,7 @@ jobs:
           BOARD: ${{ github.event.inputs.board }}
         run: |
           rm -f out/vc_companies_debug.txt
-          if [ -n "$BOARD" ]; then python -m jobsearch.vc_companies --board "$BOARD"; else python -m jobsearch.vc_companies; fi
+          if [ -n "$BOARD" ]; then python -m jobsearch.vc_companies --board "$BOARD" --count-jobs; else python -m jobsearch.vc_companies --count-jobs; fi
           echo "## VC portfolio companies" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"; head -40 leads/vc_portfolio_companies.csv >> "$GITHUB_STEP_SUMMARY"; echo '```' >> "$GITHUB_STEP_SUMMARY"
       - name: Commit
