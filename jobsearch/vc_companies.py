@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -25,6 +26,14 @@ from urllib.parse import urlparse
 
 from . import feeds as feeds_mod
 from . import run
+
+def _diag(board: str, msg: str) -> None:
+    print(f"  vc  {board:14} {msg}", flush=True)
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a") as f:
+            f.write(f"- {board}: {msg}\n")
+
 
 OUT_CSV = run.ROOT / "leads" / "vc_portfolio_companies.csv"
 COLS = ["company", "domain", "headcount", "stage", "industry_tags", "locations", "board", "board_url", "open_jobs"]
@@ -91,23 +100,44 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
                 r = feeds_mod._post(f"https://api.getro.com/api/v2/collections/{net_id}/search/organizations",
                                     {"hitsPerPage": 100, "page": page, "filters": {}, "query": ""}).json()
                 res = r.get("results") or r
-                batch = res.get("organizations") or res.get("companies") or res.get("hits") or []
+                if page == 0:
+                    _diag(board, "organizations API keys: " + ", ".join(sorted(res.keys()))[:300]
+                          if isinstance(res, dict) else f"organizations API returned {type(res).__name__}")
+                batch = (res.get("organizations") or res.get("companies") or res.get("hits") or res.get("items") or []) \
+                    if isinstance(res, dict) else (res if isinstance(res, list) else [])
                 orgs += batch
-                total = int(res.get("count") or res.get("total") or res.get("nbHits") or 0)
+                total = int(res.get("count") or res.get("total") or res.get("nbHits") or 0) if isinstance(res, dict) else 0
                 if not batch or (total and len(orgs) >= total):
                     break
             note = f"search API, {len(orgs)} companies"
         except Exception as e:
             orgs, note = [], f"search API failed ({type(e).__name__}: {str(e)[:80]})"
-    if not orgs and data:
-        # Fall back to whatever organizations are embedded in the page
-        seen = set()
-        for d in feeds_mod._walk(data):
-            if isinstance(d, dict) and d.get("name") and (d.get("domain") or d.get("website")) and d.get("id") not in seen:
-                if any(k in d for k in ("head_count", "headcount", "stage", "industry_tags", "active_jobs_count")):
-                    seen.add(d.get("id"))
-                    orgs.append(d)
-        note = (note + "; " if note else "") + f"page data only ({len(orgs)} companies)"
+            _diag(board, note)
+    if not orgs:
+        # Fall back to the server-rendered directory: /companies?page=N, each page a dozen or so cards.
+        seen, pages_read = set(), 0
+        for page in range(1, max_pages + 1):
+            try:
+                html = feeds_mod._get(f"{base}/companies?page={page}").text
+            except Exception as e:
+                _diag(board, f"/companies?page={page} failed: {type(e).__name__}")
+                break
+            m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
+            if not m:
+                break
+            found = 0
+            for d in feeds_mod._walk(json.loads(m.group(1))):
+                if isinstance(d, dict) and d.get("name") and (d.get("domain") or d.get("website")) \
+                        and any(k in d for k in ("head_count", "headcount", "stage", "industry_tags", "active_jobs_count", "slug")):
+                    key = str(d.get("id") or d.get("slug") or d.get("name"))
+                    if key not in seen:
+                        seen.add(key)
+                        orgs.append(d)
+                        found += 1
+            pages_read += 1
+            if found == 0:
+                break
+        note = (note + "; " if note else "") + f"directory pages ({pages_read} pages, {len(orgs)} companies)"
     seen_ids, out = set(), []
     for o in orgs:
         key = str(o.get("id") or o.get("slug") or o.get("name"))
