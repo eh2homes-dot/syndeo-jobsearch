@@ -25,6 +25,10 @@ on:
       sources:
         description: "Comma-separated: edgar,leadership,news,trade,reqs"
         default: "edgar,leadership,news,trade,reqs"
+      discover_leadership:
+        description: "Instead of a scan, look for leadership pages for companies that have none (writes out/leadership-discovery.csv for review)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,7 +40,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150      # includes up to 40 minutes waiting for the OpCo results
 
     steps:
       # Checkout comes first (it is cheap) so the guard can see the latest output.
@@ -70,58 +74,62 @@ jobs:
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
 
-      # The module can sit at people-moves/, outputs/people-moves/, or loose at
-      # the repo root depending on how it was uploaded. Find it rather than
-      # assume. sources/edgar.py is the marker: it only exists inside this
-      # module, so its grandparent directory is the module root.
+      # The OpCo search runs at the same 6am slot and its results feed the job
+      # signals. On scheduled runs, wait (up to 40 minutes) for this week's OpCo
+      # results to land on the branch, then pull them, so the signals don't run
+      # a week behind. Manual runs use whatever is there.
+      - name: Wait for this week's OpCo results
+        if: steps.guard.outputs.run == 'true' && github.event_name == 'schedule'
+        run: |
+          today=$(date -u +%F)
+          for i in $(seq 1 40); do
+            git fetch -q --depth 1 origin "${GITHUB_REF_NAME}"
+            got=$(git show "origin/${GITHUB_REF_NAME}:out/opco-jobs-latest.json" 2>/dev/null \
+                  | python3 -c "import json,sys; print(json.load(sys.stdin).get('run_date',''))" 2>/dev/null)
+            if [ -n "$got" ] && ! [[ "$got" < "$(date -u -d "$today -1 day" +%F)" ]]; then
+              echo "OpCo results from $got are in."
+              # Nothing has been written yet, so just move to the newest commit.
+              git reset -q --hard "origin/${GITHUB_REF_NAME}"
+              exit 0
+            fi
+            echo "OpCo results on the branch are from ${got:-never}; waiting a minute ($i/40)"
+            sleep 60
+          done
+          echo "::warning::This week's OpCo results never arrived; job signals use the last ones on file."
+
+      # The module runs from the repo root, next to the job searches. Older
+      # copies under people-moves/ are not used (a "find the first copy" lookup
+      # used to land on a 13-company sample list).
       - name: Locate the module
         if: steps.guard.outputs.run == 'true'
         id: locate
         run: |
-          MARKER=$(find . -type f -path '*/sources/edgar.py' -not -path './.git/*' | head -1)
-
-          if [ -z "$MARKER" ]; then
-            echo "::error::Could not find the people-moves module in this repo."
-            echo ""
-            echo "Looked for a file at <somewhere>/sources/edgar.py and found none."
-            echo "That means the module folder was never committed, or only some"
-            echo "of its files were."
-            echo ""
-            echo "Top level of the repo:"
-            ls -la
-            echo ""
-            echo "Every .py file currently committed:"
-            find . -name '*.py' -not -path './.git/*' | head -40
-            exit 1
-          fi
-
-          DIR=$(dirname "$(dirname "$MARKER")")
-          DIR=${DIR#./}
-          [ -z "$DIR" ] && DIR="."
-
-          echo "Found the module at: $DIR"
+          DIR="."
           echo "dir=$DIR" >> "$GITHUB_OUTPUT"
-
-          # Fail early and clearly if the folder is there but incomplete.
           MISSING=""
-          for f in run.py report.py requirements.txt config/feeds.yml \
+          for f in run.py report.py requirements.txt config/feeds.yml config/companies.csv \
+                   leads/master_leads.csv opco.csv discover_leadership.py \
                    lib/http.py lib/companies.py lib/people.py lib/move.py \
-                   lib/state.py sources/leadership.py sources/news_rss.py \
+                   lib/state.py sources/edgar.py sources/leadership.py sources/news_rss.py \
                    sources/trade_press.py sources/req_signals.py \
-                   sources/wayback.py; do
+                   sources/wayback.py jobsearch/browser.py; do
             [ -f "$DIR/$f" ] || MISSING="$MISSING $f"
           done
-
           if [ -n "$MISSING" ]; then
-            echo "::error::The module is missing these files:$MISSING"
-            echo "Re-upload the people-moves folder; some files did not commit."
+            echo "::error::People Moves is missing these files at the repo root:$MISSING"
             exit 1
           fi
 
-          if [ ! -f "$DIR/config/companies.csv" ]; then
-            echo "::warning::No config/companies.csv. Export the master leads"
-            echo "sheet to CSV and save it there, or the run will find nothing."
-          fi
+          # Job-search outputs for the inference signals: the weekly search's
+          # newest dated folder (not on-demand runs) and the OpCo search.
+          JOBS=""
+          LATEST=$(ls -d output/20??-??-??/ 2>/dev/null | sort | tail -1)
+          [ -n "$LATEST" ] && [ -f "${LATEST}all_open_roles.csv" ] && JOBS="${GITHUB_WORKSPACE}/${LATEST}all_open_roles.csv"
+          [ -f out/opco-jobs-latest.json ] && JOBS="${JOBS:+$JOBS,}${GITHUB_WORKSPACE}/out/opco-jobs-latest.json"
+          echo "Job-search outputs: ${JOBS:-none found}"
+          [ -f out/opco-jobs-latest.json ] && python3 -c "import json; print('  OpCo results dated', json.load(open('out/opco-jobs-latest.json')).get('run_date'))" || true
+          [ -n "$LATEST" ] && echo "  weekly search folder: $LATEST"
+          echo "jobs=$JOBS" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v5
         if: steps.guard.outputs.run == 'true'
@@ -134,15 +142,21 @@ jobs:
         if: steps.guard.outputs.run == 'true'
         run: pip install -r "${{ steps.locate.outputs.dir }}/requirements.txt"
 
+      # Headless browser for leadership pages whose names load with scripts.
+      # If this fails the scan still runs; those pages are skipped as before.
+      - name: Install the headless browser
+        if: steps.guard.outputs.run == 'true'
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
+
       - name: Run scan
         if: steps.guard.outputs.run == 'true'
         working-directory: ${{ steps.locate.outputs.dir }}
         env:
           # SEC requires a descriptive User-Agent with contact info.
           PEOPLE_MOVES_UA: "Syndeo People-Moves Research (hello@syndeollc.com)"
-          # Absolute path, so it resolves the same wherever the module sits.
-          # Point this at whatever the job-search workflow writes.
-          JOBS_RESULTS_PATH: ${{ github.workspace }}/out/jobs-latest.json
+          # The weekly and OpCo job-search outputs, found in "Locate the module".
+          JOBS_RESULTS_PATH: ${{ steps.locate.outputs.jobs }}
           # Database sinks: each is skipped with a warning if its secrets are
           # missing, and a sink failure never stops the run or loses the brief.
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
@@ -150,7 +164,9 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          if [ "${{ inputs.backfill }}" = "true" ]; then
+          if [ "${{ inputs.discover_leadership }}" = "true" ]; then
+            python discover_leadership.py
+          elif [ "${{ inputs.backfill }}" = "true" ]; then
             python run.py --backfill --backfill-days 120
           else
             python run.py \

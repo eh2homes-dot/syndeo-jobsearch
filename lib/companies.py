@@ -84,6 +84,71 @@ class Company:
         haystack = normalize(text)
         return any(f" {t} " in f" {haystack} " for t in self.match_terms)
 
+    def mentioned_outside_names(self, text: str, names) -> bool:
+        """Like mentioned_in, but a person's name doesn't count: "Rechat appoints
+        Audie Chamberlain" is not news about Chamberlain Group, and "Occams
+        Advisory appoints Robin Green" is not news about Robin."""
+        own = {normalize(self.name), *(normalize(a) for a in self.aliases)}
+        # The full multi-word name spelled out ("Chamberlain Group") is the company.
+        if len(self.name.split()) > 1 and re.search(rf"\b{re.escape(self.name)}\b", text, re.I):
+            return True
+        for name in names or []:
+            # The name finder sometimes returns headline words ("Joins Compass");
+            # those aren't people, so leave them alone.
+            if any(self._PREV_OK.match(w) or self._NEXT_OK.match(w) for w in (name or "").split()):
+                continue
+            if name and normalize(name) not in own:
+                text = re.sub(re.escape(name), " ", text, flags=re.I)
+                # Articles go on to use the surname alone ("Chamberlain will lead..."),
+                # and a surname can be the company's own name.
+                last = name.split()[-1] if len(name.split()) > 1 else ""
+                if len(last) >= 4:
+                    text = re.sub(rf"\b{re.escape(last)}\b", " ", text, flags=re.I)
+        if not self.mentioned_in(text):
+            return False
+        if self.ambiguous and not self._named_as_itself(text):
+            return False
+        return True
+
+    # Words that can follow a company name in a headline without making it a
+    # different company: "Compass Names...", "Compass CEO...", "Compass, Inc."
+    _NEXT_OK = re.compile(
+        r"^(?:appoints?|names?|hires?|adds?|taps?|promotes?|welcomes?|announces?|elevates?|"
+        r"selects?|picks?|brings?|expands?|launches?|loses?|ceo|cfo|coo|cto|cmo|cro|"
+        r"president|chief|founder|co-founder|board|executive|exec|leadership|inc|llc|corp|"
+        r"group|holdings|real|homes?|realty|technologies|announcement|to|and|has|is|said|"
+        r"says|will|after|as|in|on|for|with)\b", re.I)
+
+    _PREV_OK = re.compile(
+        r"^(?:joins?|rejoins?|leaves?|exits?|at|from|of|by|to|for|with|and|former|new|ex|"
+        r"named|appointed|hired|says|said|the|after)$", re.I)
+
+    def _named_as_itself(self, text: str) -> bool:
+        """For one-word names: at least one mention is the company itself, not
+        the first word of another name ("Homeward Health", "Compass Lexecon",
+        "Super Micro"). A capitalised word right after it means another name."""
+        word = self.name.split()[0]
+        for m in re.finditer(rf"\b{re.escape(word)}\b", text, flags=re.I):
+            # A capitalised word right before it, with no punctuation between,
+            # also means another name ("Analysys Mason", "Focal Point").
+            before = re.search(r"([A-Za-z][\w.&-]*)[ \t]+$", text[:m.start()])
+            if before and before.group(1)[0].isupper() and not self._PREV_OK.match(before.group(1)):
+                continue
+            rest = text[m.end():]
+            nxt = re.match(r"[\s’'s]*([A-Za-z][\w.&-]*)", rest)
+            if not nxt or not nxt.group(1)[0].isupper() or self._NEXT_OK.match(nxt.group(1)):
+                return True
+            if nxt.group(1).lower() in normalize(self.name).split():
+                return True
+        return False
+
+    @property
+    def ambiguous(self) -> bool:
+        """One-word names ("Compass", "Super", "Point", "Mason") are ordinary
+        words or belong to other companies too, so news searches add
+        real-estate context for them."""
+        return len(normalize(self.name).split()) <= 1
+
 
 def _canonical_headers(fieldnames: list[str]) -> dict[str, str]:
     mapping: dict[str, str] = {}
@@ -133,6 +198,100 @@ def load(path: str | Path) -> list[Company]:
             companies.append(Company(aliases=aliases, **data))
 
     log.info("loaded %d companies from %s", len(companies), path)
+    return companies
+
+
+def _read_source(source: str | Path) -> tuple[str, list[dict]]:
+    """Rows from a CSV file, or from a published Google Sheet CSV link."""
+    src = str(source)
+    if src.startswith(("http://", "https://")):
+        import io
+        import requests
+        r = requests.get(src, timeout=30)
+        r.raise_for_status()
+        text = r.content.decode("utf-8-sig")
+        return src.split("?")[0], list(csv.DictReader(io.StringIO(text)))
+    path = Path(src)
+    if not path.exists():
+        raise FileNotFoundError(f"{path} not found.")
+    with path.open(newline="", encoding="utf-8-sig") as fh:
+        return str(path), list(csv.DictReader(fh))
+
+
+def _rows_to_companies(label: str, rows: list[dict]) -> list[Company]:
+    if not rows:
+        return []
+    headers = _canonical_headers(list(rows[0].keys()))
+    if "name" not in headers.values():
+        raise ValueError(f"{label} has no recognisable company-name column. Found: {list(rows[0].keys())}")
+    out = []
+    for row in rows:
+        data = {canon: (row.get(raw) or "").strip() for raw, canon in headers.items()}
+        if not data.get("name"):
+            continue
+        aliases = [a.strip() for a in data.pop("aliases", "").split(";") if a.strip()]
+        out.append(Company(aliases=aliases, **data))
+    return out
+
+
+def load_lists(sources: list[str | tuple[str, str]], enrich: str | Path | None = None) -> list[Company]:
+    """The company universe: every company on the given lists, once each.
+
+    `sources` are tried in order; an entry may be a (primary, fallback) pair,
+    e.g. the live OpCo sheet with opco.csv in the repo as the fallback. The
+    lists decide WHO is watched. `enrich` (config/companies.csv) only adds
+    details to companies already on a list: ticker, SEC CIK, leadership page,
+    aliases. A company that is only in the enrichment file is not watched.
+    """
+    companies: list[Company] = []
+    seen: dict[str, Company] = {}
+    for source in sources:
+        options = source if isinstance(source, tuple) else (source,)
+        parsed, label = None, ""
+        for option in options:
+            if not option:
+                continue
+            try:
+                label, rows = _read_source(option)
+                # A sheet link can answer 200 with a sign-in page or nothing at
+                # all; treat that like an outage and use the next option.
+                parsed = _rows_to_companies(label, rows)
+                if not parsed:
+                    raise ValueError("no companies in it")
+                break
+            except Exception as exc:  # noqa: BLE001 - fall through to the next option
+                log.warning("could not read company list %s (%s)", option, exc)
+                parsed = None
+        if parsed is None:
+            raise FileNotFoundError(f"none of these company lists could be read: {options}")
+        added = 0
+        for c in parsed:
+            key = normalize(c.name)
+            if not key or key in seen:
+                continue
+            seen[key] = c
+            companies.append(c)
+            added += 1
+        log.info("loaded %d companies from %s", added, label)
+
+    if enrich and Path(enrich).exists():
+        label, rows = _read_source(enrich)
+        extra = {normalize(c.name): c for c in _rows_to_companies(label, rows)}
+        for c in companies:
+            e = extra.get(normalize(c.name))
+            if e is None:
+                for alias in c.aliases:
+                    e = extra.get(normalize(alias))
+                    if e:
+                        break
+            if e is None:
+                continue
+            for f in ("ticker", "cik", "leadership_url", "website", "careers_url"):
+                if not getattr(c, f) and getattr(e, f):
+                    setattr(c, f, getattr(e, f))
+            c.aliases = sorted(set(c.aliases) | set(e.aliases))
+        log.info("enriched from %s: %d with a ticker or CIK, %d with a leadership page",
+                 label, len(public_companies(companies)), len(with_leadership_page(companies)))
     return companies
 
 
