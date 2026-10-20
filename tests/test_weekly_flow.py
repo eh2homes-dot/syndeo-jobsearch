@@ -17,6 +17,7 @@ ROUTES = json.loads((ROOT / "tests/fixtures/readers/payloads.json").read_text())
 EMBED = {"text": "<html><body><h1>Careers</h1><script src='https://boards.greenhouse.io/embed/job_board/js?for=acme'></script></body></html>"}
 LINKS_ASHBY = {"text": "<html><body><h1>Careers</h1><a href='https://jobs.ashbyhq.com/acme'>View openings</a></body></html>"}
 PLAIN = {"text": "<html><body><h1>Careers</h1><p>We are a great place to work.</p></body></html>"}
+NONE_OPEN = {"text": "<html><body><h1>Careers</h1><p>There are currently no open positions.</p></body></html>"}
 
 
 def lead(name="Acme", careers="https://www.acme.test/careers"):
@@ -80,6 +81,23 @@ def test_sudden_zero_is_treated_as_a_failure():
     with fakenet.serve(routes(**{"GET https://www\\.acme\\.test/careers$": PLAIN})):
         r = company.read_company(lead(), old, today="2026-10-11", open_before=12)
     assert r.status.startswith("failed:dropped to 0 roles from 12")
+
+
+def test_sudden_zero_from_a_careers_page_with_no_board_on_file_is_a_failure():
+    """No board on file, roles open from an earlier source: an empty page read doesn't retire them."""
+    with fakenet.serve(routes(**{"GET https://www\\.acme\\.test/careers$": NONE_OPEN})):
+        first = company.read_company(lead(), {}, today="2026-10-11", open_before=45)
+        assert first.status.startswith("failed:dropped to 0 roles from 45") and first.jobs == []
+        assert first.mapping == {"zero_since": "2026-10-11"}
+        second = company.read_company(lead(), first.mapping, today="2026-10-18", open_before=45)
+    assert second.status == "ok" and second.jobs == [] and second.mapping["ats"] == "page"
+    assert "zero_since" not in second.mapping
+
+
+def test_empty_careers_page_with_nothing_tracked_is_a_real_zero():
+    with fakenet.serve(routes(**{"GET https://www\\.acme\\.test/careers$": NONE_OPEN})):
+        r = company.read_company(lead(), {}, today="2026-10-11")
+    assert r.status == "ok" and r.jobs == [] and r.mapping["ats"] == "page"
 
 
 def test_parent_and_excluded_are_not_read():
@@ -285,9 +303,11 @@ def test_migration_is_applied_once_and_never_overwrites_later_edits(tmp_path):
                "Mason": {"ats": "", "confidence": "manual"}, "Entrata": {"ats": "lever", "slug": "entrata"}}
     applied = tmp_path / "applied.json"
     done = run.apply_migrations(ats_map, applied)
-    assert done == ["2026-10-own-boards"] and not applied.exists()   # only recorded once the map is saved
+    assert done == ["2026-10-own-boards", "2026-10-sheet-links"] and not applied.exists()   # only recorded once the map is saved
     run.record_migrations(done, applied)
     assert ats_map["Placer.ai"]["ats"] == "greenhouse" and ats_map["Mynd"] == {**ats_map["Mynd"], "parent": "Roofstock"}
+    assert (ats_map["HqO"]["ats"], ats_map["HqO"]["slug"]) == ("rippling", "hqo")
+    assert ats_map["Matterport"]["parent"] == "CoStar Group"
     assert "Robin" not in ats_map                               # Built In entry dropped: read from its careers page
     assert ats_map["Mason"]["confidence"] == "manual" and ats_map["Entrata"]["slug"] == "entrata"
     assert not any(v.get("ats") == "builtin" for v in ats_map.values())
