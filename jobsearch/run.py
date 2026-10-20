@@ -141,6 +141,17 @@ def _domain_keys(website: str) -> set:
     return {k for k in (_norm(host), _norm(host.split(".")[0])) if k}
 
 
+def removed_test(cfg: dict):
+    """config.json -> removed_companies: companies taken off the list on purpose. Returns
+    test(name, website_or_domain) -> True for one of them, so a VC board that still lists it can't bring it back."""
+    rc = cfg.get("removed_companies") or {}
+    names = {_norm(n) for n in rc.get("names", [])}
+    hosts = {_norm(re.sub(r"^https?://", "", d.lower()).split("/")[0].replace("www.", "")) for d in rc.get("domains", [])}
+    hosts.discard("")
+    return lambda name, domain="": _norm(name) in names or \
+        _norm(re.sub(r"^https?://", "", (domain or "").lower()).split("/")[0].replace("www.", "")) in hosts
+
+
 def match_companies(typed: str, leads: list[dict]) -> list[dict]:
     """Match a typed name to leads, most exact first: name, then web address, then partial name."""
     w = _norm(typed)
@@ -254,7 +265,8 @@ def main(argv=None):
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
     run_start = time.time()
     cfg = load_json(CONFIG, {})
-    leads = load_leads()
+    is_removed = removed_test(cfg)
+    leads = [l for l in load_leads() if not is_removed(l["company"], l.get("website", ""))]
     if args.tier:
         leads = [l for l in leads if l["tier"] == args.tier]
     adhoc = bool(args.only.strip())
@@ -272,7 +284,10 @@ def main(argv=None):
     history = load_json(HISTORY, {})
     history = {k: v for k, v in history.items()
                if passes_company_filter(v.get("company", ""), v.get("title", ""), v.get("location", ""), cfg)}
-    fixtures = Path(args.fixtures) if args.fixtures else None
+    for h in history.values():
+        if h.get("status") == "open" and is_removed(h.get("company", "")):
+            h["status"], h["retired_on"] = "retired", today.isoformat()  # off the list: never read again, so never closed
+    fixtures =Path(args.fixtures) if args.fixtures else None
 
     # ---- 1. read every company from its own job board
     #      Board on file in ats_map.json -> read it. No board on file (or the one on file has gone
@@ -354,6 +369,8 @@ def main(argv=None):
             for vj in vjobs:
                 keys = _domain_keys(vj["org_domain"]) | {_norm(vj["org_name"])}
                 lead = next((key_to_lead[k] for k in keys if k in key_to_lead), None)
+                if is_removed(vj["org_name"], vj["org_domain"]):
+                    continue  # taken off the list on purpose; not "worth adding" either
                 if lead is None:
                     if not adhoc:
                         grp = classify_role(vj["title"], cfg)

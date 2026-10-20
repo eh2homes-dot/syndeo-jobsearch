@@ -418,6 +418,8 @@ def main(argv=None) -> int:
     led = _load_ledger()
 
     roles = fresh_roles(history, opco, today, int(s["window_days"]), latest_worth_adding(today))
+    is_removed = run.removed_test(cfg)
+    roles = [r for r in roles if not is_removed(r["company"], r.get("domain", ""))]
     items, scored, review = select(roles, registry, s, today, cfg, led)
 
     out_dir = run.OUT / "founders"

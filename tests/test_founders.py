@@ -121,3 +121,21 @@ def test_main_is_a_no_op_when_the_toggle_is_off(tmp_path, monkeypatch, capsys):
     assert founders.main([]) == 0
     assert "founder_hiring is off" in capsys.readouterr().out
     assert not (run.OUT / "founders").exists()
+
+
+def test_removed_companies_match_on_name_or_domain():
+    is_removed = run.removed_test({"removed_companies": {"names": ["Procore Technologies", "VTS"],
+                                                         "domains": ["procore.com", "vts.com"]}})
+    assert is_removed("Procore Technologies") and is_removed("VTS") and is_removed("vts")
+    assert is_removed("Procore Inc", "https://www.procore.com/careers")      # VC board spelling, same domain
+    assert not is_removed("Procore Inc") and not is_removed("VTS Labs", "vtslabs.io")
+    assert not is_removed("Zillow Group", "zillow.com") and not run.removed_test({})("VTS")
+
+
+def test_live_config_keeps_procore_and_vts_off_every_list():
+    is_removed = run.removed_test(run.load_json(run.CONFIG, {}))
+    assert is_removed("Procore Technologies") and is_removed("VTS")
+    import csv
+    for p in ("leads/master_leads.csv", "leads/founders.csv", "leads/vc_portfolio_companies.csv"):
+        with open(run.ROOT / p, newline="") as f:
+            assert not [r["company"] for r in csv.DictReader(f) if is_removed(r["company"], r.get("domain", ""))], p

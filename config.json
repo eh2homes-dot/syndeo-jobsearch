@@ -116,6 +116,18 @@
       ]
     }
   },
+  "removed_companies": {
+    "note": "Taken off the list on purpose (Evan, 2026-10-20). Every bot skips these: the weekly search (and its 'worth adding' list from VC boards), the VC portfolio dump and the founder-hiring draft. Their open roles in history are retired. Matched on name or web domain.",
+    "names": [
+      "Procore Technologies",
+      "Procore",
+      "VTS"
+    ],
+    "domains": [
+      "procore.com",
+      "vts.com"
+    ]
+  },
   "newsletter": {
     "note": "Now hiring draft. send_weekday 0=Mon (2=Wed). A company featured in an issue sits out the next cooldown_weeks issues (history in data/featured_companies.json). Companies in cooldown_exempt never sit out (Evan 2026-10-14: Second Nature). section_limits = max companies per section.",
     "send_weekday": 2,
@@ -305,7 +317,6 @@
     "news_context": "(real estate OR proptech OR property OR rental OR housing OR mortgage OR leasing OR homes)",
     "public_companies": {
       "AppFolio": "APPF",
-      "Procore Technologies": "PCOR",
       "Blend Labs": "BLND",
       "Compass": "COMP",
       "SmartRent": "SMRT",
@@ -338,9 +349,6 @@
       ],
       "Rocket Companies": [
         "Rocket"
-      ],
-      "Procore Technologies": [
-        "Procore"
       ],
       "Yardi Systems": [
         "Yardi"

@@ -1,7 +1,6 @@
 company,website,state,careers_url,segment,tier,sheet_verified,notes
 AppFolio,https://www.appfolio.com,California,https://www.appfolio.com/company/careers,Property Management Software,A,TRUE,"30+ open roles; ATS is Jobvite (appfolio-internal), NOT Greenhouse; 30 live roles 2026-09-23"
 Yardi Systems,https://www.yardi.com,California,https://www.yardi.com/careers,Property Management Software,A,TRUE,
-Procore Technologies,https://www.procore.com,California,https://www.procore.com/careers,Construction Tech,B,TRUE,
 Matterport,https://matterport.com,California,https://matterport.com/careers,3D Space Capture / Real Estate Media,B,TRUE,
 Measurabl,https://measurabl.com,California,https://measurabl.com/careers,ESG/Sustainability Data for CRE,B,TRUE,
 Placer.ai,https://www.placer.ai,California,https://www.placer.ai/careers,Foot Traffic / Location Analytics,B,TRUE,
@@ -35,7 +34,6 @@ Ownwell,https://www.ownwell.com,Texas,https://www.ownwell.com/careers,Property T
 Ojo Labs,https://www.ojolabs.com,Texas,https://www.ojolabs.com/careers,AI Real Estate Assistant,B,FALSE,
 Opcity (Realtor.com),https://www.opcity.com,Texas,https://www.move.com/careers,Real Estate Lead Conversion Platform,B,FALSE,dup of Move careers
 Compass,https://www.compass.com,New York,https://www.compass.com/careers,Real Estate Brokerage Tech,B,TRUE,
-VTS,https://www.vts.com,New York,https://www.vts.com/careers,Commercial Real Estate Leasing Platform,B,TRUE,
 ButterflyMX,https://www.butterflymx.com,New York,https://www.butterflymx.com/careers,Smart Access / Intercom Systems,A,TRUE,
 Guesty,https://www.guesty.com,New York,https://www.guesty.com/careers,Short-Term Rental Management Software,A,TRUE,
 Rhino,https://www.sayrhino.com,New York,https://careers.sayrhino.com,Security Deposit Insurance,A,TRUE,careers page moved to careers.sayrhino.com (sheet URL 403s)

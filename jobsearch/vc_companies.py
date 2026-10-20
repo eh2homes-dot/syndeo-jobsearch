@@ -233,6 +233,7 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
     cfg = run.load_json(run.CONFIG, {})
     boards = [b for b in cfg.get("vc_boards", []) if not args.board or b["name"].lower() == args.board.lower()]
+    is_removed = run.removed_test(cfg)
     merged: dict[str, dict] = {}
     for b in boards:
         try:
@@ -242,6 +243,8 @@ def main(argv=None) -> int:
             continue
         print(f"  vc  {b['name']:14} {note}", flush=True)
         for r in rows:
+            if is_removed(r["company"], r["domain"]):
+                continue  # config.json -> removed_companies
             k = r["domain"] or run._norm_co(r["company"])
             if k in merged:
                 m = merged[k]
