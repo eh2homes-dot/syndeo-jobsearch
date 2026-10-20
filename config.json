@@ -329,7 +329,8 @@
       "Better.com": "BETR",
       "Latch": "LTCH",
       "Redfin": "RDFN",
-      "Doma": "DOMA"
+      "Doma": "DOMA",
+      "Hippo": "HIPO"
     },
     "leadership_pages": {},
     "sec_contact": "read from the SEC_USER_AGENT GitHub secret - not stored here",
@@ -358,6 +359,9 @@
       ],
       "Alarm.com": [
         "Alarm.com"
+      ],
+      "Hippo": [
+        "Hippo Insurance"
       ]
     }
   },
