@@ -1,151 +1,151 @@
 company,headcount,stage,founder_name,founder_linkedin,founder_x,founder_led,notes
 AbodeMine,,,,,,,
-Agora,,,,,,,
-Alarm.com,1392,Public,,,,,Clay 2026-10-20: Public Company; funding $250M+; founded 2000; https://www.linkedin.com/company/alarm-com
-Alexander & Baldwin,,,,,,,
+Agora,431,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2019; https://www.linkedin.com/company/agora-re
+Alarm.com,1392,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $250M+; founded 2000; https://www.linkedin.com/company/alarm-com
+Alexander & Baldwin,163,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $250M+; founded 1870; https://www.linkedin.com/company/alexander-&-baldwin-inc.
 Apartment List,532,,,,,,Clay 2026-10-20: Privately Held; funding $50M - $100M; https://www.linkedin.com/company/apartment-list
-AppFolio,1818,Public,,,,,Clay 2026-10-20: Public Company; funding Funding unknown; https://www.linkedin.com/company/appfolio
+AppFolio,1818,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding Funding unknown; https://www.linkedin.com/company/appfolio
 Atlas Real Estate,243,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2008; https://www.linkedin.com/company/atlas-real-estate-group
-Atria Senior Living,,,,,,,
+Atria Senior Living,5379,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; https://www.linkedin.com/company/atria-senior-living
 Auction.com,437,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; founded 2007; https://www.linkedin.com/company/auction
-Avail (Realtor.com),,,,,,,
+Avail (Realtor.com),73,,,,,,"Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $1M - $5M; founded 2012; https://www.linkedin.com/company/helloavail; NOTE resolved to avail.com (Avail, by Realtor.com) — check"
 Belong,208,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2019; https://www.linkedin.com/company/belonghq
-Better.com,,,,,,,
-BH Management Services,,,,,,,
+Better.com,2014,Public,,,,FALSE,Clay 2026-10-20: business_stage=Growth Stage; Public Company; funding $100M - $250M; founded 2016; https://www.linkedin.com/company/betterdotcom
+BH Management Services,,,,,,,Clay 2026-10-20: business_stage=Established; ; funding Funding unknown; https://www.linkedin.com/company/b&h-management
 Bilt Rewards,451,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2021; https://www.linkedin.com/company/biltrewards
-Blend Labs,741,Public,,,,,Clay 2026-10-20: Public Company; funding $100M - $250M; founded 2012; https://www.linkedin.com/company/blend-
-Boom,,,,,,,
-Bowery Valuation,,,,,,,
-Bright MLS,,,,,,,
-Buildium (RealPage),,,,,,,
-ButterflyMX,,,,,,,
-Cadre,,,,,,,
+Blend Labs,741,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $100M - $250M; founded 2012; https://www.linkedin.com/company/blend-
+Boom,96,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $1M - $5M; founded 2020; https://www.linkedin.com/company/boom-pay
+Bowery Valuation,142,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2016; https://www.linkedin.com/company/bowery-real-estate-systems
+Bright MLS,173,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Partnership; funding Funding unknown; founded 2016; https://www.linkedin.com/company/brightmls
+Buildium (RealPage),295,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding $50M - $100M; founded 2004; https://www.linkedin.com/company/buildium-llc
+ButterflyMX,456,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2014; https://www.linkedin.com/company/butterflymx
+Cadre,172,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2014; https://www.linkedin.com/company/cadrere
 Case & Associates,,,,,,,
-Cecilian Partners,,,,,,,
-CertifID,,,,,,,
+Cecilian Partners,30,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2019; https://www.linkedin.com/company/cecilianpartners
+CertifID,190,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2017; https://www.linkedin.com/company/certifid
 Chamberlain Group,2853,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; https://www.linkedin.com/company/chamberlain-group-llc
-Cherre,,,,,,,
-Closinglock,,,,,,,
-Cohen-Esrey Communities,,,,,,,
-Compass,35509,Public,,,,,Clay 2026-10-20: Public Company; funding $250M+; https://www.linkedin.com/company/compassinc
-CompStak,,,,,,,
+Cherre,79,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2016; https://www.linkedin.com/company/cherre
+Closinglock,70,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2017; https://www.linkedin.com/company/closinglock
+Cohen-Esrey Communities,243,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; founded 1969; https://www.linkedin.com/company/cohen-esrey-real-estate-services-llc
+Compass,35509,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $250M+; https://www.linkedin.com/company/compassinc
+CompStak,129,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2011; https://www.linkedin.com/company/compstak
 Convene,544,,,,,,Clay 2026-10-20: Privately Held; funding $1M - $5M; founded 2009; https://www.linkedin.com/company/convene-venues
-CoStar Group,,,,,,,
-Crexi,,,,,,,
-Density,,,,,,,
-Digible,,,,,,,
-Divvy Homes,,,,,,,
-Doma,,,,,,,
+CoStar Group,12645,Public,,,,FALSE,Clay 2026-10-20: business_stage=; Public Company; funding Funding unknown; https://www.linkedin.com/company/costar-group
+Crexi,423,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2015; https://www.linkedin.com/company/crexi
+Density,59,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2014; https://www.linkedin.com/company/density-inc-
+Digible,172,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Under $1M; founded 2017; https://www.linkedin.com/company/digibleinc
+Divvy Homes,34,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2017; https://www.linkedin.com/company/divvy-homes
+Doma,2185,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding $250M+; https://www.linkedin.com/company/domahq
 DoorLoop,235,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2019; https://www.linkedin.com/company/doorloop
 Doorstead,67,,Ewen Rainer,https://www.linkedin.com/in/ewen0/,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2019; https://www.linkedin.com/company/doorstead; CEO since 2025 (not a founder)
 Easterly Government Properties,,,,,,,
-EastGroup Properties,,,,,,,
-Enertiv,,,,,,,
+EastGroup Properties,121,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding $50M - $100M; https://www.linkedin.com/company/eastgroup-properties-inc
+Enertiv,44,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $5M - $10M; founded 2009; https://www.linkedin.com/company/enertiv
 Entrata,2563,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $250M+; https://www.linkedin.com/company/entratasoftware
 Envoy,463,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2013; https://www.linkedin.com/company/envoy-inc
-EPR Properties,,,,,,,
+EPR Properties,85,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding $250M+; https://www.linkedin.com/company/epr-properties
 Evergreen Live,,,,,,,
 Evergreen Residential,252,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2021; https://www.linkedin.com/company/evergreenresi
 Evernest,,,,,,,Clay 2026-10-20: evernest.co resolved to a German brokerage; headcount not written. Fill by hand.
 Evernest Property Management,,,,,,,
 Flock Homes,54,,Ari Rubin,https://www.linkedin.com/in/ari-rubin/,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2020; https://www.linkedin.com/company/flock-homes; Founder
 Footprint,39,,Eli Wachs,https://www.linkedin.com/in/eliwachs/,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; https://www.linkedin.com/company/onefootprint; Co-Founder + CEO
-Funnel Leasing,,,,,,,
-GetCovered,,,,,,,
-GreenLite,,,,,,,
+Funnel Leasing,176,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2011; https://www.linkedin.com/company/funnelleasing
+GetCovered,125,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2017; https://www.linkedin.com/company/get-covered-inc
+GreenLite,,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding $10M - $25M; founded 2023; https://www.linkedin.com/company/bretton-ai; NOTE resolved to bretton.com (Bretton AI) — check — WRONG COMPANY RESOLVED; headcount cleared
 Greystar,19787,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $50M - $100M; https://www.linkedin.com/company/greystar
-Guesty,,,,,,,
-Haven,,,,,,,
-Hemlane,,,,,,,
-Highwoods Properties,469,Public,,,,,Clay 2026-10-20: Public Company; funding $100M - $250M; founded 1978; https://www.linkedin.com/company/highwoods-properties
-HiredHelpr,,,,,,,
-Home365,,,,,,,
-Homebot,,,,,,,
-HomeLight,,,,,,,
+Guesty,808,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2013; https://www.linkedin.com/company/guesty
+Haven,11,,,,,,Clay 2026-10-20: business_stage=Early Stage; Privately Held; funding Funding unknown; https://www.linkedin.com/company/havenai
+Hemlane,58,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $5M - $10M; founded 2015; https://www.linkedin.com/company/hemlane
+Highwoods Properties,469,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $100M - $250M; founded 1978; https://www.linkedin.com/company/highwoods-properties
+HiredHelpr,11,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2018; https://www.linkedin.com/company/hiredhelpr
+Home365,122,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2016; https://www.linkedin.com/company/home365
+Homebot,89,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $1M - $5M; founded 2015; https://www.linkedin.com/company/homebot
+HomeLight,494,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2012; https://www.linkedin.com/company/homelight
 Homeward,302,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2018; https://www.linkedin.com/company/thehomewardway
-HouseCanary,,,,,,,
-HqO,,,,,,,
+HouseCanary,59,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2013; https://www.linkedin.com/company/housecanary-inc
+HqO,103,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2018; https://www.linkedin.com/company/hqo
 Industrious,1165,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2012; https://www.linkedin.com/company/industrioushq
-Kasa Living,,,,,,,
+Kasa Living,593,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2016; https://www.linkedin.com/company/kasaliving
 Key Renter Property Managment,,,,,,,
-Kiavi,,,,,,,
-Kite Realty Group Trust,,,,,,,
-Knock CRM,,,,,,,
-Lamar Advertising Company,3824,Public,,,,,Clay 2026-10-20: Public Company; funding $250M+; founded 1902; https://www.linkedin.com/company/lamar-advertising
-Latch,,,,,,,
-LeaseLock,,,,,,,
-Lineage,,,,,,,
-Livly,,,,,,,
-Luxury Presence,,,,,,,
-Mason,,,,,,,
-Matterport,,,,,,,
-Measurabl,,,,,,,
-Medical Properties Trust,,,,,,,
-Mountain Property Management,,,,,,,
+Kiavi,469,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $250M+; founded 2013; https://www.linkedin.com/company/kiavi
+Kite Realty Group Trust,277,Public,,,,FALSE,Clay 2026-10-20: business_stage=; Public Company; funding $250M+; https://www.linkedin.com/company/kite-realty-group
+Knock CRM,47,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; https://www.linkedin.com/company/knockcrm; NOTE resolved to knockcrm.com (Knock CRM) — check
+Lamar Advertising Company,3824,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $250M+; founded 1902; https://www.linkedin.com/company/lamar-advertising
+Latch,6,Public,,,,FALSE,Clay 2026-10-20: business_stage=Growth Stage; Public Company; funding Funding unknown; founded 2016; https://www.linkedin.com/company/latchable-inc. — headcount looks too low vs. known size; verify before trusting
+LeaseLock,69,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2016; https://www.linkedin.com/company/leaselock
+Lineage,32,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2024; https://www.linkedin.com/company/lineagehq; NOTE resolved to lineagehq.com (Lineage) — check
+Livly,,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2017; https://www.linkedin.com/company/morelivly; NOTE resolved to pardot.com (Livly) — check — WRONG COMPANY RESOLVED; headcount cleared
+Luxury Presence,906,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2016; https://www.linkedin.com/company/luxurypresence
+Mason,9,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2025; https://www.linkedin.com/company/this-is-mason
+Matterport,527,Public,,,,FALSE,Clay 2026-10-20: business_stage=Growth Stage; Public Company; funding $250M+; https://www.linkedin.com/company/matterport
+Measurabl,115,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2013; https://www.linkedin.com/company/measurabl
+Medical Properties Trust,135,Public,,,,FALSE,"Clay 2026-10-20: business_stage=Established; Public Company; funding $250M+; founded 2003; https://www.linkedin.com/company/medical-properties-trust-inc; NOTE resolved to mpt.com (Medical Properties Trust, Inc.) — check"
+Mountain Property Management,,,,,,,Clay 2026-10-20: business_stage=Established; ; funding Funding unknown; https://www.linkedin.com/company/mountain-high-property-mgt; NOTE resolved to mpmjh.com (Mountain High Property MGT) — check
 MRI Software,4562,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $10M - $25M; founded 1971; https://www.linkedin.com/company/mri-software-llc
-Mynd,,,,,,,
+Mynd,468,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2016; https://www.linkedin.com/company/myndrealestate
 NARPM (National Association of Residential Property Managers) Job Board,,,,,,,
-NetVendor,,,,,,,
-Northpoint Asset Management,,,,,,,
+NetVendor,113,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2009; https://www.linkedin.com/company/netvendor
+Northpoint Asset Management,145,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2006; https://www.linkedin.com/company/northpointam
 Northpoint Asset Manamgement,,,,,,,
 Notarize (Proof),428,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; https://www.linkedin.com/company/notarize
-Nutiliti,,,,,,,
-Oakbrook Corporation,,,,,,,
-Obie,,,,,,,
+Nutiliti,37,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2020; https://www.linkedin.com/company/nutiliti
+Oakbrook Corporation,218,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; founded 1987; https://www.linkedin.com/company/oakbrook
+Obie,172,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; https://www.linkedin.com/company/joinobie
 Obligo,89,,Roey Dor,https://www.linkedin.com/in/roey-dor-bab523142/,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2017; https://www.linkedin.com/company/depositfree; Co-founder & CEO
-Offerpad,,,,,,,
-Ojo Labs,,,,,,,
-Opcity (Realtor.com),,,,,,,
-Opendoor,1417,Public,,,,,Clay 2026-10-20: Public Company; funding $250M+; https://www.linkedin.com/company/opendoor-com
+Offerpad,279,Public,,,,FALSE,Clay 2026-10-20: business_stage=Growth Stage; Public Company; funding $250M+; founded 2015; https://www.linkedin.com/company/offerpad
+Ojo Labs,298,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2015; https://www.linkedin.com/company/ojo-labs; NOTE resolved to movoto.com (OJO) — check
+Opcity (Realtor.com),59,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; founded 2015; https://www.linkedin.com/company/opcity
+Opendoor,1417,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $250M+; https://www.linkedin.com/company/opendoor-com
 Orchard,701,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2017; https://www.linkedin.com/company/orchardhomes
-Ownwell,,,,,,,
+Ownwell,175,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $5M - $10M; https://www.linkedin.com/company/ownwell
 Pacaso,180,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2020; https://www.linkedin.com/company/pacasohomes
-Picerne Real Estate Group,,,,,,,
+Picerne Real Estate Group,319,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 1925; https://www.linkedin.com/company/picerne-real-estate-group
 Placer.ai,609,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2018; https://www.linkedin.com/company/placer
-Placester,,,,,,,
+Placester,28,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2011; https://www.linkedin.com/company/placester-inc
 PMI,,,,,,,
-Point,,,,,,,
-PointCentral,,,,,,,
-Procore Technologies,4965,Public,,,,,Clay 2026-10-20: Public Company; funding $1M - $5M; https://www.linkedin.com/company/procore-technologies
-Property Meld,,,,,,,
-PropertyManagement.com,,,,,,,
+Point,560,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $250M+; founded 2015; https://www.linkedin.com/company/point
+PointCentral,30,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2012; https://www.linkedin.com/company/pointcentral
+Procore Technologies,4965,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $1M - $5M; https://www.linkedin.com/company/procore-technologies
+Property Meld,77,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2014; https://www.linkedin.com/company/property-meld
+PropertyManagement.com,7,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2025; https://www.linkedin.com/company/propertymanagement-com — headcount looks too low vs. known size; verify before trusting
 PURE HomeRiver Group,342,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; https://www.linkedin.com/company/purehomeriver
 Real Property Management,,,,,,,
 RealPage,9231,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $10M - $25M; https://www.linkedin.com/company/realpage
-Realtor.com (Move Inc.),,,,,,,
-Redfin,,,,,,,
-Redstone,,,,,,,
+Realtor.com (Move Inc.),4044,Public,,,,FALSE,Clay 2026-10-20: business_stage=; Public Company; funding Funding unknown; founded 1996; https://www.linkedin.com/company/realtor-com
+Redfin,5656,Public,,,,FALSE,Clay 2026-10-20: business_stage=; Public Company; funding $250M+; https://www.linkedin.com/company/redfin
+Redstone,63,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 1992; https://www.linkedin.com/company/redstone-commercial-group
 Reffie,,,,,,,
-Rent Manager (LCS),,,,,,,
-Rentec Direct,,,,,,,
-Renters Warehouse,,,,,,,
-RentSpree,,,,,,,
+Rent Manager (LCS),17,,,,,,Clay 2026-10-20: business_stage=Established; ; funding Funding unknown; https://www.linkedin.com/company/rentmanager — headcount looks too low vs. known size; verify before trusting
+Rentec Direct,20,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2007; https://www.linkedin.com/company/rentec-direct
+Renters Warehouse,382,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; https://www.linkedin.com/company/renosy-us
+RentSpree,158,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2016; https://www.linkedin.com/company/rentspree
 ResMan,115,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2007; https://www.linkedin.com/company/resman-cloud
-Rhino,,,,,,,
+Rhino,472,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding $5M - $10M; founded 2017; https://www.linkedin.com/company/rhino-labs
 Rhome Property Management,,,,,,,
-Robin,,,,,,,
-Rocket Companies,,,,,,,
+Robin,360,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding Funding unknown; founded 2014; https://www.linkedin.com/company/robin-powered
+Rocket Companies,502,Public,,,,FALSE,Clay 2026-10-20: business_stage=; Public Company; funding $250M+; founded 1985; https://www.linkedin.com/company/rocket-companies1
 Roofstock,379,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2015; https://www.linkedin.com/company/roofstock
-Second Nature,,,,,,,
-Series Homes,,,,,,,
-Side,,,,,,,
-SmartRent,396,Public,,,,,Clay 2026-10-20: Public Company; funding Funding unknown; founded 2017; https://www.linkedin.com/company/smartrentdotcom
+Second Nature,394,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2012; https://www.linkedin.com/company/secondnaturenow
+Series Homes,2,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 2025; https://www.linkedin.com/company/serieshomes — headcount looks too low vs. known size; verify before trusting
+Side,319,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2017; https://www.linkedin.com/company/siderealestate
+SmartRent,396,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding Funding unknown; founded 2017; https://www.linkedin.com/company/smartrentdotcom
 Snapdocs,384,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2013; https://www.linkedin.com/company/snapdocs
-SquareFoot,,,,,,,
-Starwood Property Trust,,,,,,,
+SquareFoot,58,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $10M - $25M; founded 2011; https://www.linkedin.com/company/squarefoot-
+Starwood Property Trust,257,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding Funding unknown; founded 2009; https://www.linkedin.com/company/starwoodproperty
 Steadily,209,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $50M - $100M; founded 2020; https://www.linkedin.com/company/steadily
-Super,,,,,,,
+Super,5,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $5M - $10M; founded 2021; https://www.linkedin.com/company/hiresuper — headcount looks too low vs. known size; verify before trusting
 Tamarack Property Management,,,,,,,
-The Lund Company,,,,,,,
+The Lund Company,228,,,,,,Clay 2026-10-20: business_stage=; Privately Held; funding Funding unknown; founded 1981; https://www.linkedin.com/company/the-lund-company
 TheGuarantors,320,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2015; https://www.linkedin.com/company/the-guarantors
-TurboTenant,,,,,,,
-Two Dots,,,,,,,
-Uniti Group,,,,,,,
-Updater,,,,,,,
-Veris Residential,,,,,,,
+TurboTenant,120,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $5M - $10M; founded 2015; https://www.linkedin.com/company/turbotenant
+Two Dots,61,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2022; https://www.linkedin.com/company/two-dots-financial
+Uniti Group,643,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding $10M - $25M; https://www.linkedin.com/company/uniti-fiber; NOTE resolved to unitifiber.com (Uniti Fiber) — check
+Updater,215,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $100M - $250M; founded 2011; https://www.linkedin.com/company/updater
+Veris Residential,57,Public,,,,FALSE,Clay 2026-10-20: business_stage=Established; Public Company; funding Funding unknown; https://www.linkedin.com/company/verisresidential — headcount looks too low vs. known size; verify before trusting
 VTS,699,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $100M - $250M; founded 2012; https://www.linkedin.com/company/we-are-vts
-WeWork,,,,,,,
-Worksmith,,,,,,,
-Yardi Systems,,,,,,,
-Zillow Group,10411,Public,,,,,Clay 2026-10-20: Public Company; funding $1M - $5M; founded 2006; https://www.linkedin.com/company/zillow
-Zumper,,,,,,,
+WeWork,5543,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding $250M+; founded 2010; https://www.linkedin.com/company/wework
+Worksmith,54,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $1M - $5M; founded 2015; https://www.linkedin.com/company/worksmith
+Yardi Systems,7107,,,,,,Clay 2026-10-20: business_stage=Established; Privately Held; funding Funding unknown; founded 1984; https://www.linkedin.com/company/yardi
+Zillow Group,10411,Public,,,,FALSE,Clay 2026-10-20: Public Company; funding $1M - $5M; founded 2006; https://www.linkedin.com/company/zillow
+Zumper,130,,,,,,Clay 2026-10-20: business_stage=Growth Stage; Privately Held; funding $25M - $50M; founded 2012; https://www.linkedin.com/company/zumper
