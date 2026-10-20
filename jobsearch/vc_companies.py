@@ -229,6 +229,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--board", default="", help="only this board (name from config.json)")
     ap.add_argument("--out", default=str(OUT_CSV))
+    ap.add_argument("--count-jobs", action="store_true", help="also read each board's jobs with feeds.getro and log the count")
     args = ap.parse_args(argv)
     cfg = run.load_json(run.CONFIG, {})
     boards = [b for b in cfg.get("vc_boards", []) if not args.board or b["name"].lower() == args.board.lower()]
@@ -249,6 +250,13 @@ def main(argv=None) -> int:
                     m[c] = m[c] or r[c]
             else:
                 merged[k] = r
+    if args.count_jobs:
+        for b in boards:
+            try:
+                vjobs, jnote = feeds_mod.getro(b["url"], b["name"])
+                _diag(b["name"], f"jobs reader: {len(vjobs)} jobs ({jnote})")
+            except Exception as e:
+                _diag(b["name"], f"jobs reader FAILED: {type(e).__name__}: {str(e)[:160]}")
     rows = sorted(merged.values(), key=lambda r: r["company"].lower())
     run.write_csv(Path(args.out), rows, COLS)
     print(f"  {len(rows)} companies -> {args.out}", flush=True)
