@@ -46,11 +46,15 @@ COLS = ["company", "domain", "headcount", "stage", "industry_tags", "locations",
 
 
 def _network_id(base: str) -> tuple[int | None, dict]:
-    html = feeds_mod._get(f"{base}/companies").text
-    m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
-    if not m:
-        html = feeds_mod._get(f"{base}/jobs").text
+    m = None
+    for path in ("/companies", "/jobs", "/"):
+        try:
+            html = feeds_mod._get(f"{base}{path}").text
+        except Exception:
+            continue
         m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
+        if m:
+            break
     if not m:
         return None, {}
     data = json.loads(m.group(1))
@@ -109,7 +113,17 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
         net = props.get("network") or {}
         _diag(board, "network: " + json.dumps({k: net.get(k) for k in ("id", "name", "slug", "collection_id", "collectionId") if k in net}))
         st = props.get("initialState") or {}
-        _diag(board, "initialState keys: " + ", ".join(sorted(st.keys()))[:400] if isinstance(st, dict) else "initialState not a dict")
+        for key in ("allCompanies", "companies"):
+            v = st.get(key) if isinstance(st, dict) else None
+            if isinstance(v, dict):
+                _diag(board, f"initialState.{key}: dict keys " + ", ".join(sorted(v.keys()))[:300])
+                for k2, v2 in v.items():
+                    if isinstance(v2, list) and v2 and isinstance(v2[0], dict):
+                        _diag(board, f"initialState.{key}.{k2}: list[{len(v2)}], item keys " + ", ".join(sorted(v2[0].keys()))[:400])
+            elif isinstance(v, list):
+                _diag(board, f"initialState.{key}: list[{len(v)}]" + (", item keys " + ", ".join(sorted(v[0].keys()))[:400] if v and isinstance(v[0], dict) else ""))
+            else:
+                _diag(board, f"initialState.{key}: {type(v).__name__}")
     else:
         _diag(board, "no __NEXT_DATA__ on /companies or /jobs")
     if net_id:
@@ -134,6 +148,21 @@ def read_board(board_url: str, board: str, max_pages: int = 60) -> tuple[list[di
         except Exception as e:
             orgs, note = [], f"search API failed ({type(e).__name__}: {str(e)[:200]})"
             _diag(board, note)
+    if not orgs and data:
+        st = ((data.get("props") or {}).get("pageProps") or {}).get("initialState") or {}
+        for key in ("allCompanies", "companies"):
+            v = st.get(key) if isinstance(st, dict) else None
+            cands = []
+            if isinstance(v, list):
+                cands = v
+            elif isinstance(v, dict):
+                for v2 in v.values():
+                    if isinstance(v2, list) and v2 and isinstance(v2[0], dict) and v2[0].get("name"):
+                        cands = v2 if len(v2) > len(cands) else cands
+            cands = [c for c in cands if isinstance(c, dict) and c.get("name")]
+            if len(cands) > len(orgs):
+                orgs = cands
+                note = f"initialState.{key}, {len(orgs)} companies"
     if not orgs:
         # Fall back to the server-rendered directory: /companies?page=N, each page a dozen or so cards.
         seen, pages_read = set(), 0
