@@ -120,9 +120,15 @@
     "note": "Now hiring draft. send_weekday 0=Mon (2=Wed). A company featured in an issue sits out the next cooldown_weeks issues (history in data/featured_companies.json). Companies in cooldown_exempt never sit out (Evan 2026-10-14: Second Nature). section_limits = max companies per section.",
     "send_weekday": 2,
     "cooldown_weeks": 3,
-    "cooldown_exempt": ["Second Nature"],
+    "cooldown_exempt": [
+      "Second Nature"
+    ],
     "roles_per_company": 2,
-    "section_limits": {"executive": 10, "gtm": 8, "product_engineering": 8}
+    "section_limits": {
+      "executive": 10,
+      "gtm": 8,
+      "product_engineering": 8
+    }
   },
   "role_filter": {
     "enabled": true,
@@ -346,5 +352,19 @@
         "Alarm.com"
       ]
     }
+  },
+  "founder_hiring": {
+    "enabled": false,
+    "note": "Founder-led hiring draft (jobsearch/founders.py). Separate from the Origins 'Now hiring' draft. A role posted at a company with headcount <= max_headcount (or founder_led = TRUE) in leads/founders.csv counts as founder-led. enabled=false means `python -m jobsearch.founders` writes nothing unless --force; the Founder hiring workflow also checks the FOUNDER_HIRING repo variable. Cooldown ledger: data/founder_featured.json (separate from Origins').",
+    "window_days": 7,
+    "max_headcount": 50,
+    "max_items": 12,
+    "min_items": 6,
+    "roles_per_company": 1,
+    "cooldown_issues": 3,
+    "cooldown_exempt": [
+      "Second Nature"
+    ],
+    "us_only": true
   }
 }

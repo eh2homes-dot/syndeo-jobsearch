@@ -1,0 +1,49 @@
+name: VC portfolio companies
+
+# One-off / on-demand: list every portfolio company on the VC job boards in config.json
+# (MetaProp, Fifth Wall, RET Ventures, Camber Creek) into leads/vc_portfolio_companies.csv.
+# This is the seed list for founder-led hiring: small proptech companies the master list lacks.
+on:
+  workflow_dispatch:
+    inputs:
+      board:
+        description: "Only this board (name from config.json); blank for all"
+        default: ""
+      commit:
+        description: "Commit the CSV to the repo"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Read the boards
+        env:
+          PYTHONUNBUFFERED: "1"
+          BOARD: ${{ github.event.inputs.board }}
+        run: |
+          if [ -n "$BOARD" ]; then python -m jobsearch.vc_companies --board "$BOARD"; else python -m jobsearch.vc_companies; fi
+          echo "## VC portfolio companies" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"; head -40 leads/vc_portfolio_companies.csv >> "$GITHUB_STEP_SUMMARY"; echo '```' >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit
+        if: github.event.inputs.commit != 'false'
+        run: |
+          git config user.name "jobsearch-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add leads/vc_portfolio_companies.csv
+          git commit -m "vc portfolio companies $(date -u +%F)" || echo "nothing to commit"
+          git pull --rebase --autostash || true
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vc-portfolio-companies
+          path: leads/vc_portfolio_companies.csv
