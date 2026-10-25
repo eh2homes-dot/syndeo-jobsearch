@@ -5,6 +5,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Accolade": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Agora": {
     "checked": "2026-09-29",
     "method": "none",
@@ -27,6 +33,12 @@
     "checked": "2026-09-29",
     "method": "homepage link",
     "url": "https://www.appfolio.com/resources/events"
+  },
+  "Archer": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
   },
   "Atlas Real Estate": {
     "checked": "2026-09-29",
@@ -54,6 +66,12 @@
   },
   "Better.com": {
     "checked": "2026-09-29",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Betterbot": {
+    "checked": "2026-10-25",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -86,6 +104,11 @@
     "method": "none",
     "note": "no events page found",
     "url": ""
+  },
+  "Brynson": {
+    "checked": "2026-10-25",
+    "method": "homepage link",
+    "url": "https://www.brynson.com/events"
   },
   "Buildium (RealPage)": {
     "checked": "2026-09-29",
@@ -275,6 +298,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "HelloData": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Hemlane": {
     "checked": "2026-09-29",
     "method": "none",
@@ -340,8 +369,20 @@
     "note": "no events page found",
     "url": ""
   },
+  "Leap": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "LeaseLock": {
     "checked": "2026-09-29",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Leni": {
+    "checked": "2026-10-25",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -451,6 +492,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Orange Charger": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Orchard": {
     "checked": "2026-09-29",
     "method": "none",
@@ -471,6 +518,18 @@
   },
   "Pacaso": {
     "checked": "2026-09-29",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "PearlX": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Peek": {
+    "checked": "2026-10-25",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -645,6 +704,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Tour24": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "TurboTenant": {
     "checked": "2026-09-29",
     "method": "none",
@@ -659,6 +724,12 @@
   },
   "Updater": {
     "checked": "2026-09-29",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "VLTED": {
+    "checked": "2026-10-25",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -684,6 +755,12 @@
     "checked": "2026-09-29",
     "method": "probe /community/events",
     "url": "https://www.zillow.com/homes/"
+  },
+  "Zuma": {
+    "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
   },
   "Zumper": {
     "checked": "2026-09-29",
