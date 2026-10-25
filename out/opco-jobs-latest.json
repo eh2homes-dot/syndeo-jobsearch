@@ -1,36 +1,69 @@
 {
-  "run_date": "2026-10-19",
+  "run_date": "2026-10-25",
   "roles": [
     {
+      "department": "",
       "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4391920",
+      "location": "Las Vegas, NV",
+      "posted": "2026-10-12",
       "title": "Business Development Manager",
       "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4391920",
-      "location": "Las Vegas, NV",
-      "department": "",
-      "posted": "2026-10-12",
       "company": "Atlas Real Estate",
       "category": "sales",
-      "status": "ok"
+      "status": "stale"
     },
     {
+      "department": "",
       "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4392063",
+      "location": "Atlanta, GA",
+      "posted": "2026-10-12",
       "title": "Business Development Manager",
       "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392063",
-      "location": "Atlanta, GA",
-      "department": "",
-      "posted": "2026-10-12",
       "company": "Atlas Real Estate",
       "category": "sales",
+      "status": "stale"
+    },
+    {
+      "department": "",
+      "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4392123",
+      "location": "Kansas City, KS",
+      "posted": "2026-10-12",
+      "title": "Business Development Manager",
+      "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392123",
+      "company": "Atlas Real Estate",
+      "category": "sales",
+      "status": "stale"
+    },
+    {
+      "id": "wd-pretiumenterpriseservices-JR117262",
+      "title": "Area Vice President",
+      "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/Remote---Open/Area-Vice-President_JR117262-1",
+      "location": "Remote - Open",
+      "department": "",
+      "posted": "Posted 3 Days Ago",
+      "company": "BH Management Services",
+      "category": "executive",
       "status": "ok"
     },
     {
-      "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4392123",
-      "title": "Business Development Manager",
-      "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392123",
-      "location": "Kansas City, KS",
+      "id": "gh-4745044005",
+      "title": "Analytics Engineer, SFR Real Estate",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4745044005",
+      "location": "Dallas, Tx",
       "department": "",
-      "posted": "2026-10-12",
-      "company": "Atlas Real Estate",
+      "posted": "2026-10-19",
+      "company": "Evergreen Residential",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4745954005",
+      "title": "Revenue Management Associate, Build-to-Rent Communities",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4745954005",
+      "location": "New York, Ny",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Evergreen Residential",
       "category": "sales",
       "status": "ok"
     },
@@ -43,6 +76,17 @@
       "posted": "2026-07-29",
       "company": "Flock Homes",
       "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4745234005",
+      "title": "Head of Engineering",
+      "url": "https://job-boards.greenhouse.io/flockhomes/jobs/4745234005",
+      "location": "San Francisco or Denver",
+      "department": "",
+      "posted": "2026-10-19",
+      "company": "Flock Homes",
+      "category": "executive",
       "status": "ok"
     },
     {
@@ -145,6 +189,17 @@
       "status": "ok"
     },
     {
+      "id": "gh-8037963003",
+      "title": "Sales Coordinator",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/8037963003",
+      "location": "Los Angeles, CA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
       "id": "gh-8002784003",
       "title": "Sales Manager",
       "url": "https://job-boards.greenhouse.io/kasa/jobs/8002784003",
@@ -152,6 +207,94 @@
       "department": "",
       "posted": "2026-09-25",
       "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-27d4e935-f652-46bd-be39-72baafe78b3b",
+      "title": "Market Research Analyst",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=27d4e935-f652-46bd-be39-72baafe78b3b",
+      "location": "BATON ROUGE, LA",
+      "department": "",
+      "posted": "2026-10-23",
+      "company": "Lamar Advertising Company",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "uk-daa5f60e-5706-4e3b-bca9-725e60772524",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=daa5f60e-5706-4e3b-bca9-725e60772524",
+      "location": "LAS VEGAS, NV",
+      "department": "",
+      "posted": "2026-10-23",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-51bd3f34-5f4f-4eed-b47d-be7f63798ebc",
+      "title": "Sales Operations & National Account Coordinator",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=51bd3f34-5f4f-4eed-b47d-be7f63798ebc",
+      "location": "COLORADO SPRINGS, CO",
+      "department": "",
+      "posted": "2026-10-22",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-1d61a82a-de55-459a-a429-6b20d7bffd9f",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=1d61a82a-de55-459a-a429-6b20d7bffd9f",
+      "location": "URBANDALE, IA",
+      "department": "",
+      "posted": "2026-10-22",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-a3ee4043-4f3c-4c23-a425-8dd43d72aa42",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=a3ee4043-4f3c-4c23-a425-8dd43d72aa42",
+      "location": "BRUNSWICK, GA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-9c20a0c9-e735-4ebc-83bb-302067b789ea",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9c20a0c9-e735-4ebc-83bb-302067b789ea",
+      "location": "SAVANNAH, GA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-3d74da43-6375-4d54-842b-7dbe9112b03e",
+      "title": "Sales and Campaign Coordinator",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=3d74da43-6375-4d54-842b-7dbe9112b03e",
+      "location": "EAST PROVIDENCE, RI",
+      "department": "",
+      "posted": "2026-10-20",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-42a51a9e-5aae-4695-891c-bf3c851e17ac",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=42a51a9e-5aae-4695-891c-bf3c851e17ac",
+      "location": "FORT MYERS, FL",
+      "department": "",
+      "posted": "2026-10-19",
+      "company": "Lamar Advertising Company",
       "category": "sales",
       "status": "ok"
     },
@@ -237,17 +380,6 @@
       "title": "Sales Account Executive",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=b40fea45-7707-4feb-9655-7efcfd85e040",
       "location": "WESTLAND, MI",
-      "department": "",
-      "posted": "2026-09-30",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "uk-480b2b9a-4b49-482c-91f1-b7730d521c71",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=480b2b9a-4b49-482c-91f1-b7730d521c71",
-      "location": "RENO, NV",
       "department": "",
       "posted": "2026-09-30",
       "company": "Lamar Advertising Company",
@@ -387,17 +519,6 @@
       "status": "ok"
     },
     {
-      "id": "uk-9a3327e7-7936-46c8-844a-88d58d0cbe9d",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9a3327e7-7936-46c8-844a-88d58d0cbe9d",
-      "location": "ROCHESTER, NY",
-      "department": "",
-      "posted": "2026-08-24",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "uk-e158622f-cfa2-4664-819f-4b23fb370ce7",
       "title": "Sales Account Executive",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=e158622f-cfa2-4664-819f-4b23fb370ce7",
@@ -442,39 +563,6 @@
       "status": "ok"
     },
     {
-      "id": "uk-570af94b-faa4-448d-b518-a79a9b45c931",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=570af94b-faa4-448d-b518-a79a9b45c931",
-      "location": "PEARL, MS",
-      "department": "",
-      "posted": "2026-07-24",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "uk-c2a75c1c-96d6-4a8d-ad6f-f52ee59a9da1",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c2a75c1c-96d6-4a8d-ad6f-f52ee59a9da1",
-      "location": "SAVANNAH, GA",
-      "department": "",
-      "posted": "2026-07-23",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "uk-2f2ca29d-125d-4dda-b927-2f5cd16c17ab",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2f2ca29d-125d-4dda-b927-2f5cd16c17ab",
-      "location": "Buckhannon, WV",
-      "department": "",
-      "posted": "2026-06-26",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "uk-dbb18298-b04a-48f7-832d-0cd8d0b3c8ef",
       "title": "Sales Account Executive",
       "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=dbb18298-b04a-48f7-832d-0cd8d0b3c8ef",
@@ -503,17 +591,6 @@
       "location": "Phoenix, AZ",
       "department": "",
       "posted": "2026-01-30",
-      "company": "Lamar Advertising Company",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "uk-35c27127-185b-40aa-8d25-d7c472f962df",
-      "title": "Sales Account Executive",
-      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=35c27127-185b-40aa-8d25-d7c472f962df",
-      "location": "READING, PA",
-      "department": "",
-      "posted": "2025-12-30",
       "company": "Lamar Advertising Company",
       "category": "sales",
       "status": "ok"
@@ -612,7 +689,7 @@
       "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=25863430_1&lang=en_US",
       "location": "Minneapolis, MN",
       "department": "",
-      "posted": "2026-06-25",
+      "posted": "2026-06-26",
       "company": "Renters Warehouse",
       "category": "sales",
       "status": "ok"
@@ -637,6 +714,149 @@
       "posted": "",
       "company": "Starwood Property Trust",
       "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35071-tx",
+      "title": "Senior Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/35071-tx",
+      "location": "Uniti | TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35071-az",
+      "title": "Senior Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/35071-az",
+      "location": "Uniti | AZ, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-beatrice-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-beatrice-ne",
+      "location": "Uniti | Beatrice, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-lincoln-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-hastings-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-hastings-ne",
+      "location": "Uniti | Hastings, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34952-jamestown-ny",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34952-jamestown-ny",
+      "location": "Uniti | Jamestown, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34969-lincoln-ne",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34969-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34973-mount-pleasant-ia",
+      "title": "Field Sales Account Executive (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34973-mount-pleasant-ia",
+      "location": "Uniti | Mount Pleasant, IA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-meadville-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-meadville-pa",
+      "location": "Uniti | Meadville, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-waynesburg-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-waynesburg-pa",
+      "location": "Uniti | Waynesburg, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-brookville-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-brookville-pa",
+      "location": "Uniti | Brookville, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-ephrata-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-ephrata-pa",
+      "location": "Uniti | Ephrata, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-state-college-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-state-college-pa",
+      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
       "status": "ok"
     },
     {
@@ -927,7 +1147,7 @@
     },
     {
       "id": "op-/jobs/34672-glennville-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-glennville-ga",
       "location": "Uniti | Glennville, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -938,7 +1158,7 @@
     },
     {
       "id": "op-/jobs/34672-springfield-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-springfield-ga",
       "location": "Uniti | Springfield, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -949,7 +1169,7 @@
     },
     {
       "id": "op-/jobs/34672-fitzgerald-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-fitzgerald-ga",
       "location": "Uniti | Fitzgerald, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -960,7 +1180,7 @@
     },
     {
       "id": "op-/jobs/34672-douglas-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-douglas-ga",
       "location": "Uniti | Douglas, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -971,7 +1191,7 @@
     },
     {
       "id": "op-/jobs/34672-ocilla-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-ocilla-ga",
       "location": "Uniti | Ocilla, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -982,7 +1202,7 @@
     },
     {
       "id": "op-/jobs/34672-valdosta-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-valdosta-ga",
       "location": "Uniti | Valdosta, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -993,7 +1213,7 @@
     },
     {
       "id": "op-/jobs/34672-tifton-ga",
-      "title": "Consumer Direct Sales Manager",
+      "title": "Regional Sales Manager",
       "url": "https://careers.uniti.com/jobs/34672-tifton-ga",
       "location": "Uniti | Tifton, GA, US (Onsite) | Full-Time",
       "department": "",
@@ -1007,6 +1227,28 @@
       "title": "Field Account Executive II (Hybrid)",
       "url": "https://careers.uniti.com/jobs/34679-valdosta-ga",
       "location": "Uniti | Valdosta, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34679-albany-ga",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34679-albany-ga",
+      "location": "Uniti | Albany, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34679-tifton-ga",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34679-tifton-ga",
+      "location": "Uniti | Tifton, GA, US (Onsite) | Full-Time",
       "department": "",
       "posted": "",
       "company": "Uniti Group",
@@ -1036,28 +1278,6 @@
       "status": "ok"
     },
     {
-      "id": "op-/jobs/34332-lexington-ky",
-      "title": "Outside Plant Engineer I",
-      "url": "https://careers.uniti.com/jobs/34332-lexington-ky",
-      "location": "Uniti | Lexington, KY, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "engineering",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/34192-nc",
-      "title": "Sr Sales Engineer-KB",
-      "url": "https://careers.uniti.com/jobs/34192-nc",
-      "location": "Uniti | NC, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "op-/jobs/34187-lincoln-ne",
       "title": "Account Executive (Hybrid)",
       "url": "https://careers.uniti.com/jobs/34187-lincoln-ne",
@@ -1073,17 +1293,6 @@
       "title": "Lead Specialist Consumer Direct Sales",
       "url": "https://careers.uniti.com/jobs/34091-crockett-tx",
       "location": "Uniti | Crockett, TX, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/34087-dawson-ga",
-      "title": "Lead Specialist Consumer Direct Sales",
-      "url": "https://careers.uniti.com/jobs/34087-dawson-ga",
-      "location": "Uniti | Dawson, GA, US (Onsite) | Full-Time",
       "department": "",
       "posted": "",
       "company": "Uniti Group",
@@ -1135,17 +1344,6 @@
       "status": "ok"
     },
     {
-      "id": "op-/jobs/33709-des-moines-ia",
-      "title": "Account Manager (Hybrid)",
-      "url": "https://careers.uniti.com/jobs/33709-des-moines-ia",
-      "location": "Uniti | Des Moines, IA, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
       "id": "op-/jobs/33701-lexington-ky",
       "title": "Field Account Executive I (Hybrid)",
       "url": "https://careers.uniti.com/jobs/33701-lexington-ky",
@@ -1161,17 +1359,6 @@
       "title": "Gov't Account Executive (Hybrid)",
       "url": "https://careers.uniti.com/jobs/33683-nm",
       "location": "Uniti | NM, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/33693-ne",
-      "title": "Account Manager (Hybrid)",
-      "url": "https://careers.uniti.com/jobs/33693-ne",
-      "location": "Uniti | NE, US (Onsite) | Full-Time",
       "department": "",
       "posted": "",
       "company": "Uniti Group",
@@ -1366,28 +1553,6 @@
       "status": "ok"
     },
     {
-      "id": "op-/jobs/31769-lincoln-ne",
-      "title": "Field Account Executive I (Hybrid)",
-      "url": "https://careers.uniti.com/jobs/31769-lincoln-ne",
-      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/31500-co",
-      "title": "Major Customer Success Mgr",
-      "url": "https://careers.uniti.com/jobs/31500-co",
-      "location": "Uniti | CO, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "gtm",
-      "status": "ok"
-    },
-    {
       "id": "op-/jobs/31500",
       "title": "Major Customer Success Mgr",
       "url": "https://careers.uniti.com/jobs/31500",
@@ -1399,36 +1564,14 @@
       "status": "ok"
     },
     {
-      "id": "op-/jobs/31384",
-      "title": "Software Engineer",
-      "url": "https://careers.uniti.com/jobs/31384",
-      "location": "Uniti | United States (Virtual) | Full-Time",
+      "id": "op-/jobs/31500-co",
+      "title": "Major Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/31500-co",
+      "location": "Uniti | CO, US (Onsite) | Full-Time",
       "department": "",
       "posted": "",
       "company": "Uniti Group",
-      "category": "engineering",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/31398-muncy-pa",
-      "title": "Manager-Consumer Direct Sales",
-      "url": "https://careers.uniti.com/jobs/31398-muncy-pa",
-      "location": "Uniti | Muncy, PA, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
-      "status": "ok"
-    },
-    {
-      "id": "op-/jobs/31398-state-college-pa",
-      "title": "Manager-Consumer Direct Sales",
-      "url": "https://careers.uniti.com/jobs/31398-state-college-pa",
-      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
-      "department": "",
-      "posted": "",
-      "company": "Uniti Group",
-      "category": "sales",
+      "category": "gtm",
       "status": "ok"
     },
     {
@@ -1454,9 +1597,242 @@
       "status": "ok"
     },
     {
-      "id": "op-/jobs/31328-mount-pleasant-ia",
+      "id": "wd-wework-JR-0064279",
+      "title": "Analista J\u00fanior de Sales Development Representative (SDR)",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/So-Paulo-Brazil/Analista-Jnior-de-Sales-Development-Representative--SDR-_JR-0064279",
+      "location": "S\u00e3o Paulo, Brazil",
+      "department": "",
+      "posted": "Posted 5 Days Ago",
+      "company": "WeWork",
+      "category": "sales",
+      "status": "ok"
+    }
+  ],
+  "new": [
+    {
+      "id": "wd-pretiumenterpriseservices-JR117262",
+      "title": "Area Vice President",
+      "url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers/job/Remote---Open/Area-Vice-President_JR117262-1",
+      "location": "Remote - Open",
+      "department": "",
+      "posted": "Posted 3 Days Ago",
+      "company": "BH Management Services",
+      "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4745044005",
+      "title": "Analytics Engineer, SFR Real Estate",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4745044005",
+      "location": "Dallas, Tx",
+      "department": "",
+      "posted": "2026-10-19",
+      "company": "Evergreen Residential",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4745954005",
+      "title": "Revenue Management Associate, Build-to-Rent Communities",
+      "url": "https://evergreenresi.com/careers/openings/?gh_jid=4745954005",
+      "location": "New York, Ny",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Evergreen Residential",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "gh-4745234005",
+      "title": "Head of Engineering",
+      "url": "https://job-boards.greenhouse.io/flockhomes/jobs/4745234005",
+      "location": "San Francisco or Denver",
+      "department": "",
+      "posted": "2026-10-19",
+      "company": "Flock Homes",
+      "category": "executive",
+      "status": "ok"
+    },
+    {
+      "id": "gh-8037963003",
+      "title": "Sales Coordinator",
+      "url": "https://job-boards.greenhouse.io/kasa/jobs/8037963003",
+      "location": "Los Angeles, CA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Kasa Living",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-27d4e935-f652-46bd-be39-72baafe78b3b",
+      "title": "Market Research Analyst",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=27d4e935-f652-46bd-be39-72baafe78b3b",
+      "location": "BATON ROUGE, LA",
+      "department": "",
+      "posted": "2026-10-23",
+      "company": "Lamar Advertising Company",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "uk-daa5f60e-5706-4e3b-bca9-725e60772524",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=daa5f60e-5706-4e3b-bca9-725e60772524",
+      "location": "LAS VEGAS, NV",
+      "department": "",
+      "posted": "2026-10-23",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-51bd3f34-5f4f-4eed-b47d-be7f63798ebc",
+      "title": "Sales Operations & National Account Coordinator",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=51bd3f34-5f4f-4eed-b47d-be7f63798ebc",
+      "location": "COLORADO SPRINGS, CO",
+      "department": "",
+      "posted": "2026-10-22",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-1d61a82a-de55-459a-a429-6b20d7bffd9f",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=1d61a82a-de55-459a-a429-6b20d7bffd9f",
+      "location": "URBANDALE, IA",
+      "department": "",
+      "posted": "2026-10-22",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-a3ee4043-4f3c-4c23-a425-8dd43d72aa42",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=a3ee4043-4f3c-4c23-a425-8dd43d72aa42",
+      "location": "BRUNSWICK, GA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-9c20a0c9-e735-4ebc-83bb-302067b789ea",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9c20a0c9-e735-4ebc-83bb-302067b789ea",
+      "location": "SAVANNAH, GA",
+      "department": "",
+      "posted": "2026-10-21",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-3d74da43-6375-4d54-842b-7dbe9112b03e",
+      "title": "Sales and Campaign Coordinator",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=3d74da43-6375-4d54-842b-7dbe9112b03e",
+      "location": "EAST PROVIDENCE, RI",
+      "department": "",
+      "posted": "2026-10-20",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "uk-42a51a9e-5aae-4695-891c-bf3c851e17ac",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=42a51a9e-5aae-4695-891c-bf3c851e17ac",
+      "location": "FORT MYERS, FL",
+      "department": "",
+      "posted": "2026-10-19",
+      "company": "Lamar Advertising Company",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35071-tx",
+      "title": "Senior Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/35071-tx",
+      "location": "Uniti | TX, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35071-az",
+      "title": "Senior Customer Success Mgr",
+      "url": "https://careers.uniti.com/jobs/35071-az",
+      "location": "Uniti | AZ, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "gtm",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-beatrice-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-beatrice-ne",
+      "location": "Uniti | Beatrice, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-lincoln-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/35000-hastings-ne",
+      "title": "Sales Account Executive Multi Dwelling",
+      "url": "https://careers.uniti.com/jobs/35000-hastings-ne",
+      "location": "Uniti | Hastings, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34952-jamestown-ny",
       "title": "Field Account Executive I (Hybrid)",
-      "url": "https://careers.uniti.com/jobs/31328-mount-pleasant-ia",
+      "url": "https://careers.uniti.com/jobs/34952-jamestown-ny",
+      "location": "Uniti | Jamestown, NY, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34969-lincoln-ne",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34969-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34973-mount-pleasant-ia",
+      "title": "Field Sales Account Executive (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34973-mount-pleasant-ia",
       "location": "Uniti | Mount Pleasant, IA, US (Onsite) | Full-Time",
       "department": "",
       "posted": "",
@@ -1465,41 +1841,286 @@
       "status": "ok"
     },
     {
-      "id": "wd-wework-JR-0064210",
-      "title": "Lead, Email Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Lead--Email-Marketing_JR-0064210",
-      "location": "Mexico City, Mexico",
+      "id": "op-/jobs/34931-meadville-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-meadville-pa",
+      "location": "Uniti | Meadville, PA, US (Onsite) | Full-Time",
       "department": "",
-      "posted": "Posted 18 Days Ago",
-      "company": "WeWork",
-      "category": "gtm",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
       "status": "ok"
     },
     {
-      "id": "wd-wework-JR-0064161",
-      "title": "Lead, Integrated Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/New-York-NY-United-States-of-America/Lead--Integrated-Marketing_JR-0064161-1",
-      "location": "New York, NY United States of America",
+      "id": "op-/jobs/34931-waynesburg-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-waynesburg-pa",
+      "location": "Uniti | Waynesburg, PA, US (Onsite) | Full-Time",
       "department": "",
-      "posted": "Posted 21 Days Ago",
-      "company": "WeWork",
-      "category": "gtm",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
       "status": "ok"
     },
     {
-      "id": "wd-wework-JR-0064060",
-      "title": "Senior Manager, Field Marketing",
-      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Senior-Manager--Field-Marketing_JR-0064060-1",
-      "location": "Mexico City, Mexico",
+      "id": "op-/jobs/34931-brookville-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-brookville-pa",
+      "location": "Uniti | Brookville, PA, US (Onsite) | Full-Time",
       "department": "",
-      "posted": "Posted 30+ Days Ago",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-ephrata-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-ephrata-pa",
+      "location": "Uniti | Ephrata, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34931-state-college-pa",
+      "title": "Outside Plant Engineer I/II",
+      "url": "https://careers.uniti.com/jobs/34931-state-college-pa",
+      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "engineering",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34679-albany-ga",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34679-albany-ga",
+      "location": "Uniti | Albany, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "op-/jobs/34679-tifton-ga",
+      "title": "Field Account Executive II (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/34679-tifton-ga",
+      "location": "Uniti | Tifton, GA, US (Onsite) | Full-Time",
+      "department": "",
+      "posted": "",
+      "company": "Uniti Group",
+      "category": "sales",
+      "status": "ok"
+    },
+    {
+      "id": "wd-wework-JR-0064279",
+      "title": "Analista J\u00fanior de Sales Development Representative (SDR)",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/So-Paulo-Brazil/Analista-Jnior-de-Sales-Development-Representative--SDR-_JR-0064279",
+      "location": "S\u00e3o Paulo, Brazil",
+      "department": "",
+      "posted": "Posted 5 Days Ago",
       "company": "WeWork",
-      "category": "gtm",
+      "category": "sales",
       "status": "ok"
     }
   ],
-  "new": [],
-  "closed": [],
+  "closed": [
+    {
+      "department": "",
+      "id": "uk-480b2b9a-4b49-482c-91f1-b7730d521c71",
+      "location": "RENO, NV",
+      "posted": "2026-09-30",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=480b2b9a-4b49-482c-91f1-b7730d521c71",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-9a3327e7-7936-46c8-844a-88d58d0cbe9d",
+      "location": "ROCHESTER, NY",
+      "posted": "2026-08-24",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9a3327e7-7936-46c8-844a-88d58d0cbe9d",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-570af94b-faa4-448d-b518-a79a9b45c931",
+      "location": "PEARL, MS",
+      "posted": "2026-07-24",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=570af94b-faa4-448d-b518-a79a9b45c931",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-c2a75c1c-96d6-4a8d-ad6f-f52ee59a9da1",
+      "location": "SAVANNAH, GA",
+      "posted": "2026-07-23",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c2a75c1c-96d6-4a8d-ad6f-f52ee59a9da1",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-2f2ca29d-125d-4dda-b927-2f5cd16c17ab",
+      "location": "Buckhannon, WV",
+      "posted": "2026-06-26",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2f2ca29d-125d-4dda-b927-2f5cd16c17ab",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "uk-35c27127-185b-40aa-8d25-d7c472f962df",
+      "location": "READING, PA",
+      "posted": "2025-12-30",
+      "title": "Sales Account Executive",
+      "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=35c27127-185b-40aa-8d25-d7c472f962df",
+      "company": "Lamar Advertising Company",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/34332-lexington-ky",
+      "location": "Uniti | Lexington, KY, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Outside Plant Engineer I",
+      "url": "https://careers.uniti.com/jobs/34332-lexington-ky",
+      "company": "Uniti Group",
+      "category": "engineering"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/34192-nc",
+      "location": "Uniti | NC, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Sr Sales Engineer-KB",
+      "url": "https://careers.uniti.com/jobs/34192-nc",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/34087-dawson-ga",
+      "location": "Uniti | Dawson, GA, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Lead Specialist Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/34087-dawson-ga",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/33709-des-moines-ia",
+      "location": "Uniti | Des Moines, IA, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Account Manager (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33709-des-moines-ia",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/33693-ne",
+      "location": "Uniti | NE, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Account Manager (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/33693-ne",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/31769-lincoln-ne",
+      "location": "Uniti | Lincoln, NE, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/31769-lincoln-ne",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/31384",
+      "location": "Uniti | United States (Virtual) | Full-Time",
+      "posted": "",
+      "title": "Software Engineer",
+      "url": "https://careers.uniti.com/jobs/31384",
+      "company": "Uniti Group",
+      "category": "engineering"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/31398-muncy-pa",
+      "location": "Uniti | Muncy, PA, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Manager-Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/31398-muncy-pa",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/31398-state-college-pa",
+      "location": "Uniti | State College, PA, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Manager-Consumer Direct Sales",
+      "url": "https://careers.uniti.com/jobs/31398-state-college-pa",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "op-/jobs/31328-mount-pleasant-ia",
+      "location": "Uniti | Mount Pleasant, IA, US (Onsite) | Full-Time",
+      "posted": "",
+      "title": "Field Account Executive I (Hybrid)",
+      "url": "https://careers.uniti.com/jobs/31328-mount-pleasant-ia",
+      "company": "Uniti Group",
+      "category": "sales"
+    },
+    {
+      "department": "",
+      "id": "wd-wework-JR-0064210",
+      "location": "Mexico City, Mexico",
+      "posted": "Posted 18 Days Ago",
+      "title": "Lead, Email Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Lead--Email-Marketing_JR-0064210",
+      "company": "WeWork",
+      "category": "gtm"
+    },
+    {
+      "department": "",
+      "id": "wd-wework-JR-0064161",
+      "location": "New York, NY United States of America",
+      "posted": "Posted 21 Days Ago",
+      "title": "Lead, Integrated Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/New-York-NY-United-States-of-America/Lead--Integrated-Marketing_JR-0064161-1",
+      "company": "WeWork",
+      "category": "gtm"
+    },
+    {
+      "department": "",
+      "id": "wd-wework-JR-0064060",
+      "location": "Mexico City, Mexico",
+      "posted": "Posted 30+ Days Ago",
+      "title": "Senior Manager, Field Marketing",
+      "url": "https://wework.wd1.myworkdayjobs.com/WeWork/job/Mexico-City-Mexico/Senior-Manager--Field-Marketing_JR-0064060-1",
+      "company": "WeWork",
+      "category": "gtm"
+    }
+  ],
   "coverage": {
     "Alexander & Baldwin": {
       "column_d": "https://jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL",
@@ -1516,12 +2137,12 @@
       "column_d_from": "Column D",
       "system": "page",
       "board": "page::{\"url\": \"https://realatlas.com/careers/#positions\"}",
-      "via": "paylocity:5e5fc082-a90b-4d93-8b73-46f77d40e081:{}",
-      "note": "read from the job board this page loads its jobs from (paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081: https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081)",
+      "via": "",
+      "note": "",
       "total": 18,
-      "via_label": "paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081",
-      "via_url": "https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081",
-      "status": "ok"
+      "status": "stale",
+      "reason": "the Column D page doesn't load (HTTP 202)",
+      "stale_since": "2026-10-19"
     },
     "Atria Senior Living": {
       "column_d": "https://www.atriaseniorliving.com/careers",
@@ -1541,7 +2162,7 @@
       "board": "page::{\"url\": \"https://livebh.com/careers/job-search/\"}",
       "via": "workday:pretiumenterpriseservices:{\"host\": \"pretiumenterpriseservices.wd1.myworkdayjobs.com\", \"site\": \"livebhcareers\"}",
       "note": "read from the job board this page embeds (workday: pretiumenterpriseservices: https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers)",
-      "total": 152,
+      "total": 139,
       "via_label": "workday: pretiumenterpriseservices",
       "via_url": "https://pretiumenterpriseservices.wd1.myworkdayjobs.com/livebhcareers",
       "status": "ok"
@@ -1553,7 +2174,7 @@
       "board": "workable:belong-6:{}",
       "via": "",
       "note": "",
-      "total": 3,
+      "total": 1,
       "status": "ok"
     },
     "Case & Associates": {
@@ -1622,15 +2243,15 @@
       "status": "ok"
     },
     "Easterly Government Properties": {
-      "column_d": "https://www.easterlyre.com/careers",
+      "column_d": "https://easterlyreit.com/company/#careers",
       "column_d_from": "Column D",
       "system": "page",
-      "board": "page::{\"url\": \"https://www.easterlyre.com/careers\"}",
+      "board": "page::{\"url\": \"https://easterlyreit.com/company/#careers\"}",
       "via": "",
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CONNECTION_CLOSED at https://www.easterlyre.com/careers))"
+      "reason": "the Column D page doesn't load (HTTP 404; in a browser: not found)"
     },
     "Evergreen Live": {
       "column_d": "",
@@ -1650,7 +2271,7 @@
       "board": "page::{\"url\": \"https://evergreenresi.com/careers/openings/\"}",
       "via": "greenhouse:evergreenresidentialemployeeservicescorp:{}",
       "note": "read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp)",
-      "total": 41,
+      "total": 35,
       "via_label": "greenhouse: evergreenresidentialemployeeservicescorp",
       "via_url": "https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp",
       "status": "ok"
@@ -1662,7 +2283,7 @@
       "board": "page::{\"url\": \"https://www.evernest.co/careers\"}",
       "via": "lever:evernest:{}",
       "note": "read from the job board this page loads its jobs from (lever: evernest: https://jobs.lever.co/evernest)",
-      "total": 11,
+      "total": 10,
       "via_label": "lever: evernest",
       "via_url": "https://jobs.lever.co/evernest",
       "status": "ok"
@@ -1674,7 +2295,7 @@
       "board": "page::{\"url\": \"https://www.flockhomes.com/careers\"}",
       "via": "greenhouse:flockhomes:{}",
       "note": "read from the job board this page loads its jobs from (greenhouse: flockhomes: https://job-boards.greenhouse.io/flockhomes)",
-      "total": 3,
+      "total": 4,
       "via_label": "greenhouse: flockhomes",
       "via_url": "https://job-boards.greenhouse.io/flockhomes",
       "status": "ok"
@@ -1696,7 +2317,7 @@
       "board": "page::{\"url\": \"https://www.highwoods.com/careers\"}",
       "via": "ukg:HIG1001HIW:{\"board\": \"cf2a3a89-ceb7-4bb7-aa13-3167c6417621\", \"host\": \"recruiting.ultipro.com\"}",
       "note": "read from the job board this page links to (ukg: HIG1001HIW: https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/)",
-      "total": 5,
+      "total": 4,
       "via_label": "ukg: HIG1001HIW",
       "via_url": "https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/",
       "status": "ok"
@@ -1708,7 +2329,7 @@
       "board": "page::{\"url\": \"https://www.industriousoffice.com/careers#open-positions\"}",
       "via": "ashby:industrious:{}",
       "note": "read from the job board this page loads its jobs from (ashby: industrious: https://jobs.ashbyhq.com/industrious)",
-      "total": 60,
+      "total": 63,
       "via_label": "ashby: industrious",
       "via_url": "https://jobs.ashbyhq.com/industrious",
       "status": "ok"
@@ -1720,7 +2341,7 @@
       "board": "page::{\"url\": \"https://www.kasa.com/careers\"}",
       "via": "greenhouse:kasa:{}",
       "note": "read from the job board this page loads its jobs from (greenhouse: kasa: https://job-boards.greenhouse.io/kasa)",
-      "total": 17,
+      "total": 18,
       "via_label": "greenhouse: kasa",
       "via_url": "https://job-boards.greenhouse.io/kasa",
       "status": "ok"
@@ -1734,7 +2355,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "the Column D page doesn't load (HTTP 403)"
+      "reason": "the Column D page doesn't load (HTTP 202)"
     },
     "Kite Realty Group Trust": {
       "column_d": "https://www.kiterealty.com/careers",
@@ -1754,7 +2375,7 @@
       "board": "ukg:LAM1000LAC:{\"board\": \"82898216-ca7a-4621-b01b-bf3410c919b2\", \"host\": \"recruiting2.ultipro.com\"}",
       "via": "",
       "note": "",
-      "total": 100,
+      "total": 96,
       "status": "ok"
     },
     "Medical Properties Trust": {
@@ -1785,7 +2406,7 @@
       "board": "page::{\"url\": \"https://www.mynd.co/talent-and-culture\"}",
       "via": "greenhouse:roofstock:{}",
       "note": "read from the job board this page links to (greenhouse: roofstock: https://job-boards.greenhouse.io/roofstock)",
-      "total": 10,
+      "total": 8,
       "via_label": "greenhouse: roofstock",
       "via_url": "https://job-boards.greenhouse.io/roofstock",
       "status": "ok"
@@ -1810,7 +2431,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+      "reason": "the Column D page points at a job board that isn't there: rippling:cdn-cgi (Rippling has no board named 'cdn-cgi' (it may have moved))"
     },
     "Oakbrook Corporation": {
       "column_d": "https://oakbrookcorp.isolvedhire.com/jobs/",
@@ -1819,7 +2440,7 @@
       "board": "isolved:oakbrookcorp:{}",
       "via": "",
       "note": "read by opening the isolved job board in a browser",
-      "total": 5,
+      "total": 6,
       "status": "ok"
     },
     "PMI": {
@@ -1829,7 +2450,7 @@
       "board": "page::{\"url\": \"https://www.propertymanagementinc.com/careers\"}",
       "via": "",
       "note": "read from the jobs the page shows in a browser",
-      "total": 28,
+      "total": 29,
       "status": "ok"
     },
     "PURE Homeriver Group": {
@@ -1839,7 +2460,7 @@
       "board": "page::{\"url\": \"https://purehomeriver.com/company/careers/\"}",
       "via": "adp:eea42ed6-3dcf-47f3-b99b-29a304948b2b:{\"cc\": \"9200441095595_2\"}",
       "note": "read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2)",
-      "total": 9,
+      "total": 10,
       "via_label": "adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b",
       "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2",
       "status": "ok"
@@ -1885,7 +2506,7 @@
       "board": "page::{\"url\": \"https://www.renterswarehouse.com/careers\"}",
       "via": "adp:0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da:{}",
       "note": "read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da)",
-      "total": 12,
+      "total": 11,
       "via_label": "adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
       "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da",
       "status": "ok"
@@ -1922,7 +2543,7 @@
       "note": "",
       "total": 0,
       "status": "needs-link",
-      "reason": "no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead"
+      "reason": "the Column D page doesn't load (connection error (SSLError))"
     },
     "The Lund Company": {
       "column_d": "https://lundco.com/join-our-team/",
@@ -1940,8 +2561,8 @@
       "system": "page",
       "board": "page::{\"url\": \"https://careers.uniti.com/\"}",
       "via": "",
-      "note": "read from the jobs the page shows in a browser (14 pages of results)",
-      "total": 191,
+      "note": "read from the jobs the page shows in a browser (13 pages of results)",
+      "total": 182,
       "status": "ok"
     },
     "Veris Residential": {
@@ -1951,7 +2572,7 @@
       "board": "page::{\"url\": \"https://www.rhoresidential.com/careers/#careers-positions\"}",
       "via": "adp:28860e2c-1615-47c9-9444-c35ba9f7d7d1:{\"cc\": \"19000101_000003\"}",
       "note": "read from the job board this page loads its jobs from (adp: 28860e2c-1615-47c9-9444-c35ba9f7d7d1: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003)",
-      "total": 17,
+      "total": 15,
       "via_label": "adp: 28860e2c-1615-47c9-9444-c35ba9f7d7d1",
       "via_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003",
       "status": "ok"
