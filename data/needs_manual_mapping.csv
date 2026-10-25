@@ -1,6 +1,7 @@
 company,careers_url,reason
 Procore Technologies,https://www.procore.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 Matterport,https://matterport.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+Measurabl,https://measurabl.com/careers,"found 1 listings on the careers page, but they don't look like job titles (e.g. 'Sustainability Services'), so nothing was published"
 Hemlane,https://www.hemlane.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 HouseCanary,https://www.housecanary.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Realtor.com (Move Inc.),https://www.move.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
@@ -14,7 +15,7 @@ Cecilian Partners,https://www.cecilianpartners.com/careers,the careers page does
 CoStar Group,https://www.costargroup.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
 Rocket Companies,https://www.rocketcompanies.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
 LeaseLock,https://www.leaselock.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-Northpoint Asset Management,https://northpointam.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Northpoint Asset Management,https://northpointam.com/careers,the careers page points at a job board that isn't there: rippling:cdn-cgi (Rippling has no board named 'cdn-cgi' (it may have moved))
 Mason,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)
 PropertyManagement.com,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan
 Accolade,https://www.accoladehq.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
