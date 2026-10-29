@@ -65,6 +65,16 @@ def test_fresh_roles_window_and_baseline_rule():
     assert titles == ["BD Manager", "Baseline, dated", "Founding Engineer"]
 
 
+
+def test_fresh_roles_reads_opco_new_as_records():
+    # 2026-10-25: the OpCo search wrote "new" as full role records; the founder pass crashed on them.
+    opco = {"run_date": "2026-10-19", "new": [{"id": "o1", "title": "BD Manager"}], "roles": [
+        {"id": "o1", "company": "Atlas Real Estate", "title": "BD Manager", "url": "https://o.test/1",
+         "location": "Las Vegas, NV", "posted": "Posted 3 Days Ago", "status": "ok"},
+        {"id": "o2", "company": "Atlas Real Estate", "title": "Not new", "url": "https://o.test/2", "posted": ""},
+    ]}
+    assert [r["title"] for r in founders.fresh_roles({}, opco, TODAY, 7)] == ["BD Manager"]
+
 def test_select_ranks_founding_roles_first_and_flags_unknown_companies(tmp_path):
     reg = _registry(tmp_path, [{"company": "Doorline", "headcount": "12", "stage": "seed", "founder_name": "Maya Chen",
                                 "founder_linkedin": "https://linkedin.com/in/maya"},
