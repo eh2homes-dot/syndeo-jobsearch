@@ -4,26 +4,38 @@ name: Founder hiring
 # the OpCo search already found. Reads data/history.json + out/opco-jobs-latest.json and
 # leads/founders.csv; writes output/founders/. Does no scraping of its own.
 #
-# TWO TOGGLES, both off by default, so this never runs by accident:
+# TWO TOGGLES, so this never runs by accident:
 #   1. Repo variable FOUNDER_HIRING = true   (Settings > Secrets and variables > Actions > Variables)
-#      gates the scheduled run. Without it the Sunday schedule exits immediately.
+#      gates every automatic run. Without it they exit immediately.
 #   2. config.json -> founder_hiring.enabled  gates the script itself. A manual run from the
 #      Actions tab passes --force, so you can try it without flipping either toggle.
 #
-# Sundays ~7:10am ET, after the weekly search (4am) and People Moves (6am) have committed.
-# GitHub cron is UTC; two schedules + the guard step give one run per Sunday all year.
+# WHEN IT RUNS. It needs that week's weekly search and OpCo search to have committed first.
+# Those are scheduled for early Sunday, but GitHub starts them hours late (2026-10-25: the
+# weekly search landed 9:07am ET, OpCo 10:05am ET), so a fixed early time read last week's
+# data. Instead:
+#   - it starts as soon as an OpCo Job Search run finishes successfully (Sunday or Monday), and
+#   - three backup times (Sun ~11:47am and ~3:47pm ET, Mon ~9:47am ET, an hour earlier in winter)
+#     catch a week where that trigger didn't fire.
+# Every automatic start goes through the guard: it runs only if this week's weekly search AND
+# OpCo results are in the repo and no founder draft exists yet for this week. So it runs once a
+# week, on fresh data. The Monday backup runs on the weekly search alone if OpCo never landed.
 on:
+  workflow_run:
+    workflows: ["OpCo Job Search"]
+    types: [completed]
   schedule:
-    - cron: "10 11 * * 0"     # 07:10 UTC-4 = 7:10am EDT
-    - cron: "10 12 * * 0"     # 07:10 UTC-5 = 7:10am EST
+    - cron: "47 15 * * 0"     # Sun 11:47am EDT / 10:47am EST
+    - cron: "47 19 * * 0"     # Sun 3:47pm EDT / 2:47pm EST
+    - cron: "47 13 * * 1"     # Mon 9:47am EDT / 8:47am EST (last backup)
   workflow_dispatch:
     inputs:
       days:
-        description: "Window: roles first seen in the last N days"
-        default: "7"
+        description: "Window: roles first seen in the last N days (blank = config.json, 7)"
+        default: ""
       max_headcount:
-        description: "A company at or under this headcount counts as founder-led"
-        default: "50"
+        description: "A company at or under this headcount counts as founder-led (blank = config.json, 100)"
+        default: ""
       record:
         description: "Log the picked companies to data/founder_featured.json (cooldown). Leave off for a dry look."
         type: boolean
@@ -45,24 +57,52 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 50       # enough history to see when the weekly search last committed
+
       - name: Decide whether this trigger should run
         id: guard
         env:
           EVENT: ${{ github.event_name }}
           FIRED: ${{ github.event.schedule }}
           ENABLED: ${{ vars.FOUNDER_HIRING }}
+          UPSTREAM: ${{ github.event.workflow_run.conclusion }}
         run: |
-          offset=$(TZ=America/New_York date +%z)
-          if [ "$EVENT" != "schedule" ]; then run=true
-          elif [ "$ENABLED" != "true" ]; then run=false; echo "FOUNDER_HIRING repo variable is not 'true'; skipping."
-          elif [ "$FIRED" = "10 11 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "10 12 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
-          else run=false; fi
-          echo "run=$run" >> "$GITHUB_OUTPUT"
-          echo "event=$EVENT schedule='$FIRED' offset=$offset enabled='$ENABLED' -> run=$run"
+          say() { echo "$*"; echo "$*" >> "$GITHUB_STEP_SUMMARY"; }
+          decide() { echo "run=$1" >> "$GITHUB_OUTPUT"; say "event=$EVENT schedule='$FIRED' -> run=$1: $2"; exit 0; }
 
-      - uses: actions/checkout@v5
-        if: steps.guard.outputs.run == 'true'
+          [ "$EVENT" = "workflow_dispatch" ] && decide true "manual run"
+          [ "$ENABLED" = "true" ] || decide false "FOUNDER_HIRING repo variable is not 'true'"
+          if [ "$EVENT" = "workflow_run" ] && [ "$UPSTREAM" != "success" ]; then
+            decide false "OpCo Job Search finished '$UPSTREAM', not success"
+          fi
+
+          # This week = since the most recent Sunday, Eastern time.
+          dow=$(TZ=America/New_York date +%u)          # 7 = Sunday
+          case "$dow" in 7|1) ;; *) decide false "only runs Sunday/Monday ET (today is day $dow)";; esac
+          if [ "$dow" = "7" ]; then week=$(TZ=America/New_York date +%F)
+          else week=$(TZ=America/New_York date -d yesterday +%F); fi
+
+          for f in output/founders/founder-roles-*.md; do
+            [ -e "$f" ] || continue
+            d=$(basename "$f" .md); d=${d#founder-roles-}
+            [[ "$d" > "$week" || "$d" = "$week" ]] && decide false "this week's draft already exists ($f)"
+          done
+
+          weekly=$(git log -1 --format=%cs -- data/history.json)
+          opco=$(python -c "import json; print(json.load(open('out/opco-jobs-latest.json')).get('run_date',''))" 2>/dev/null || true)
+          [[ "$weekly" > "$week" || "$weekly" = "$week" ]] || decide false "weekly search not in yet this week (last: ${weekly:-none}, week of $week)"
+          if [[ "$opco" < "$week" ]]; then
+            if [ "$FIRED" = "47 13 * * 1" ]; then
+              say "::warning::OpCo results never landed this week (last: ${opco:-none}); running on the weekly search alone."
+            else
+              decide false "OpCo search not in yet this week (last: ${opco:-none}, week of $week)"
+            fi
+          fi
+          decide true "weekly search $weekly, OpCo $opco, week of $week"
+
       - uses: actions/setup-python@v6
         if: steps.guard.outputs.run == 'true'
         with: { python-version: "3.12" }
@@ -73,26 +113,42 @@ jobs:
         if: steps.guard.outputs.run == 'true'
         env:
           PYTHONUNBUFFERED: "1"
-          DAYS: ${{ github.event.inputs.days || '7' }}
-          MAX_HC: ${{ github.event.inputs.max_headcount || '50' }}
-          RECORD: ${{ github.event.inputs.record || 'false' }}
+          DAYS: ${{ github.event.inputs.days }}
+          MAX_HC: ${{ github.event.inputs.max_headcount }}
+          RECORD: ${{ github.event.inputs.record }}
           EVENT: ${{ github.event_name }}
         run: |
-          ARGS="--days $DAYS --max-headcount $MAX_HC"
-          if [ "$RECORD" = "true" ]; then ARGS="$ARGS --record"; fi
+          # Window and headcount come from config.json (founder_hiring) unless a manual run overrides them.
+          ARGS=""
+          [ -n "$DAYS" ] && ARGS="$ARGS --days $DAYS"
+          [ -n "$MAX_HC" ] && ARGS="$ARGS --max-headcount $MAX_HC"
+          # Automatic runs log their picks for the cooldown (as source "draft"; publishing overrides it).
+          # A manual run logs only when asked.
+          if [ "$EVENT" != "workflow_dispatch" ] || [ "$RECORD" = "true" ]; then ARGS="$ARGS --record"; fi
           # A manual run is an explicit ask, so it goes ahead even with config.json's toggle off.
           if [ "$EVENT" = "workflow_dispatch" ]; then ARGS="$ARGS --force"; fi
+          echo "python -m jobsearch.founders$ARGS"
           python -m jobsearch.founders $ARGS
 
+      # Other Sunday workflows commit too, so retry the push.
       - name: Commit results
         if: steps.guard.outputs.run == 'true' && github.event.inputs.dry_run != 'true'
+        env:
+          BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add output/founders data/founder_featured.json 2>/dev/null || git add output/founders
-          git commit -m "founder hiring $(date -u +%F)" || echo "nothing to commit"
-          git pull --rebase --autostash || true
-          git push
+          git add output/founders
+          [ -f data/founder_featured.json ] && git add data/founder_featured.json
+          if git diff --staged --quiet; then echo "Nothing changed."; exit 0; fi
+          git commit -m "founder hiring $(date -u +%F)"
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "$BRANCH" && git push origin "HEAD:$BRANCH" && exit 0
+            echo "Push attempt $attempt failed; retrying in 15s"
+            sleep 15
+          done
+          echo "::error::Could not push results after 3 attempts."
+          exit 1
 
       - uses: actions/upload-artifact@v4
         if: steps.guard.outputs.run == 'true'

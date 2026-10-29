@@ -204,7 +204,8 @@ def fresh_roles(history: dict, opco: dict, today: dt.date, window_days: int, wor
              "location": j.get("location", ""), "first_seen": when.isoformat(), "ats": j.get("ats", ""),
              "key": key}, "weekly")
 
-    new_ids = set(opco.get("new") or [])
+    # The OpCo search lists new roles as full records (with "id"); older runs listed bare ids.
+    new_ids = {(n.get("id") if isinstance(n, dict) else n) for n in (opco.get("new") or [])}
     for r in opco.get("roles") or []:
         if r.get("status") not in (None, "", "ok", "open"):
             continue
