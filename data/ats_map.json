@@ -27,15 +27,15 @@
   "AppFolio": {
     "ats": "ashby",
     "confidence": "page-moved",
-    "detected_on": "2026-10-18",
-    "evidence": "read from the job board this page embeds (ashby: 13a892fa-5b4f-4539-a264-3a0452bbead3: https://jobs.ashbyhq.com/13a892fa-5b4f-4539-a264-3a0452bbead3); found by following the page's link to its full list (https://www.appfolio.com/open-roles)",
-    "moved_on": "2026-10-18",
+    "detected_on": "2026-11-01",
+    "evidence": "read from the job board this page embeds (ashby: appfolio: https://jobs.ashbyhq.com/appfolio); found by following the page's link to its full list (https://www.appfolio.com/open-roles)",
+    "moved_on": "2026-11-01",
     "previous": {
-      "ats": "jobvite",
-      "confidence": "manual",
-      "slug": "appfolio-internal"
+      "ats": "ashby",
+      "confidence": "page-moved",
+      "slug": "13a892fa-5b4f-4539-a264-3a0452bbead3"
     },
-    "slug": "13a892fa-5b4f-4539-a264-3a0452bbead3"
+    "slug": "appfolio"
   },
   "Atlas Real Estate": {
     "ats": "paylocity",
