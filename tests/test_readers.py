@@ -229,3 +229,38 @@ def test_smartrecruiters_tells_a_missing_company_from_an_empty_one():
 def test_gems_own_embed_script_is_not_a_company_board():
     assert B.classify("https://jobs.gem.com/gem/embed.js").system == "page"
     assert B.classify("https://jobs.gem.com/lower-llc").slug == "lower-llc"
+
+
+EIGHTFOLD_ROUTES = {
+    r"GET https://careers\.acme\.com/api/apply/v2/jobs\?domain=acme\.com&start=0&.*": {"json": {
+        "count": 3, "positions": [
+            {"id": 101, "name": "VP Sales", "posting_name": "VP Sales", "location": "Austin, Texas",
+             "department": "Widgets (Jane Doe)", "t_create": 1793059200,
+             "canonicalPositionUrl": "https://acme.eightfold.ai/careers/job/101"},
+            {"id": 102, "name": "Staff Engineer", "locations": ["Remote", "London"],
+             "department": "Platform", "t_create": None},
+        ]}},
+    r"GET https://careers\.acme\.com/api/apply/v2/jobs\?domain=acme\.com&start=2&.*": {"json": {
+        "count": 3, "positions": [
+            {"id": 102, "name": "Staff Engineer"},             # repeated across pages: kept once
+            {"id": 103, "name": "Account Executive", "location": "Denver, Colorado"},
+        ]}},
+}
+
+
+def test_eightfold_pages_through_and_cleans_departments():
+    with fakenet.serve(EIGHTFOLD_ROUTES):
+        jobs = B.eightfold("acme", host="careers.acme.com", domain="acme.com")
+    assert [j["id"] for j in jobs] == ["101", "102", "103"]
+    assert not jobs.truncated
+    vp, eng, ae = jobs
+    assert vp["url"] == "https://acme.eightfold.ai/careers/job/101"
+    assert vp["department"] == "Widgets" and vp["posted"] == "2026-10-27"
+    assert eng["location"] == "Remote; London" and eng["posted"] == ""
+    assert ae["url"] == "https://careers.acme.com/careers/job/103"
+    assert all(j["system"] == "eightfold" for j in jobs)
+
+
+def test_eightfold_link_is_recognised():
+    b = B.classify("https://costar.eightfold.ai/careers/job/446721826862")
+    assert b.system == "eightfold" and b.slug == "costar" and b.readable

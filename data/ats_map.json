@@ -161,6 +161,16 @@
     "evidence": "ats.rippling.com/closinglock | 2026-09-23 run: KeyError 'id' -> rippling adapter fixed to accept uuid",
     "slug": "closinglock"
   },
+  "CoStar Group": {
+    "ats": "eightfold",
+    "confidence": "manual",
+    "domain": "costar.com",
+    "evidence": "careers.costargroup.com is Eightfold (costar.eightfold.ai); public JSON at /api/apply/v2/jobs?domain=costar.com listed 388 roles on 2026-11-02",
+    "host": "careers.costargroup.com",
+    "slug": "costar",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
+  },
   "CompStak": {
     "ats": "lever",
     "confidence": "probe-reviewed",
@@ -420,6 +430,13 @@
     "confidence": "manual",
     "evidence": "no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)",
     "slug": ""
+  },
+  "Matterport": {
+    "confidence": "manual",
+    "evidence": "Matterport is part of CoStar and posts on CoStar's Eightfold board (department 'Matterport'); read under CoStar Group",
+    "parent": "CoStar Group",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
   },
   "Measurabl": {
     "ats": "rippling",
