@@ -580,9 +580,11 @@
     "slug": "pointcentral"
   },
   "Property Meld": {
-    "ats": "breezy",
+    "ats": "generic",
+    "careers_url": "https://careers.propertymeld.com/jobs",
     "confidence": "manual",
-    "evidence": "property-meld.breezy.hr fetched live (no open positions); verified by Claude 2026-09-24",
+    "evidence": "Breezy board property-meld.breezy.hr is stale (0 jobs) while Property Meld posts on Teamtailor at careers.propertymeld.com/jobs (custom domain, server-rendered; 4 roles seen in a browser 2026-11-02)",
+    "link_regex": "^https://careers\\.propertymeld\\.com/jobs/\\d+-[a-z0-9-]+$",
     "slug": "property-meld"
   },
   "PropertyManagement.com": {
