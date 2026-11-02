@@ -57,6 +57,12 @@ jobs:
         if: steps.et.outputs.run == 'true'
         continue-on-error: true
         run: python -m playwright install --with-deps chromium
+      # Copy careers links from the live sheet into leads/master_leads.csv and
+      # config/companies.csv, so a link fixed in the sheet is used this run.
+      - name: Sync careers links from the sheet
+        if: steps.et.outputs.run == 'true'
+        continue-on-error: true
+        run: python -m jobsearch.sheet_sync
       - name: Run job search
         if: steps.et.outputs.run == 'true'
         env:
@@ -78,7 +84,7 @@ jobs:
         run: |
           git config user.name "jobsearch-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data output
+          git add data output leads/master_leads.csv config/companies.csv
           git commit -m "job search $(date -u +%F) ${{ github.event.inputs.companies && 'on-demand' || 'weekly run' }}" || echo "nothing to commit"
           git pull --rebase --autostash || true
           git push
