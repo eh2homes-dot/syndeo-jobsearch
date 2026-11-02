@@ -149,6 +149,12 @@ jobs:
         continue-on-error: true
         run: python -m playwright install --with-deps chromium
 
+      - name: Sync careers links from the sheet
+        if: steps.guard.outputs.run == 'true'
+        continue-on-error: true
+        working-directory: ${{ steps.locate.outputs.dir }}
+        run: python -m jobsearch.sheet_sync
+
       - name: Run scan
         if: steps.guard.outputs.run == 'true'
         working-directory: ${{ steps.locate.outputs.dir }}

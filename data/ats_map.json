@@ -1,14 +1,4 @@
 {
-  "AbodeMine": {
-    "ats": "linkedin",
-    "company_name": "AbodeMine",
-    "confidence": "guess",
-    "evidence": "LinkedIn page GUESSED as /company/abodemine - wrong guess returns nothing (strict page match); confirm with Evan",
-    "linkedin_pages": [
-      "abodemine"
-    ],
-    "slug": "abodemine"
-  },
   "Alarm.com": {
     "ats": "greenhouse",
     "confidence": "verified",
@@ -214,13 +204,6 @@
     "evidence": "greenhouse.io/embed/job_board/js?for=digible",
     "slug": "digible"
   },
-  "Divvy Homes": {
-    "ats": "greenhouse",
-    "confidence": "html",
-    "detected_on": "2026-09-24",
-    "evidence": "boards.greenhouse.io/divvyhomes",
-    "slug": "divvyhomes"
-  },
   "Doma": {
     "ats": "greenhouse",
     "confidence": "probe-reviewed",
@@ -371,12 +354,13 @@
     "evidence": "greenhouse.io/embed/job_board/js?for=homeward",
     "slug": "homeward"
   },
-  "HqO": {
-    "ats": "ashby",
-    "confidence": "html",
-    "detected_on": "2026-09-24",
-    "evidence": "jobs.ashbyhq.com/hqo",
-    "slug": "hqo"
+  "Kasa Living": {
+    "ats": "greenhouse",
+    "confidence": "manual",
+    "evidence": "kasa.com/careers lists Greenhouse 'kasa' postings; www.kasa.com has a bad TLS certificate (2026-11-02)",
+    "slug": "kasa",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
   },
   "Kiavi": {
     "ats": "greenhouse",
@@ -400,11 +384,13 @@
     "slug": "latch"
   },
   "Lineage": {
-    "ats": "generic",
+    "ats": "page",
     "confidence": "manual",
-    "evidence": "lineage.finance/careers says no open positions 2026-09-24; watching for role links; verified by Claude 2026-09-24",
-    "link_regex": "lineage\\.finance/careers/[a-z0-9-]+",
-    "slug": "lineage-finance"
+    "evidence": "lineage.finance is stale; careers now at lineagehq.com/careers (2026-11-02)",
+    "slug": "lineagehq",
+    "url": "https://www.lineagehq.com/careers",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
   },
   "Livly": {
     "ats": "paylocity",
@@ -436,12 +422,12 @@
     "slug": ""
   },
   "Measurabl": {
-    "ats": "page",
-    "confidence": "page",
-    "detected_on": "2026-10-09",
-    "evidence": "the page says nothing is open (\"There are currently no open roles\")",
-    "slug": "measurabl",
-    "url": "https://measurabl.com/careers"
+    "ats": "rippling",
+    "confidence": "manual",
+    "evidence": "jobs read from ats.rippling.com/measurabljobs/jobs on 2026-11-02",
+    "slug": "measurabljobs",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
   },
   "Mynd": {
     "confidence": "manual",
@@ -573,11 +559,11 @@
     "verified_on": "2026-10-09"
   },
   "PointCentral": {
-    "ats": "greenhouse",
-    "confidence": "probe-reviewed",
-    "detected_on": "2026-09-23",
-    "evidence": "greenhouse:pointcentral returned 1 jobs | 2026-09-24 reviewed: titles/locations match the company",
-    "slug": "pointcentral"
+    "confidence": "manual",
+    "evidence": "pointcentral.com/careers now goes to Alarm.com's Greenhouse board; greenhouse:pointcentral is gone (2026-11-02)",
+    "parent": "Alarm.com",
+    "verified_by": "Claude",
+    "verified_on": "2026-11-02"
   },
   "Property Meld": {
     "ats": "generic",
@@ -716,13 +702,6 @@
     "detected_on": "2026-09-23",
     "evidence": "ashby:steadily returned 34 jobs | 2026-09-24 reviewed: titles/locations match the company",
     "slug": "steadily"
-  },
-  "Super": {
-    "ats": "generic",
-    "confidence": "manual",
-    "evidence": "hiresuper.com posts roles at /careers/<slug>; SDR posting 404 on 2026-09-24; verified by Claude 2026-09-24",
-    "link_regex": "hiresuper\\.com/careers/[a-z0-9-]+",
-    "slug": "hiresuper"
   },
   "TheGuarantors": {
     "ats": "rippling",
