@@ -285,7 +285,8 @@ def test_migration_is_applied_once_and_never_overwrites_later_edits(tmp_path):
                "Mason": {"ats": "", "confidence": "manual"}, "Entrata": {"ats": "lever", "slug": "entrata"}}
     applied = tmp_path / "applied.json"
     done = run.apply_migrations(ats_map, applied)
-    assert done == ["2026-10-own-boards"] and not applied.exists()   # only recorded once the map is saved
+    every = [json.loads(p.read_text())["id"] for p in sorted(run.MIGRATIONS.glob("*.json"))]
+    assert done == every and "2026-10-own-boards" in done and not applied.exists()   # only recorded once the map is saved
     run.record_migrations(done, applied)
     assert ats_map["Placer.ai"]["ats"] == "greenhouse" and ats_map["Mynd"] == {**ats_map["Mynd"], "parent": "Roofstock"}
     assert "Robin" not in ats_map                               # Built In entry dropped: read from its careers page

@@ -1,0 +1,30 @@
+{
+  "about": "Companies added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup that have no job board the weekly search can read. They are read from LinkedIn's public job search, keeping only jobs posted by the listed company page(s). Page slugs are guesses until confirmed; a wrong slug simply finds nothing. Geolava's real board is Dover (app.dover.com/jobs/geolava), which is JavaScript-only and has no reader yet.",
+  "id": "2026-11-new-in-proptech",
+  "set": {
+    "Andes STR": {
+      "ats": "linkedin",
+      "company_name": "Andes STR",
+      "confidence": "guess",
+      "evidence": "no careers page or job board on andstr.com (checked 2026-11-05); LinkedIn page slug not confirmed",
+      "linkedin_pages": ["andes-str", "andesstr", "andstr"],
+      "slug": "andes-str"
+    },
+    "Zoneomics": {
+      "ats": "linkedin",
+      "company_name": "Zoneomics",
+      "confidence": "guess",
+      "evidence": "no careers page or job board on zoneomics.com (checked 2026-11-05); LinkedIn page slug not confirmed",
+      "linkedin_pages": ["zoneomics", "zoneomics-inc"],
+      "slug": "zoneomics"
+    },
+    "Geolava": {
+      "ats": "linkedin",
+      "company_name": "Geolava",
+      "confidence": "guess",
+      "evidence": "real board is Dover (https://app.dover.com/jobs/geolava, linked from geolava.com/team 2026-11-05) but Dover pages are JavaScript-only and have no reader; LinkedIn used until one exists",
+      "linkedin_pages": ["geolava"],
+      "slug": "geolava"
+    }
+  }
+}
