@@ -11,6 +11,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Acres": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Agora": {
     "checked": "2026-11-01",
     "method": "homepage link",
@@ -18,6 +24,12 @@
   },
   "Alarm.com": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Andes STR": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -33,8 +45,20 @@
     "method": "homepage link",
     "url": "https://www.appfolio.com/resources/events"
   },
+  "Arcadia": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Archer": {
     "checked": "2026-10-25",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Aspen Power": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -50,8 +74,20 @@
     "note": "no events page found",
     "url": ""
   },
+  "Aurora Solar": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Avail (Realtor.com)": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "AvantStay": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -110,6 +146,12 @@
   },
   "Buildium (RealPage)": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Built Technologies": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -226,6 +268,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Enpal": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Entrata": {
     "checked": "2026-11-01",
     "method": "none",
@@ -249,8 +297,20 @@
     "note": "no events page found",
     "url": ""
   },
+  "Flexe": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Flock Homes": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Flyhomes": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -267,8 +327,20 @@
     "note": "no events page found",
     "url": ""
   },
+  "Geolava": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "GetCovered": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Giraffe": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -289,6 +361,18 @@
     "checked": "2026-09-29",
     "method": "homepage link",
     "url": "https://www.guesty.com/events/"
+  },
+  "HABU": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Habi": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
   },
   "Haven": {
     "checked": "2026-11-01",
@@ -348,6 +432,12 @@
     "method": "homepage link",
     "url": "https://hqo.com/products/events?hsLang=en"
   },
+  "ICON": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Kiavi": {
     "checked": "2026-11-01",
     "method": "none",
@@ -384,6 +474,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Lessen": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Lineage": {
     "checked": "2026-11-01",
     "method": "none",
@@ -392,6 +488,12 @@
   },
   "Livly": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Loft": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -413,6 +515,12 @@
     "note": "no events page found",
     "url": ""
   },
+  "Material Bank": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Matterport": {
     "checked": "2026-09-29",
     "method": "probe /events-webinars",
@@ -420,6 +528,12 @@
   },
   "Measurabl": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Mews": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "no events page found",
     "url": ""
@@ -483,6 +597,11 @@
     "note": "no events page found",
     "url": ""
   },
+  "OpenSpace": {
+    "checked": "2026-11-08",
+    "method": "homepage link",
+    "url": "https://www.openspace.ai/webinars-and-events/"
+  },
   "Opendoor": {
     "checked": "2026-11-01",
     "method": "none",
@@ -531,6 +650,23 @@
     "note": "no events page found",
     "url": ""
   },
+  "Perk (formerly TravelPerk)": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Pirros": {
+    "checked": "2026-11-08",
+    "method": "homepage link",
+    "url": "https://www.pirros.com/events"
+  },
+  "Place": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Placer.ai": {
     "checked": "2026-11-01",
     "method": "none",
@@ -571,6 +707,11 @@
     "note": "no events page found",
     "url": ""
   },
+  "Qualia": {
+    "checked": "2026-11-08",
+    "method": "homepage link",
+    "url": "https://www.qualia.com/events/"
+  },
   "RealPage": {
     "checked": "2026-11-01",
     "method": "none",
@@ -581,6 +722,12 @@
     "checked": "2026-11-01",
     "method": "none",
     "note": "homepage blocked or unreachable",
+    "url": ""
+  },
+  "Redaptive": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
     "url": ""
   },
   "Redfin": {
@@ -665,6 +812,18 @@
     "note": "no events page found",
     "url": ""
   },
+  "Side Inc.": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Sidewalk Infrastructure Partners": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "SmartRent": {
     "checked": "2026-11-01",
     "method": "none",
@@ -689,6 +848,18 @@
     "note": "no events page found",
     "url": ""
   },
+  "Stegra (formerly H2 Green Steel)": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
+  "Sun King": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "Super": {
     "checked": "2026-11-01",
     "method": "none",
@@ -707,10 +878,21 @@
     "note": "no events page found",
     "url": ""
   },
+  "Tul": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
+  },
   "TurboTenant": {
     "checked": "2026-11-01",
     "method": "homepage link",
     "url": "https://www.turbotenant.com/events/"
+  },
+  "Turntide Technologies": {
+    "checked": "2026-11-08",
+    "method": "homepage link",
+    "url": "https://turntide.com/events/"
   },
   "Two Dots": {
     "checked": "2026-11-01",
@@ -724,6 +906,11 @@
     "note": "no events page found",
     "url": ""
   },
+  "Uptake Technologies": {
+    "checked": "2026-11-08",
+    "method": "homepage link",
+    "url": "https://uptake.com/events/"
+  },
   "VLTED": {
     "checked": "2026-10-25",
     "method": "none",
@@ -732,6 +919,17 @@
   },
   "VTS": {
     "checked": "2026-11-01",
+    "method": "none",
+    "note": "homepage blocked or unreachable",
+    "url": ""
+  },
+  "Verkada": {
+    "checked": "2026-11-08",
+    "method": "probe /events",
+    "url": "https://www.verkada.com/events/"
+  },
+  "Willow Wealth (formerly Yieldstreet)": {
+    "checked": "2026-11-08",
     "method": "none",
     "note": "homepage blocked or unreachable",
     "url": ""
@@ -751,6 +949,12 @@
     "checked": "2026-09-29",
     "method": "probe /community/events",
     "url": "https://www.zillow.com/homes/"
+  },
+  "Zoneomics": {
+    "checked": "2026-11-08",
+    "method": "none",
+    "note": "no events page found",
+    "url": ""
   },
   "Zuma": {
     "checked": "2026-10-25",
