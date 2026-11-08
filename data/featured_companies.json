@@ -98,6 +98,25 @@
         "Snapdocs"
       ],
       "source": "draft"
+    },
+    "2026-11-11": {
+      "companies": [
+        "Auction.com",
+        "CoStar Group",
+        "Digible",
+        "DoorLoop",
+        "Lessen",
+        "MRI Software",
+        "Obligo",
+        "Place",
+        "Procore Technologies",
+        "Redaptive",
+        "ResMan",
+        "TheGuarantors",
+        "Verkada",
+        "Yardi Systems"
+      ],
+      "source": "draft"
     }
   },
   "note": "Companies each Origins issue featured in its job sections, keyed by send date. Drives the cooldown in jobsearch/run.py (newsletter.cooldown_weeks in config.json). 'published' = read from the sent beehiiv issue; 'draft' = what the Sunday draft proposed. Edit by hand to add a company you featured or drop one you cut."

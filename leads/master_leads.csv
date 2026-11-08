@@ -90,16 +90,16 @@ DoorLoop,https://www.doorloop.com,Florida,https://www.doorloop.com/careers,Prope
 Envoy,https://envoy.com,California,https://envoy.com/careers,Workplace Experience Platform,B,TRUE,
 LeaseLock,https://www.leaselock.com,California,https://www.leaselock.com/careers,Deposit-Free Leasing Insurtech,A,FALSE,
 Flock Homes,https://www.flockhomes.com,California,https://www.flockhomes.com/careers,SFR 1031 Exchange Platform,A,FALSE,OpCo sheet
-Greystar,https://www.greystar.com,South Carolina,https://www.greystar.com/careers,Multifamily Property Manager,A,TRUE,OpCo sheet
-Doorstead,https://www.doorstead.com,California,https://www.doorstead.com/careers,Guaranteed-Rent Property Management,A,FALSE,OpCo sheet
-Belong,https://belonghome.com,California,https://belonghome.com/careers,SFR Property Management,A,FALSE,OpCo sheet
-Mynd,https://www.mynd.co,California,https://www.mynd.co/careers,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
+Greystar,https://www.greystar.com,South Carolina,https://jobs.greystar.com/,Multifamily Property Manager,A,TRUE,OpCo sheet
+Doorstead,https://www.doorstead.com,California,https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw,Guaranteed-Rent Property Management,A,FALSE,OpCo sheet
+Belong,https://belonghome.com,California,https://apply.workable.com/belong-6,SFR Property Management,A,FALSE,OpCo sheet
+Mynd,https://www.mynd.co,California,https://www.mynd.co/talent-and-culture,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
 Renters Warehouse,https://www.renterswarehouse.com,Minnesota,https://www.renterswarehouse.com/careers,SFR Property Management Franchise,A,FALSE,OpCo sheet
 Evernest,https://www.evernest.co,Alabama,https://www.evernest.co/careers,SFR Property Management,A,FALSE,OpCo sheet; name collision with Evernest GmbH (Germany) on Greenhouse
-Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/,SFR Property Management,A,FALSE,OpCo sheet
+Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/#positions,SFR Property Management,A,FALSE,OpCo sheet
 PURE HomeRiver Group,https://purehomeriver.com,Idaho,https://purehomeriver.com/company/careers/,SFR Property Management,A,FALSE,OpCo sheet
 Northpoint Asset Management,https://northpointam.com,Utah,https://ats.rippling.com/northpoint-asset-management/jobs,SFR Property Management,A,FALSE,OpCo sheet
-Evergreen Residential,https://evergreenresi.com,Texas,https://evergreenresi.com/careers/,SFR Operator,A,FALSE,OpCo sheet
+Evergreen Residential,https://evergreenresi.com,Texas,https://evergreenresi.com/careers/openings/,SFR Operator,A,FALSE,OpCo sheet
 Property Meld,https://propertymeld.com,South Dakota,https://careers.propertymeld.com/jobs,Maintenance Coordination Software,A,FALSE,"Evan's list 2026-09-24; Breezy board live, 0 roles on 2026-09-24"
 Footprint,https://www.onefootprint.com,New York,https://jobs.ashbyhq.com/onefootprint,Identity Verification / KYC,A,FALSE,Evan's list 2026-09-24; Ashby slug onefootprint (not 'footprint')
 Reffie,https://reffie.com,Texas,https://careers.reffie.me/,AI Leasing Workflow,A,FALSE,Evan's list 2026-09-24; custom careers site; 1 role on 2026-09-24
