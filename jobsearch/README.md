@@ -114,6 +114,38 @@ One-time changes to this file that ship with a code change live in
 `data/migrations_applied.json`). That keeps a code branch from colliding with
 the weekly run's own commit of this file.
 
+## Company LinkedIn pages
+
+`python -m jobsearch.linkedin` looks for each company's LinkedIn page on the
+company's **own website**: the homepage first, then the careers page if the
+homepage has no link. It takes the address from the link the company itself
+puts there (usually the footer, or the site's own schema.org description). It
+never requests anything from LinkedIn and never guesses a page from a name.
+
+It runs after each full weekly search, covering both company lists (the master
+list and the OpCo tab). A company is looked at again every four weeks, or the
+next week if its site couldn't be read. Results:
+
+- `data/linkedin_found.json`: what was found per company and when.
+- `output/linkedin-review.csv`: one row per company, the ones needing a look
+  first. `action` is one of:
+  - *differs from list: check*: the site now links somewhere other than the list.
+  - *check, then add*: found, but `what_to_check` says why to look first: a
+    page name that doesn't look like the company (often a parent), a showcase
+    page, the same page found for two companies, found only on the careers
+    page, and so on.
+  - *add to list*: found in the site's footer, name matches, nothing odd.
+  - *couldn't check*: the site turned the request away (it's tried again next week).
+  - *not found*: the site has no LinkedIn link. Add one by hand if wanted.
+  - *in list*: already approved.
+
+Found pages are suggestions only. A company's LinkedIn page is used once it's
+**in the company list**, in a column headed `LinkedIn` (also accepted:
+`LinkedIn URL`, `LinkedIn Page`, `Company LinkedIn`) on `leads/master_leads.csv`
+or the OpCo tab. Nothing here writes to either list. Approved pages then appear
+as `company_linkedin` on every role in the weekly CSVs and the OpCo CSVs, and as
+`linkedin` in `company_status.csv`.
+
 ## Code
 
 | File | What it holds |
@@ -126,6 +158,7 @@ the weekly run's own commit of this file.
 | `run.py` | weekly search: history, new/closed, reports, newsletter draft |
 | `../opco_search.py` | OpCo search |
 | `http.py` | polite HTTP client, throttled per site |
+| `linkedin.py` | each company's LinkedIn page, from its own website, for review |
 
 ## Tests
 
