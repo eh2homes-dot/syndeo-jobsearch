@@ -1,7 +1,7 @@
 company,website,state,careers_url,segment,tier,sheet_verified,notes
 AppFolio,https://www.appfolio.com,California,https://www.appfolio.com/company/careers,Property Management Software,A,TRUE,"30+ open roles; ATS is Jobvite (appfolio-internal), NOT Greenhouse; 30 live roles 2026-09-23"
-Yardi Systems,https://www.yardi.com,California,https://www.yardi.com/careers,Property Management Software,A,TRUE,
-Procore Technologies,https://www.procore.com,California,https://www.procore.com/careers,Construction Tech,B,TRUE,
+Yardi Systems,https://www.yardi.com,California,https://careers.yardi.com/openings/,Property Management Software,A,TRUE,
+Procore Technologies,https://www.procore.com,California,https://careers.procore.com/jobs/search,Construction Tech,B,TRUE,
 Matterport,https://matterport.com,California,https://careers.costargroup.com/careers,3D Space Capture / Real Estate Media,B,TRUE,
 Measurabl,https://measurabl.com,California,https://ats.rippling.com/measurabljobs/jobs,ESG/Sustainability Data for CRE,B,TRUE,
 Placer.ai,https://www.placer.ai,California,https://www.placer.ai/careers,Foot Traffic / Location Analytics,B,TRUE,
@@ -37,14 +37,14 @@ Opcity (Realtor.com),https://www.opcity.com,Texas,https://www.move.com/careers,R
 Compass,https://www.compass.com,New York,https://www.compass.com/careers,Real Estate Brokerage Tech,B,TRUE,
 VTS,https://www.vts.com,New York,https://www.vts.com/careers,Commercial Real Estate Leasing Platform,B,TRUE,
 ButterflyMX,https://www.butterflymx.com,New York,https://www.butterflymx.com/careers,Smart Access / Intercom Systems,A,TRUE,
-Guesty,https://www.guesty.com,New York,https://www.guesty.com/careers,Short-Term Rental Management Software,A,TRUE,
+Guesty,https://www.guesty.com,New York,https://www.guesty.com/careers/#open-positions,Short-Term Rental Management Software,A,TRUE,
 Rhino,https://www.sayrhino.com,New York,https://careers.sayrhino.com,Security Deposit Insurance,A,TRUE,careers page moved to careers.sayrhino.com (sheet URL 403s)
 Bilt Rewards,https://www.biltrewards.com,New York,https://www.biltrewards.com/careers,Rent Rewards / Resident Fintech,A,FALSE,
 CompStak,https://www.compstak.com,New York,https://www.compstak.com/careers,CRE Comparable Data Platform,B,TRUE,
 Cadre,https://www.cadre.com,New York,https://www.cadre.com/careers,CRE Investment Platform,B,FALSE,
-SquareFoot,https://www.squarefoot.com,New York,https://www.squarefoot.com/careers,Commercial Office Brokerage Tech,B,FALSE,
+SquareFoot,https://www.squarefoot.com,New York,https://www.squarefoot.com/jobs/,Commercial Office Brokerage Tech,B,FALSE,
 Latch,https://www.latch.com,New York,https://www.latch.com/careers,Smart Access for Multifamily,A,FALSE,
-Agora,https://www.agorareal.com,New York,https://www.agorareal.com/careers,Real Estate Investment Management SaaS,B,FALSE,sheet URL agora-re.com had DNS error
+Agora,https://www.agorareal.com,New York,https://agorareal.com/careers/,Real Estate Investment Management SaaS,B,FALSE,
 Cherre,https://www.cherre.com,New York,https://www.cherre.com/careers,Real Estate Data Integration Platform,A,TRUE,
 Enertiv,https://www.enertiv.com,New York,https://www.enertiv.com/careers,Building Energy Management,B,FALSE,
 Bowery Valuation,https://www.boweryvaluation.com,New York,https://www.boweryvaluation.com/careers,AI-Powered Appraisal Software,B,FALSE,
@@ -59,7 +59,7 @@ Livly,https://www.livly.io,Illinois,https://www.livly.io/careers,Resident Experi
 Chamberlain Group,https://www.chamberlaingroup.com,Illinois,https://www.chamberlaingroup.com/careers,Smart Access (myQ/LiftMaster),B,FALSE,
 Obie,https://www.obieinsurance.com,Illinois,https://www.obieinsurance.com/careers,Landlord Insurance / Insurtech,A,FALSE,
 Avail (Realtor.com),https://www.avail.co,Illinois,https://www.avail.co/careers,DIY Landlord Software,A,FALSE,
-Buildium (RealPage),https://www.buildium.com,Massachusetts,https://www.buildium.com/careers,Property Management Software,A,FALSE,
+Buildium (RealPage),https://www.buildium.com,Massachusetts,https://careers-realpagepms.icims.com/jobs/search?ss=1,Property Management Software,A,FALSE,
 Robin,https://www.robinpowered.com,Massachusetts,https://careers.kula.ai/robin,Workplace Experience Platform,B,TRUE,
 GetCovered,https://getcovered.io,Colorado,https://getcovered.io/careers,Renters Insurance / PropTech-Insurtech,A,FALSE,
 TurboTenant,https://www.turbotenant.com,Colorado,https://www.turbotenant.com/careers,Landlord/DIY Property Management Software,A,FALSE,
@@ -80,7 +80,7 @@ Alarm.com,https://www.alarm.com,Virginia,https://www.alarm.com/careers,Smart Pro
 Notarize (Proof),https://www.proof.com,Virginia,https://www.proof.com/careers,Remote Online Notarization,B,TRUE,name collision with ProofServe on Greenhouse
 Zillow Group,https://www.zillow.com,Washington,https://www.zillow.com/careers,Real Estate Marketplace,B,TRUE,
 Redfin,https://www.redfin.com,Washington,https://careers.rocket.com/us/en/search-results?qkcompany=Redfin%20Corporation,Real Estate Brokerage Tech,B,TRUE,
-Knock CRM,https://www.knockrentals.com,Washington,https://www.knockrentals.com/careers,Multifamily Leasing CRM,A,FALSE,
+Knock CRM,https://www.knockrentals.com,Washington,https://careers-realpagepms.icims.com/jobs/search?ss=1,Multifamily Leasing CRM,A,FALSE,
 Rocket Companies,https://www.rocketcompanies.com,Michigan,https://careers.rocket.com/us/en/search-results,Mortgage / Real Estate Fintech,B,TRUE,
 Rent Manager (LCS),https://www.rentmanager.com,Ohio,https://www.rentmanager.com/careers,Property Management Software,A,FALSE,
 MRI Software,https://www.mrisoftware.com,Ohio,https://www.mrisoftware.com/careers,Real Estate/Property Management Software,A,TRUE,
