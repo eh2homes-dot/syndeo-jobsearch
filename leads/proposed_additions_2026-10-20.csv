@@ -1,0 +1,17 @@
+company,website,careers_url (blank = VERIFY by hand; scraper --detect can try the site),founder,headcount (Clay),why,source
+Accolade,https://www.accoladehq.com,,Galen Simmons,27,"multifamily ops workflow software, NYC",Clay company search 2026-10-20 via founder-hiring session
+Zuma,https://www.getzuma.com,,Shiv Gettu,51,"AI leasing assistant for multifamily, Santa Monica",Clay company search 2026-10-20 via founder-hiring session
+Peek,https://www.peek.us,,Austin Lo,57,"AI leasing automation / 3D tours, NYC",Clay company search 2026-10-20 via founder-hiring session
+Brynson,https://www.brynson.com,https://www.brynson.com/careers,Anthony Paganucci,16,"multifamily compliance/ILS/BI, NYC — careers page verified, 6 roles listed 2026-10-20",Clay company search 2026-10-20 via founder-hiring session
+Leap,https://www.leapeasy.com,,Rory O'Connell,50,"deposit/guarantor alternatives for multifamily + scattered site, Jersey City",Clay company search 2026-10-20 via founder-hiring session
+HelloData,https://www.hellodata.ai,,,16,"multifamily rent surveys / pricing AI, Dover DE",Clay company search 2026-10-20 via founder-hiring session
+Tour24,https://tour24.io,,Georgianna Oliver,51,"self-guided tours for apartment operators, Medfield MA",Clay company search 2026-10-20 via founder-hiring session
+Betterbot,https://betterbot.com,https://www.betterbot.com/careers/,Zlatko Bogoevski,42,"AI customer platform for multifamily, Atlanta — careers page verified, no open roles 2026-10-20",Clay company search 2026-10-20 via founder-hiring session
+Leni,https://leni.co,,Arunabh Dastidar,31,"AI for asset managers, NYC/Toronto",Clay company search 2026-10-20 via founder-hiring session
+Archer,https://www.archer.re,,Thomas Foley,23,"AI underwriting / deal sourcing, SF/LA",Clay company search 2026-10-20 via founder-hiring session
+Orange Charger,https://orangecharger.com,https://www.orangecharger.com/careers,,31,"EV charging for multifamily, Menlo Park — careers page verified",Clay company search 2026-10-20 via founder-hiring session
+PearlX,https://www.pearlx.com,,,15,"clean-energy amenities for rental communities, Charlottesville",Clay company search 2026-10-20 via founder-hiring session
+VLTED,https://www.vlted.com,,,15,"resident engagement for multifamily, Las Vegas",Clay company search 2026-10-20 via founder-hiring session
+Super,https://hiresuper.com,,Lindsay Liu,5,"AI receptionist for property management, NYC — already in founders.csv; check it is on the master list with a careers URL",Clay company search 2026-10-20 via founder-hiring session
+Haven,https://www.usehaven.ai,,Juan Burgos,11,AI orchestration for property management — already in founders.csv; check master list,Clay company search 2026-10-20 via founder-hiring session
+Mason,https://thisismason.com,,Nitin Gupta,9,already in founders.csv; check master list,Clay company search 2026-10-20 via founder-hiring session

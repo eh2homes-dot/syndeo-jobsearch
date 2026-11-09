@@ -58,6 +58,7 @@ from jobsearch.boards import Board, classify as classify_link          # noqa: E
 from jobsearch.browser import close_shared, shared as shared_browser   # noqa: E402
 from jobsearch.http import FetchError, NotFound, get                   # noqa: E402
 from jobsearch.pages import NeedsLink, PageDown, read_page, read_rendered_board  # noqa: E402
+from jobsearch.linkedin import approved as linkedin_approved, approved_column as linkedin_approved_column  # noqa: E402
 
 log = logging.getLogger("opco")
 
@@ -221,6 +222,7 @@ def read_company(company, role_filter, baseline, browser=None, out_of_time: bool
     """Read one company from its Column D. Always returns a result."""
     board = classify(company.careers_url)
     base = {"column_d": company.careers_url, "column_d_from": company.careers_from,
+            "company_linkedin": getattr(company, "linkedin", ""),
             "system": board.system, "board": board.key, "via": "", "note": "",
             "roles": [], "filtered": [], "total": 0}
 
@@ -353,6 +355,7 @@ class Company:
     careers_from: str = ""
     state: str = ""
     segment: str = ""
+    linkedin: str = ""      # approved LinkedIn page, from a "LinkedIn" column if the tab has one
 
 
 _NA = {"", "n/a", "na", "none", "-"}
@@ -389,6 +392,7 @@ def parse_companies(text: str, source: str) -> list[Company]:
         found = header[CAREERS_COLUMN] if CAREERS_COLUMN < len(header) else "(missing)"
         log.warning("no 'Careers Page URL' header; using Column D, headed %r", found)
     i_state, i_seg = col("State"), col("Industry Segment")
+    i_li = linkedin_approved_column(header)
 
     def cell(r, i):
         return _clean(r[i]) if i is not None and i < len(r) else ""
@@ -409,7 +413,8 @@ def parse_companies(text: str, source: str) -> list[Company]:
             careers, careers_from = website, "Column B (Column D empty)"
         out.append(Company(name=name, website=website, careers_url=careers,
                            careers_from=careers_from if careers else "",
-                           state=cell(r, i_state), segment=cell(r, i_seg)))
+                           state=cell(r, i_state), segment=cell(r, i_seg),
+                           linkedin=linkedin_approved(cell(r, i_li))))
     log.info("loaded %d companies from %s", len(out), source)
     return out
 
@@ -701,7 +706,7 @@ def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
     # read the right jobs from the right companies.
     with (out_dir / f"opco-jobs-all-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["company", "title", "location", "url", "posted",
-                                           "in_scope", "column_d"])
+                                           "in_scope", "column_d", "company_linkedin"])
         w.writeheader()
         for n, c in sorted(results.items()):
             in_scope = {r["id"] for r in c.get("filtered", [])}
@@ -709,14 +714,16 @@ def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
                 w.writerow({"company": n, "title": r.get("title", ""), "location": r.get("location", ""),
                             "url": r.get("url", ""), "posted": r.get("posted", ""),
                             "in_scope": "yes" if r.get("id") in in_scope else "no",
-                            "column_d": c.get("column_d", "")})
+                            "column_d": c.get("column_d", ""),
+                            "company_linkedin": c.get("company_linkedin", "")})
 
     with (out_dir / f"opco-jobs-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["company", "category", "title", "location", "url",
-                                           "posted", "status"])
+                                           "posted", "status", "company_linkedin"])
         w.writeheader()
         for r in open_roles:
-            w.writerow({k: r.get(k, "") for k in w.fieldnames})
+            li = (results.get(r.get("company", "")) or {}).get("company_linkedin", "")
+            w.writerow({**{k: r.get(k, "") for k in w.fieldnames}, "company_linkedin": li})
     return path
 
 

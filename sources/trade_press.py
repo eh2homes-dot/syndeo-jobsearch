@@ -97,7 +97,8 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
             if not people_column and not MOVE_VERBS.search(blob):
                 continue
 
-            matched = [c for c in companies if c.mentioned_in(blob)]
+            named = [p.name for p in extract_from_text(blob)]
+            matched = [c for c in companies if c.mentioned_outside_names(blob, named)]
             if not matched:
                 continue
 

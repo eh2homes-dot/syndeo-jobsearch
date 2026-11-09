@@ -26,13 +26,37 @@ from lib.state import SeenStore  # noqa: E402
 import report  # noqa: E402
 
 ALL_SOURCES = ["edgar", "leadership", "news", "trade", "reqs"]
-DEFAULT_COMPANIES = Path(__file__).resolve().parent / "config" / "companies.csv"
+ROOT = Path(__file__).resolve().parent
+# Who is watched: the same lists the two job searches read.
+MASTER_LEADS = ROOT / "leads" / "master_leads.csv"
+OPCO_CSV = ROOT / "opco.csv"
+OPCO_CONFIG = ROOT / "opco_config.yml"
+# What we know about them beyond the lists: ticker / SEC CIK, leadership page, aliases.
+ENRICHMENT = ROOT / "config" / "companies.csv"
+
+
+def _opco_sheet_url() -> str:
+    """The live OpCo tab, as configured for the OpCo job search (blank if none)."""
+    try:
+        import yaml
+        cfg = yaml.safe_load(OPCO_CONFIG.read_text(encoding="utf-8")) or {}
+        url = str(cfg.get("sheet_csv_url") or "").strip()
+        return url if url.startswith("http") else ""
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def default_company_sources() -> list:
+    return [str(MASTER_LEADS), (_opco_sheet_url(), str(OPCO_CSV))]
 
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--companies", default=str(DEFAULT_COMPANIES),
-                   help="CSV exported from the master leads sheet")
+    p.add_argument("--companies", default="",
+                   help="comma-separated company lists (default: leads/master_leads.csv "
+                        "plus the OpCo tab, live sheet first and opco.csv as fallback)")
+    p.add_argument("--enrich", default=str(ENRICHMENT),
+                   help="tickers, SEC CIKs, leadership pages and aliases for listed companies")
     p.add_argument("--sources", default=",".join(ALL_SOURCES),
                    help=f"comma-separated subset of: {', '.join(ALL_SOURCES)}")
     p.add_argument("--lookback-days", type=int, default=8,
@@ -41,7 +65,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--top", type=int, default=0,
                    help="cap the report at N items (0 = no cap)")
     p.add_argument("--jobs-file", default=None,
-                   help="job-search results JSON for inference signals")
+                   help="job-search outputs for inference signals, comma-separated (CSV or JSON); default: $JOBS_RESULTS_PATH")
     p.add_argument("--backfill", action="store_true",
                    help="one-off Wayback baseline instead of a weekly run")
     p.add_argument("--backfill-days", type=int, default=120,
@@ -70,7 +94,9 @@ def main() -> int:
         return 0
 
     try:
-        all_companies = companies_lib.load(args.companies)
+        sources = ([s.strip() for s in args.companies.split(",") if s.strip()]
+                   if args.companies else default_company_sources())
+        all_companies = companies_lib.load_lists(sources, enrich=args.enrich)
     except (FileNotFoundError, ValueError) as exc:
         log.error("%s", exc)
         return 2

@@ -21,6 +21,23 @@
 # ---------------------------------------------------------------------------
 sheet_csv_url: https://docs.google.com/spreadsheets/d/e/2PACX-1vTSwmVSPJRHEhczKBKMoy2qM5V45fqKzJTxdygsppLrj-Q8Gx9LpJXg4BA3biaue5UqAqzVWTGEq5Uk/pub?gid=586376452&single=true&output=csv
 
+# Tabs whose column D (careers link) is copied into leads/master_leads.csv and
+# config/companies.csv before the weekly search and people-moves run
+# (python -m jobsearch.sheet_sync). Later tabs win, so the Master File goes last.
+# A tab that isn't published is skipped with a warning.
+#
+# To turn on the other two tabs: File > Share > Publish to web, pick the tab,
+# CSV, Publish, and paste the link as its url. Note the repo is public and a
+# published tab is readable by anyone with the link - including the Master
+# File's Verification Notes column, which names contacts.
+sheet_sync_tabs:
+  - name: OpCo
+    url: https://docs.google.com/spreadsheets/d/e/2PACX-1vTSwmVSPJRHEhczKBKMoy2qM5V45fqKzJTxdygsppLrj-Q8Gx9LpJXg4BA3biaue5UqAqzVWTGEq5Uk/pub?gid=586376452&single=true&output=csv
+  - name: PropTech
+    url: ""   # publish the PropTech tab (gid 349934249) and paste its CSV link
+  - name: Master File
+    url: ""   # publish the Master File tab (gid 1149219180) and paste its CSV link
+
 # Which open roles make the weekly brief.
 #
 # Current scope, as set for the job search: Sales, GTM, Engineering, and

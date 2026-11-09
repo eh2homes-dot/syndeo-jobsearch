@@ -1,0 +1,371 @@
+{
+  "run_date": "2026-11-08",
+  "settings": {
+    "enabled": true,
+    "window_days": 7,
+    "max_headcount": 100,
+    "max_items": 12,
+    "min_items": 6,
+    "roles_per_company": 1,
+    "cooldown_issues": 3,
+    "cooldown_exempt": [
+      "Second Nature"
+    ],
+    "us_only": true,
+    "note": "Founder-led hiring draft (jobsearch/founders.py). Separate from the Origins 'Now hiring' draft. A role posted at a company with headcount <= max_headcount (Evan 2026-10-20: 100, to include Series A) (or founder_led = TRUE) in leads/founders.csv counts as founder-led. enabled=false means `python -m jobsearch.founders` writes nothing unless --force; the Founder hiring workflow also checks the FOUNDER_HIRING repo variable. Cooldown ledger: data/founder_featured.json (separate from Origins')."
+  },
+  "items": [
+    {
+      "source": "vc-board",
+      "company": "Fyxt",
+      "domain": "",
+      "title": "Mid Market Customer Success Manager",
+      "url": "https://www.linkedin.com/jobs/view/mid-market-customer-success-manager-at-fyxt-4484856513",
+      "location": "United States",
+      "first_seen": "2026-11-02",
+      "ats": "getro:RET Ventures",
+      "key": "https://jobs.ret.vc/companies/fyxt-2-ad66dc4e-779c-484d-89e1-eebd1118b85a/jobs/98736642-98736642-mid-market-customer-success-manager",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 6,
+      "role_group": "gtm",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "pre_seed",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    }
+  ],
+  "eligible_roles": [
+    {
+      "source": "vc-board",
+      "company": "Fyxt",
+      "domain": "",
+      "title": "Mid Market Customer Success Manager",
+      "url": "https://www.linkedin.com/jobs/view/mid-market-customer-success-manager-at-fyxt-4484856513",
+      "location": "United States",
+      "first_seen": "2026-11-02",
+      "ats": "getro:RET Ventures",
+      "key": "https://jobs.ret.vc/companies/fyxt-2-ad66dc4e-779c-484d-89e1-eebd1118b85a/jobs/98736642-98736642-mid-market-customer-success-manager",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 6,
+      "role_group": "gtm",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "pre_seed",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    }
+  ],
+  "needs_review": [
+    {
+      "company": "EquipmentShare",
+      "new_roles": 42,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Assistant General Manager - Sanitation",
+        "Facility & Property Account Manager",
+        "Fleet Sales Associate"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Verkada",
+      "new_roles": 16,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sales Development Representative, Internship",
+        "VCE Technical Trainer (ASEAN)",
+        "Channel Solutions Engineer"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Clutter",
+      "new_roles": 11,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Enterprise Account Manager",
+        "Enterprise Inside Sales Representative (German speaking)",
+        "Inside Sales Professional"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Habi",
+      "new_roles": 5,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "L\u00edder De Ventas Inmobiliario",
+        "Director Comercial Inmobiliario",
+        "Analista de Tesoreria"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "PermitFlow",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Corporate & Business Development Manager",
+        "Principal Software Engineer, AI",
+        "Principal Software Engineer, Platform"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Buildots",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Construction Customer Success Manager",
+        "Customer Success Enablement Manager",
+        "Customer Success Manager - Canada"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Figure",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Customer Success Associate",
+        "Customer Success Associate"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Flex",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sales Development Representative I",
+        "Senior Engineering Manager, Consumer / New Verticals"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Material Bank",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sr. Account Manager",
+        "Sr. Director, Platform Monetization"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Metropolis",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Associate Account Executive (Charleston)",
+        "Associate Account Executive (Knoxville)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Place",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Backend / Full-Stack Engineer",
+        "Web Designer"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Redaptive",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Energy Engineering Manager",
+        "Technical Asset Manager, Mechanical & Solar Systems"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Stackpoint Ventures",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Founding Head of Engineering - cmdr",
+        "Founding Head of Product - cmdr"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "TaskEasy",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "AI Quality Governance Engineer (QGE) M/F",
+        "Senior Software Architect (M/F)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Valon Technologies",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Partnerships Manager",
+        "Technical Program Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Ampd Energy",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Regional Sales Manager - HK & Taiwan"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Building Engines",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Reliability Engineer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "CREtelligent",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Integrated Marketing Specialist"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Credivera",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Full Stack Developer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Dealpath",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Product Manager, Commercial Real Estate"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "EliseAI",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sales Development Representative | Housing"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Evernest",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Senior Property Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Field Ai",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Robotics Engineer, Mission Autonomy"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Hometree",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Lead Plumbing & Heating Engineer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Jobber",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Product Marketing Manager, Operations"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Juniper Square",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Manager, Venture Capital Sales"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Kin Insurance",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Security Engineer - App Sec"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "OpenSpace",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "IT Administrator"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Re-Leased",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "VP, Embedded Finance"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Reffie",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Ux Design Intern Toronto"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "VendorPM",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sales Development Representative"
+      ],
+      "source": "vc-board"
+    }
+  ]
+}

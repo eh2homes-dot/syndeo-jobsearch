@@ -14,8 +14,9 @@ newsletter gets a name wrong.
 
 INTEGRATION POINT
 -----------------
-Set JOBS_RESULTS_PATH (env var or --jobs-file) to whatever the job-search
-workflow writes. The loader accepts either a list of role dicts or an object
+Set JOBS_RESULTS_PATH (env var or --jobs-file) to the job-search outputs,
+comma-separated: the weekly search's newest output/<date>/all_open_roles.csv and
+the OpCo search's out/opco-jobs-latest.json. The workflow does this. The loader accepts either a list of role dicts or an object
 with a "roles"/"jobs"/"results" key, and looks for company/title fields under
 several common names. If your shapes differ, _load_roles() is the one function
 to edit.
@@ -52,16 +53,29 @@ def _first_key(row: dict, keys) -> str:
 
 
 def _load_roles(path: Path) -> dict[str, set[str]]:
-    """Return {company: {role title, ...}} from the job-search output."""
+    """Return {company: {role title, ...}} from one job-search output file.
+
+    Reads the weekly search's CSV (output/<date>/all_open_roles.csv) or a JSON
+    file such as the OpCo search's out/opco-jobs-latest.json.
+    """
     if not path.exists():
-        log.info("no job-search output at %s; skipping inference signals", path)
+        log.info("no job-search output at %s; skipping it", path)
         return {}
 
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError) as exc:
-        log.warning("could not read %s: %s", path, exc)
-        return {}
+    if path.suffix.lower() == ".csv":
+        import csv
+        try:
+            with path.open(newline="", encoding="utf-8-sig") as fh:
+                data = list(csv.DictReader(fh))
+        except OSError as exc:
+            log.warning("could not read %s: %s", path, exc)
+            return {}
+    else:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as exc:
+            log.warning("could not read %s: %s", path, exc)
+            return {}
 
     if isinstance(data, dict):
         for key in ("roles", "jobs", "results", "postings", "items"):
@@ -82,9 +96,18 @@ def _load_roles(path: Path) -> dict[str, set[str]]:
         if company and title:
             out.setdefault(company, set()).add(title)
 
-    log.info("loaded %d companies / %d roles from job-search output",
-             len(out), sum(len(v) for v in out.values()))
+    log.info("loaded %d companies / %d roles from %s",
+             len(out), sum(len(v) for v in out.values()), path)
     return out
+
+
+def _load_all(spec: str) -> dict[str, set[str]]:
+    """Merge several outputs; `spec` is a comma-separated list of paths."""
+    merged: dict[str, set[str]] = {}
+    for part in [s.strip() for s in spec.split(",") if s.strip()]:
+        for company, titles in _load_roles(Path(part)).items():
+            merged.setdefault(company, set()).update(titles)
+    return merged
 
 
 def _function_of(title: str) -> str | None:
@@ -93,9 +116,13 @@ def _function_of(title: str) -> str | None:
 
 
 def collect(companies, jobs_file: str | None = None, seen=None) -> list[Move]:
-    path = Path(jobs_file or os.environ.get("JOBS_RESULTS_PATH", "out/jobs-latest.json"))
-    current = _load_roles(path)
+    spec = jobs_file or os.environ.get("JOBS_RESULTS_PATH", "")
+    if not spec:
+        log.warning("no job-search output given (JOBS_RESULTS_PATH); skipping inference signals")
+        return []
+    current = _load_all(spec)
     if not current:
+        log.warning("job-search output was empty or missing (%s); skipping inference signals", spec)
         return []
 
     previous = {k: set(v) for k, v in _read_json(PREVIOUS_PATH, {}).items()}

@@ -1,19 +1,31 @@
 company,careers_url,reason
 Procore Technologies,https://www.procore.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-Matterport,https://matterport.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
-Hemlane,https://www.hemlane.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-HouseCanary,https://www.housecanary.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Hemlane,https://www.hemlane.com/about-us/#careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+HouseCanary,https://www.housecanary.com/resources/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Realtor.com (Move Inc.),https://www.move.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
 Guesty,https://www.guesty.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Cadre,https://www.cadre.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 SquareFoot,https://www.squarefoot.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 Agora,https://www.agorareal.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
-Better.com,https://better.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-Robin,https://www.robinpowered.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Robin,https://careers.kula.ai/robin,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Cecilian Partners,https://www.cecilianpartners.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-CoStar Group,https://www.costargroup.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
-Rocket Companies,https://www.rocketcompanies.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
+Rocket Companies,https://careers.rocket.com/us/en/search-results,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
 LeaseLock,https://www.leaselock.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-Northpoint Asset Management,https://northpointam.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Mason,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)
 PropertyManagement.com,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan
+Accolade,https://www.accoladehq.com/careers,the careers page doesn't load (HTTP 429 rate limited (waited 15s); in a browser: the site refused the browser (HTTP 429))
+Peek,https://www.peek.us/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Leap,https://www.leapeasy.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+HelloData,https://www.hellodata.ai/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Tour24,https://tour24.io/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Leni,https://leni.co/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
+Archer,https://www.archer.re/company/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+PearlX,https://www.pearlx.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+VLTED,https://www.vlted.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Enpal,https://jobs.enpal.com,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Uptake Technologies,https://uptake.com/careers/,the careers page doesn't load (connection error (ConnectionError))
+Perk (formerly TravelPerk),https://www.perk.com/careers/,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Habi,https://habicareers.tuhabi.mx/vacantes,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Flyhomes,https://flyhomes.com/jobs,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Tul,https://tul.peopleforce.io/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+HABU,https://www.ycombinator.com/companies/habu/jobs,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"

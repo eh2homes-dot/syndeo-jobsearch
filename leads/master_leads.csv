@@ -3,7 +3,7 @@ AppFolio,https://www.appfolio.com,California,https://www.appfolio.com/company/ca
 Yardi Systems,https://www.yardi.com,California,https://careers.yardi.com/openings/,Property Management Software,A,TRUE,
 Procore Technologies,https://www.procore.com,California,https://careers.procore.com/jobs/search,Construction Tech,B,TRUE,
 Matterport,https://matterport.com,California,https://careers.costargroup.com/careers,3D Space Capture / Real Estate Media,B,TRUE,
-Measurabl,https://measurabl.com,California,https://measurabl.com/careers,ESG/Sustainability Data for CRE,B,TRUE,
+Measurabl,https://measurabl.com,California,https://ats.rippling.com/measurabljobs/jobs,ESG/Sustainability Data for CRE,B,TRUE,
 Placer.ai,https://www.placer.ai,California,https://www.placer.ai/careers,Foot Traffic / Location Analytics,B,TRUE,
 Roofstock,https://www.roofstock.com,California,https://www.roofstock.com/careers,SFR Investment Marketplace,A,FALSE,
 Doma,https://www.doma.com,California,https://www.doma.com/careers,Title Insurance / Mortgage Tech,B,FALSE,
@@ -30,7 +30,7 @@ Closinglock,https://www.closinglock.com,Texas,https://www.closinglock.com/career
 CertifID,https://www.certifid.com,Texas,https://www.certifid.com/careers,Wire Fraud Prevention / Identity Verification,B,FALSE,
 Luxury Presence,https://www.luxurypresence.com,Texas,https://www.luxurypresence.com/careers,Real Estate Agent Marketing Platform,B,FALSE,
 GreenLite,https://www.greenlite.ai,Texas,https://www.greenlite.ai/careers,AI Permitting & Compliance,B,FALSE,WRONG COMPANY: greenlite.ai is an AML/fincrime startup (Bretton AI). Excluded - confirm intended permitting company
-Worksmith,https://www.worksmith.com,Texas,https://www.worksmith.com/careers,Retail/CRE Facilities Marketplace,B,FALSE,
+Worksmith,https://www.worksmith.com,Texas,https://www.worksmith.com/team-and-careers,Retail/CRE Facilities Marketplace,B,FALSE,
 Ownwell,https://www.ownwell.com,Texas,https://www.ownwell.com/careers,Property Tax Appeal Platform,B,FALSE,
 Ojo Labs,https://www.ojolabs.com,Texas,https://www.ojolabs.com/careers,AI Real Estate Assistant,B,FALSE,
 Opcity (Realtor.com),https://www.opcity.com,Texas,https://www.move.com/careers,Real Estate Lead Conversion Platform,B,FALSE,dup of Move careers
@@ -59,9 +59,7 @@ Livly,https://www.livly.io,Illinois,https://www.livly.io/careers,Resident Experi
 Chamberlain Group,https://www.chamberlaingroup.com,Illinois,https://www.chamberlaingroup.com/careers,Smart Access (myQ/LiftMaster),B,FALSE,
 Obie,https://www.obieinsurance.com,Illinois,https://www.obieinsurance.com/careers,Landlord Insurance / Insurtech,A,FALSE,
 Avail (Realtor.com),https://www.avail.co,Illinois,https://www.avail.co/careers,DIY Landlord Software,A,FALSE,
-HqO,https://www.hqo.com,Massachusetts,https://ats.rippling.com/embed/hqo/jobs,Tenant/Workplace Experience Platform,B,FALSE,
 Buildium (RealPage),https://www.buildium.com,Massachusetts,https://careers-realpagepms.icims.com/jobs/search?ss=1,Property Management Software,A,FALSE,
-Placester,https://placester.com,Massachusetts,https://placester.com/careers,Real Estate Agent Website Platform,B,FALSE,
 Robin,https://www.robinpowered.com,Massachusetts,https://careers.kula.ai/robin,Workplace Experience Platform,B,TRUE,
 GetCovered,https://getcovered.io,Colorado,https://getcovered.io/careers,Renters Insurance / PropTech-Insurtech,A,FALSE,
 TurboTenant,https://www.turbotenant.com,Colorado,https://www.turbotenant.com/careers,Landlord/DIY Property Management Software,A,FALSE,
@@ -71,7 +69,7 @@ NetVendor,https://www.netvendor.com,Georgia,https://www.netvendor.com/careers,Ve
 SmartRent,https://smartrent.com,Arizona,https://smartrent.com/careers,Smart Home / Multifamily IoT,A,TRUE,Greenhouse embedded on smartrent.com/careers/apply; 9 live roles 2026-09-23
 Offerpad,https://www.offerpad.com,Arizona,https://www.offerpad.com/careers,iBuying / Real Estate Transactions,B,FALSE,
 Opendoor,https://www.opendoor.com,Arizona,https://www.opendoor.com/careers,iBuying / Real Estate Transactions,B,FALSE,
-PointCentral,https://www.pointcentral.com,Arizona,https://www.pointcentral.com/careers,Smart Home for SFR (Alarm.com subsidiary),A,FALSE,
+PointCentral,https://www.pointcentral.com,Arizona,https://job-boards.greenhouse.io/alarmcom,Smart Home for SFR (Alarm.com subsidiary),A,FALSE,
 Entrata,https://www.entrata.com,Utah,https://www.entrata.com/careers,Property Management Software (AI leasing/payments),A,TRUE,18-22 open roles; ATS Lever (entrata); verified 2026-09-23
 Rentec Direct,https://www.rentecdirect.com,Oregon,https://www.rentecdirect.com/careers,Property Management Software,A,FALSE,
 Second Nature,https://www.secondnature.com,Tennessee,https://www.secondnature.com/careers,Resident Benefits / Property Management SaaS,A,FALSE,Evan's former company; JazzHR board (secondnature.applytojob.com) live but empty; real roles elsewhere - JS embed; also on Evan's list 2026-09-24
@@ -92,18 +90,17 @@ DoorLoop,https://www.doorloop.com,Florida,https://www.doorloop.com/careers,Prope
 Envoy,https://envoy.com,California,https://envoy.com/careers,Workplace Experience Platform,B,TRUE,
 LeaseLock,https://www.leaselock.com,California,https://www.leaselock.com/careers,Deposit-Free Leasing Insurtech,A,FALSE,
 Flock Homes,https://www.flockhomes.com,California,https://www.flockhomes.com/careers,SFR 1031 Exchange Platform,A,FALSE,OpCo sheet
-Divvy Homes,https://www.divvyhomes.com,California,https://www.divvyhomes.com/careers,Rent-to-Own Platform,A,FALSE,OpCo sheet
-Greystar,https://www.greystar.com,South Carolina,https://www.greystar.com/careers,Multifamily Property Manager,A,TRUE,OpCo sheet
-Doorstead,https://www.doorstead.com,California,https://www.doorstead.com/careers,Guaranteed-Rent Property Management,A,FALSE,OpCo sheet
-Belong,https://belonghome.com,California,https://belonghome.com/careers,SFR Property Management,A,FALSE,OpCo sheet
-Mynd,https://www.mynd.co,California,https://job-boards.greenhouse.io/roofstock,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
+Greystar,https://www.greystar.com,South Carolina,https://jobs.greystar.com/,Multifamily Property Manager,A,TRUE,OpCo sheet
+Doorstead,https://www.doorstead.com,California,https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw,Guaranteed-Rent Property Management,A,FALSE,OpCo sheet
+Belong,https://belonghome.com,California,https://apply.workable.com/belong-6,SFR Property Management,A,FALSE,OpCo sheet
+Mynd,https://www.mynd.co,California,https://www.mynd.co/talent-and-culture,SFR Property Management,A,FALSE,"OpCo sheet; MERGE INTO Roofstock - 'Mynd, a Roofstock company'; roles post on Roofstock board"
 Renters Warehouse,https://www.renterswarehouse.com,Minnesota,https://www.renterswarehouse.com/careers,SFR Property Management Franchise,A,FALSE,OpCo sheet
 Evernest,https://www.evernest.co,Alabama,https://www.evernest.co/careers,SFR Property Management,A,FALSE,OpCo sheet; name collision with Evernest GmbH (Germany) on Greenhouse
-Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/,SFR Property Management,A,FALSE,OpCo sheet
+Atlas Real Estate,https://realatlas.com,Colorado,https://realatlas.com/careers/#positions,SFR Property Management,A,FALSE,OpCo sheet
 PURE HomeRiver Group,https://purehomeriver.com,Idaho,https://purehomeriver.com/company/careers/,SFR Property Management,A,FALSE,OpCo sheet
-Northpoint Asset Management,https://northpointam.com,Utah,https://northpointam.com/careers,SFR Property Management,A,FALSE,OpCo sheet
-Evergreen Residential,https://evergreenresi.com,Texas,https://evergreenresi.com/careers/,SFR Operator,A,FALSE,OpCo sheet
-Property Meld,https://propertymeld.com,South Dakota,https://property-meld.breezy.hr/,Maintenance Coordination Software,A,FALSE,"Evan's list 2026-09-24; Breezy board live, 0 roles on 2026-09-24"
+Northpoint Asset Management,https://northpointam.com,Utah,https://ats.rippling.com/northpoint-asset-management/jobs,SFR Property Management,A,FALSE,OpCo sheet
+Evergreen Residential,https://evergreenresi.com,Texas,https://evergreenresi.com/careers/openings/,SFR Operator,A,FALSE,OpCo sheet
+Property Meld,https://propertymeld.com,South Dakota,https://careers.propertymeld.com/jobs,Maintenance Coordination Software,A,FALSE,"Evan's list 2026-09-24; Breezy board live, 0 roles on 2026-09-24"
 Footprint,https://www.onefootprint.com,New York,https://jobs.ashbyhq.com/onefootprint,Identity Verification / KYC,A,FALSE,Evan's list 2026-09-24; Ashby slug onefootprint (not 'footprint')
 Reffie,https://reffie.com,Texas,https://careers.reffie.me/,AI Leasing Workflow,A,FALSE,Evan's list 2026-09-24; custom careers site; 1 role on 2026-09-24
 Two Dots,https://www.twodots.com,California,https://jobs.lever.co/twodots,AI Tenant Screening / Underwriting,A,FALSE,Evan's list 2026-09-24; Lever twodots
@@ -111,9 +108,54 @@ Haven,https://www.usehaven.ai,New York,https://www.ycombinator.com/companies/hav
 Nutiliti,https://www.nutiliti.com,Texas,https://builtin.com/company/nutiliti/jobs,Utility Management for Property Managers,A,FALSE,Evan's list 2026-09-24; no careers page/ATS; Built In shows 0 jobs
 HiredHelpr,https://www.hiredhelpr.com,,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm,SFR Maintenance Services Platform,A,FALSE,Evan's list 2026-09-24; no careers page/ATS; roles surface on Glassdoor/LinkedIn only
 Mason,https://www.thisismason.com,California,https://www.thisismason.com,AI Maintenance Coordinator (SFR),A,FALSE,"Evan's list 2026-09-24; thisismason.com (Enduring Labs); no ATS, hires by email; ~12k homes"
-Super,https://www.hiresuper.com,New York,https://www.hiresuper.com/careers,Voice AI for Property Management,A,FALSE,Evan's list 2026-09-24; hiresuper.com; posts roles at /careers/<slug>; SDR page 404 on 2026-09-24
 Boom,https://www.boompay.app,Texas,https://wellfound.com/company/boom-app/jobs,Rent Reporting / Screening / Leasing CRM,A,FALSE,Evan's list 2026-09-24; no careers page/ATS found
-AbodeMine,https://www.abodemine.com,Colorado,https://wellfound.com/company/abodemine/jobs,SFR Property Intelligence Data,A,FALSE,Evan's list 2026-09-24; Wellfound shows 0 jobs
-Lineage,https://lineage.finance,,https://lineage.finance/careers,Rental Property Investing Platform,A,FALSE,Evan's list 2026-09-24; careers page says no open positions 2026-09-24
+Lineage,https://lineage.finance,,https://www.lineagehq.com/careers,Rental Property Investing Platform,A,FALSE,Evan's list 2026-09-24; careers page says no open positions 2026-09-24
 Series Homes,https://www.serieshomes.com,Texas,https://www.serieshomes.com,2-4 Unit / House-Hacking Marketplace & Brokerage,A,FALSE,Evan's list 2026-09-24; serieshomes.com (Dallas; TX + CO); no careers page or ATS on 2026-09-24
 PropertyManagement.com,https://www.propertymanagement.com,,https://www.propertymanagement.com/careers,Property Management (TBC),A,FALSE,Evan's list 2026-09-24; COMPANY NOT CONFIRMED - no careers page found; ask Evan (could mean PMI / Property Management Inc.)
+Accolade,https://www.accoladehq.com,New York,https://www.accoladehq.com/careers,Multifamily Ops Workflow Software,B,FALSE,Added 2026-10-20 from Clay company search (founder-hiring); founder Galen Simmons; careers URL unverified - --detect will read the site
+Peek,https://www.peek.us,New York,https://www.peek.us/careers,AI Leasing Automation / 3D Tours,B,FALSE,Added 2026-10-20 from Clay; founder Austin Lo; ~57 people; careers URL unverified
+Brynson,https://www.brynson.com,New York,https://www.brynson.com/careers,Multifamily Compliance / ILS / BI,B,FALSE,"Added 2026-10-20 from Clay; founder Anthony Paganucci; ~16 people; careers page verified 2026-10-20, 6 roles listed on-page"
+Leap,https://www.leapeasy.com,New Jersey,https://www.leapeasy.com/careers,Deposit Alternatives (Multifamily + Scattered Site),B,FALSE,Added 2026-10-20 from Clay; founder Rory O'Connell; ~50 people; careers URL unverified
+HelloData,https://www.hellodata.ai,Delaware,https://www.hellodata.ai/careers,Multifamily Rent Survey / Pricing AI,B,FALSE,Added 2026-10-20 from Clay; ~16 people; careers URL unverified
+Tour24,https://tour24.io,Massachusetts,https://tour24.io/careers,Self-Guided Tours (Multifamily),B,FALSE,Added 2026-10-20 from Clay; founder Georgianna Oliver; ~51 people; careers URL unverified
+Betterbot,https://betterbot.com,Georgia,https://www.betterbot.com/careers/,AI Customer Platform (Multifamily),B,FALSE,"Added 2026-10-20 from Clay; founder Zlatko Bogoevski; ~42 people; careers page verified 2026-10-20, no open roles that day"
+Leni,https://leni.co,New York,https://leni.co/careers,AI for Real Estate Asset Managers,B,FALSE,Added 2026-10-20 from Clay; founder Arunabh Dastidar; ~31 people; careers URL unverified
+Archer,https://www.archer.re,California,https://www.archer.re/company/careers,AI Underwriting / Deal Sourcing,B,FALSE,Added 2026-10-20 from Clay; founder Thomas Foley; ~23 people; careers URL unverified
+Orange Charger,https://orangecharger.com,California,https://www.orangecharger.com/careers,EV Charging for Multifamily,B,FALSE,Added 2026-10-20 from Clay; ~31 people; careers page verified 2026-10-20
+PearlX,https://www.pearlx.com,Virginia,https://www.pearlx.com/careers,Clean Energy Amenities for Rental Communities,B,FALSE,Added 2026-10-20 from Clay; ~15 people; careers URL unverified (site blocks fetchers)
+VLTED,https://www.vlted.com,Nevada,https://www.vlted.com/careers,Resident Engagement (Multifamily),B,FALSE,Added 2026-10-20 from Clay; ~15 people; careers URL unverified
+Aurora Solar,https://www.aurorasolar.com,,https://jobs.ashbyhq.com/aurorasolar,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 2)
+Loft,https://loft.com.br,,https://loft.teamtailor.com/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 3); Brazil
+Side Inc.,https://www.side.com,,https://jobs.lever.co/sideinc,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 4); sideinc.com redirects to side.com
+Enpal,https://www.enpal.de,,https://jobs.enpal.com,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 5); Germany
+Uptake Technologies,https://uptake.com,,https://uptake.com/careers/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 6); Bosch acquisition announced (pending per Mar 2026 trade press)
+ICON,https://www.iconbuild.com,,https://job-boards.greenhouse.io/iconcareers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 8); also on the Moderne Ventures board
+Material Bank,https://www.materialbank.com,,https://careers.materialbank.com/careers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 10)
+Built Technologies,https://getbuilt.com,,https://job-boards.greenhouse.io/getbuilt,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 15)
+Arcadia,https://www.arcadia.com,,https://ats.rippling.com/arcadiacareers/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 19); not jobs.lever.co/arcadia (different company)
+Perk (formerly TravelPerk),https://www.perk.com,,https://www.perk.com/careers/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 22); TravelPerk rebranded to Perk (Nov 2025)
+Sidewalk Infrastructure Partners,https://www.sidewalkinfra.com,,https://sidewalkinfra.com/careers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 23); careers page said no current openings 2026-11-03
+Habi,https://habi.co,,https://habicareers.tuhabi.mx/vacantes,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 25); Colombia/Mexico; apply links go to Magneto365
+Redaptive,https://redaptive.com,,https://redaptive.wd12.myworkdayjobs.com/Redaptive-Careers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 26)
+Stegra (formerly H2 Green Steel),https://stegra.com,,https://career.stegra.com/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 27); H2 Green Steel rebranded to Stegra
+Sun King,https://sunking.com,,https://sunking.pinpointhq.com/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 28)
+Flexe,https://www.flexe.com,,https://job-boards.greenhouse.io/flexe,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 30)
+Lessen,https://www.lessen.com,,https://jobs.lever.co/lessen,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 31); board mixes staff jobs with vendor/trade-partner postings
+Qualia,https://www.qualia.com,,https://www.qualia.com/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 33)
+Place,https://place.com,,https://place.com/corporate-careers/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 34); corporate jobs; place.com/open-positions is agent recruiting (not used)
+Turntide Technologies,https://turntide.com,,https://ats.rippling.com/turntide-careers/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 35)
+Aspen Power,https://aspenpower.com,,https://aspenpower.com/careers/our-culture/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 36); listings embedded from ADP
+OpenSpace,https://www.openspace.ai,,https://www.openspace.ai/careers/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 37); Greenhouse board 'openspace' embedded
+Willow Wealth (formerly Yieldstreet),https://www.yieldstreet.com,,https://ats.rippling.com/yieldstreet/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 38); Yieldstreet rebranded to Willow Wealth (Jan 2026)
+Mews,https://www.mews.com,,https://www.mews.com/en/careers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 39); Greenhouse board 'mewssystems' embedded
+Verkada,https://www.verkada.com,,https://job-boards.greenhouse.io/verkada,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 41)
+Flyhomes,https://www.flyhomes.com,,https://flyhomes.com/jobs,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 42)
+Tul,https://tul.com.co,,https://tul.peopleforce.io/careers,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 43); Colombia
+AvantStay,https://avantstay.com,,https://apply.workable.com/avantstay/,PropTech Power List,B,FALSE,Added 2026-11-03 from PropTech Angel Group Power List (rank 48)
+Geolava,https://www.geolava.com,California,https://app.dover.com/jobs/geolava,Real Estate World Model / Spatial AI,B,FALSE,"Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); launched Terra 2026-10-26; Dover board (JS-rendered, no Dover reader yet - may report needs-link); 1 role seen: ML Researcher, World Models (remote)"
+Andes STR,https://andstr.com,Texas,https://www.linkedin.com/company/andes-str/jobs/,Flex-Stay / Furnished Rentals in Multifamily,B,FALSE,"Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); HQ Austin TX, ops in Santiago Chile; ~24 staff; no careers page on andstr.com - LinkedIn fallback (slug unverified); hiring Partnership Analyst (Santiago) per Built In"
+HABU,https://www.ycombinator.com/companies/habu,Arizona,https://www.ycombinator.com/companies/habu/jobs,AI-Native Merchant Developer,B,FALSE,Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); YC Fall 2026; Phoenix AZ; 2 people; 12 townhomes in Tempe; no own site found - YC jobs page (0 roles today)
+Zoneomics,https://www.zoneomics.com,Florida,https://www.linkedin.com/company/zoneomics/jobs/,Zoning Data / AI (Bassett.ai),B,FALSE,Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); launched Bassett.ai (bassett.ai) Jul 2026; HQ Boca Raton FL; ~37 staff (Revelio Mar-26); no careers page on site - LinkedIn fallback (slug unverified)
+Giraffe,https://www.giraffe.build,,https://www.giraffe.build/careers,Development Feasibility / Site Analysis Platform,B,FALSE,Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); launched Giraffe AI; AU + US; careers page lists no roles today and is JS-rendered
+Pirros,https://pirros.com,California,https://www.ycombinator.com/companies/pirros/jobs,AI Project Hub for Architects/Engineers (Revit),B,FALSE,"Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); YC W23; Los Angeles; ~44 staff; jobs only on YC (Customer Support Specialist, Design Advocate - Architect, Member Technical Staff)"
+Acres,https://www.acres.com,Arkansas,https://ats.rippling.com/acres/jobs,Land & Homebuilder Market Intelligence,B,FALSE,"Added 2026-11-05 from Daniel Heller's Fall 2026 New in Proptech roundup (Thesis Driven); launched Homebuilder Market Intelligence 2026-09-23; Fayetteville AR; Rippling board live with 4 roles (BDR, Client Success Mgr, Sr Enterprise AE, QA Intern)"

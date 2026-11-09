@@ -1,0 +1,50 @@
+name: NARPM affiliates scrape
+
+# Run from GitHub: Actions tab -> "NARPM affiliates scrape" -> Run workflow.
+# Output: rows upserted into Airtable (NARPM Affiliates table) plus a downloadable CSV artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      business_type:
+        description: 'Optional business type filter (e.g. Software). Leave blank for all.'
+        required: false
+        default: ''
+  # Uncomment to refresh automatically on the 1st of each month:
+  # schedule:
+  #   - cron: '17 11 1 * *'
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Scrape NARPM affiliate directory and sync to Airtable
+        env:
+          # Same secrets People Moves uses. If AIRTABLE_TOKEN is missing, the
+          # script still writes the CSV and just skips the Airtable step.
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+        run: |
+          python narpm_affiliates.py \
+            --out data/narpm_affiliates.csv \
+            --type "${{ github.event.inputs.business_type }}" \
+            --airtable
+
+      - name: Upload CSV as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: narpm-affiliates
+          path: data/narpm_affiliates.csv
+
+    

@@ -711,12 +711,61 @@ def comeet(slug: str, key: str = "", **_) -> JobList:
     return out
 
 
+# ----------------------------------------------------------------- Eightfold
+_EF_PAGE = 50          # the API answers in pages; it may send fewer than asked
+_EF_MAX_PAGES = 60
+
+
+def _ef_department(v) -> str:
+    """Eightfold departments carry the hiring leader: 'Matterport (Jane Doe)'.
+    Keep the team, drop the person."""
+    return re.sub(r"\s*\([^)]*\)\s*$", "", as_text(v))
+
+
+def eightfold(slug: str, host: str = "", domain: str = "", **_) -> JobList:
+    """Eightfold career sites (CoStar). Public JSON at
+    https://{host}/api/apply/v2/jobs?domain={domain}&start=N&num=M.
+      slug    the tenant, e.g. "costar" (costar.eightfold.ai)
+      host    the site that serves the API; a custom domain such as
+              careers.costargroup.com, or {slug}.eightfold.ai by default
+      domain  the company domain the API wants, default {slug}.com"""
+    host = (host or f"{slug}.eightfold.ai").strip("/")
+    domain = domain or f"{slug}.com"
+    out, seen, start, total = JobList(), set(), 0, None
+    for _page in range(_EF_MAX_PAGES):
+        d = _json(get(f"https://{host}/api/apply/v2/jobs?domain={domain}&start={start}"
+                      f"&num={_EF_PAGE}&sort_by=timestamp"), "Eightfold")
+        total = int(d.get("count") or 0) if total is None else total
+        page = records(d.get("positions"))
+        if not page:
+            break
+        for j in page:
+            jid = rid(j, "id", "ats_job_id")
+            if jid in seen:
+                continue
+            seen.add(jid)
+            created = j.get("t_create")
+            posted = (dt.datetime.fromtimestamp(int(created), tz=dt.timezone.utc).strftime("%Y-%m-%d")
+                      if str(created or "").isdigit() else "")
+            locs = j.get("locations") if isinstance(j.get("locations"), list) else []
+            out.append(_job("eightfold", slug, jid, j.get("posting_name") or j.get("name"),
+                            j.get("canonicalPositionUrl") or f"https://{host}/careers/job/{jid}",
+                            as_text(j.get("location")) or "; ".join(as_text(x) for x in locs),
+                            _ef_department(j.get("department")), posted))
+        start += len(page)
+        if start >= total:
+            break
+    else:
+        out.truncated = f"stopped after {_EF_MAX_PAGES} pages ({len(out)} of {total} roles)"
+    return out
+
+
 READERS: dict[str, Callable[..., JobList]] = {
     "greenhouse": greenhouse, "lever": lever, "ashby": ashby, "workable": workable,
     "smartrecruiters": smartrecruiters, "recruitee": recruitee, "breezy": breezy,
     "bamboohr": bamboohr, "rippling": rippling, "workday": workday, "ukg": ukg, "adp": adp,
     "dayforce": dayforce, "jobvite": jobvite, "paylocity": paylocity, "icims": icims,
-    "comeet": comeet,
+    "comeet": comeet, "eightfold": eightfold,
 }
 
 
@@ -792,6 +841,7 @@ class Board:
             "breezy": p.get("origin") or f"https://{s}.breezy.hr/",
             "bamboohr": f"https://{s}.bamboohr.com/careers",
             "rippling": f"https://ats.rippling.com/{s}/jobs",
+            "eightfold": f"https://{p.get('host') or s + '.eightfold.ai'}/careers",
             "workday": f"https://{p.get('host', '')}/{p.get('site', '')}",
             "ukg": f"https://{p.get('host', 'recruiting.ultipro.com')}/{s}/JobBoard/{p.get('board', '')}/",
             "adp": ("https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html"
@@ -881,6 +931,7 @@ PATTERNS = [
     ("rippling", re.compile(r"api\.rippling\.com/platform/api/ats/v1/board/(?P<slug>[a-z0-9_-]+)", re.I)),
     ("rippling", re.compile(r"ats\.rippling\.com/(?:[a-z]{2}-[A-Z]{2}/)?(?P<slug>[a-z0-9_-]+)", re.I)),
     ("jobvite", re.compile(r"jobs\.jobvite\.com/(?:careers/)?(?P<slug>[a-z0-9_-]+)", re.I)),
+    ("eightfold", re.compile(r"(?P<slug>[a-z0-9-]+)\.eightfold\.ai", re.I)),
     ("paylocity", re.compile(r"recruiting\.paylocity\.com/recruiting/jobs/(?:All|List)/(?P<slug>" + _G + ")", re.I)),
     ("icims", re.compile(r"(?P<host>(?P<slug>[a-z0-9-]+)\.icims\.com)", re.I)),
     ("comeet", re.compile(r"comeet\.co/careers-api/2\.0/company/(?P<slug>[A-Za-z0-9.]+)/positions"
@@ -935,7 +986,7 @@ JOB_SYSTEM_HOSTS = re.compile(
     r"adp\.com|dayforcehcm\.com|jobvite\.com|paylocity\.com|icims\.com|paycomonline\.|"
     r"isolvedhire\.com|applicantpro\.com|gem\.com|applytojob\.com|teamtailor\.com|trinethire\.com|"
     r"pinpointhq\.com|comeet\.co|paradox\.ai|taleo\.net|successfactors\.com|jobs\.sap\.com|"
-    r"recruitingbypaycor\.com|hireology\.com|apploi\.com", re.I)
+    r"recruitingbypaycor\.com|hireology\.com|apploi\.com|eightfold\.ai", re.I)
 
 
 def classify(link: str) -> Board:

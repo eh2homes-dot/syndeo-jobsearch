@@ -114,6 +114,38 @@ One-time changes to this file that ship with a code change live in
 `data/migrations_applied.json`). That keeps a code branch from colliding with
 the weekly run's own commit of this file.
 
+## Company LinkedIn pages
+
+`python -m jobsearch.linkedin` looks for each company's LinkedIn page on the
+company's **own website**: the homepage first, then the careers page if the
+homepage has no link. It takes the address from the link the company itself
+puts there (usually the footer, or the site's own schema.org description). It
+never requests anything from LinkedIn and never guesses a page from a name.
+
+It runs after each full weekly search, covering both company lists (the master
+list and the OpCo tab). A company is looked at again every four weeks, or the
+next week if its site couldn't be read. Results:
+
+- `data/linkedin_found.json`: what was found per company and when.
+- `output/linkedin-review.csv`: one row per company, the ones needing a look
+  first. `action` is one of:
+  - *differs from list: check*: the site now links somewhere other than the list.
+  - *check, then add*: found, but `what_to_check` says why to look first: a
+    page name that doesn't look like the company (often a parent), a showcase
+    page, the same page found for two companies, found only on the careers
+    page, and so on.
+  - *add to list*: found in the site's footer, name matches, nothing odd.
+  - *couldn't check*: the site turned the request away (it's tried again next week).
+  - *not found*: the site has no LinkedIn link. Add one by hand if wanted.
+  - *in list*: already approved.
+
+Found pages are suggestions only. A company's LinkedIn page is used once it's
+**in the company list**, in a column headed `LinkedIn` (also accepted:
+`LinkedIn URL`, `LinkedIn Page`, `Company LinkedIn`) on `leads/master_leads.csv`
+or the OpCo tab. Nothing here writes to either list. Approved pages then appear
+as `company_linkedin` on every role in the weekly CSVs and the OpCo CSVs, and as
+`linkedin` in `company_status.csv`.
+
 ## Code
 
 | File | What it holds |
@@ -126,6 +158,7 @@ the weekly run's own commit of this file.
 | `run.py` | weekly search: history, new/closed, reports, newsletter draft |
 | `../opco_search.py` | OpCo search |
 | `http.py` | polite HTTP client, throttled per site |
+| `linkedin.py` | each company's LinkedIn page, from its own website, for review |
 
 ## Tests
 
@@ -143,3 +176,42 @@ merged; if it fails, tracked roles would look closed-and-reopened.
 The **Tests** workflow runs this on every branch and pull request. Its "Live
 check" job runs both searches for real without saving anything, and attaches
 what they found.
+
+## Founder-led hiring (off by default)
+
+The small-company slice of what the two searches already found, drafted in the
+founder-item format for the founder newsletter. No scraping of its own.
+
+```
+python -m jobsearch.founders --force          # try it without flipping the toggle
+python -m jobsearch.founders --days 14 --max-headcount 75 --force
+python -m jobsearch.founders --record         # log the picked companies for the cooldown
+```
+
+| | |
+|---|---|
+| Reads | `data/history.json`, `out/opco-jobs-latest.json`, `leads/founders.csv` |
+| Rule | a role first seen in the last `window_days` at a company with `headcount ≤ max_headcount`, or `founder_led = TRUE`, is founder-led |
+| Writes | `output/founders/founder-roles-<date>.md` (draft), `.csv` / `.json` (every eligible role, scored), `needs-review-<date>.csv` |
+| Cooldown | `data/founder_featured.json`, its own ledger — Origins' `featured_companies.json` is untouched |
+| Toggles | `config.json → founder_hiring.enabled` (the script) and the `FOUNDER_HIRING` repo variable (the Sunday schedule). Manual runs from the Actions tab pass `--force`. |
+
+**`leads/founders.csv` is the only source of headcount, stage and founder details.**
+It is seeded with every company name from the master list and the OpCo tab, all
+blank. A company with fresh roles and no headcount on file is listed under "Needs
+review" in the draft rather than guessed at; fill in `headcount` (or set
+`founder_led` to TRUE/FALSE) and it is in or out next run. Anything still blank
+when an item is drafted shows up as `[VERIFY …]`, never as a value.
+
+Columns: `company, headcount, stage, founder_name, founder_linkedin, founder_x, founder_led, notes`.
+`stage` places the item in a bucket (pre-seed/seed → Build -1→0; Series A–C → 0→1;
+growth/established/operator → 1→beyond).
+
+### VC portfolio companies
+
+`python -m jobsearch.vc_companies` (or the "VC portfolio companies" workflow) lists every
+company on the Getro boards in `config.json → vc_boards` into `leads/vc_portfolio_companies.csv`
+with headcount bucket, stage and tags. The founder-led draft reads `leads/founders.csv`, which
+carries those companies with a `domain` column, so VC-board roles in `worth_adding.csv` match
+them even though they aren't on the master list. Getro's API needs `Accept: application/json`
+or it answers 406; both the jobs and companies readers send it.
