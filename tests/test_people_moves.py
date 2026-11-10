@@ -206,3 +206,107 @@ def test_real_headlines_from_the_first_live_run(company, headline, expected):
     from lib.people import extract_from_text
     named = [p.name for p in extract_from_text(headline)]
     assert C.Company(name=company).mentioned_outside_names(headline, named) is expected
+
+
+# ---------- SEC Form D (funding rounds, and the officers named on them) ----------
+
+def _form_d_xml(entity, state, people, sold="12000000", kind="D"):
+    persons = "".join(
+        f"<relatedPersonInfo><relatedPersonName><firstName>{f}</firstName><lastName>{l}</lastName></relatedPersonName>"
+        f"<relatedPersonRelationshipList><relationship>{role}</relationship></relatedPersonRelationshipList></relatedPersonInfo>"
+        for f, l, role in people)
+    return (f"<edgarSubmission><submissionType>{kind}</submissionType><primaryIssuer><entityName>{entity}</entityName>"
+            f"<issuerAddress><city>X</city><stateOrCountry>ZZ</stateOrCountry><stateOrCountryDescription>{state}</stateOrCountryDescription>"
+            f"</issuerAddress></primaryIssuer><relatedPersonsList>{persons}</relatedPersonsList><offeringData><industryGroup>"
+            f"<industryGroupType>Other Real Estate</industryGroupType></industryGroup><offeringSalesAmounts>"
+            f"<totalOfferingAmount>20000000</totalOfferingAmount><totalAmountSold>{sold}</totalAmountSold></offeringSalesAmounts>"
+            f"</offeringData></edgarSubmission>")
+
+
+def _sec(monkeypatch, filings):
+    """A stand-in SEC: `filings` is [(cik, issuer, form, accession, xml)]. Every weekday's index lists them all."""
+    from sources import form_d
+    index = "CIK|Company Name|Form Type|Date Filed|File Name\n" + "".join(
+        f"{cik}|{issuer}|{form}|20261105|edgar/data/{cik}/{acc}.txt\n" for cik, issuer, form, acc, _ in filings)
+    index += "999|Some Bank Corp|8-K|20261105|edgar/data/999/0000000999-26-000001.txt\n"     # not a Form D
+    docs = {acc.replace("-", ""): xml for _, _, _, acc, xml in filings}
+    asked = []
+
+    def fake_get(url, **kw):
+        asked.append(url)
+        if "daily-index" in url:
+            return SimpleNamespace(text=index)
+        folder = url.split("/")[-2]
+        return SimpleNamespace(text=docs[folder]) if folder in docs else None
+    monkeypatch.setattr(form_d, "get", fake_get)
+    return form_d, asked
+
+
+def _watch(name, state="", cik="", aliases=()):
+    return C.Company(name=name, state=state, cik=cik, aliases=list(aliases))
+
+
+def test_form_d_reports_a_round_and_then_new_officers(monkeypatch):
+    first = _form_d_xml("Evernest Holdings, LLC", "ALABAMA", [("Matthew", "Whitaker", "Executive Officer")])
+    form_d, _ = _sec(monkeypatch, [("1900001", "Evernest Holdings, LLC", "D", "0001900001-26-000010", first)])
+    seen = state_lib.SeenStore()
+    moves = form_d.collect([_watch("Evernest", "Alabama")], 8, seen)
+    assert len(moves) == 1                                                   # the round; the first roster is a baseline, not news
+    m = moves[0]
+    assert (m.category, m.kind, m.confidence, m.person) == ("company", "funding", "confirmed", None)
+    assert "**Evernest** filed a Form D — raised $12.0M" in m.summary and "Filed as Evernest Holdings, LLC." in m.summary
+    assert m.url.endswith("/edgar/data/1900001/000190000126000010/")
+    assert form_d.collect([_watch("Evernest", "Alabama")], 8, seen) == []     # never reported twice
+
+    second = _form_d_xml("Evernest Holdings, LLC", "ALABAMA", [("Matthew", "Whitaker", "Executive Officer"),
+                                                               ("Dana", "Okafor", "Executive Officer")], kind="D/A")
+    form_d, _ = _sec(monkeypatch, [("1900001", "Evernest Holdings, LLC", "D/A", "0001900001-26-000022", second)])
+    moves = form_d.collect([_watch("Evernest", "Alabama")], 8, seen)
+    people = [m for m in moves if m.category == "people"]
+    assert [(p.person, p.confidence, p.kind) for p in people] == [("Dana Okafor", "probable", "arrival")]
+
+
+def test_form_d_does_not_pin_a_strangers_fundraise_on_a_watched_company(monkeypatch):
+    fund = lambda name, state: _form_d_xml(name, state, [("Pat", "Stranger", "Promoter")])   # noqa: E731
+    form_d, asked = _sec(monkeypatch, [
+        ("1", "Haven Capital Fund III LP", "D", "0000000001-26-000001", fund("Haven Capital Fund III LP", "NEW YORK")),       # similar name, another state
+        ("2", "New Haven Partners LLC", "D", "0000000002-26-000001", fund("New Haven Partners LLC", "TEXAS")),               # name in the middle
+        ("3", "Atlas Real Estate Partners LLC", "D", "0000000003-26-000001", fund("Atlas Real Estate Partners LLC", "COLORADO")),  # similar name, same state
+        ("4", "Side, Inc.", "D", "0000000004-26-000001", fund("Side, Inc.", "FLORIDA")),                                      # same name, another state
+    ])
+    watched = [_watch("Haven", "Texas"), _watch("Atlas Real Estate", "Colorado"), _watch("Side", "California")]
+    moves = form_d.collect(watched, 8, state_lib.SeenStore())
+    by = {m.company: m for m in moves}
+    assert set(by) == {"Atlas Real Estate", "Side"}                           # nothing for Haven at all
+    assert not any("0000000002" in u for u in asked if "daily-index" not in u)   # the mid-name stranger was never even opened
+    atlas, side = by["Atlas Real Estate"], by["Side"]
+    assert atlas.confidence == "probable" and atlas.summary.startswith("**Atlas Real Estate Partners LLC** filed a Form D")
+    assert "check it is theirs" in atlas.summary
+    assert side.confidence == "probable" and "gives Florida as its state, not California" in side.summary
+    assert all(m.category == "company" for m in moves)                        # no stranger's officers reported as hires
+    assert not (state_lib.STATE_DIR / "formd").exists()                       # and none saved as the company's roster
+
+
+def test_form_d_matches_on_the_sec_number_when_the_list_has_one(monkeypatch):
+    xml = _form_d_xml("OD Homes Parent Corp", "ARIZONA", [])
+    form_d, _ = _sec(monkeypatch, [("1801169", "OD Homes Parent Corp", "D", "0001801169-26-000005", xml)])
+    moves = form_d.collect([_watch("Opendoor", "California", cik="0001801169")], 8, state_lib.SeenStore())
+    assert [(m.company, m.confidence) for m in moves] == [("Opendoor", "confirmed")] and "Filed as OD Homes Parent Corp." in moves[0].summary
+
+
+def test_funding_rounds_get_their_own_section_in_the_brief():
+    import report
+    from lib.move import Move
+    moves = [Move(company="Evernest", source="SEC Form D", confidence="confirmed", kind="funding", category="company",
+                  summary="**Evernest** filed a Form D — raised $12.0M.", url="https://sec.test/x", published="20261105"),
+             Move(company="Acme", source="Team page", confidence="probable", kind="arrival", person="Dana Okafor", title="COO")]
+    md = report.render_markdown(moves, "2026-11-10")
+    assert "## Funding rounds (1)" in md and "- **Evernest** filed a Form D — raised $12.0M." in md
+    assert "## Probable (1)" in md and "## Confirmed" not in md                # the round is not filed under the people tiers
+    assert md.index("## Probable") < md.index("## Funding rounds")
+
+
+def test_form_d_is_part_of_the_weekly_run():
+    import run
+    workflow = (ROOT / ".github/workflows/people-moves.yml").read_text()
+    assert "formd" in run.ALL_SOURCES and "edgar,formd,leadership,news,trade,reqs" in workflow

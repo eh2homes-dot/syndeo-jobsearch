@@ -25,7 +25,7 @@ from lib import companies as companies_lib  # noqa: E402
 from lib.state import SeenStore  # noqa: E402
 import report  # noqa: E402
 
-ALL_SOURCES = ["edgar", "leadership", "news", "trade", "reqs"]
+ALL_SOURCES = ["edgar", "formd", "leadership", "news", "trade", "reqs"]
 ROOT = Path(__file__).resolve().parent
 # Who is watched: the same lists the two job searches read.
 MASTER_LEADS = ROOT / "leads" / "master_leads.csv"
@@ -125,6 +125,9 @@ def main() -> int:
                 if name == "edgar":
                     from sources import edgar
                     moves += edgar.collect(all_companies, args.lookback_days, seen)
+                elif name == "formd":
+                    from sources import form_d
+                    moves += form_d.collect(all_companies, args.lookback_days, seen)
                 elif name == "leadership":
                     from sources import leadership
                     moves += leadership.collect(all_companies)

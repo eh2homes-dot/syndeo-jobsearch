@@ -13,7 +13,7 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
-from lib.move import Move, CONFIRMED, PROBABLE, INFERRED, DEPARTURE
+from lib.move import Move, CONFIRMED, PROBABLE, INFERRED, DEPARTURE, COMPANY
 
 TIER_HEADINGS = {
     CONFIRMED: (
@@ -54,9 +54,13 @@ def render_markdown(moves: list[Move], run_date: str, top_n: int = 0) -> str:
     if top_n:
         moves = moves[:top_n]
 
+    # Company events (funding rounds) are not people moves: they get their own
+    # section instead of being tiered alongside named individuals.
+    company_events = [m for m in moves if m.category == COMPANY]
     by_tier: dict[str, list[Move]] = defaultdict(list)
     for m in moves:
-        by_tier[m.confidence].append(m)
+        if m.category != COMPANY:
+            by_tier[m.confidence].append(m)
 
     lines = [
         f"# People Moves — week of {run_date}",
@@ -85,6 +89,19 @@ def render_markdown(moves: list[Move], run_date: str, top_n: int = 0) -> str:
             meta = m.source + (f", {m.published}" if m.published else "")
             detail.append(f"*{meta}*" if not m.url else f"[{meta}]({m.url})")
             lines.append(f"  {' — '.join(detail)}")
+        lines.append("")
+
+    if company_events:
+        lines += [f"## Funding rounds ({len(company_events)})", "",
+                  "*From SEC Form D filings: a company reporting money raised, or being raised, "
+                  "in a private offering. It is a filing, not an announcement, and the amount can "
+                  "be a partial close. An item that says \"check it is theirs\" matched on a "
+                  "similar name only.*", ""]
+        for m in company_events:
+            meta = m.source + (f", {m.published}" if m.published else "")
+            check = " *(unconfirmed match)*" if m.confidence != CONFIRMED else ""
+            lines.append(f"- {m.display()}{check}")
+            lines.append(f"  {f'*{meta}*' if not m.url else f'[{meta}]({m.url})'}")
         lines.append("")
 
     if not moves:

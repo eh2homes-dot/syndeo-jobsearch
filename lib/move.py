@@ -29,6 +29,14 @@ DEPARTURE = "departure"
 PROMOTION = "promotion"
 UNKNOWN = "unknown"
 
+# Company-level events. These are not people moves, so they get their own
+# section in the brief rather than being tiered alongside named individuals.
+FUNDING = "funding"
+
+# Which section of the brief an item belongs to.
+PEOPLE = "people"
+COMPANY = "company"
+
 
 @dataclass
 class Move:
@@ -36,6 +44,7 @@ class Move:
     source: str
     confidence: str
     kind: str = UNKNOWN
+    category: str = PEOPLE
     person: Optional[str] = None
     title: Optional[str] = None
     previous_title: Optional[str] = None

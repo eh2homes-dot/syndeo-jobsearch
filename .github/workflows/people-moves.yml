@@ -23,8 +23,8 @@ on:
         description: "How many days back to look for news and filings"
         default: "8"
       sources:
-        description: "Comma-separated: edgar,leadership,news,trade,reqs"
-        default: "edgar,leadership,news,trade,reqs"
+        description: "Comma-separated: edgar,formd,leadership,news,trade,reqs"
+        default: "edgar,formd,leadership,news,trade,reqs"
       discover_leadership:
         description: "Instead of a scan, look for leadership pages for companies that have none (writes out/leadership-discovery.csv for review)"
         type: boolean
@@ -177,7 +177,7 @@ jobs:
             python run.py --backfill --backfill-days 120
           else
             python run.py \
-              --sources "${{ inputs.sources || 'edgar,leadership,news,trade,reqs' }}" \
+              --sources "${{ inputs.sources || 'edgar,formd,leadership,news,trade,reqs' }}" \
               --lookback-days "${{ inputs.lookback_days || 8 }}"
           fi
 
