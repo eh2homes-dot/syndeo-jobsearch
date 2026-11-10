@@ -35,6 +35,21 @@ operations** search, and it reads operators differently from software companies:
 Everything read is still written to `out/opco-jobs-all-<date>.csv` with an
 `in_scope` and `category` column, so what the lens left out can be checked.
 
+### A company on both lists is reported once
+
+An operator on the master list that is also on the OpCo tab (same name, website
+or careers link), in the scattered-site or multifamily segment, is reported by
+the property operations search only. The weekly search still reads it and keeps
+it in `data/history.json` and `all_open_roles.csv` (with `search` = `property
+operations`), but leaves it out of `open_roles.csv`, the three bucket files,
+new/closed, `report.md` and the newsletter draft. `report.md` lists these
+companies under "Reported by the property operations search".
+
+Set in `config.json` -> `property_operations`: `hand_off` turns it on or off,
+`segments` says which OpCo segments hand over, and `keep_in_proptech` names
+companies to leave in both. An on-demand run (`--only`) always shows the
+company asked for.
+
 ## How a company is read
 
 Every company is read from **its own job board**. No company is looked up by

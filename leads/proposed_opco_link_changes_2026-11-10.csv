@@ -1,0 +1,2 @@
+Company Name,Column D today,Proposed Column D,Why
+Greystar,https://jobs.greystar.com/,https://greystar.wd1.myworkdayjobs.com/External,"The OpCo search read 3 roles from jobs.greystar.com on 2026-11-08; the weekly search reads 81 from this Workday board (the one in data/ats_map.json). The OpCo config already runs Greystar's corporate and leadership keyword searches on Workday. Once this is in, remove Greystar from config.json -> property_operations -> keep_in_proptech."

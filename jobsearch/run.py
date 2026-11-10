@@ -199,6 +199,65 @@ def passes_company_filter(company: str, title: str, location: str, cfg: dict) ->
     return any(w in t for w in f.get("keep_if_title_has", [])) or any(w in loc for w in f.get("keep_if_location_has", []))
 
 
+# The OpCo tab as last read from the sheet (saved by the OpCo search), then the repo copy.
+OPCO_COPIES = (ROOT / "state" / "opco" / "opco_live.csv", ROOT / "opco.csv")
+
+
+def _link_key(url: str) -> str:
+    return re.sub(r"^https?://(www\.)?", "", (url or "").strip().lower()).split("?")[0].split("#")[0].rstrip("/")
+
+
+def handed_to_property_ops(leads: list[dict], cfg: dict) -> dict[str, str]:
+    """Master-list companies that the property operations (OpCo) search reports instead.
+
+    A company is handed over when it is also on the OpCo tab (same name, same website, or same
+    careers link) in one of the segments named in config.json -> property_operations -> segments.
+    It is still read here and kept in history and all_open_roles.csv; it is only left out of the
+    proptech reports and the newsletter draft, so it is reported once, through the operator lens.
+    Returns {company: segment label}. Never fatal: if the OpCo list can't be read, nobody is handed over.
+    """
+    po = cfg.get("property_operations") or {}
+    if not po.get("hand_off"):
+        return {}
+    path = next((c for c in OPCO_COPIES if Path(c).exists()), None)
+    if path is None:
+        return {}
+    try:
+        import yaml
+        sys.path.insert(0, str(ROOT))
+        import opco_search as opco
+        role_filter = opco.RoleFilter(yaml.safe_load((ROOT / "opco_config.yml").read_text(encoding="utf-8")) or {})
+        operators = opco.load_companies(Path(path))
+        role_filter.assign(operators)
+    except Exception as e:  # noqa: BLE001
+        print(f"  WARNING: couldn't read the OpCo list ({type(e).__name__}: {str(e)[:100]}); "
+              "no company was handed to the property operations search", flush=True)
+        return {}
+    segments = set(po.get("segments") or [])
+    keep = {_norm(n) for n in po.get("keep_in_proptech") or []}
+    by_name, by_domain, by_link = {}, {}, {}
+    for c in operators:
+        seg = role_filter.segment_of(c.name)
+        if seg not in segments:
+            continue
+        label = role_filter.segment_label(seg)
+        by_name.setdefault(_norm(c.name), label)
+        for k in _domain_keys(c.website):
+            by_domain.setdefault(k, label)
+        if _link_key(c.careers_url):
+            by_link.setdefault(_link_key(c.careers_url), label)
+    out = {}
+    for l in leads:
+        if _norm(l["company"]) in keep:
+            continue
+        label = (by_name.get(_norm(l["company"]))
+                 or next((by_domain[k] for k in _domain_keys(l.get("website", "")) if k in by_domain), None)
+                 or by_link.get(_link_key(l.get("careers_url", ""))))
+        if label:
+            out[l["company"]] = label
+    return out
+
+
 ROLE_GROUPS = ("executive", "gtm", "product_engineering")
 GROUP_LABEL = {"executive": "Leadership", "gtm": "GTM & Sales", "product_engineering": "Product & Engineering"}
 
@@ -562,10 +621,24 @@ def main(argv=None):
     new_jobs.sort(key=lambda j: (j["tier"], j["company"], j["title"]))
     closed_jobs.sort(key=lambda j: (j["company"], j["title"]))
     job_cols.insert(job_cols.index("focus"), "role_group")
+    # Operators that are also on the OpCo tab are reported by the property operations search, through
+    # its own lens. They stay in history and all_open_roles.csv; they leave the proptech reports and
+    # the newsletter draft. An on-demand run for a named company always shows that company.
+    handed = {} if adhoc else handed_to_property_ops(leads, cfg)
+    if handed and not fixtures:
+        print(f"  handoff {len(handed)} companies are reported by the property operations search: "
+              f"{', '.join(sorted(handed))}", flush=True)
+    for j in all_jobs:
+        j["search"] = "property operations" if j["company"] in handed else "proptech"
+    for r in company_rows:
+        r["search"] = "property operations" if r["company"] in handed else "proptech"
+        if r["company"] in handed:
+            r["focus_open"] = 0
+    job_cols.append("search")
     all_open = all_jobs
-    all_jobs = [j for j in all_open if j.get("role_group")]
-    new_jobs = [j for j in new_jobs if j.get("role_group")]
-    closed_jobs = [j for j in closed_jobs if j.get("role_group")]
+    all_jobs = [j for j in all_open if j.get("role_group") and j["company"] not in handed]
+    new_jobs = [j for j in new_jobs if j.get("role_group") and j["company"] not in handed]
+    closed_jobs = [j for j in closed_jobs if j.get("role_group") and j.get("company") not in handed]
     write_csv(out_dir / "all_open_roles.csv", all_open, job_cols)   # unfiltered, for data/analysis
     write_csv(out_dir / "open_roles.csv", all_jobs, job_cols)       # all three buckets together
     for g, fname in (("executive", "leadership_roles.csv"), ("gtm", "gtm_sales_roles.csv"),
@@ -582,8 +655,8 @@ def main(argv=None):
               ["company", "title", "url", "link_status", "first_seen", "ats", "job_key"])
     write_csv(out_dir / "company_status.csv", company_rows,
               ["company", "tier", "ats", "slug", "status", "focus_open", "open", "new", "closed", "careers_url", "note",
-               "linkedin"])
-    write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery)
+               "linkedin", "search"])
+    write_report(out_dir, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery, handed)
     if not adhoc:
       save_json(DATA / "last_run.json", {"date": today.isoformat(), "companies": len(leads), "feed_decides": True,
                                                  "ok": len(ok_companies), "open_in_scope": len(all_jobs), "open_all": len(all_open),
@@ -930,10 +1003,11 @@ def write_step_summary(all_jobs, company_rows, unmatched, out_dir):
 
 
 # ------------------------------------------------------------------ report
-def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery=None):
+def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_rows, cfg, discovery=None, handed=None):
+    handed = handed or {}
     ok = [c for c in company_rows if c["status"] == "ok"]
     bad = [c for c in company_rows if c["status"] != "ok"]
-    top = sorted(ok, key=lambda c: -c["open"])[:15]
+    top = sorted((c for c in ok if c["company"] not in handed), key=lambda c: -c["open"])[:15]
     focus_new = [j for j in new_jobs if j.get("focus")]
 
     md = [f"# Syndeo weekly hiring signal — week of {today.isoformat()}", ""]
@@ -987,6 +1061,16 @@ def write_report(out_dir: Path, today, all_jobs, new_jobs, closed_jobs, company_
                "_The board on file had gone quiet or missing, and the company's careers page now loads "
                "its jobs from a different one. The new board was read and saved in data/ats_map.json._", ""]
         md += [f"- **{c['company']}** — {c['note']}" for c in moved]
+        md.append("")
+    if handed:
+        md += ["## Reported by the property operations search", "",
+               "_These companies are operators that are also on the OpCo tab. Their roles are in the "
+               "property operations brief (out/opco-jobs-latest.md), read through the operator lens, and "
+               "are left out of this report and the newsletter draft. They are still in all_open_roles.csv. "
+               "To keep one here, add it to config.json -> property_operations -> keep_in_proptech._", "",
+               "| Company | Segment | Open (all roles) |", "|---|---|---|"]
+        opened = {c["company"]: c["open"] for c in company_rows}
+        md += [f"| {name} | {label} | {opened.get(name, 0)} |" for name, label in sorted(handed.items())]
         md.append("")
     covered = [c for c in bad if c["status"].startswith(("covered by parent", "excluded"))]
     bad = [c for c in bad if c not in covered]
