@@ -11,13 +11,12 @@ imn,ok,1,new IMN event,https://informaconnect.com/imn-sfr-awards/
 imn,ok,1,new IMN event,https://informaconnect.com/imn-str-winter/
 narpm,ok,3,,https://www.narpm.org/national-conferences/
 narpm-state,ok,2,,https://www.narpm.org/national-conferences/conferences/
-narpm-calendar,http 404,0,,https://www.narpm.org/events/
+narpm-calendar,skipped (unverified URL not found),0,,https://www.narpm.org/events/
 narpm-courses,ok,6,,https://www.narpm.org/education/course-schedule/
 narpm-webinars,ok,2,,https://www.narpm.org/education/webinars/
-narpm-chapters,ok,34,"55 chapter sites, 44 read, 13 with upcoming events; 55 chapters on the finder, 55 looked up this run",https://www.narpm.org/find/chapters/
+narpm-chapters,ok,32,"55 chapter sites, 45 read, 14 with upcoming events; 55 chapters on the finder, 0 looked up this run",https://www.narpm.org/find/chapters/
 narpm-chapters,skipped (never reached: http 403),0,Alameda/Contra Costa Counties,https://narpmacc.org/events
 narpm-chapters,skipped (never reached: http 404),0,California State,https://narpmcalifornia.org/events
-narpm-chapters,skipped (never reached: http 404),0,Charleston,https://chsnarpm.org/events
 narpm-chapters,skipped (never reached: http 403),0,Colorado Springs,https://coloradosprings.narpm.org/events
 narpm-chapters,skipped (never reached: http 403),0,Denver CO,https://denvernarpm.org/events
 narpm-chapters,skipped (never reached: http 403),0,Greater Dallas,https://dallas-narpm.org/events

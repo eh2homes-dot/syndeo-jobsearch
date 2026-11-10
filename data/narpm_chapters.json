@@ -292,6 +292,8 @@
   },
   "C090": {
     "checked": "2026-11-10",
+    "events_url": "https://chsnarpm.org/meetings-and-events/",
+    "last_ok": "2026-11-10",
     "method": "chapter finder",
     "name": "Charleston",
     "site": "https://chsnarpm.org/"
