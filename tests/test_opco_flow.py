@@ -212,10 +212,15 @@ def test_companies_are_placed_by_the_sheets_industry_segment():
 def test_scattered_site_operators_get_the_operator_lens():
     f = _lens()
     want = {
-        "Senior Property Manager": "operations",
+        "Senior Property Manager": "property_management",
         "Operations Manager - Nashville, TN": "operations",
         "Director of Customer Experience": "operations",
-        "Manager, Resident Experience (Delinquency & Eviction Specialist)": "operations",
+        "Leasing Agent - Single Family Resident - Oklahoma City, OK (RE licensed required)": "leasing",
+        "Leasing Specialist": "leasing",
+        "Regional Leasing Manager": "leasing",
+        "Growth Advisor, Leasing": "leasing",
+        "Regional Manager - DFW": "property_management",
+        "Manager, Resident Experience (Delinquency & Eviction Specialist)": "property_management",
         "Portfolio Asset Manager": "asset_management",
         "Analyst, SFR Asset Management": "asset_management",
         "Corporate Development Associate - Nationwide, US": "asset_management",
@@ -234,7 +239,8 @@ def test_scattered_site_operators_get_the_operator_lens():
 def test_site_level_and_hourly_roles_stay_out():
     f = _lens()
     out = ["Maintenance Technician", "Community Maintenance Tech - Charlotte, North Carolina", "Assistant Property Manager",
-           "Leasing Agent", "Showing Agent - Rental Property Showings", "Maintenance Coordinator", "Property Accountant",
+           "Leasing Field Coordinator", "Showing Agent - Rental Property Showings", "Rental Showing Agent – Tacoma Area (Flexible, 1099)",
+           "Field Associate - Rental Property Showings", "Leasing Consultant (Part-Time)", "Real Estate Agent", "Maintenance Coordinator", "Property Accountant",
            "Utility Specialist - Single Family Rental Property Operations", "Senior Legal Operations Manager",
            "1099 Real Estate Advisor", "Future Opening: Business Development Representative", "Property Accounting Intern",
            "Copia - Técnico de mantenimiento", "Handyman - Kansas City Metro", "Community Manager, BTR"]
@@ -243,7 +249,8 @@ def test_site_level_and_hourly_roles_stay_out():
 
 def test_multifamily_is_corporate_and_leadership_only():
     f = _lens()
-    assert f.categorize("Regional Manager - DFW", "BH") == "operations"
+    assert f.categorize("Regional Manager - DFW", "BH") == "property_management"
+    assert f.categorize("Leasing Consultant", "BH") is None and f.categorize("Director of Leasing", "BH") == "leasing"   # on-site leasing stays out
     assert f.categorize("Acquisitions Manager", "BH") == "asset_management"
     assert f.categorize("Operations Manager", "BH") is None and f.categorize("Maintenance Supervisor", "BH") is None
     assert f.categorize("Operations Manager", "Evernest") == "operations"          # same title, scattered-site operator

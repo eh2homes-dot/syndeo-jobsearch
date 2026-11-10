@@ -23,10 +23,13 @@ operations** search, and it reads operators differently from software companies:
   Industry Segment is treated as scattered-site and listed in the brief so it
   can be filled in.
 - **Categories.** Leadership; Asset Management & Investments; Maintenance,
-  Turns & Construction; Technology & Data; Finance & Accounting; Growth &
-  Sales; Property Operations. Maintenance, finance and operations roles need a
-  manager-or-above word in the title, so a Director of Maintenance is in and a
-  Maintenance Technician is out.
+  Turns & Construction; Technology & Data; Finance & Accounting; Leasing;
+  Growth & Sales; Property Management; Operations. Maintenance, finance,
+  property management and operations roles need a manager-or-above word in the
+  title, so a Director of Maintenance is in and a Maintenance Technician is
+  out. Leasing has no such floor (leasing agents and specialists are the
+  talent), but showing-agent gigs, 1099 work, assistants and coordinators are
+  still left out.
 - **Scope by segment.** Scattered-site operators get every category.
   Multifamily managers are corporate and leadership only (the Greystar rule).
   Other real estate reports leadership and asset management only, which keeps a
