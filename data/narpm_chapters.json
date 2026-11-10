@@ -1,0 +1,406 @@
+{
+  "C001": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Phoenix",
+    "site": "https://community.narpm.org/home"
+  },
+  "C002": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Houston",
+    "site": "https://narpmhouston.com/"
+  },
+  "C003": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Colorado Springs",
+    "site": "https://coloradosprings.narpm.org/"
+  },
+  "C004": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Sacramento",
+    "site": "https://sacramento.narpm.org"
+  },
+  "C005": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Atlanta",
+    "site": "https://www.narpmatlanta.com/"
+  },
+  "C006": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Denver CO",
+    "site": "https://denvernarpm.org"
+  },
+  "C007": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Pensacola dba Northwest FL",
+    "site": "https://nwf.narpm.org/"
+  },
+  "C008": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Greater Dallas",
+    "site": "https://dallas-narpm.org"
+  },
+  "C010": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Santa Clara",
+    "site": "https://narpmscc.com/"
+  },
+  "C011": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Greater Portland",
+    "site": "https://www.narpmpdx.org/"
+  },
+  "C013": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Southern Arizona/Tucson",
+    "site": "https://southernarizona.narpm.org"
+  },
+  "C014": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Fort Worth/Mid Cities",
+    "site": "https://fortworthmidcitiesnarpm.wildapricot.org/"
+  },
+  "C015": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "King County",
+    "site": "https://kingcounty.narpm.org/"
+  },
+  "C016": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Austin",
+    "site": "https://austin.narpm.org/"
+  },
+  "C017": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Alameda/Contra Costa Counties",
+    "site": "https://narpmacc.org/"
+  },
+  "C018": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Tampa Bay",
+    "site": "https://tampabay.narpm.org"
+  },
+  "C019": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Marin/Sonoma",
+    "site": "https://marinsonoma.narpm.org"
+  },
+  "C020": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Maryland Suburban",
+    "site": "https://marylandsub.narpm.org"
+  },
+  "C021": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Pierce County",
+    "site": "https://piercecounty.narpm.org/"
+  },
+  "C022": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Orlando/Central Florida",
+    "site": "https://cflorida.narpm.org"
+  },
+  "C024": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "San Diego",
+    "site": "https://sdnarpm.org/"
+  },
+  "C025": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "San Antonio",
+    "site": "https://sanarpm.org/"
+  },
+  "C026": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Jacksonville - Northeast Florida aka NARPM JAX",
+    "site": "https://jax.narpm.org"
+  },
+  "C029": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Southeastern Virginia (Hampton Roads)",
+    "site": "https://sevirginia.narpm.org"
+  },
+  "C030": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Big Sky Montana",
+    "site": "https://bigskymontana.narpm.org"
+  },
+  "C040": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Nashville",
+    "site": "https://nashville.narpm.org"
+  },
+  "C042": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Albuquerque Metro",
+    "site": "https://albuquerquemetro.narpm.org"
+  },
+  "C043": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Northern Virginia",
+    "site": "https://www.novanarpm.org/"
+  },
+  "C045": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Northern Colorado",
+    "site": "https://ncolorado.narpm.org"
+  },
+  "C047": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Southwest Washington",
+    "site": "https://swwa.narpm.org"
+  },
+  "C059": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Southwest Idaho",
+    "site": "https://swidaho.narpm.org"
+  },
+  "C061": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Heart of America",
+    "site": "https://heartofamerica.narpm.org/"
+  },
+  "C067": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Inland Northwest",
+    "site": "https://inlandnorthwest.narpm.org"
+  },
+  "C068": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Texas Hill Co",
+    "site": "https://texashill.narpm.org"
+  },
+  "C072": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Baltimore/Washington",
+    "site": "https://baltimore.narpm.org"
+  },
+  "C073": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Oahu",
+    "site": "https://oahu.narpm.org"
+  },
+  "C075": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "District of Columbia",
+    "site": "https://dc.narpm.org"
+  },
+  "C076": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Sarasota Manatee",
+    "site": "https://narpmsrq.org/"
+  },
+  "C080": {
+    "checked": "2026-11-10",
+    "name": "Charlotte Regional",
+    "note": "chapter page http 429"
+  },
+  "C081": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Western Colorado",
+    "site": "https://westernco.narpm.org"
+  },
+  "C083": {
+    "checked": "2026-11-10",
+    "name": "Greater Richmond",
+    "note": "chapter page http 429"
+  },
+  "C085": {
+    "checked": "2026-11-10",
+    "name": "Minnesota",
+    "note": "chapter page http 429"
+  },
+  "C086": {
+    "checked": "2026-11-10",
+    "name": "Utah",
+    "note": "chapter page http 429"
+  },
+  "C089": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Triangle",
+    "site": "https://trianglenarpm.org/"
+  },
+  "C090": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Charleston",
+    "site": "https://chsnarpm.org/"
+  },
+  "C091": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Southwest Florida Chapter",
+    "site": "https://southwestflorida.narpm.org"
+  },
+  "C094": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Long Beach/Orange County",
+    "site": "https://lboc.narpm.org"
+  },
+  "C095": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Lakeland",
+    "site": "https://lakeland.narpm.org/"
+  },
+  "S003": {
+    "checked": "2026-11-10",
+    "method": "chapter finder",
+    "name": "California State",
+    "site": "https://narpmcalifornia.org"
+  },
+  "S005": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Florida State",
+    "site": "https://floridastate.narpm.org"
+  },
+  "S006": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Texas State",
+    "site": "https://texas.narpm.org/"
+  },
+  "S007": {
+    "checked": "2026-11-10",
+    "name": "Washington State",
+    "note": "chapter page http 429"
+  },
+  "S008": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "chapter finder",
+    "name": "Pennsylvania State",
+    "site": "https://pennsylvania.narpm.org/"
+  },
+  "S010": {
+    "checked": "2026-11-10",
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Arizona State",
+    "site": "https://arizona.narpm.org/"
+  },
+  "S011": {
+    "checked": "2026-11-10",
+    "name": "Nevada State",
+    "note": "chapter page http 429"
+  },
+  "site:https://chapters.narpm.org/northernnevada/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Northern Nevada",
+    "site": "https://chapters.narpm.org/northernnevada/"
+  },
+  "site:https://chapters.narpm.org/nwwa/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Northwest Counties",
+    "site": "https://chapters.narpm.org/nwwa/"
+  },
+  "site:https://chapters.narpm.org/philadelphia/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Greater Philadelphia",
+    "site": "https://chapters.narpm.org/philadelphia/"
+  },
+  "site:https://chapters.narpm.org/snohomish/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Greater Snohomish County",
+    "site": "https://chapters.narpm.org/snohomish/"
+  },
+  "site:https://chapters.narpm.org/southeastflorida/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Southeast Florida",
+    "site": "https://chapters.narpm.org/southeastflorida/"
+  },
+  "site:https://community.narpm.org/": {
+    "checked": "2026-11-10",
+    "method": "finder link",
+    "name": "",
+    "site": "https://community.narpm.org/"
+  },
+  "site:https://northerncalifornia.narpm.org/": {
+    "last_ok": "2026-11-10",
+    "method": "seed",
+    "name": "Northern California Central Valley",
+    "site": "https://northerncalifornia.narpm.org/"
+  }
+}

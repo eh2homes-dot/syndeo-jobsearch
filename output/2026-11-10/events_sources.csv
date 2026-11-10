@@ -1,0 +1,30 @@
+source,status,events,note,url
+nrhc,ok,2,,https://rentalhomecouncil.org/events/
+imn,ok,0,9 other IMN event sites linked,https://imn.org/
+imn,ok,1,,https://informaconnect.com/imn-sfr-west/
+imn,ok,1,,https://informaconnect.com/imn-sfr-east/
+imn,ok,1,,https://informaconnect.com/imn-sfr-pm/
+imn,ok,1,,https://informaconnect.com/imn-btr-spring/
+imn,ok,1,,https://informaconnect.com/imn-btr-fall/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-residential-ground-up-construction/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-sfr-awards/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-str-winter/
+narpm,ok,3,,https://www.narpm.org/national-conferences/
+narpm-state,ok,2,,https://www.narpm.org/national-conferences/conferences/
+narpm-calendar,http 404,0,,https://www.narpm.org/events/
+narpm-courses,ok,6,,https://www.narpm.org/education/course-schedule/
+narpm-webinars,ok,2,,https://www.narpm.org/education/webinars/
+narpm-chapters,ok,34,"55 chapter sites, 44 read, 13 with upcoming events; 55 chapters on the finder, 55 looked up this run",https://www.narpm.org/find/chapters/
+narpm-chapters,skipped (never reached: http 403),0,Alameda/Contra Costa Counties,https://narpmacc.org/events
+narpm-chapters,skipped (never reached: http 404),0,California State,https://narpmcalifornia.org/events
+narpm-chapters,skipped (never reached: http 404),0,Charleston,https://chsnarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Colorado Springs,https://coloradosprings.narpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Denver CO,https://denvernarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Greater Dallas,https://dallas-narpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,San Antonio,https://sanarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,San Diego,https://sdnarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Santa Clara,https://narpmscc.com/events
+narpm-chapters,skipped (never reached: http 403),0,Sarasota Manatee,https://narpmsrq.org/events
+narpm-chapters,skipped (never reached: http 403),0,Triangle,https://trianglenarpm.org/events
+nmhc,ok,12,,https://www.nmhc.org/meetings/calendar/upcoming-meetings/
+naa,http 403,0,,https://naahq.org/events/upcoming
