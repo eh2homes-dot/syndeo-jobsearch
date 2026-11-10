@@ -381,5 +381,17 @@
       "Second Nature"
     ],
     "us_only": true
+  },
+  "property_operations": {
+    "note": "Evan 2026-11-10: operators come out of the proptech search. A master-list company that is also on the OpCo tab (same name, website or careers link) in one of these segments is reported by the property operations search (opco_search.py) instead. It is still read and kept in history and all_open_roles.csv; it is left out of the proptech reports and the newsletter draft. keep_in_proptech lists companies to leave in both.",
+    "hand_off": true,
+    "segments": [
+      "scattered_site",
+      "multifamily"
+    ],
+    "keep_in_proptech": [
+      "Greystar"
+    ],
+    "keep_note": "Greystar stays in both until its Column D on the OpCo tab is its Workday board (https://greystar.wd1.myworkdayjobs.com/External). Column D is jobs.greystar.com today, and the OpCo search reads only 3 roles from it against 81 here, so handing it over now would lose its roles."
   }
 }

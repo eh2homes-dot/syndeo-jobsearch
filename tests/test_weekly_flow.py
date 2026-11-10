@@ -313,3 +313,68 @@ def test_migration_is_applied_once_and_never_overwrites_later_edits(tmp_path):
     ats_map["Placer.ai"] = {"ats": "lever", "slug": "edited-by-hand"}
     assert run.apply_migrations(ats_map, applied) == []
     assert ats_map["Placer.ai"]["slug"] == "edited-by-hand"
+
+
+# --------------------------------------------------------------------------
+# Operators that are also on the OpCo tab are reported by the property operations search.
+# --------------------------------------------------------------------------
+
+OPCO_HEADER = "Company Name,Website URL,State,Careers Page URL,Sample Open Roles / Focus,Industry Segment,Verification Notes,Verified\n"
+HAND_OFF = {"property_operations": {"hand_off": True, "segments": ["scattered_site", "multifamily"], "keep_in_proptech": ["Kept Homes"]}}
+
+
+def _opco_tab(tmp_path, monkeypatch, rows):
+    tab = tmp_path / "opco_live.csv"
+    tab.write_text(OPCO_HEADER + "".join(rows))
+    monkeypatch.setattr(run, "OPCO_COPIES", (tab,))
+
+
+def test_operators_on_the_opco_tab_are_matched_by_name_website_or_careers_link(tmp_path, monkeypatch):
+    _opco_tab(tmp_path, monkeypatch, [
+        "Evernest Property Management,,,https://www.evernest.co/careers,,,,\n",                        # blank segment, same careers link
+        "Northpoint Asset Manamgement,,,https://ats.rippling.com/northpoint/jobs,,,,\n",               # typo in the name, same careers link
+        "Flock Homes,https://www.flockhomes.com,CA,https://www.flockhomes.com/careers,,SFR 1031 Exchange Platform,,\n",
+        "Big Apartments,https://bigapartments.test,SC,https://jobs.bigapartments.test/,,Multifamily Property Management,,\n",
+        "Lamar,https://www.lamar.com,LA,https://lamar.test/jobs,,Outdoor Advertising REIT,,\n",       # other real estate: not handed over
+        "Kept Homes,https://kept.test,TX,https://kept.test/careers,,SFR Property Management,,\n",      # on the keep list
+    ])
+    L = lambda name, web="", careers="": {"company": name, "website": web, "careers_url": careers}      # noqa: E731
+    leads = [L("Evernest", "https://www.evernest.co", "https://www.evernest.co/careers/"), L("Northpoint Asset Management", "", "https://ats.rippling.com/northpoint/jobs"),
+             L("Flock Homes"), L("Big Apartments Inc", "https://www.bigapartments.test"), L("Lamar", "https://www.lamar.com"),
+             L("Kept Homes", "https://kept.test"), L("AppFolio", "https://www.appfolio.com", "https://www.appfolio.com/company/careers")]
+    got = run.handed_to_property_ops(leads, HAND_OFF)
+    assert got == {"Evernest": "Scattered-site & SFR operators", "Northpoint Asset Management": "Scattered-site & SFR operators",
+                   "Flock Homes": "Scattered-site & SFR operators", "Big Apartments Inc": "Multifamily & residential managers"}
+    assert run.handed_to_property_ops(leads, {}) == {}                                               # off unless config.json turns it on
+    monkeypatch.setattr(run, "OPCO_COPIES", (tmp_path / "missing.csv",))
+    assert run.handed_to_property_ops(leads, HAND_OFF) == {}                                         # no OpCo list: nobody is handed over
+
+
+def test_a_handed_over_operator_leaves_the_proptech_reports_but_stays_in_the_full_list(tmp_path, monkeypatch):
+    data, out = _setup(tmp_path, monkeypatch, {})
+    (data / "ats_map.json").write_text(json.dumps({"Acme": {"ats": "greenhouse", "slug": "acme", "confidence": "html"}}))
+    cfg = tmp_path / "config.json"
+    cfg.write_text(json.dumps({**json.loads(run.CONFIG.read_text()), **HAND_OFF}))
+    monkeypatch.setattr(run, "CONFIG", cfg)
+    args = ["--no-vc", "--no-browser", "--no-verify", "--sleep", "0", "--date", "2026-10-11"]
+
+    with fakenet.serve(ROUTES):                                # Acme is not on the OpCo tab: reported as usual
+        assert run.main(args) == 0
+    d = out / "2026-10-11"
+    assert len(_rows(d / "open_roles.csv")) == 2 and _rows(d / "company_status.csv")[0]["search"] == "proptech"
+
+    _opco_tab(tmp_path, monkeypatch, ["Acme,https://www.acme.test,NC,https://job-boards.greenhouse.io/acme,,SFR Property Management,,\n"])
+    with fakenet.serve(ROUTES):
+        assert run.main(args) == 0
+    assert _rows(d / "open_roles.csv") == [] and _rows(d / "gtm_sales_roles.csv") == []
+    full = _rows(d / "all_open_roles.csv")
+    assert len(full) == 2 and {r["search"] for r in full} == {"property operations"}                 # still read, still tracked
+    status = _rows(d / "company_status.csv")[0]
+    assert (status["search"], status["focus_open"], status["open"]) == ("property operations", "0", "2")
+    report = (d / "report.md").read_text()
+    assert "## Reported by the property operations search" in report and "| Acme | Scattered-site & SFR operators | 2 |" in report
+
+    with fakenet.serve(ROUTES):                                # an on-demand run for a named company always shows it
+        assert run.main(args + ["--only", "Acme"]) == 0
+    adhoc = next((out / "on-demand").iterdir())
+    assert len(_rows(adhoc / "open_roles.csv")) == 2

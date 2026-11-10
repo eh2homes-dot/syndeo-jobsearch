@@ -1,4 +1,4 @@
-# OpCo job search configuration.
+# Property operations job search (the OpCo tab) configuration.
 #
 # Which job system a company uses is not set here: Column D of the sheet decides
 # that (a job-board link is read directly; a careers page is read through the
@@ -38,17 +38,113 @@ sheet_sync_tabs:
   - name: Master File
     url: ""   # publish the Master File tab (gid 1149219180) and paste its CSV link
 
-# Which open roles make the weekly brief.
+# ---------------------------------------------------------------------------
+# WHAT THIS SEARCH IS FOR
 #
-# Current scope, as set for the job search: Sales, GTM, Engineering, and
-# VP-level executives. Each entry is a regex fragment matched against the job
-# title on word boundaries. Exclusions are checked first and always win.
+# This is the property operations search. The proptech search (the weekly job
+# search over the master list) looks for Leadership, GTM & Sales, and Product &
+# Engineering roles at software companies. Operators don't hire like that, so
+# this search has its own lens: who runs the homes, the maintenance and turns,
+# the portfolio and the money.
 #
-# A NOTE FOR THIS LIST: OpCo is mostly REITs and property operators, not
-# software companies. Their core roles are asset management, investments,
-# acquisitions and portfolio management, which none of the categories below
-# catch. If the first brief looks thin, uncomment the `operators` block.
+# Three things decide what makes the brief, checked in this order:
+#   1. exclude   - site-level and hourly roles. Always wins.
+#   2. segments  - what kind of company it is. Scattered-site operators come
+#                  first and get the full lens. Other real estate (billboard,
+#                  fiber, healthcare REITs...) is kept on the list but only its
+#                  leadership and asset-management roles are reported.
+#   3. include   - the role categories. First match wins.
+# ---------------------------------------------------------------------------
 
+# Company segments, in the order the brief shows them. A company's segment
+# comes from the sheet's Industry Segment column (Column F): the first segment
+# whose `segment_has` words appear in it. `companies` pins a company by name
+# whatever Column F says. `categories` limits which role categories count for
+# that segment (leave it out for all of them). `require` means a title must
+# also carry one of these words.
+segments:
+  - key: scattered_site
+    label: Scattered-site & SFR operators
+    segment_has:
+      - SFR
+      - single[- ]family
+      - scattered[- ]site
+      - build[- ]to[- ]rent
+      - BTR
+      - guaranteed[- ]rent
+      - "1031"
+      - rental homes?
+
+  - key: multifamily
+    label: Multifamily & residential managers
+    segment_has:
+      - multifamily
+      - residential
+      - apartments?
+      - military housing
+    # Corporate and leadership only, the same rule as Greystar: these companies
+    # post hundreds of on-site roles.
+    require:
+      - vice president
+      - VP
+      - SVP
+      - EVP
+      - chief
+      - director
+      - head of
+      - president
+      - managing director
+      - regional
+      - corporate
+      - asset manag\w*
+      - acquisitions?
+      - investments?
+      - portfolio
+
+  - key: other
+    label: Other real estate (REITs, flex space, senior living)
+    default: true
+    # Leadership and asset management only. Without this, a billboard REIT's
+    # sales reps and a fiber REIT's network engineers fill the brief.
+    categories:
+      - executive
+      - asset_management
+
+# A company with nothing in the Industry Segment column goes here, and the
+# brief lists it under "Industry Segment is blank" so it can be filled in.
+blank_segment: scattered_site
+
+# What each category is called in the brief.
+labels:
+  executive: Leadership
+  asset_management: Asset Management & Investments
+  maintenance_construction: Maintenance, Turns & Construction
+  technology: Technology & Data
+  finance: Finance & Accounting
+  growth: Growth & Sales
+  operations: Property Operations
+
+# Words that mark manager level and up. A category with `level: manager_up`
+# only counts a title that also has one of these, so "Director of Maintenance"
+# is in and "Maintenance Technician" is out.
+levels:
+  manager_up:
+    - manager
+    - mgr
+    - supervisor
+    - lead
+    - head
+    - director
+    - regional
+    - principal
+    - vice president
+    - VP
+    - chief
+    - president
+
+# Role categories. Each entry is a regex fragment matched against the job title
+# on word boundaries. The order matters: the first category that matches wins,
+# so the general one (operations) is last.
 include:
   executive:
     - vice president
@@ -60,25 +156,39 @@ include:
     - president
     - head of
     - managing director
-  sales:
-    - sales
-    - account executive
-    - account manager
-    - business development
-    - BDR
-    - SDR
-    - partnerships?
-    - revenue
-  gtm:
-    - market\w*
-    - growth
-    - go[- ]to[- ]market
-    - GTM
-    - demand gen\w*
-    - customer success
-    - revenue operations
-    - brand
-  engineering:
+    - general manager
+
+  asset_management:
+    - asset manag\w*
+    - acquisitions?
+    - dispositions?
+    - investments?
+    - underwrit\w*
+    - capital markets
+    - transactions?
+    - revenue manag\w*
+    - pricing (strategy|analyst|manager)
+    - portfolio (strategy|analytics|analyst)
+    - (?<!business )development (manager|director|associate|analyst)
+
+  maintenance_construction:
+    level: manager_up
+    match:
+      - maintenance
+      - turns?
+      - make[- ]ready
+      - renovations?
+      - rehab\w*
+      - construction
+      - facilities
+      - repairs?
+      - procurement
+      - vendor (management|relations|operations)
+      - field (services?|operations)
+      - dispatch
+      - property readiness
+
+  technology:
     - engineer\w*
     - software
     - developer
@@ -88,34 +198,99 @@ include:
     - devops
     - SRE
     - architect
-    - platform
+    - product (manager|management|owner|lead|designer)
+    - information technology
+    - IT (operations|director|manager)
 
-  # operators:
-  #   - asset manag\w*
-  #   - investments?
-  #   - acquisitions?
-  #   - portfolio manag\w*
-  #   - capital markets
-  #   - development manager
+  finance:
+    level: manager_up
+    always:
+      - controller
+    match:
+      - accounting
+      - finance
+      - financial planning
+      - FP&A
+      - treasury
 
-# Site-level and building-operations roles. These match words like "engineer"
-# and "manager" but are not what the brief is for.
+  growth:
+    - sales
+    - account executive
+    - account manager
+    - business development
+    - BDR
+    - SDR
+    - partnerships?
+    - revenue operations
+    - marketing
+    - growth
+    - go[- ]to[- ]market
+    - GTM
+    - demand gen\w*
+    - customer success
+    - client success
+    - client advisor
+    - investor relations
+    - brand
+
+  operations:
+    level: manager_up
+    unless:
+      - legal
+      - people
+      - HR
+      - human resources
+      - talent
+      - recruit\w*
+    match:
+      - property manag\w*
+      - portfolio manag\w*
+      - operations
+      - regional
+      - (area|district|market) (manager|director)
+      - resident (experience|services|relations|success)
+      - customer experience
+      - (owner|client) (experience|services|relations|success)
+      - leasing
+      - occupancy
+      - renewals?
+      - collections?
+      - delinquency
+      - evictions?
+      - compliance
+      - utilit(y|ies)
+
+# Site-level, hourly and contract roles. Checked first; a match here is out
+# whatever else the title says. "maintenance" is deliberately NOT on this list
+# any more: maintenance leadership is a core operator role. The technicians are
+# kept out by name instead.
 exclude:
-  - maintenance
+  - tech(nician)?s?(?! lead)
+  - handyman
+  - porter
+  - groundskeeper
+  - housekeep\w*
+  - custodia\w*
+  - cleaner
+  - janitor\w*
+  - painter
+  - inspector
   - building engineer
   - chief engineer
   - stationary engineer
   - facilities engineer
   - maintenance engineer
   - HVAC
-  - porter
-  - groundskeeper
-  - housekeep\w*
-  - custodian
-  - janitor\w*
-  - leasing (consultant|agent|professional|specialist)
-  - community assistant
+  - leasing (consultant|agent|professional|specialist|associate)
+  - (rental )?showing agents?
+  - field associate
+  - real estate (agents?|advisor|salesperson)
+  - independent
+  - community (manager|director|assistant|specialist)
+  - service manager
+  - floating
   - concierge
+  - receptionist
   - caregiver
   - CNA
   - nurs\w*
@@ -123,7 +298,15 @@ exclude:
   - cook
   - server
   - driver
-  - intern
+  - intern(ship)?
+  - assistant(?! vice president| controller| general counsel)
+  - asst
+  - coordinator
+  - part[- ]time
+  - "1099"
+  - future opening
+  - copia
+  - copy of
 
 # Per-company rules, applied on top of the above.
 company_overrides:
