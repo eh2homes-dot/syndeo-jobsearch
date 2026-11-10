@@ -122,7 +122,9 @@ labels:
   technology: Technology & Data
   finance: Finance & Accounting
   growth: Growth & Sales
-  operations: Property Operations
+  leasing: Leasing
+  property_management: Property Management
+  operations: Operations
 
 # Words that mark manager level and up. A category with `level: manager_up`
 # only counts a title that also has one of these, so "Director of Maintenance"
@@ -213,6 +215,23 @@ include:
       - FP&A
       - treasury
 
+  # The three kinds of property management talent, each its own section in the
+  # brief: Leasing, Property Management, Operations. Leasing is checked first,
+  # so a Regional Leasing Manager is Leasing, not Property Management.
+  #
+  # Leasing has no manager floor: at scattered-site operators nearly all
+  # leasing talent is the agent or specialist, so a floor would leave the
+  # section empty. Showing-agent gigs, 1099 work, assistants and coordinators
+  # are still kept out by `exclude`, and multifamily managers' on-site leasing
+  # consultants by that segment's corporate-and-leadership rule. To go back to
+  # leasing managers and up only, add `level: manager_up` here.
+  leasing:
+    match:
+      - leasing
+      - occupancy
+      - renewals?
+      - lease (administration|operations|compliance)
+
   growth:
     - sales
     - account executive
@@ -233,7 +252,9 @@ include:
     - investor relations
     - brand
 
-  operations:
+  # Property Management and Operations: manager level and up. Operations is
+  # last because "operations" appears in many titles that belong elsewhere.
+  property_management:
     level: manager_up
     unless:
       - legal
@@ -245,15 +266,23 @@ include:
     match:
       - property manag\w*
       - portfolio manag\w*
-      - operations
       - regional
       - (area|district|market) (manager|director)
       - resident (experience|services|relations|success)
-      - customer experience
       - (owner|client) (experience|services|relations|success)
-      - leasing
-      - occupancy
-      - renewals?
+
+  operations:
+    level: manager_up
+    unless:
+      - legal
+      - people
+      - HR
+      - human resources
+      - talent
+      - recruit\w*
+    match:
+      - operations
+      - customer experience
       - collections?
       - delinquency
       - evictions?
@@ -281,7 +310,6 @@ exclude:
   - facilities engineer
   - maintenance engineer
   - HVAC
-  - leasing (consultant|agent|professional|specialist|associate)
   - (rental )?showing agents?
   - field associate
   - real estate (agents?|advisor|salesperson)
