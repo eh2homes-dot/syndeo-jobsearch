@@ -1,128 +1,41 @@
-# People Moves
+# syndeo-jobsearch
 
-Weekly scan for hires, departures and promotions at the companies on the master
-leads list. Runs as its own GitHub Action alongside the job search, on the same
-Sunday 6am ET cadence. Output is a markdown brief for the newsletter plus JSON.
+Weekly automations behind the newsletter and the talent data: two job searches,
+people moves, events, and the founder-hiring pass. Everything runs as a GitHub
+Action and commits its results back to this repo. Free sources only.
 
-Free sources only. No paid feeds, no API keys, nothing to sign up for.
+## What runs, and when
 
-## Install
+Times are Eastern. Every workflow can also be started by hand from the Actions tab.
 
-```
-people-moves/           <- this folder, drop it at the repo root
-.github/workflows/people-moves.yml
-```
+| Workflow | When | Runs | Reads | Writes |
+|---|---|---|---|---|
+| **Weekly job search** (proptech) | Sun 4am | `python -m jobsearch.run --detect` | `leads/master_leads.csv` | `output/<date>/`, `output/newsletter/`, `data/` |
+| **Weekly events** | Sun 5am | `python -m jobsearch.events` | sources in `data/event_sources.json` | `output/`, `data/` |
+| **OpCo Job Search** (property operations) | Sun 6am, with two backup slots | `python opco_search.py` | Column D of the sheet's OpCo tab | `out/opco-jobs-*`, `state/opco/` |
+| **People Moves** | Sun 6am, with two backup slots | `python run.py` | both company lists, plus `config/companies.csv` | `out/people-moves-*`, `state/` |
+| **Founder hiring** | Sun late morning, after both searches | `python -m jobsearch.founders` | `leads/founders.csv` and both searches' results | `output/founders/` |
+| **VC portfolio companies** | by hand | `python -m jobsearch.vc_companies` | VC job boards in `config.json` | `leads/vc_portfolio_companies.csv` |
+| **NARPM affiliates scrape** | by hand | `python narpm_affiliates.py` | NARPM's affiliate directory | `data/narpm_affiliates.csv` |
+| **Tests** | every branch push and pull request | `pytest tests` | recorded samples, no network | nothing |
 
-Then:
+## Where things are
 
-1. Export the master sheet to CSV and save it as `people-moves/config/companies.csv`.
-   A starter file is committed with 13 companies so you can see the shape —
-   replace it with the real export.
-2. Commit. The workflow runs itself on Sunday.
-3. Run the one-off backfill once (see below) so week one has a baseline.
+| Path | What |
+|---|---|
+| `jobsearch/` | The job searches' shared code: job-system readers, careers-page reader, the weekly search, events, founder hiring. Details in [`jobsearch/README.md`](jobsearch/README.md). |
+| `opco_search.py`, `opco_config.yml` | The property operations search and its settings (role filter, the sheet link). |
+| `run.py`, `report.py`, `discover_leadership.py`, `lib/`, `sources/` | People Moves. Details in [`docs/people-moves.md`](docs/people-moves.md). |
+| `config.json` | Settings for the weekly search: role filter, newsletter draft, per-company rules. |
+| `leads/` | Company lists. `master_leads.csv` is the proptech list; `proposed_*.csv` files are suggestions waiting for review and are read by nothing. |
+| `config/` | People Moves enrichment (`companies.csv`) and trade press feeds (`feeds.yml`). |
+| `data/`, `state/` | What the runs remember between weeks. Written by the workflows; don't edit by hand mid-run. |
+| `output/`, `out/` | Results. `output/` is the weekly search, events and founder hiring; `out/` is OpCo and People Moves. |
+| `unwired/` | Code that was written but is not run by anything. See the README inside. |
+| `tests/` | Offline tests. They run on every branch before it is merged. |
 
-### The companies CSV
+## Changing something
 
-Column headers are matched loosely, so a re-export with slightly different
-headers still works. Recognised columns:
-
-| Column | Needed for | Notes |
-|---|---|---|
-| `Company Name` | everything | required |
-| `Leadership URL` | leadership diffing | the single highest-value column — see below |
-| `Ticker` or `CIK` | EDGAR | public companies only |
-| `Careers Page URL` | links in the brief | |
-| `Aliases` | news and trade press matching | semicolon-separated |
-
-**The leadership URL is the column worth your time.** Most of the master list is
-private and will never file with the SEC or issue a press release. Their team
-page is the only place a new hire shows up. Every row you fill in is a company
-that starts producing signal; every row you leave blank is one that never will.
-
-## Sources
-
-| Source | Covers | Confidence | Notes |
-|---|---|---|---|
-| `edgar` | ~25 public companies | Confirmed | 8-K Item 5.02. Officers and directors only — a new VP of Sales won't appear. |
-| `leadership` | any company with a team page | Probable | Weekly snapshot and diff. The workhorse. |
-| `news` | all companies | Confirmed / Probable | Google News RSS, one query per company, verb-filtered. |
-| `trade` | all companies | Confirmed / Probable | Publisher feeds in `config/feeds.yml`, filtered against the list. |
-| `reqs` | companies on the job board | Inferred | Derived from the job-search output. Describes companies, names nobody. |
-
-### Confidence tiers
-
-The brief is grouped by tier because that is the editorial decision:
-
-- **Confirmed** — filed or announced by the company. Name the person.
-- **Probable** — a team page changed, or a headline implies it. Verify on
-  LinkedIn first.
-- **Inferred** — a req closed or a cluster opened. Describe the company, name
-  nobody.
-
-Never promote a tier because an item looks convincing. These are people Evan
-knows and may place; a wrong name costs more than the item was worth.
-
-## Usage
-
-```bash
-cd people-moves
-pip install -r requirements.txt
-
-python run.py                             # weekly run, all sources
-python run.py --sources leadership -v     # one source, verbose
-python run.py --lookback-days 14          # wider news window
-python run.py --limit 10                  # first 10 companies, for testing
-python run.py --check-feeds               # validate trade press feed URLs
-python run.py --backfill                  # one-off Wayback baseline (slow)
-```
-
-### Run the backfill once, first
-
-Leadership diffing needs two snapshots before it produces anything, so a cold
-start reports nothing for a month. `--backfill` pulls an archived copy of each
-team page from ~120 days ago via the Wayback Machine, diffs it against today,
-and seeds the baseline in one pass.
-
-It is throttled to one request per second against archive.org, so budget 20-40
-minutes for the full list. Run it from the Actions tab (workflow_dispatch →
-backfill: true) and forget about it.
-
-## Two integration points to check
-
-**1. The job-search output path.** The `reqs` source reads whatever your job
-search writes. Set `JOBS_RESULTS_PATH` in the workflow to the real path. The
-loader accepts a list of role dicts or an object with a `roles` / `jobs` /
-`results` key, and looks for company and title fields under several common
-names. If your shapes differ, `_load_roles()` in `sources/req_signals.py` is the
-one function to edit. Until it is pointed somewhere real, that source quietly
-returns nothing and the other four still run.
-
-**2. State is committed back to the repo.** Runners are ephemeral, so snapshots
-live in `people-moves/state/` and the workflow pushes them after each run. That
-also gives you a free audit trail: `git log -p people-moves/state/leadership/evernest.json`
-shows every change to that company's team page over time. If your repo protects
-the default branch, the push will fail — either exempt the bot or switch the
-workflow to `actions/cache`.
-
-## Maintenance
-
-- **Feed URLs rot.** Run `python run.py --check-feeds` after any edit to
-  `config/feeds.yml`, and once a quarter regardless. Anything reported DEAD
-  should be found again or disabled rather than left to fail silently.
-- **JavaScript-rendered team pages parse as empty.** The leadership source skips
-  any page yielding fewer than 2 people and logs a warning. Those companies need
-  a different URL, or accept that news and trade press are their only coverage.
-- **Page redesigns look like mass turnover.** If more than 60% of a page's names
-  change at once, the run treats it as a redesign, re-baselines, and reports
-  nothing. Tune `MAX_CHURN_RATIO` in `sources/leadership.py` if that fires too
-  often or not often enough.
-
-## What this does not do
-
-It does not touch LinkedIn. Job-change alerts sit behind Sales Navigator, and
-scraping profiles violates their terms and gets addresses blocked. LinkedIn is
-the verification step at the end — confirm the move before it goes in the
-newsletter — not a discovery source.
-
-Nothing in the brief is publication-ready as written. Every item carries its
-source link precisely so the manual verification step has something to click.
+- **A company's careers link**: on the OpCo tab, fix Column D in the sheet; the next run uses it. For the master list, fix `careers_url` in `leads/master_leads.csv` (or the board in `data/ats_map.json`). The sheet's PropTech and Master File tabs are only synced once they are published; `opco_config.yml` says how.
+- **Which roles are reported**: `config.json` -> `role_filter` for the proptech search, `opco_config.yml` for property operations.
+- **Code**: on a branch, through a pull request. The Tests workflow checks it before it reaches `main`.

@@ -6,20 +6,21 @@ Sunday 6am ET cadence. Output is a markdown brief for the newsletter plus JSON.
 
 Free sources only. No paid feeds, no API keys, nothing to sign up for.
 
-## Install
+## Where it lives
+
+The module runs from the repo root, next to the two job searches:
 
 ```
-people-moves/           <- this folder, drop it at the repo root
+run.py, report.py, discover_leadership.py     <- the scan
+lib/, sources/                                <- its parts
+config/companies.csv, config/feeds.yml        <- tickers, leadership pages, aliases; trade press feeds
+state/                                        <- snapshots and what has been seen
 .github/workflows/people-moves.yml
 ```
 
-Then:
-
-1. Export the master sheet to CSV and save it as `people-moves/config/companies.csv`.
-   A starter file is committed with 13 companies so you can see the shape —
-   replace it with the real export.
-2. Commit. The workflow runs itself on Sunday.
-3. Run the one-off backfill once (see below) so week one has a baseline.
+It watches the same companies the job searches read: `leads/master_leads.csv`
+plus the OpCo tab. `config/companies.csv` adds what the lists don't hold
+(ticker or SEC CIK, leadership page, aliases).
 
 ### The companies CSV
 
@@ -44,22 +45,10 @@ that starts producing signal; every row you leave blank is one that never will.
 | Source | Covers | Confidence | Notes |
 |---|---|---|---|
 | `edgar` | ~25 public companies | Confirmed | 8-K Item 5.02. Officers and directors only — a new VP of Sales won't appear. |
-| `formd` | private companies that have raised | Confirmed / Probable | Funding rounds *and* the officer roster named on the filing. Covers the part of the list EDGAR otherwise misses. |
-| `warn` | any company filing layoffs | Confirmed / Probable | Mass-layoff notices. Candidate supply, not a people move. |
 | `leadership` | any company with a team page | Probable | Weekly snapshot and diff. The workhorse. |
 | `news` | all companies | Confirmed / Probable | Google News RSS, one query per company, verb-filtered. |
 | `trade` | all companies | Confirmed / Probable | Publisher feeds in `config/feeds.yml`, filtered against the list. |
 | `reqs` | companies on the job board | Inferred | Derived from the job-search output. Describes companies, names nobody. |
-
-### Two sections, not one
-
-The brief splits into **Company moves** (funding rounds, layoff notices) and
-**People moves** (named individuals). They are different newsletter content and
-carry different risk, so they never get mixed.
-
-A Form D round is a hiring wave 60-90 days out — worth watching before the reqs
-appear. A WARN notice is the opposite signal: people about to become available,
-which for placement work is often worth more than a job posting.
 
 ### Confidence tiers
 
@@ -77,12 +66,10 @@ knows and may place; a wrong name costs more than the item was worth.
 ## Usage
 
 ```bash
-cd people-moves
 pip install -r requirements.txt
 
 python run.py                             # weekly run, all sources
 python run.py --sources leadership -v     # one source, verbose
-python run.py --sources formd,warn        # just the new company-move sources
 python run.py --lookback-days 14          # wider news window
 python run.py --limit 10                  # first 10 companies, for testing
 python run.py --check-feeds               # validate trade press feed URLs
@@ -100,26 +87,6 @@ It is throttled to one request per second against archive.org, so budget 20-40
 minutes for the full list. Run it from the Actions tab (workflow_dispatch →
 backfill: true) and forget about it.
 
-## Two gotchas worth knowing
-
-**WARN company matching is deliberately strict.** Legal entity names collide.
-The archive contains many notices from "Compass Group USA" — a food service
-company with no relationship to Compass the brokerage. Publishing that as a
-Compass layoff is the worst error this pipeline can make, so `warn` matches on
-strict equality against the company name and its aliases, never on substrings
-or prefixes. Near misses are logged rather than reported. If one is genuinely
-the same company, add its legal name to that company's `Aliases` column and it
-will match next week.
-
-**The first WARN run would otherwise dump the whole archive.** Every row's
-"first seen" date is the day the dataset was first fetched, so on run one all
-61,000 notices look new. `max_notice_age_days` in `config/warn.yml` (default 90)
-drops anything filed longer ago than that, however recently it landed.
-
-**Attribution.** The default WARN dataset is CC BY 4.0 and asks for credit to
-"WARN Feed". The credit line is rendered into every brief so it does not get
-lost — carry it into the newsletter if you publish a notice from it.
-
 ## Two integration points to check
 
 **1. The job-search output path.** The `reqs` source reads whatever your job
@@ -131,8 +98,8 @@ one function to edit. Until it is pointed somewhere real, that source quietly
 returns nothing and the other four still run.
 
 **2. State is committed back to the repo.** Runners are ephemeral, so snapshots
-live in `people-moves/state/` and the workflow pushes them after each run. That
-also gives you a free audit trail: `git log -p people-moves/state/leadership/evernest.json`
+live in `state/` and the workflow pushes them after each run. That
+also gives you a free audit trail: `git log -p state/leadership/evernest.json`
 shows every change to that company's team page over time. If your repo protects
 the default branch, the push will fail — either exempt the bot or switch the
 workflow to `actions/cache`.
@@ -159,3 +126,9 @@ newsletter — not a discovery source.
 
 Nothing in the brief is publication-ready as written. Every item carries its
 source link precisely so the manual verification step has something to click.
+
+## Built but not switched on
+
+`unwired/people-moves/` holds two more sources (SEC Form D, WARN layoff
+notices) and two database writers (Airtable, Supabase) that were written for
+this scan but are not part of the weekly run. See the README there.
