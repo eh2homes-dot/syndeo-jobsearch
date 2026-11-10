@@ -45,6 +45,7 @@ that starts producing signal; every row you leave blank is one that never will.
 | Source | Covers | Confidence | Notes |
 |---|---|---|---|
 | `edgar` | ~25 public companies | Confirmed | 8-K Item 5.02. Officers and directors only — a new VP of Sales won't appear. |
+| `formd` | private companies that have raised money | Confirmed / Probable | SEC Form D. Reports the round in its own "Funding rounds" section, and officers newly named on a company's latest filing as Probable. A filing only counts when the issuer is the company: same SEC number, or the same name once Inc/LLC/Holdings is taken off. A longer look-alike name is kept only if it is in the company's state, and is marked unconfirmed. |
 | `leadership` | any company with a team page | Probable | Weekly snapshot and diff. The workhorse. |
 | `news` | all companies | Confirmed / Probable | Google News RSS, one query per company, verb-filtered. |
 | `trade` | all companies | Confirmed / Probable | Publisher feeds in `config/feeds.yml`, filtered against the list. |
@@ -129,6 +130,6 @@ source link precisely so the manual verification step has something to click.
 
 ## Built but not switched on
 
-`unwired/people-moves/` holds two more sources (SEC Form D, WARN layoff
-notices) and two database writers (Airtable, Supabase) that were written for
-this scan but are not part of the weekly run. See the README there.
+`unwired/people-moves/` holds one more source (WARN layoff notices) and two
+database writers (Airtable, Supabase) that were written for this scan but are
+not part of the weekly run. See the README there.

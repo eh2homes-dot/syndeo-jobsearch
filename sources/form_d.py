@@ -34,7 +34,8 @@ from lib.move import (
     Move, CONFIRMED, PROBABLE, ARRIVAL, FUNDING, PEOPLE, COMPANY,
 )
 from lib.people import priority_score
-from lib.state import SeenStore, item_id, _read_json, _write_json, STATE_DIR
+from lib import state as state_lib
+from lib.state import SeenStore, item_id, _read_json, _write_json
 
 log = logging.getLogger(__name__)
 
@@ -44,7 +45,7 @@ DAILY_INDEX = (
 PRIMARY_DOC = "https://www.sec.gov/Archives/edgar/data/{cik}/{folder}/primary_doc.xml"
 FILING_INDEX = "https://www.sec.gov/Archives/edgar/data/{cik}/{folder}/"
 
-ROSTER_DIR = STATE_DIR / "formd"
+_RANK = {"cik": 0, "name": 1, "related": 2}   # best match first
 
 # Form D and its amendments. Amendments matter: they are often where a new
 # officer first appears.
@@ -179,7 +180,105 @@ def _parse_form_d(xml_text: str) -> dict | None:
 
 
 def _roster_path(slug: str):
-    return ROSTER_DIR / f"{slug}.json"
+    # Looked up at call time so the tests' scratch state folder is honoured.
+    return state_lib.STATE_DIR / "formd" / f"{slug}.json"
+
+
+# ---------------------------------------------------------------------------
+# Which company a filing belongs to
+# ---------------------------------------------------------------------------
+#
+# A few thousand Form Ds are filed every week, most of them by investment funds
+# with names like "Haven Capital Fund III LP". Matching those the way a headline
+# is matched ("the company's name appears in the text") would put a stranger's
+# fundraise in the brief under a watched company's name, marked Confirmed. So a
+# filing only counts when the issuer IS the company:
+#
+#   "cik"      the issuer's SEC number is the one on file for the company
+#   "name"     the issuer's name, minus its legal form (Inc, LLC...) and any
+#              holding-company wrapping (Holdings, Group), is exactly the
+#              company's name or one of its aliases
+#   "related"  the issuer's name starts with the company's name and goes on
+#              ("Evernest Fund II"). It may be the company's own fund or a
+#              stranger. It is reported as Probable, only when the issuer's
+#              state matches the company's, and never feeds the officer roster.
+
+# Legal form only. Descriptive words (Partners, Capital, Realty...) are part of
+# who a company is: "Atlas Real Estate Partners" is not "Atlas Real Estate".
+_LEGAL_FORM = re.compile(r"\s+(inc|incorporated|llc|l l c|lp|l p|llp|ltd|limited|corp|corporation|co|company|pbc|plc)$")
+# A holding entity of the same name is the same company.
+_HOLDING = re.compile(r"\s+(holdings?|holdco|parent|topco|intermediate|group)$")
+
+_STATES = {
+    "alabama": "al", "alaska": "ak", "arizona": "az", "arkansas": "ar", "california": "ca",
+    "colorado": "co", "connecticut": "ct", "delaware": "de", "district of columbia": "dc",
+    "florida": "fl", "georgia": "ga", "hawaii": "hi", "idaho": "id", "illinois": "il",
+    "indiana": "in", "iowa": "ia", "kansas": "ks", "kentucky": "ky", "louisiana": "la",
+    "maine": "me", "maryland": "md", "massachusetts": "ma", "michigan": "mi", "minnesota": "mn",
+    "mississippi": "ms", "missouri": "mo", "montana": "mt", "nebraska": "ne", "nevada": "nv",
+    "new hampshire": "nh", "new jersey": "nj", "new mexico": "nm", "new york": "ny",
+    "north carolina": "nc", "north dakota": "nd", "ohio": "oh", "oklahoma": "ok", "oregon": "or",
+    "pennsylvania": "pa", "rhode island": "ri", "south carolina": "sc", "south dakota": "sd",
+    "tennessee": "tn", "texas": "tx", "utah": "ut", "vermont": "vt", "virginia": "va",
+    "washington": "wa", "west virginia": "wv", "wisconsin": "wi", "wyoming": "wy",
+}
+
+
+def _state(value: str) -> str:
+    """'California', 'CALIFORNIA' or 'CA' -> 'ca'. Unknown or blank -> ''."""
+    v = (value or "").strip().lower()
+    if v in _STATES:
+        return _STATES[v]
+    return v if v in _STATES.values() else ""
+
+
+def _plain(name: str) -> str:
+    """Lowercase, no punctuation, legal form taken off the end:
+    'Belong Home, Inc.' -> 'belong home'."""
+    n = re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", (name or "").lower())).strip()
+    while True:
+        shorter = _LEGAL_FORM.sub("", n)
+        if shorter == n:
+            return n
+        n = shorter
+
+
+def _core(name: str) -> str:
+    """An issuer's name with holding-company wrapping taken off too:
+    'Evernest Holdings, LLC' -> 'evernest'."""
+    n = _plain(name)
+    while True:
+        shorter = _plain(_HOLDING.sub("", n))
+        if shorter == n:
+            return n
+        n = shorter
+
+
+def _exact_names(company) -> set[str]:
+    names = {_plain(company.name), *(_plain(a) for a in company.aliases)}
+    return {n for n in names if n}
+
+
+def _own_cik(company) -> int:
+    digits = "".join(ch for ch in str(getattr(company, "cik", "") or "") if ch.isdigit())
+    return int(digits) if digits else 0
+
+
+def match_issuer(company, cik: str, issuer_name: str, *, names=None, own_cik=None,
+                 plain=None, core=None) -> str:
+    """How a filing's issuer relates to a watched company: 'cik', 'name',
+    'related' or '' (not this company). The keyword arguments are the same
+    values worked out ahead of time, for the weekly scan's inner loop."""
+    own_cik = _own_cik(company) if own_cik is None else own_cik
+    if own_cik and cik.isdigit() and own_cik == int(cik):
+        return "cik"
+    names = _exact_names(company) if names is None else names
+    full = _plain(issuer_name) if plain is None else plain
+    if full in names or (_core(issuer_name) if core is None else core) in names:
+        return "name"
+    if any(len(n) >= 5 and full.startswith(n + " ") for n in names):
+        return "related"
+    return ""
 
 
 def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
@@ -189,20 +288,35 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
 
     log.info("Form D: scanning %d days of EDGAR daily index", len(days))
 
+    watched = [(c, _exact_names(c), _own_cik(c)) for c in companies]
     candidates: list[tuple] = []
+    days_read = filings = 0
     for day in days:
+        if day.weekday() >= 5:
+            continue   # the SEC publishes no index at weekends
         rows = _daily_index_rows(day)
         if rows:
+            days_read += 1
+            filings += len(rows)
             log.debug("  %s: %d Form D filings", day, len(rows))
         for cik, issuer_name, form, filed, filename in rows:
-            for company in companies:
-                if company.mentioned_in(issuer_name):
-                    candidates.append((company, cik, issuer_name, form, filed, filename))
-                    break
+            best = None
+            plain, core = _plain(issuer_name), _core(issuer_name)
+            for company, names, own_cik in watched:
+                how = match_issuer(company, cik, issuer_name, names=names, own_cik=own_cik,
+                                   plain=plain, core=core)
+                if how and (best is None or _RANK[how] < _RANK[best[1]]):
+                    best = (company, how)
+            if best:
+                candidates.append((best[0], best[1], cik, issuer_name, form, filed, filename))
 
-    log.info("Form D: %d filings matched the master list", len(candidates))
+    if not days_read:
+        log.warning("Form D: no daily index could be read for the last %d days "
+                    "(SEC unreachable, or it refused the User-Agent)", lookback_days)
+    log.info("Form D: %d filings in %d days, %d matched a watched company",
+             filings, days_read, len(candidates))
 
-    for company, cik, issuer_name, form, filed, filename in candidates:
+    for company, how, cik, issuer_name, form, filed, filename in candidates:
         m = re.search(r"(\d{10}-\d{2}-\d{6})", filename)
         if not m:
             continue
@@ -225,9 +339,25 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
         link = FILING_INDEX.format(cik=int(cik), folder=folder)
         amount = _money(parsed["sold"]) or _money(parsed["offered"])
         amended = parsed["submission_type"] == "D/A"
+        entity = parsed["entity"] or issuer_name
+
+        ours, theirs = _state(company.state), _state(parsed["state"])
+        if how == "related":
+            # A longer name that starts with the company's. Keep it only when the
+            # issuer is in the company's own state, and say plainly it is unchecked.
+            if not ours or ours != theirs:
+                log.debug("  %s: skipped '%s' (similar name, state %s vs %s)",
+                          company.name, entity, theirs or "?", ours or "?")
+                continue
+        # Same name, but the filing gives a different state from the one on the
+        # list: two companies can share a name, so this one is not Confirmed.
+        elsewhere = how == "name" and bool(ours) and bool(theirs) and ours != theirs
 
         # 1. The company move: the round itself.
-        bits = [f"**{company.name}** filed a Form D"]
+        if how == "related":
+            bits = [f"**{entity}** filed a Form D"]
+        else:
+            bits = [f"**{company.name}** filed a Form D"]
         if amended:
             bits.append("(amendment)")
         if amount:
@@ -235,19 +365,30 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
             bits.append(f"— {sold_label} {amount}")
         if parsed["industry"]:
             bits.append(f"[{parsed['industry']}]")
+        summary = " ".join(bits) + "."
+        if how == "related":
+            summary += (f" Similar name to **{company.name}** and the same state; "
+                        "check it is theirs before using it.")
+        elif _plain(entity) != _plain(company.name):
+            summary += f" Filed as {entity}."
+        if elsewhere:
+            summary += (f" The filing gives {parsed['state'].title()} as its state, not "
+                        f"{company.state}; check it is the same company.")
         moves.append(
             Move(
                 company=company.name,
                 source="SEC Form D",
-                confidence=CONFIRMED,
+                confidence=PROBABLE if (how == "related" or elsewhere) else CONFIRMED,
                 kind=FUNDING,
                 category=COMPANY,
-                summary=" ".join(bits) + ".",
+                summary=summary,
                 url=link,
                 published=filed,
-                score=45 if not amended else 25,
+                score=(45 if not amended else 25) - (20 if how == "related" else 0),
             )
         )
+        if how == "related" or elsewhere:
+            continue   # someone else's officers must never land in this company's roster
 
         # 2. The people: officers named on this filing who were not named on
         #    the last one. Probable rather than confirmed — an officer can be
