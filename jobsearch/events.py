@@ -285,9 +285,20 @@ def good_href(href: str | None, base: str) -> str:
 
 
 # ================================================================ event records
+LEAD_TIME = re.compile(r"^\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)?\s*[-\u2013\u2014to]+\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)\s*,?\s*", re.I)
+
+
+def clean_location(location: str) -> str:
+    """'10:30 AM - 12:30 PM, NRH Grand Hall, ...' -> 'NRH Grand Hall, ...'; 'TBA, TBA, TBA, United States' -> ''."""
+    loc = LEAD_TIME.sub("", " ".join(H.unescape(location or "").split()))
+    parts = [p.strip() for p in loc.split(",")]
+    parts = [p for p in parts if p and p.upper() not in {"TBA", "TBD", "UNITED STATES", "USA", "US"}]
+    return ", ".join(parts)
+
+
 def make_event(source: str, organizer: str, title: str, start, end, location: str, url: str, **kw) -> dict:
-    title = " ".join(H.unescape(title or "").split()).strip(" -\u2013|*")
-    location = " ".join(H.unescape(location or "").split())
+    title = " ".join(H.unescape(title or "").split()).strip(" -\u2013|*\"\u201c\u201d")
+    location = clean_location(location)
     cs = city_state(location)
     online = bool(ONLINE.search(location)) or bool(ONLINE.search(kw.get("fmt", "") or ""))
     ev = {"source": source, "organizer": organizer, "title": title,
@@ -331,6 +342,22 @@ def parse_title_date(html: str, base: str, today: dt.date, src: dict) -> list[di
         if j is None:
             continue
         title, href = heading_text(toks, j)
+        if title.endswith(":"):
+            # "NARPM® Partner Webinar sponsored by ShowMojo:" then the real name in bold on the next line
+            k = j
+            while k + 1 < i and toks[k + 1]["h"] is toks[j]["h"]:
+                k += 1
+            nxt = toks[k + 1] if k + 1 < i else None
+            if nxt and nxt["b"] and nxt["h"] is None and len(nxt["t"]) < 150 and not is_mostly_date(nxt["t"], today):
+                title = nxt["t"]
+        if src.get("date_from_time_line"):
+            # NARPM's webinar blocks sometimes carry a stale Date: field; the Time: line has the real date
+            for k in range(i + 1, min(len(toks) - 1, i + 8)):
+                if re.match(r"^\s*time\s*:?\s*$", toks[k]["t"], re.I):
+                    td = parse_dates(toks[k + 1]["t"], today)
+                    if td and td[2]:
+                        d = td
+                    break
         if not title or (title, d[0]) in seen:
             continue
         seen.add((title, d[0]))
@@ -389,11 +416,14 @@ def parse_date_heading(html: str, base: str, today: dt.date, src: dict) -> list[
         if not title or (title, d[0]) in seen:
             continue
         seen.add((title, d[0]))
-        nxt = next((k for k in range(j + 1, len(toks)) if is_mostly_date(toks[k]["t"], today)), len(toks))
-        loc = next((toks[k]["t"] for k in range(j + 1, min(nxt, j + 15))
-                    if len(toks[k]["t"]) <= 90 and city_state(toks[k]["t"])), "")
-        if not loc and ONLINE.search(f"{title} {tk['t']}"):
+        if ONLINE.search(f"{title} {tk['t']}"):
             loc = "Online"
+        else:   # look for a city only inside this course's block, never past the next course or into the footer
+            nxt = next((k for k in range(j + 1, len(toks)) if is_mostly_date(toks[k]["t"], today)), len(toks))
+            nxt_h = next((k for k in range(j + 1, len(toks)) if toks[k]["h"] is not None and toks[k]["h"] is not toks[j]["h"]),
+                         len(toks))
+            loc = next((toks[k]["t"] for k in range(j + 1, min(nxt, nxt_h, j + 15))
+                        if len(toks[k]["t"]) <= 90 and city_state(toks[k]["t"])), "")
         tm = re.search(r"\d{1,2}(?::\d{2})?\s*(?:am|pm)", tk["t"], re.I)
         out.append(make_event(src["id"], src["name"], title, d[0], d[1], loc, good_href(href, base) or base,
                               time=tm.group(0) if tm else "", method="page"))
@@ -809,10 +839,15 @@ def discover_chapters(fetcher: Fetcher, src: dict, cmap: dict, today: dt.date, b
     return len(codes), looked
 
 
+def narpm_hosted(site: str) -> bool:
+    """chapters.narpm.org / texas.narpm.org, but not a chapter's own domain like trianglenarpm.org."""
+    host = urlparse(chapter_root(site)).netloc.lower()
+    return host == "narpm.org" or host.endswith(".narpm.org")
+
+
 def chapter_feed_urls(site: str) -> list[str]:
     root = chapter_root(site)
-    host = urlparse(root).netloc.lower()
-    if host.endswith("narpm.org"):
+    if narpm_hosted(site):
         return [root + "events.ics"]
     m = re.search(r"meetup\.com/([^/?#]+)", site, re.I)
     if m:
@@ -838,9 +873,16 @@ def read_chapter(fetcher: Fetcher, key: str, entry: dict, src: dict, today: dt.d
         if st == 200 and "BEGIN:VCALENDAR" in text:
             raw, method, reached = parse_ics(text), "ical", True
             break
+    found_url = ""
     if not reached:
         listing = chapter_listing_url(site)
         st, html, fin = fetcher.get(listing, tries=1)
+        if st == 404 and not entry.get("events_url") and not narpm_hosted(site):
+            # own domain with no /events page: find the events link from its homepage (saved for next time)
+            det = detect_events_page(fetcher, {"website": chapter_root(site)}, today)
+            if det.get("url"):
+                found_url = det["url"]
+                st, html, fin = fetcher.get(found_url, tries=1)
         if st == 200:
             reached = True
             got = generic_page_events(fetcher, fin, html, today, src["id"], org, kind="chapter", max_detail=4)
@@ -850,17 +892,22 @@ def read_chapter(fetcher: Fetcher, key: str, entry: dict, src: dict, today: dt.d
         else:
             return [], {"source": src["id"], "url": listing, "events": 0, "note": name,
                         "status": f"http {st}" if st else (html[:100] or "unreachable")}
-    out = []
-    for r in raw:
-        if not r.get("start") or not r.get("title"):
-            continue
+    out, series = [], set()
+    for r in sorted((r for r in raw if r.get("start") and r.get("title")), key=lambda r: r["start"]):
         if re.search(r"\bnational\b", r.get("categories", ""), re.I):
             continue   # NARPM national events cross-posted on every chapter calendar
+        if (r["end"] or r["start"]) >= today:
+            # a weekly series ("52 Weeks of Property Management Mastery") shows once: the next session
+            k = norm_title(r["title"])
+            if k in series:
+                continue
+            series.add(k)
         kind = "conference" if CONF_TITLE.search(r["title"]) else "chapter"
         out.append(make_event(src["id"], org, r["title"], r["start"], r["end"], r["location"],
                               r["url"] or chapter_root(site), kind=kind, time=r.get("time", ""), method=method))
     upcoming = [e for e in out if e["end"] >= today.isoformat()]
-    return out, {"source": src["id"], "url": entry.get("site", site), "status": "ok", "events": len(upcoming), "note": name}
+    return out, {"source": src["id"], "url": entry.get("site", site), "status": "ok", "events": len(upcoming), "note": name,
+                 "found_url": found_url}
 
 
 def run_narpm_chapters(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path | None,
@@ -890,6 +937,9 @@ def run_narpm_chapters(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: P
             except Exception as err:   # one broken chapter never stops the rest
                 evs, row = [], {"source": src["id"], "url": entry.get("site", ""), "status": f"error: {err}"[:160],
                                 "events": 0, "note": entry.get("name", key)}
+            new_events_url = row.pop("found_url", "")
+            if new_events_url:
+                cmap[key]["events_url"] = new_events_url
             if row["status"] == "ok":
                 read_ok += 1
                 cmap[key]["last_ok"] = today.isoformat()

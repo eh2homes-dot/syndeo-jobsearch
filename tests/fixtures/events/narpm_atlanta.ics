@@ -63,4 +63,69 @@ URL:https://chapters.narpm.org/atlanta/events/board/
 LOCATION:Zoom
 CATEGORIES:Chapter Events
 END:VEVENT
+BEGIN:VEVENT
+UID:s0922@chapters.narpm.org
+DTSTART;TZID=America/New_York:20260922T120000
+DTEND;TZID=America/New_York:20260922T130000
+SUMMARY:GA NARPM presents 52 Weeks of Property Management Mastery
+URL:https://chapters.narpm.org/atlanta/events/52-weeks-0922/
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:s0929@chapters.narpm.org
+DTSTART;TZID=America/New_York:20260929T120000
+DTEND;TZID=America/New_York:20260929T130000
+SUMMARY:GA NARPM presents 52 Weeks of Property Management Mastery
+URL:https://chapters.narpm.org/atlanta/events/52-weeks-0929/
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:s1006@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261006T120000
+DTEND;TZID=America/New_York:20261006T130000
+SUMMARY:GA NARPM presents 52 Weeks of Property Management Mastery
+URL:https://chapters.narpm.org/atlanta/events/52-weeks-1006/
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:s1013@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261013T120000
+DTEND;TZID=America/New_York:20261013T130000
+SUMMARY:GA NARPM presents 52 Weeks of Property Management Mastery
+URL:https://chapters.narpm.org/atlanta/events/52-weeks-1013/
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:s1020@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261020T120000
+DTEND;TZID=America/New_York:20261020T130000
+SUMMARY:GA NARPM presents 52 Weeks of Property Management Mastery
+URL:https://chapters.narpm.org/atlanta/events/52-weeks-1020/
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:cal@chapters.narpm.org
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:2026 Calendar
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:tba@chapters.narpm.org
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+SUMMARY:Atlanta Holiday Party
+URL:https://chapters.narpm.org/atlanta/events/holiday-party/
+LOCATION:TBA\, TBA\, TBA\, United States
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:tm@chapters.narpm.org
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+SUMMARY:Interactive AI Learning Workshop
+URL:https://chapters.narpm.org/atlanta/events/ai-workshop/
+LOCATION:10:30 AM - 12:30 PM\, Ravinia Club\, Atlanta\, GA
+CATEGORIES:Chapter Events
+END:VEVENT
 END:VCALENDAR

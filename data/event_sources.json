@@ -2,7 +2,7 @@
   "_how_to_edit": "Each source is one page (or a few). 'priority' decides which listing wins when two sources show the same event (1 = best). Set \"disabled\": true to switch a source off without deleting it.",
   "horizon_days": 183,
   "exclude_title_patterns": ["committee", "board of directors", "board meeting", "assembly of delegates",
-                             "emerging leaders", "leadership symposium", "exhibitor summit"],
+                             "emerging leaders", "leadership symposium", "exhibitor summit", "^\\s*20\\d\\d calendar\\s*$"],
   "newsletter": {
     "weeks": 8,
     "max_per_source": {"bisnow": 6},
@@ -33,15 +33,16 @@
      "url": "https://www.narpm.org/national-conferences/conferences/"},
 
     {"id": "narpm-calendar", "name": "NARPM", "group": "associations", "priority": 2, "parser": "generic", "may_be_empty": true,
-     "_note": "NARPM's national events calendar (read through its iCal export). Often empty; new national events land here.",
-     "url": "https://www.narpm.org/events/"},
+     "_note": "NARPM's national events calendar (read through its iCal export). Often empty; new national events land here. Answers 404 to the scraper some weeks, so a 404 is logged as skipped, not broken.",
+     "url": "https://www.narpm.org/events/",
+     "unverified_urls": ["https://www.narpm.org/events/"]},
 
     {"id": "narpm-courses", "name": "NARPM", "group": "associations", "priority": 3, "parser": "date_heading",
      "kind": "education", "may_be_empty": true,
      "url": "https://www.narpm.org/education/course-schedule/"},
 
     {"id": "narpm-webinars", "name": "NARPM", "group": "associations", "priority": 3, "parser": "title_date",
-     "kind": "education", "online": true, "may_be_empty": true,
+     "kind": "education", "online": true, "may_be_empty": true, "date_from_time_line": true,
      "url": "https://www.narpm.org/education/webinars/"},
 
     {"id": "narpm-chapters", "name": "NARPM chapters", "group": "associations", "priority": 3, "parser": "narpm_chapters",

@@ -101,9 +101,12 @@ def test_narpm_national_and_chapters():
     assert doors["url"].endswith("/the-art-of-acquiring-more-doors-virtual-3")
     assert rows["Ethics (In-Person)"]["location"] == "Raleigh, NC"
     assert "Risk Management (Virtual)" not in rows
-    # webinars: always online, never the "Cost: Free" lines as a location
+    assert rows["How to Successfully Market Your Company (Virtual)"]["location"] == "Online"   # not the footer address
+    # webinars: real name from the bold line under "...sponsored by X:", date from the Time: line, always online
     assert rows["Hard Data and Proven Tactics to Level Up Leasing"]["location"] == "Online"
+    assert rows["Hard Data and Proven Tactics to Level Up Leasing"]["start"] == "2026-11-10"
     assert rows["How to Use AI in Your Property Management Business"]["start"] == "2026-11-18"
+    assert not any(t.endswith(":") for t in rows)
     # chapters: iCal feeds on NARPM-hosted sites
     oct_mtg = rows["NARPM Atlanta October Chapter Meeting"]
     assert oct_mtg["kind"] == "chapter" and oct_mtg["organizer"] == "NARPM Atlanta" and oct_mtg["city"] == "Atlanta"
@@ -114,6 +117,11 @@ def test_narpm_national_and_chapters():
     assert "2026 NARPM Annual Convention & Expo" not in rows                              # cross-post of national
     assert rows["2026 NARPM® Annual Convention and Expo"]["source"] == "narpm"
     assert rows["Georgia Property Management Conference & Expo"]["kind"] == "conference"  # promoted
+    series = [r for r in all_rows if "52 Weeks" in r["title"]]
+    assert len(series) == 1 and series[0]["start"] == "2026-09-29"                        # weekly series: next session only
+    assert "2026 Calendar" not in rows
+    assert rows["Atlanta Holiday Party"]["location"] == ""                                # "TBA, TBA, TBA, United States"
+    assert rows["Interactive AI Learning Workshop"]["location"] == "Ravinia Club, Atlanta, GA"   # leading time removed
     # Wild Apricot (Houston): day-month-year dates, venue line; the same meeting on the Texas feed is kept once
     hou = [r for r in all_rows if r["title"] == "NARPM Houston November 2026 Chapter Meeting"]
     assert len(hou) == 1 and hou[0]["start"] == "2026-11-18" and hou[0]["state"] == "TX"
@@ -124,7 +132,10 @@ def test_narpm_national_and_chapters():
     assert rows["Baltimore/Washington NARPM Fall Happy Hour"]["state"] == "MD"
     # chapter map: built from the finder + chapter pages, seed entries kept
     cmap = json.loads(E.CHAPTERS_MAP.read_text())
-    assert cmap["C099"]["site"] == "https://testville.narpm.org/" and cmap["C099"]["name"] == "Testville"
+    assert cmap["C099"]["site"] == "https://testvillenarpm.org/" and cmap["C099"]["name"] == "Testville"
+    # own domain without /events: the events link was found from its homepage and saved for next week
+    assert cmap["C099"]["events_url"].startswith("https://testvillenarpm.org/chapter-calendar")
+    assert rows["Testville December Luncheon"]["organizer"] == "NARPM Testville"
     assert cmap["C002"]["site"] == "https://narpmhouston.wildapricot.org" and cmap["C002"]["method"] == "chapter finder"
     assert cmap["C005"]["site"] == "https://chapters.narpm.org/atlanta/" and cmap["C005"]["last_ok"] == TODAY.isoformat()
     assert "UA" not in cmap and "DCHR" not in cmap
@@ -132,12 +143,13 @@ def test_narpm_national_and_chapters():
     src = list(csv.DictReader(open(tmp / "output" / TODAY.isoformat() / "events_sources.csv")))
     summary = next(r for r in src if r["source"] == "narpm-chapters" and r["url"].endswith("/find/chapters/"))
     assert summary["status"] == "ok" and "5 chapters on the finder" in summary["note"]
-    assert any(r["source"] == "narpm-chapters" and r["status"].startswith("skipped") and r["note"] == "Testville" for r in src)
+    assert any(r["source"] == "narpm-chapters" and r["status"].startswith("skipped") and r["note"] == "Greater Portland"
+               for r in src)
     assert all(r["status"] == "ok" for r in src if r["source"] in ("narpm-calendar", "narpm-courses", "narpm-webinars"))
     # newsletter: chapter block, one line per chapter; courses and webinars stay out
     nl = (tmp / "output" / "newsletter" / f"events-{TODAY.isoformat()}.md").read_text()
     block = nl.split("**NARPM chapter meetings**")[1].split("\n**")[0]
-    assert "October Chapter Meeting" in block and "November Chapter Meeting](https://chapters" not in block
+    assert block.count("chapters.narpm.org/atlanta") == 1 and "52 Weeks" in block   # Atlanta's soonest event only
     assert "Fall Happy Hour" in block
     assert "Acquiring More Doors" not in nl and "Level Up Leasing" not in nl
     assert "Georgia Property Management Conference" in nl.split("**NARPM chapter meetings**")[0]

@@ -26,5 +26,7 @@
  "https://texas.narpm.org/events.ics": "narpm_texas.ics",
  "https://narpmhouston.wildapricot.org/events": "narpm_houston_wa.html",
  "https://chapters.narpm.org/dallas/events": "narpm_dallas_empty.html",
- "https://www.meetup.com/baltimore-washington-narpm-chapter/events/ical/": "narpm_balt_meetup.ics"
+ "https://www.meetup.com/baltimore-washington-narpm-chapter/events/ical/": "narpm_balt_meetup.ics",
+ "https://testvillenarpm.org/": "testville_home.html",
+ "https://testvillenarpm.org/chapter-calendar": "testville_events.html"
 }
