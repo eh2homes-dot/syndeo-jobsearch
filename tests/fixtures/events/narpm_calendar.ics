@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//NARPM - ECPv6//NONSGML v1.0//EN
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261205
+SUMMARY:NARPM Southeast Regional Conference
+URL:https://www.narpm.org/event/southeast-regional-2026/
+LOCATION:Omni Charlotte Hotel\, Charlotte\, NC
+END:VEVENT
+END:VCALENDAR

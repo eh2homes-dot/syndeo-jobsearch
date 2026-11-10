@@ -14,5 +14,17 @@
  "https://www.rently.com": "co_home.html",
  "https://www.rently.com/company/events": "co_events_ld.html",
  "https://www.hiredhelpr.com": "co2_home.html",
- "https://www.hiredhelpr.com/webinars": "co2_webinars.html"
+ "https://www.hiredhelpr.com/webinars": "co2_webinars.html",
+ "https://www.narpm.org/events/": "narpm_calendar.html",
+ "https://www.narpm.org/events/?ical=1": "narpm_calendar.ics",
+ "https://www.narpm.org/education/course-schedule/": "narpm_courses.html",
+ "https://www.narpm.org/education/webinars/": "narpm_webinars.html",
+ "https://www.narpm.org/find/chapters/": "narpm_finder.html",
+ "https://www.narpm.org/find/chapters?a=chapterinfo&chap=C099&submitted=true": "narpm_chapter_c099.html",
+ "https://www.narpm.org/find/chapters?a=chapterinfo&chap=C002&submitted=true": "narpm_chapter_c002.html",
+ "https://chapters.narpm.org/atlanta/events.ics": "narpm_atlanta.ics",
+ "https://texas.narpm.org/events.ics": "narpm_texas.ics",
+ "https://narpmhouston.wildapricot.org/events": "narpm_houston_wa.html",
+ "https://chapters.narpm.org/dallas/events": "narpm_dallas_empty.html",
+ "https://www.meetup.com/baltimore-washington-narpm-chapter/events/ical/": "narpm_balt_meetup.ics"
 }

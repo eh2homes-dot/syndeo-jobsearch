@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//wp-events-plugin.com//6.4//EN
+BEGIN:VEVENT
+UID:1@texas.narpm.org
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+SUMMARY:Texas State Legislative Day
+URL:https://texas.narpm.org/events/legislative-day/
+LOCATION:Texas State Capitol\, Austin\, TX
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:2@texas.narpm.org
+DTSTART;TZID=America/Chicago:20261118T110000
+DTEND;TZID=America/Chicago:20261118T130000
+SUMMARY:NARPM Houston November 2026 Chapter Meeting
+URL:https://narpmhouston.wildapricot.org/event-6568906
+LOCATION:Cadillac Bar\, 1802 Shepherd Dr.\, Houston\, TX 77007
+CATEGORIES:Chapter Events
+END:VEVENT
+END:VCALENDAR

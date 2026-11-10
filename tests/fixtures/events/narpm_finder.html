@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><title>Find Chapters - National Association of Residential Property Managers</title></head>
+<body>
+<main>
+<h1>Find Chapters</h1>
+<p>Select a specific chapter to go straight to their Membership page, or search by state using the drop-downs below.</p>
+<form action="https://www.narpm.org/find/chapters" method="get">
+  <input type="hidden" name="a" value="chapterinfo">
+  <label>Search by Chapter / Region</label>
+  <select name="chap" onchange="this.form.submit()">
+    <option value="">-- Select --</option>
+    <option value="DCHR">DCHR</option>
+    <option value="C002">C002 - Houston</option>
+    <option value="C005">C005 - Atlanta</option>
+    <option value="C008">C008 - Greater Dallas</option>
+    <option value="C099">C099 - Testville</option>
+    <option value="S006">S006 - Texas State</option>
+    <option value="UA">UA - Unassigned Chapter</option>
+  </select>
+</form>
+<p><a href="https://www.narpm.org/narpm-at-large-chapter/">No Local Chapter? Click Here</a></p>
+</main>
+</body></html>

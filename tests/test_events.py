@@ -14,6 +14,7 @@ TODAY = dt.date(2026, 9, 28)
 
 def _sandbox(tmp: pathlib.Path, leads_rows=None):
     E.HISTORY, E.EVENTS_MAP, E.NEEDS_MAP, E.OUT = tmp / "events.json", tmp / "events_map.json", tmp / "needs.csv", tmp / "output"
+    E.CHAPTERS_MAP = tmp / "narpm_chapters.json"
     if leads_rows is not None:
         E.LEADS = tmp / "leads.csv"
         with open(E.LEADS, "w", newline="") as f:
@@ -39,6 +40,12 @@ def test_dates():
     assert p("5/20/2026 » 5/22/2026") == (d(2026, 5, 20), d(2026, 5, 22))
     assert p("Thursday, November 12, 2026 · 1:00 PM ET") == (d(2026, 11, 12), d(2026, 11, 12))
     assert E.parse_dates("March 2026 market update", TODAY) is None
+    # Wild Apricot writes day-month-year; NARPM's course list writes "12pm - 3pm EASTERN"
+    assert p("18 Nov 2026, 11:00 AM - 1:00 PM") == (d(2026, 11, 18), d(2026, 11, 18))
+    assert p("14 Jan 2027 8:00 AM - 15 Jan 2027 4:00 PM") == (d(2027, 1, 14), d(2027, 1, 15))
+    assert E.is_mostly_date("18 Nov 2026, 11:00 AM - 1:00 PM", TODAY)
+    assert E.is_mostly_date("Nov 17, 2026 12pm - 3pm EASTERN", TODAY)
+    assert not E.is_mostly_date("Join us Nov 17, 2026 for the chapter lunch and awards", TODAY)
     assert E.city_state("Loews Miami Beach, Miami, FL") == ("Miami", "FL")
     assert E.city_state("Grand Hyatt Washington | Washington, DC") == ("Washington", "DC")
 
@@ -77,6 +84,65 @@ def test_associations_and_bisnow():
     assert "## Upcoming events" and "scattered site rental operations" in nl
     assert "Just announced" not in nl        # first run: everything is new, so nothing is called just announced
     assert "SFR" not in nl.split("\n")[2]    # our own intro line never says SFR
+
+
+def test_narpm_national_and_chapters():
+    tmp = pathlib.Path(tempfile.mkdtemp())
+    _sandbox(tmp)
+    assert E.main(["--fixtures", str(FX), "--date", TODAY.isoformat(), "--only", "associations"]) == 0
+    all_rows = _rows(tmp)
+    rows = {r["title"]: r for r in all_rows}
+    # national calendar, read through its iCal export
+    assert rows["NARPM Southeast Regional Conference"]["end"] == "2026-12-04"            # all-day DTEND is exclusive
+    assert rows["NARPM Southeast Regional Conference"]["kind"] == "conference"
+    # course schedule: date line before the title, past course dropped, virtual vs in person
+    doors = rows["The Art of Acquiring More Doors (Virtual)"]
+    assert doors["start"] == "2026-10-27" and doors["kind"] == "education" and doors["location"] == "Online"
+    assert doors["url"].endswith("/the-art-of-acquiring-more-doors-virtual-3")
+    assert rows["Ethics (In-Person)"]["location"] == "Raleigh, NC"
+    assert "Risk Management (Virtual)" not in rows
+    # webinars: always online, never the "Cost: Free" lines as a location
+    assert rows["Hard Data and Proven Tactics to Level Up Leasing"]["location"] == "Online"
+    assert rows["How to Use AI in Your Property Management Business"]["start"] == "2026-11-18"
+    # chapters: iCal feeds on NARPM-hosted sites
+    oct_mtg = rows["NARPM Atlanta October Chapter Meeting"]
+    assert oct_mtg["kind"] == "chapter" and oct_mtg["organizer"] == "NARPM Atlanta" and oct_mtg["city"] == "Atlanta"
+    assert oct_mtg["time"] == "11:30" and oct_mtg["source"] == "narpm-chapters"
+    assert "NARPM Atlanta June Chapter Meeting" not in rows                              # past
+    assert "Chapter Board Meeting" not in rows                                            # excluded pattern
+    assert "Fair Housing Update for Members" not in rows                                  # national category
+    assert "2026 NARPM Annual Convention & Expo" not in rows                              # cross-post of national
+    assert rows["2026 NARPM® Annual Convention and Expo"]["source"] == "narpm"
+    assert rows["Georgia Property Management Conference & Expo"]["kind"] == "conference"  # promoted
+    # Wild Apricot (Houston): day-month-year dates, venue line; the same meeting on the Texas feed is kept once
+    hou = [r for r in all_rows if r["title"] == "NARPM Houston November 2026 Chapter Meeting"]
+    assert len(hou) == 1 and hou[0]["start"] == "2026-11-18" and hou[0]["state"] == "TX"
+    assert hou[0]["organizer"] == "NARPM Houston"                                         # host chapter wins
+    assert rows["NARPM Atlanta November Chapter Meeting"]["start"] == "2026-11-18"        # same day, other city: kept
+    assert rows["Gulf Coast Property Management Summit"]["end"] == "2027-01-15"
+    # Meetup chapter via its iCal feed
+    assert rows["Baltimore/Washington NARPM Fall Happy Hour"]["state"] == "MD"
+    # chapter map: built from the finder + chapter pages, seed entries kept
+    cmap = json.loads(E.CHAPTERS_MAP.read_text())
+    assert cmap["C099"]["site"] == "https://testville.narpm.org/" and cmap["C099"]["name"] == "Testville"
+    assert cmap["C002"]["site"] == "https://narpmhouston.wildapricot.org" and cmap["C002"]["method"] == "chapter finder"
+    assert cmap["C005"]["site"] == "https://chapters.narpm.org/atlanta/" and cmap["C005"]["last_ok"] == TODAY.isoformat()
+    assert "UA" not in cmap and "DCHR" not in cmap
+    # status: unreachable chapters are listed but never counted as broken
+    src = list(csv.DictReader(open(tmp / "output" / TODAY.isoformat() / "events_sources.csv")))
+    summary = next(r for r in src if r["source"] == "narpm-chapters" and r["url"].endswith("/find/chapters/"))
+    assert summary["status"] == "ok" and "5 chapters on the finder" in summary["note"]
+    assert any(r["source"] == "narpm-chapters" and r["status"].startswith("skipped") and r["note"] == "Testville" for r in src)
+    assert all(r["status"] == "ok" for r in src if r["source"] in ("narpm-calendar", "narpm-courses", "narpm-webinars"))
+    # newsletter: chapter block, one line per chapter; courses and webinars stay out
+    nl = (tmp / "output" / "newsletter" / f"events-{TODAY.isoformat()}.md").read_text()
+    block = nl.split("**NARPM chapter meetings**")[1].split("\n**")[0]
+    assert "October Chapter Meeting" in block and "November Chapter Meeting](https://chapters" not in block
+    assert "Fall Happy Hour" in block
+    assert "Acquiring More Doors" not in nl and "Level Up Leasing" not in nl
+    assert "Georgia Property Management Conference" in nl.split("**NARPM chapter meetings**")[0]
+    report = (tmp / "output" / TODAY.isoformat() / "events_report.md").read_text()
+    assert "## NARPM chapter events" in report and "## Courses and webinars" in report
 
 
 def test_companies_detect_and_classify():
@@ -125,7 +191,7 @@ def test_sheet_csv_full_runs_only():
     assert list(rows[0])[:4] == ["Start", "End", "Event", "Type"]
     assert rows[0]["Start"] <= rows[1]["Start"] and rows[-1]["Start"] == "TBA"
     types = {r["Type"] for r in rows}
-    assert types == {"Conference", "Company event"}                       # attending listings left out
+    assert types == {"Conference", "Company event", "NARPM chapter event", "Course / webinar"}   # attending left out
     assert any(r["Event"] == "Rently Happy Hour at NARPM" and r["Host"] == "Rently" for r in rows)
     new = {r["Host"] for r in rows if r["New this week"] == "yes"}
     assert "NRHC" not in new and "Bisnow" in new and "Rently" in new     # only what the first run hadn't seen

@@ -1,0 +1,66 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//wp-events-plugin.com//6.4//EN
+BEGIN:VEVENT
+UID:1@chapters.narpm.org
+DTSTART;VALUE=DATE:20260610
+DTEND;VALUE=DATE:20260611
+SUMMARY:NARPM Atlanta June Chapter Meeting
+URL:https://chapters.narpm.org/atlanta/events/june-chapter-meeting/
+LOCATION:Maggiano's\, 3368 Peachtree Rd NE\, Atlanta\, GA 30326
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:2@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261021T113000
+DTEND;TZID=America/New_York:20261021T133000
+SUMMARY:NARPM Atlanta October Chapter Meeting
+URL:https://chapters.narpm.org/atlanta/events/october-chapter-meeting/
+LOCATION:Maggiano's\, 3368 Peachtree Rd NE\, Atlanta\, GA 30326
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:3@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261118T113000
+DTEND;TZID=America/New_York:20261118T133000
+SUMMARY:NARPM Atlanta November Chapter Meeting
+URL:https://chapters.narpm.org/atlanta/events/november-chapter-meeting/
+LOCATION:Maggiano's\, 3368 Peachtree Rd NE\, Atlanta\, GA 30326
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:4@chapters.narpm.org
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261114
+SUMMARY:Georgia Property Management Conference & Expo
+URL:https://chapters.narpm.org/atlanta/events/georgia-pm-conference/
+LOCATION:Cobb Galleria Centre\, Atlanta\, GA
+CATEGORIES:Chapter Events
+END:VEVENT
+BEGIN:VEVENT
+UID:5@chapters.narpm.org
+DTSTART;VALUE=DATE:20261013
+DTEND;VALUE=DATE:20261016
+SUMMARY:2026 NARPM Annual Convention & Expo
+URL:https://www.narpm.org/national-conferences/annual-convention/
+LOCATION:Mandalay Bay\, Las Vegas\, NV
+END:VEVENT
+BEGIN:VEVENT
+UID:6@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261029T140000
+DTEND;TZID=America/New_York:20261029T150000
+SUMMARY:Fair Housing Update for Members
+URL:https://www.narpm.org/education/webinars/
+LOCATION:Online
+CATEGORIES:NARPM® National Events
+END:VEVENT
+BEGIN:VEVENT
+UID:7@chapters.narpm.org
+DTSTART;TZID=America/New_York:20261008T090000
+DTEND;TZID=America/New_York:20261008T100000
+SUMMARY:Chapter Board Meeting
+URL:https://chapters.narpm.org/atlanta/events/board/
+LOCATION:Zoom
+CATEGORIES:Chapter Events
+END:VEVENT
+END:VCALENDAR

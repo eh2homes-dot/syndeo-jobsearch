@@ -10,6 +10,8 @@ Inputs
   leads/master_leads.csv      the companies whose own events we track (no discovery beyond this list)
   data/events_map.json        company -> events page. Found by --detect or typed in by hand; manual entries win
   data/events.json            every event ever seen, with first_seen / last_seen / status
+  data/narpm_chapters.json    NARPM chapter -> website + feed. Built from narpm.org's chapter finder and refreshed
+                              monthly; entries with "manual": true are never overwritten
 
 Outputs (output/YYYY-MM-DD/)
   events.csv                  every upcoming event in the horizon: when, where, who, link
@@ -48,6 +50,7 @@ from .run import LEADS, OUT, ROOT, draft_html, load_json, save_json
 SOURCES = ROOT / "data" / "event_sources.json"
 HISTORY = ROOT / "data" / "events.json"
 EVENTS_MAP = ROOT / "data" / "events_map.json"
+CHAPTERS_MAP = ROOT / "data" / "narpm_chapters.json"
 NEEDS_MAP = ROOT / "data" / "events_needs_manual.csv"
 TIMEOUT = 20
 SKIP_TAGS = {"script", "style", "noscript", "svg", "template", "head", "title", "iframe", "select", "option"}
@@ -96,6 +99,8 @@ RANGE_RE = re.compile(rf"\b{_WD}{_MON}\s+{_DAY}(?:,?\s*{_YR})?{_DASH}{_WD}(?:{_M
 SINGLE_RE = re.compile(rf"\b{_WD}{_MON}\s+{_DAY}(?:,?\s*{_YR})?(?![\d:])", re.I)
 NUM_RE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(20\d{2})(?:\s*(?:[-\u2013\u2014]|\u00bb|to)\s*(\d{1,2})/(\d{1,2})/(20\d{2}))?")
 ISO_RE = re.compile(r"\b(20\d{2})-(\d{2})-(\d{2})")
+# day-month-year, as Wild Apricot writes it: "18 Nov 2026, 11:00 AM - 1:00 PM" or "18 Nov 2026 9:00 AM - 19 Nov 2026 5:00 PM"
+DMY_RE = re.compile(rf"\b{_DAY}\s+{_MON},?\s+{_YR}\b", re.I)
 LABEL_PREFIX = re.compile(r"^\s*(?:dates?|when|location|where|venue)\s*:\s*", re.I)
 LABEL_ONLY = re.compile(r"^\s*(?:dates?|when|location|where|venue|time)\s*:?\s*$", re.I)
 
@@ -139,6 +144,16 @@ def parse_dates(text: str, today: dt.date, default_year: int | None = None):
         e = _safe(int(m.group(6)), int(m.group(4)), int(m.group(5))) if m.group(4) else s
         if s:
             return s, (e if e and 0 <= (e - s).days <= 31 else s), True
+    ms = list(DMY_RE.finditer(t))
+    if ms:
+        d1, mo1, y1 = ms[0].groups()
+        s = _safe(int(y1), _mon(mo1), int(d1))
+        e = None
+        if len(ms) > 1:
+            d2, mo2, y2 = ms[1].groups()
+            e = _safe(int(y2), _mon(mo2), int(d2))
+        if s:
+            return s, (e if e and 0 <= (e - s).days <= 31 else s), True
     m = SINGLE_RE.search(t)
     if m:
         mo, d, y = m.groups()
@@ -165,8 +180,10 @@ def is_mostly_date(text: str, today: dt.date) -> bool:
     t = LABEL_PREFIX.sub("", text)
     if len(t) > 60 or not parse_dates(t, today):
         return False
-    rest = RANGE_RE.sub("", t) if RANGE_RE.search(t) else SINGLE_RE.sub("", NUM_RE.sub("", t))
-    rest = re.sub(r"\d{1,2}:\d{2}\s*(?:am|pm)?|\b(?:am|pm|[ecmp][sd]t|et|ct|mt|pt|bst|gmt|cet|noon)\b|[|,\-\u2013\u2014@()]", " ", rest, flags=re.I)
+    rest = RANGE_RE.sub("", t) if RANGE_RE.search(t) else SINGLE_RE.sub("", NUM_RE.sub("", DMY_RE.sub("", t)))
+    rest = re.sub(r"\d{1,2}(?::\d{2})?\s*(?:am|pm|a\.m\.|p\.m\.)|\d{1,2}:\d{2}|"
+                  r"\b(?:am|pm|[ecmp][sd]t|et|ct|mt|pt|bst|gmt|cet|noon|eastern|central|mountain|pacific)\b|[|,\-\u2013\u2014@()]",
+                  " ", rest, flags=re.I)
     return len(rest.split()) <= 2
 
 
@@ -353,6 +370,33 @@ def parse_date_title(html: str, base: str, today: dt.date, src: dict) -> list[di
         href = next((good_href(t["href"], base) for t in near
                      if good_href(t["href"], base) and "email-protection" not in t["href"]), "") or base
         out.append(make_event(src["id"], src["name"], title, d[0], d[1], loc, href, method="page"))
+    return out
+
+
+def parse_date_heading(html: str, base: str, today: dt.date, src: dict) -> list[dict]:
+    """A date line followed by a heading with the title, then a description. Used for NARPM's course schedule:
+    "Nov 17, 2026 12pm - 3pm EASTERN" / <h3><a>How to Successfully Market Your Company (Virtual)</a></h3> / blurb."""
+    toks = tokens(soup_of(html))
+    out, seen = [], set()
+    for i, tk in enumerate(toks):
+        if tk["h"] is not None or not is_mostly_date(tk["t"], today):
+            continue
+        j = next((j for j in range(i + 1, min(len(toks), i + 6)) if toks[j]["h"] is not None), None)
+        if j is None:
+            continue
+        title, href = heading_text(toks, j)
+        d = parse_dates(LABEL_PREFIX.sub("", tk["t"]), today)
+        if not title or (title, d[0]) in seen:
+            continue
+        seen.add((title, d[0]))
+        nxt = next((k for k in range(j + 1, len(toks)) if is_mostly_date(toks[k]["t"], today)), len(toks))
+        loc = next((toks[k]["t"] for k in range(j + 1, min(nxt, j + 15))
+                    if len(toks[k]["t"]) <= 90 and city_state(toks[k]["t"])), "")
+        if not loc and ONLINE.search(f"{title} {tk['t']}"):
+            loc = "Online"
+        tm = re.search(r"\d{1,2}(?::\d{2})?\s*(?:am|pm)", tk["t"], re.I)
+        out.append(make_event(src["id"], src["name"], title, d[0], d[1], loc, good_href(href, base) or base,
+                              time=tm.group(0) if tm else "", method="page"))
     return out
 
 
@@ -543,8 +587,10 @@ def parse_ics(text: str) -> list[dict]:
         e = _safe(int(de.group(1)), int(de.group(2)), int(de.group(3))) if de else s
         if e and s and "T" not in f.get("DTEND", "T") and e > s:
             e = e - dt.timedelta(days=1)   # all-day DTEND is exclusive
+        tm = re.match(r"\d{8}T(\d{2})(\d{2})", f.get("DTSTART", ""))
         out.append({"title": f.get("SUMMARY", ""), "start": s, "end": e or s, "location": f.get("LOCATION", ""),
-                    "url": f.get("URL", ""), "time": ""})
+                    "url": f.get("URL", ""), "time": f"{tm.group(1)}:{tm.group(2)}" if tm and tm.group(1) != "00" else "",
+                    "categories": f.get("CATEGORIES", "")})
     return out
 
 
@@ -603,7 +649,18 @@ def detail_page_event(html: str, url: str, today: dt.date) -> dict | None:
 
 
 # ================================================================ association + Bisnow runners
-PARSERS = {"title_date": parse_title_date, "date_title": parse_date_title, "naa": parse_naa, "bisnow": parse_bisnow}
+PARSERS = {"title_date": parse_title_date, "date_title": parse_date_title, "date_heading": parse_date_heading,
+           "naa": parse_naa, "bisnow": parse_bisnow}
+
+
+def apply_source_options(evs: list[dict], src: dict) -> list[dict]:
+    """Per-source settings from event_sources.json: "kind" (e.g. education) and "online": true for webinar pages."""
+    for e in evs:
+        if src.get("kind"):
+            e["kind"] = src["kind"]
+        if src.get("online") and not e["city"]:
+            e["location"], e["format"] = "Online", "Online"
+    return evs
 
 
 def run_page_source(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path | None) -> tuple[list[dict], list[dict]]:
@@ -624,6 +681,10 @@ def run_page_source(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path
         if not evs:
             evs = [make_event(src["id"], src["name"], e["title"], e["start"], e["end"], e["location"], e["url"] or final,
                               time=e.get("time", ""), method="json-ld") for e in jsonld_events(html, final) if e["start"]]
+        evs = apply_source_options(evs, src)
+        if not evs and src.get("may_be_empty"):   # a calendar that is often empty: zero is normal, not a broken parser
+            status_rows.append({"source": src["id"], "url": url, "status": "ok", "events": 0, "note": "nothing listed right now"})
+            continue
         if not evs and debug_dir is not None:
             debug_dir.mkdir(parents=True, exist_ok=True)
             (debug_dir / f"{src['id']}-{hashlib.sha1(url.encode()).hexdigest()[:6]}.html").write_text(html)
@@ -666,6 +727,192 @@ def run_informa(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path | N
         if ev:
             events.append(ev)
     return events, rows
+
+
+# ================================================================ NARPM chapters
+# ~55 local and state chapters, each with its own site. Most are NARPM-hosted microsites (chapters.narpm.org/<slug>/
+# or <name>.narpm.org) running the WordPress "Events Manager" plugin: its listing loads by script and its pages write
+# dates as DD/MM/YYYY, so we read the plugin's iCal feed (<site>/events.ics), which has unambiguous dates.
+# The rest (Wild Apricot, Meetup, own sites) go through the generic reader.
+CHAPTER_CODE = re.compile(r"\b([CS]\d{3})\s*[-–]\s*([^<>\n\"|]{2,80})")
+SOCIAL = re.compile(r"facebook\.|twitter\.|x\.com|instagram\.|linkedin\.|youtube\.|google\.com/maps|maps\.google|tiktok\.", re.I)
+CONF_TITLE = re.compile(r"\b(conference|convention|trade ?show|expo|summit|symposium)\b", re.I)
+
+
+def chapter_root(site: str) -> str:
+    """https://chapters.narpm.org/atlanta/about/ -> https://chapters.narpm.org/atlanta/ ; other hosts -> scheme://host/"""
+    if not site.startswith("http"):
+        site = "https://" + site
+    p = urlparse(site)
+    if p.netloc.lower() == "chapters.narpm.org":
+        slug = next((x for x in p.path.split("/") if x), "")
+        return f"https://chapters.narpm.org/{slug}/" if slug else ""
+    return f"{p.scheme}://{p.netloc}/"
+
+
+def site_key(site: str) -> str:
+    """One key per chapter site: the microsite root, or the group for Meetup (many chapters share meetup.com)."""
+    m = re.search(r"meetup\.com/([^/?#]+)", site or "", re.I)
+    return f"meetup:{m.group(1).lower()}" if m else chapter_root(site)
+
+
+def chapter_website(html: str, base: str) -> str:
+    """The chapter's own site from its narpm.org chapter-info page (shown after a "Website:" label)."""
+    soup = soup_of(html)
+    for lab in soup.find_all(string=re.compile(r"^\s*website\s*:?\s*$", re.I)):
+        a = lab.find_next("a", href=True)
+        if a and a["href"].startswith("http") and not SOCIAL.search(a["href"]):
+            return a["href"].strip()
+    links = [urljoin(base, a["href"]) for a in soup.find_all("a", href=True)]
+    hosted = [h for h in links if re.match(r"https?://(chapters\.narpm\.org/[a-z0-9-]+|(?!www\.)[a-z0-9-]+\.narpm\.org)", h, re.I)]
+    if hosted:
+        return hosted[0]
+    m = re.search(r"website\s*:?\s*</?[^>]*>\s*(?:<a[^>]+href=\")?(https?://[^\"<\s]+)", html, re.I)
+    return m.group(1) if m and not SOCIAL.search(m.group(1)) else ""
+
+
+def discover_chapters(fetcher: Fetcher, src: dict, cmap: dict, today: dt.date, budget: int) -> tuple[int, int]:
+    """Read every chapter code from narpm.org's chapter finder, then fill in / refresh each chapter's website.
+    Returns (codes found on the finder, chapter pages looked up)."""
+    status, html, _ = fetcher.get(src["finder_url"])
+    codes = {}
+    if status == 200:
+        for code, name in CHAPTER_CODE.findall(html):
+            codes.setdefault(code, " ".join(H.unescape(name).split()).strip(" -"))
+        # any chapter microsite linked straight from the finder (sometimes in a data attribute or script)
+        for h in set(re.findall(r"https?://(?:chapters\.narpm\.org/[a-z0-9-]+|(?!www\.)[a-z0-9-]+\.narpm\.org)", html, re.I)):
+            root = chapter_root(h)
+            if root and not any(chapter_root(c.get("site", "")) == root for c in cmap.values()):
+                cmap[f"site:{root}"] = {"name": "", "site": root, "method": "finder link", "checked": today.isoformat()}
+    stale = (today - dt.timedelta(days=src.get("refresh_days", 28))).isoformat()
+    todo = [c for c in codes if c not in cmap or (not cmap[c].get("manual") and cmap[c].get("checked", "") < stale)]
+    looked = 0
+    for code in sorted(todo)[:budget]:
+        url = src["info_url"].format(code=code)
+        st, page, fin = fetcher.get(url, tries=1)
+        looked += 1
+        prev = cmap.get(code, {})
+        entry = {**prev, "name": codes[code] or prev.get("name", ""), "checked": today.isoformat()}
+        if st == 200:
+            site = chapter_website(page, fin)
+            if site:
+                entry.update(site=site, method="chapter finder")
+                entry.pop("note", None)
+            elif not prev.get("site"):
+                entry["note"] = "no website listed on narpm.org"
+        elif not prev.get("site"):
+            entry["note"] = f"chapter page http {st}" if st else "chapter page unreachable"
+        cmap[code] = entry
+    for code, name in codes.items():   # keep names current for entries that came from the seed list
+        if code in cmap and not cmap[code].get("name"):
+            cmap[code]["name"] = name
+    return len(codes), looked
+
+
+def chapter_feed_urls(site: str) -> list[str]:
+    root = chapter_root(site)
+    host = urlparse(root).netloc.lower()
+    if host.endswith("narpm.org"):
+        return [root + "events.ics"]
+    m = re.search(r"meetup\.com/([^/?#]+)", site, re.I)
+    if m:
+        return [f"https://www.meetup.com/{m.group(1)}/events/ical/"]
+    return []
+
+
+def chapter_listing_url(site: str) -> str:
+    """Where to look when there is no feed: an explicit events page if the map has one, else <root>/events."""
+    if re.search(r"/(events?|calendar)(-\d+)?/?$", site, re.I) or "meetup.com" in site.lower():
+        return site
+    return chapter_root(site) + "events"
+
+
+def read_chapter(fetcher: Fetcher, key: str, entry: dict, src: dict, today: dt.date) -> tuple[list[dict], dict]:
+    site = entry.get("events_url") or entry.get("site", "")
+    name = entry.get("name") or key
+    short = re.sub(r"(?i)\s*-\s*chapter of narpm.*$", "", name)
+    org = short if short.lower().startswith("narpm") else f"NARPM {short}"
+    raw, method, reached = [], "", False
+    for feed in chapter_feed_urls(entry.get("site", site)):
+        st, text, _ = fetcher.get(feed, tries=1)
+        if st == 200 and "BEGIN:VCALENDAR" in text:
+            raw, method, reached = parse_ics(text), "ical", True
+            break
+    if not reached:
+        listing = chapter_listing_url(site)
+        st, html, fin = fetcher.get(listing, tries=1)
+        if st == 200:
+            reached = True
+            got = generic_page_events(fetcher, fin, html, today, src["id"], org, kind="chapter", max_detail=4)
+            raw = [{"title": e["title"], "start": dt.date.fromisoformat(e["start"]), "end": dt.date.fromisoformat(e["end"]),
+                    "location": e["location"], "url": e["url"], "time": e["time"], "categories": ""} for e in got if e["start"]]
+            method = "page"
+        else:
+            return [], {"source": src["id"], "url": listing, "events": 0, "note": name,
+                        "status": f"http {st}" if st else (html[:100] or "unreachable")}
+    out = []
+    for r in raw:
+        if not r.get("start") or not r.get("title"):
+            continue
+        if re.search(r"\bnational\b", r.get("categories", ""), re.I):
+            continue   # NARPM national events cross-posted on every chapter calendar
+        kind = "conference" if CONF_TITLE.search(r["title"]) else "chapter"
+        out.append(make_event(src["id"], org, r["title"], r["start"], r["end"], r["location"],
+                              r["url"] or chapter_root(site), kind=kind, time=r.get("time", ""), method=method))
+    upcoming = [e for e in out if e["end"] >= today.isoformat()]
+    return out, {"source": src["id"], "url": entry.get("site", site), "status": "ok", "events": len(upcoming), "note": name}
+
+
+def run_narpm_chapters(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path | None,
+                       save: bool = True) -> tuple[list[dict], list[dict]]:
+    cmap = load_json(CHAPTERS_MAP, {})
+    for s in src.get("seed", []):   # known chapter sites, so the first run works even if the finder changes
+        key = s.get("code") or f"site:{site_key(s['site'])}"
+        if key not in cmap or not cmap[key].get("site"):
+            cmap[key] = {**cmap.get(key, {}), "name": s.get("name", ""), "site": s["site"], "method": "seed",
+                         **({"events_url": s["events_url"]} if s.get("events_url") else {})}
+    found, looked = discover_chapters(fetcher, src, cmap, today, src.get("max_lookups_per_run", 80))
+    # one entry per site (a code and a seed can point at the same microsite)
+    by_root, todo = {}, []
+    for key, entry in sorted(cmap.items()):
+        root = site_key(entry.get("site", "")) if entry.get("site") else ""
+        if not root or entry.get("disabled") or root in by_root:
+            continue
+        by_root[root] = key
+        todo.append((key, entry))
+    events, fail_rows, read_ok = [], [], 0
+    with ThreadPoolExecutor(max_workers=src.get("workers", 6)) as pool:
+        futs = {pool.submit(read_chapter, fetcher, k, e, src, today): (k, e) for k, e in todo}
+        for f in as_completed(futs):
+            key, entry = futs[f]
+            try:
+                evs, row = f.result()
+            except Exception as err:   # one broken chapter never stops the rest
+                evs, row = [], {"source": src["id"], "url": entry.get("site", ""), "status": f"error: {err}"[:160],
+                                "events": 0, "note": entry.get("name", key)}
+            if row["status"] == "ok":
+                read_ok += 1
+                cmap[key]["last_ok"] = today.isoformat()
+                events += evs
+            elif cmap[key].get("last_ok"):
+                fail_rows.append(row)   # worked before, broken now: worth a look
+            else:
+                row["status"] = f"skipped (never reached: {row['status']})"
+                fail_rows.append(row)
+    if save:
+        save_json(CHAPTERS_MAP, cmap)
+    # stable order whatever finished first; when two chapters list one event, the host chapter (named in the title) wins
+    def _host_first(e):
+        city = e["organizer"].replace("NARPM", "").replace("State", "").strip().lower()
+        return (e["start"], norm_title(e["title"]), 0 if city and city in e["title"].lower() else 1, e["organizer"])
+    events.sort(key=_host_first)
+    broken = [r for r in fail_rows if not r["status"].startswith("skipped")]
+    with_events = len({e["organizer"] for e in events if e["end"] >= today.isoformat()})
+    summary = {"source": src["id"], "url": src["finder_url"], "events": len([e for e in events if e["end"] >= today.isoformat()]),
+               "status": "ok" if not broken else f"{len(broken)} chapter sites that used to work failed",
+               "note": f"{len(todo)} chapter sites, {read_ok} read, {with_events} with upcoming events; "
+                       f"{found} chapters on the finder, {looked} looked up this run"}
+    return events, [summary] + sorted(fail_rows, key=lambda r: r["note"])
 
 
 # ================================================================ company events
@@ -887,10 +1134,22 @@ def dedupe(events: list[dict], priority: dict) -> list[dict]:
     out = []
     for e in events:
         dup = next((o for o in out if o["start"] and o["start"] == e["start"] and title_sim(o["title"], e["title"]) >= 0.6
-                    and o["kind"] == e["kind"]), None)
+                    and o["kind"] == e["kind"]
+                    # "NARPM Atlanta November Chapter Meeting" and "NARPM Houston November Chapter Meeting" on the
+                    # same day are two events: different cities never match
+                    and not (o["city"] and e["city"] and o["city"].lower() != e["city"].lower())), None)
         if dup is None:
             out.append(e)
     return out
+
+
+def drop_crossposts(events: list[dict], cfg: dict) -> list[dict]:
+    """A chapter calendar re-listing an event we already have from a national source (any kind), e.g. a NARPM
+    webinar or the Broker/Owner conference posted on a chapter site. The national listing wins."""
+    chapter_srcs = {s["id"] for s in cfg.get("sources", []) if s.get("parser") == "narpm_chapters"}
+    national = [e for e in events if e["source"] not in chapter_srcs and e["start"]]
+    return [e for e in events if e["source"] not in chapter_srcs or not any(
+        n["start"] == e["start"] and title_sim(n["title"], e["title"]) >= 0.6 for n in national)]
 
 
 def update_history(events: list[dict], ok_sources: set[str], today: dt.date) -> tuple[dict, list[dict], list[dict]]:
@@ -951,7 +1210,8 @@ def is_recent(e: dict, today: dt.date, baseline: str) -> bool:
 def write_sheet_csv(path: Path, events: list[dict], today: dt.date, baseline: str):
     """One tidy table for the Google Sheet: conferences and company-hosted events, soonest first, TBA at the bottom.
     Company listings for other people's conferences are left out (they're in the weekly report)."""
-    label = {"conference": "Conference", "company_hosted": "Company event"}
+    label = {"conference": "Conference", "company_hosted": "Company event", "chapter": "NARPM chapter event",
+             "education": "Course / webinar"}
     rows = []
     for e in sorted(events, key=lambda e: (e["tba"], e["start"] or "9999", e["title"])):
         if e["kind"] not in label:
@@ -1004,9 +1264,18 @@ def write_newsletter(events: list[dict], today: dt.date, cfg: dict, out_root: Pa
         md.append("")
     if hosted:
         md += ["**Hosted by companies we track**", ""] + [_line(e) for e in hosted[:ncfg.get("max_company_events", 10)]] + [""]
+    # local NARPM chapter meetings: soonest first, one per chapter so a single busy chapter can't fill the block
+    chapters, seen_org = [], set()
+    for e in sorted([e for e in events if e["kind"] == "chapter" and not e["tba"] and e["start"] <= until],
+                    key=lambda e: (e["start"], e["organizer"])):
+        if e["organizer"] not in seen_org:
+            seen_org.add(e["organizer"])
+            chapters.append(e)
+    if chapters and ncfg.get("max_chapter_events", 6):
+        md += ["**NARPM chapter meetings**", ""] + [_line(e) for e in chapters[:ncfg.get("max_chapter_events", 6)]] + [""]
     if later:
         md += ["**Just announced**", ""] + [_line(e, with_year=True) for e in later[:ncfg.get("max_just_announced", 5)]] + [""]
-    if not (shown or hosted or later):
+    if not (shown or hosted or later or chapters):
         md.append("_No events in the next few weeks from the sources we track._")
     nl = out_root / "newsletter"
     nl.mkdir(parents=True, exist_ok=True)
@@ -1021,9 +1290,12 @@ def write_report(out_dir: Path, events: list[dict], new: list[dict], moved: list
     conf = [e for e in events if e["kind"] == "conference" and not e["tba"]]
     hosted = [e for e in events if e["kind"] == "company_hosted"]
     attending = [e for e in events if e["kind"] == "company_attending"]
+    chapter = [e for e in events if e["kind"] == "chapter" and not e["tba"]]
+    education = [e for e in events if e["kind"] == "education" and not e["tba"]]
     tba = [e for e in events if e["tba"]]
     md = [f"# Events report, {today.isoformat()}", "",
-          f"{len(conf)} conferences and {len(hosted)} company-hosted events in the next 6 months. "
+          f"{len(conf)} conferences, {len(hosted)} company-hosted events, {len(chapter)} NARPM chapter events and "
+          f"{len(education)} courses/webinars in the next 6 months. "
           f"{len(new)} new this week, {len(moved)} rescheduled, {len(removed)} taken down.", ""]
     month = None
     md += ["## Conferences", ""]
@@ -1035,6 +1307,12 @@ def write_report(out_dir: Path, events: list[dict], new: list[dict], moved: list
         md.append(_line(e) + (" **NEW**" if e in new else "") + (f" _({e.get('note')})_" if e.get("note") else ""))
     md += ["", "## Hosted by master-list companies", ""]
     md += [_line(e) + (" **NEW**" if e in new else "") for e in sorted(hosted, key=lambda e: e["start"])] or ["_None found._"]
+    md += ["", "## NARPM chapter events", ""]
+    md += [_line(e) + (" **NEW**" if e in new else "") for e in sorted(chapter, key=lambda e: (e["start"], e["organizer"]))] \
+        or ["_None found._"]
+    if education:
+        md += ["", "## Courses and webinars", "", "_Online education; in the sheet, not in the newsletter._", ""]
+        md += [_line(e) + (" **NEW**" if e in new else "") for e in sorted(education, key=lambda e: e["start"])]
     if tba:
         md += ["", "## Dates not announced yet", ""] + [f"- [{e['title']}]({e['url']}) ({e['organizer']})" for e in tba]
     if removed:
@@ -1077,9 +1355,12 @@ def main(argv=None) -> int:
     for src in cfg.get("sources", []) + cfg.get("apartment_associations", []):
         if src.get("group", "associations") not in only or src.get("disabled"):
             continue
-        runner = run_informa if src.get("parser") == "informa" else run_page_source
         try:
-            evs, r = runner(fetcher, src, today, debug_dir)
+            if src.get("parser") == "narpm_chapters":
+                evs, r = run_narpm_chapters(fetcher, src, today, debug_dir, save=save)
+            else:
+                runner = run_informa if src.get("parser") == "informa" else run_page_source
+                evs, r = runner(fetcher, src, today, debug_dir)
         except Exception as err:   # one broken source never stops the run
             evs, r = [], [{"source": src["id"], "url": src.get("url", ""), "status": f"error: {err}"[:160], "events": 0, "note": ""}]
         print(f"  {src['id']}: {len(evs)} events", flush=True)
@@ -1093,7 +1374,8 @@ def main(argv=None) -> int:
         rows += crows
 
     priority = {s["id"]: s.get("priority", 5) for s in cfg.get("sources", []) + cfg.get("apartment_associations", [])}
-    events = dedupe([e for e in events if keep(e, today, horizon, cfg)], priority)
+    events = drop_crossposts([e for e in events if keep(e, today, horizon, cfg)], cfg)
+    events = dedupe(events, priority)
     healthy = lambda st: st == "ok" or st.startswith("skipped")
     by_src = {}
     for r in rows:

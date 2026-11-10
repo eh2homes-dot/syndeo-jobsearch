@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Meetup//RemoteApi//EN
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20261015T173000
+DTEND;TZID=America/New_York:20261015T193000
+SUMMARY:Baltimore/Washington NARPM Fall Happy Hour
+URL:https://www.meetup.com/baltimore-washington-narpm-chapter/events/308610231/
+LOCATION:Silver Diner (12276 Rockville Pike\, Rockville\, MD)
+END:VEVENT
+END:VCALENDAR

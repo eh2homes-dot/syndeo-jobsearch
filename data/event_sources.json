@@ -7,6 +7,7 @@
     "weeks": 8,
     "max_per_source": {"bisnow": 6},
     "max_company_events": 10,
+    "max_chapter_events": 6,
     "max_just_announced": 5
   },
   "sources": [
@@ -30,6 +31,52 @@
 
     {"id": "narpm-state", "name": "NARPM", "group": "associations", "priority": 2, "parser": "title_date",
      "url": "https://www.narpm.org/national-conferences/conferences/"},
+
+    {"id": "narpm-calendar", "name": "NARPM", "group": "associations", "priority": 2, "parser": "generic", "may_be_empty": true,
+     "_note": "NARPM's national events calendar (read through its iCal export). Often empty; new national events land here.",
+     "url": "https://www.narpm.org/events/"},
+
+    {"id": "narpm-courses", "name": "NARPM", "group": "associations", "priority": 3, "parser": "date_heading",
+     "kind": "education", "may_be_empty": true,
+     "url": "https://www.narpm.org/education/course-schedule/"},
+
+    {"id": "narpm-webinars", "name": "NARPM", "group": "associations", "priority": 3, "parser": "title_date",
+     "kind": "education", "online": true, "may_be_empty": true,
+     "url": "https://www.narpm.org/education/webinars/"},
+
+    {"id": "narpm-chapters", "name": "NARPM chapters", "group": "associations", "priority": 3, "parser": "narpm_chapters",
+     "_how_to_edit": "Chapter sites are found automatically from narpm.org's chapter finder and saved in data/narpm_chapters.json (refreshed every refresh_days). To fix one by hand, edit its entry there and add \"manual\": true; add \"events_url\" if its calendar isn't at <site>/events, or \"disabled\": true to skip it.",
+     "finder_url": "https://www.narpm.org/find/chapters/",
+     "info_url": "https://www.narpm.org/find/chapters?a=chapterinfo&chap={code}&submitted=true",
+     "refresh_days": 28,
+     "max_lookups_per_run": 80,
+     "seed": [
+       {"code": "C002", "name": "Houston", "site": "https://narpmhouston.wildapricot.org/"},
+       {"code": "C003", "name": "Colorado Springs", "site": "https://coloradosprings.narpm.org/"},
+       {"code": "C004", "name": "Sacramento", "site": "https://sacramento.narpm.org/"},
+       {"code": "C005", "name": "Atlanta", "site": "https://chapters.narpm.org/atlanta/"},
+       {"code": "C008", "name": "Greater Dallas", "site": "https://chapters.narpm.org/dallas/"},
+       {"code": "C011", "name": "Greater Portland", "site": "https://chapters.narpm.org/portland/"},
+       {"code": "C014", "name": "Fort Worth/Mid Cities", "site": "https://chapters.narpm.org/ftworth/"},
+       {"code": "C017", "name": "Alameda/Contra Costa Counties", "site": "https://chapters.narpm.org/alamedac/"},
+       {"code": "C021", "name": "Pierce County", "site": "https://piercecounty.narpm.org/"},
+       {"code": "C043", "name": "Northern Virginia", "site": "https://chapters.narpm.org/nvirginia/"},
+       {"code": "C045", "name": "Northern Colorado", "site": "https://ncolorado.narpm.org/"},
+       {"code": "C072", "name": "Baltimore/Washington", "site": "https://www.meetup.com/baltimore-washington-narpm-chapter/events/"},
+       {"code": "C081", "name": "Western Colorado", "site": "https://westernco.narpm.org/"},
+       {"code": "C090", "name": "Charleston", "site": "https://chapters.narpm.org/charleston/"},
+       {"code": "C091", "name": "Southwest Florida", "site": "https://southwestflorida.narpm.org/"},
+       {"code": "C095", "name": "Lakeland", "site": "https://lakeland.narpm.org/"},
+       {"code": "S006", "name": "Texas State", "site": "https://texas.narpm.org/"},
+       {"code": "S008", "name": "Pennsylvania State", "site": "https://pennsylvania.narpm.org/"},
+       {"code": "S010", "name": "Arizona State", "site": "https://arizona.narpm.org/"},
+       {"name": "Northern Nevada", "site": "https://chapters.narpm.org/northernnevada/"},
+       {"name": "Southeast Florida", "site": "https://chapters.narpm.org/southeastflorida/"},
+       {"name": "Greater Snohomish County", "site": "https://chapters.narpm.org/snohomish/"},
+       {"name": "Greater Philadelphia", "site": "https://chapters.narpm.org/philadelphia/"},
+       {"name": "Northwest Counties", "site": "https://chapters.narpm.org/nwwa/"},
+       {"name": "Northern California Central Valley", "site": "https://northerncalifornia.narpm.org/"}
+     ]},
 
     {"id": "nmhc", "name": "NMHC", "group": "associations", "priority": 2, "parser": "title_date",
      "url": "https://www.nmhc.org/meetings/calendar/upcoming-meetings/"},
