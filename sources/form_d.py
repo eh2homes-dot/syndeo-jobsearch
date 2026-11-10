@@ -346,8 +346,10 @@ def collect(companies, lookback_days: int, seen: SeenStore) -> list[Move]:
             # A longer name that starts with the company's. Keep it only when the
             # issuer is in the company's own state, and say plainly it is unchecked.
             if not ours or ours != theirs:
-                log.debug("  %s: skipped '%s' (similar name, state %s vs %s)",
-                          company.name, entity, theirs or "?", ours or "?")
+                log.info("  skipped '%s' (%s): its name starts like %s, but the issuer's state "
+                         "doesn't match the one on the list (%s)",
+                         entity, theirs.upper() or "state unknown", company.name,
+                         ours.upper() or "none on file")
                 continue
         # Same name, but the filing gives a different state from the one on the
         # list: two companies can share a name, so this one is not Confirmed.
