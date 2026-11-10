@@ -478,14 +478,55 @@ def load_live_companies(url: str) -> tuple[list[Company], str]:
 # ==========================================================================
 
 class RoleFilter:
-    """Title-keyword filter, configured in opco_config.yml."""
+    """Title-keyword filter, configured in opco_config.yml.
+
+    Three layers, checked in this order:
+
+      exclude    site-level and hourly roles; always wins
+      segments   which kind of company this is (scattered-site operator,
+                 multifamily manager, other real estate). A segment can limit
+                 which categories count and can require a senior word.
+      include    the categories, first match wins. A category is either a plain
+                 list of words, or {match, level, always, unless}:
+                   match   the function (maintenance, accounting...)
+                   level   the title must also carry one of these (manager, director...)
+                   always  matches on its own, no level needed (controller)
+                   unless  never this category if the title has one of these
+    """
 
     def __init__(self, cfg: dict):
         def rx(words):
-            return re.compile(r"\b(" + "|".join(words) + r")\b", re.I) if words else None
+            return re.compile(r"\b(" + "|".join(str(w) for w in words) + r")\b", re.I) if words else None
 
-        self.include = {k: rx(v) for k, v in (cfg.get("include") or {}).items()}
+        levels = {k: rx(v) for k, v in (cfg.get("levels") or {}).items()}
+
+        def level(v):
+            return levels.get(v) if isinstance(v, str) else rx(v or [])
+
+        self.include = {}
+        for category, spec in (cfg.get("include") or {}).items():
+            if not isinstance(spec, dict):
+                spec = {"match": spec}
+            self.include[category] = {"match": rx(spec.get("match") or []), "level": level(spec.get("level")),
+                                      "always": rx(spec.get("always") or []), "unless": rx(spec.get("unless") or [])}
+        self.labels = {**CATEGORY_LABEL, **{k: str(v) for k, v in (cfg.get("labels") or {}).items()}}
         self.exclude = rx(cfg.get("exclude") or [])
+
+        # Company segments, in the order the brief shows them.
+        self.segments = []
+        for seg in cfg.get("segments") or []:
+            self.segments.append({
+                "key": seg["key"], "label": seg.get("label") or seg["key"],
+                "segment_has": rx(seg.get("segment_has") or []),
+                "companies": rx(seg.get("companies") or []),
+                "categories": set(seg["categories"]) if seg.get("categories") else None,
+                "require": rx(seg.get("require") or []),
+                "default": bool(seg.get("default")),
+            })
+        self.blank_segment = cfg.get("blank_segment") or ""
+        self.company_segment: dict[str, str] = {}     # company name (lowercase) -> segment key
+        self.segment_assumed: list[str] = []          # companies whose Industry Segment is blank
+
         self.overrides = {}
         self.search_terms = {}
         self.trusted_pages = set()   # pages whose listings skip the "looks like jobs" check
@@ -504,6 +545,47 @@ class RoleFilter:
     def load(cls, path: Path) -> "RoleFilter":
         return cls(yaml.safe_load(path.read_text(encoding="utf-8")) or {})
 
+    # -- segments ----------------------------------------------------------
+
+    def _segment(self, key: str) -> dict | None:
+        return next((s for s in self.segments if s["key"] == key), None)
+
+    def segment_label(self, key: str) -> str:
+        seg = self._segment(key)
+        return seg["label"] if seg else key
+
+    def place(self, name: str, industry_segment: str) -> str:
+        """Which segment a company belongs to. A company named in a segment's
+        `companies` goes there; otherwise the sheet's Industry Segment decides;
+        a blank Industry Segment goes to `blank_segment`; anything left goes to
+        the segment marked default."""
+        if not self.segments:
+            return ""
+        for seg in self.segments:
+            if seg["companies"] and seg["companies"].search(name):
+                return seg["key"]
+        text = (industry_segment or "").strip()
+        if text:
+            for seg in self.segments:
+                if seg["segment_has"] and seg["segment_has"].search(text):
+                    return seg["key"]
+        elif self.blank_segment and self._segment(self.blank_segment):
+            self.segment_assumed.append(name)
+            return self.blank_segment
+        fallback = next((s for s in self.segments if s["default"]), self.segments[-1])
+        return fallback["key"]
+
+    def assign(self, companies) -> None:
+        """Place every company on the list in its segment, once per run."""
+        self.segment_assumed = []
+        self.company_segment = {c.name.lower(): self.place(c.name, getattr(c, "segment", ""))
+                                for c in companies}
+
+    def segment_of(self, company: str) -> str:
+        return self.company_segment.get((company or "").lower(), "")
+
+    # -- roles -------------------------------------------------------------
+
     def categorize(self, title: str, company: str = "") -> str | None:
         """Return the matched category, or None if the role is filtered out."""
         t = title or ""
@@ -517,8 +599,18 @@ class RoleFilter:
             if rule["require"] and not rule["require"].search(t):
                 return None
 
-        for category, pattern in self.include.items():
-            if pattern and pattern.search(t):
+        seg = self._segment(self.segment_of(company))
+        if seg and seg["require"] and not seg["require"].search(t):
+            return None
+
+        for category, spec in self.include.items():
+            if seg and seg["categories"] is not None and category not in seg["categories"]:
+                continue
+            if spec["unless"] and spec["unless"].search(t):
+                continue
+            if spec["always"] and spec["always"].search(t):
+                return category
+            if spec["match"] and spec["match"].search(t) and (not spec["level"] or spec["level"].search(t)):
                 return category
         return None
 
@@ -540,7 +632,7 @@ def plain_error(exc: Exception) -> str:
 
 
 CATEGORY_LABEL = {"executive": "Executive", "sales": "Sales", "gtm": "GTM",
-                  "engineering": "Engineering", "operators": "Operators"}
+                  "engineering": "Engineering", "operators": "Operators"}   # opco_config.yml `labels` adds to these
 
 
 def _line(r: dict) -> str:
@@ -627,47 +719,19 @@ def _attention(results: dict) -> list[str]:
     return md
 
 
-def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
-                 out_dir: Path, source: str) -> Path:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    open_roles = [r for c in results.values() for r in c.get("filtered", [])]
-    with_roles = sorted({r["company"] for r in open_roles})
-    readable = sum(1 for c in results.values() if c["status"] in ("ok", "stale"))
-
-    md = [f"# OpCo job search — week of {run_date}", "",
-          f"{len(open_roles)} matching roles across {len(with_roles)} companies. "
-          f"{readable} of {len(results)} companies read from their Column D.", "",
-          f"Company list read from: **{source}**.", "",
-          "> Open each link before it goes in the newsletter. Postings move.", ""]
-    md += _attention(results)
-
-    if first_run:
-        md += ["*First run of this version: this is the baseline. New-this-week and "
-               "recently-closed start next week.*", ""]
-    else:
-        md += [f"## New this week ({len(diff['new'])})", ""]
-        md += ([f"- **{r['company']}** · {CATEGORY_LABEL.get(r['category'], r['category'])} · {_line(r)}"
-                for r in sorted(diff["new"], key=lambda x: (x["company"], x["title"]))]
-               or ["No new matching roles."])
-        md += ["", f"## Recently closed ({len(diff['closed'])})", "",
-               "*Open last week, gone now — the \"recently hired\" signal. Closed usually means "
-               "filled, but can mean pulled. Companies that failed this week are left out.*", ""]
-        md += ([f"- **{r['company']}** · {r['title']}" + (f" — {r['location']}" if r.get("location") else "")
-                for r in sorted(diff["closed"], key=lambda x: (x["company"], x["title"]))]
-               or ["No matching roles closed."])
-        md.append("")
-
-    md += ["## All open roles", ""]
-    for company in with_roles:
-        roles = [r for r in open_roles if r["company"] == company]
+def _role_lines(roles: list[dict], results: dict, labels: dict, heading: str) -> list[str]:
+    """Open roles grouped by company, each line labelled with its category."""
+    md = []
+    for company in sorted({r["company"] for r in roles}):
+        mine = [r for r in roles if r["company"] == company]
         c = results[company]
-        md.append(f"### {company} ({len(roles)})"
+        md.append(f"{heading} {company} ({len(mine)})"
                   + (f" — *carried forward from {c.get('stale_since')}*" if c["status"] == "stale" else ""))
         groups: dict[tuple, list] = {}
-        for r in roles:
+        for r in mine:
             groups.setdefault((r["category"], r["title"]), []).append(r)
         for (category, title), group in sorted(groups.items()):
-            label = CATEGORY_LABEL.get(category, category)
+            label = labels.get(category, category)
             if len(group) == 1:
                 md.append(f"- {label} · {_line(group[0])}")
             else:
@@ -675,17 +739,100 @@ def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
                 where = f" — {', '.join(places[:5])}{'…' if len(places) > 5 else ''}" if places else ""
                 md.append(f"- {label} · [{title}]({group[0]['url']}) **({len(group)} openings)**{where}")
         md.append("")
+    return md
+
+
+def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
+                 out_dir: Path, source: str, role_filter: "RoleFilter | None" = None) -> Path:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    labels = role_filter.labels if role_filter else CATEGORY_LABEL
+    segments = role_filter.segments if role_filter else []
+
+    def seg_of(company: str) -> str:
+        return (results.get(company) or {}).get("segment", "")
+
+    open_roles = [{**r, "segment": seg_of(r["company"])} for c in results.values() for r in c.get("filtered", [])]
+    new = [{**r, "segment": seg_of(r["company"])} for r in diff["new"]]
+    closed = [{**r, "segment": seg_of(r["company"])} for r in diff["closed"]]
+    with_roles = sorted({r["company"] for r in open_roles})
+    readable = sum(1 for c in results.values() if c["status"] in ("ok", "stale"))
+
+    def in_seg(items, key):
+        return [r for r in items if r["segment"] == key]
+
+    title = "Property operations job search" if segments else "OpCo job search"
+    md = [f"# {title} — week of {run_date}", "",
+          f"{len(open_roles)} matching roles across {len(with_roles)} companies. "
+          f"{readable} of {len(results)} companies read from their Column D.", ""]
+    if segments:
+        md += ["| Segment | Companies on the list | Hiring in scope | Matching roles | New | Closed |",
+               "|---|---|---|---|---|---|"]
+        for seg in segments:
+            k = seg["key"]
+            on_list = sum(1 for c in results.values() if c.get("segment") == k)
+            md.append(f"| {seg['label']} | {on_list} | {len({r['company'] for r in in_seg(open_roles, k)})} | "
+                      f"{len(in_seg(open_roles, k))} | {len(in_seg(new, k))} | {len(in_seg(closed, k))} |")
+        md.append("")
+    md += [f"Company list read from: **{source}**.", "",
+           "> Open each link before it goes in the newsletter. Postings move.", ""]
+    md += _attention(results)
+    if role_filter and role_filter.segment_assumed:
+        names = ", ".join(sorted(role_filter.segment_assumed))
+        md += [f"### Industry Segment is blank ({len(role_filter.segment_assumed)})", "",
+               f"*Treated as {role_filter.segment_label(role_filter.blank_segment)}. Fill in the Industry "
+               "Segment column on the OpCo tab to place them yourself.*", "", f"- {names}", ""]
+
+    def new_line(r):
+        return f"- **{r['company']}** · {labels.get(r['category'], r['category'])} · {_line(r)}"
+
+    def closed_line(r):
+        return f"- **{r['company']}** · {r['title']}" + (f" — {r['location']}" if r.get("location") else "")
+
+    def by_segment(items, line, empty):
+        """One list, or one list per segment in the order the config gives them."""
+        ordered = sorted(items, key=lambda x: (x["company"], x["title"]))
+        if not segments:
+            return [line(r) for r in ordered] or [empty]
+        out = []
+        for seg in segments:
+            mine = in_seg(ordered, seg["key"])
+            if mine:
+                out += [f"### {seg['label']} ({len(mine)})", ""] + [line(r) for r in mine] + [""]
+        return out or [empty]
+
+    if first_run:
+        md += ["*First run of this version: this is the baseline. New-this-week and "
+               "recently-closed start next week.*", ""]
+    else:
+        md += [f"## New this week ({len(new)})", ""]
+        md += by_segment(new, new_line, "No new matching roles.")
+        md += ["", f"## Recently closed ({len(closed)})", "",
+               "*Open last week, gone now — the \"recently hired\" signal. Closed usually means "
+               "filled, but can mean pulled. Companies that failed this week are left out.*", ""]
+        md += by_segment(closed, closed_line, "No matching roles closed.")
+        md.append("")
+
+    md += ["## All open roles", ""]
+    if segments:
+        for seg in segments:
+            mine = in_seg(open_roles, seg["key"])
+            if mine:
+                md += [f"### {seg['label']} ({len(mine)})", ""]
+                md += _role_lines(mine, results, labels, "####")
+    else:
+        md += _role_lines(open_roles, results, labels, "###")
 
     md += ["## Coverage", "",
-           "| Company | Column D | System | Status | Roles (all / matching) | Note |",
-           "|---|---|---|---|---|---|"]
+           "| Company | Segment | Column D | System | Status | Roles (all / matching) | Note |",
+           "|---|---|---|---|---|---|---|"]
     for n, c in sorted(results.items(), key=lambda kv: (STATUS_ORDER.get(kv[1]["status"], 9), kv[0])):
         d = c.get("column_d") or ""
         shown = f"[{d.split('//')[-1][:45]}]({d})" if d.startswith("http") else (d[:45] or "— empty")
         if d and str(c.get("column_d_from", "")).startswith("Column B"):
             shown += " *(from Column B)*"
         note = (c.get("reason") or c.get("note") or "").replace("|", "/")
-        md.append(f"| {n} | {shown} | {c.get('system') or '—'} | {c['status']} | "
+        seg_label = role_filter.segment_label(c.get("segment", "")) if role_filter and c.get("segment") else "—"
+        md.append(f"| {n} | {seg_label} | {shown} | {c.get('system') or '—'} | {c['status']} | "
                   f"{c.get('total', 0)} / {len(c.get('filtered', []))} | {note} |")
     counts: dict[str, int] = {}
     for c in results.values():
@@ -698,27 +845,30 @@ def write_report(results: dict, diff: dict, run_date: str, first_run: bool,
     path.write_text(text, encoding="utf-8")
     (out_dir / "opco-jobs-latest.md").write_text(text, encoding="utf-8")
     (out_dir / "opco-jobs-latest.json").write_text(json.dumps({
-        "run_date": run_date, "roles": open_roles, "new": diff["new"], "closed": diff["closed"],
+        "run_date": run_date, "roles": open_roles, "new": new, "closed": closed,
+        "segments": [{"key": seg["key"], "label": seg["label"]} for seg in segments],
         "coverage": {n: {k: v for k, v in c.items() if k not in ("roles", "filtered")}
                      for n, c in results.items()},
     }, indent=2), encoding="utf-8")
     # Every job read, matching or not, with its link: for checking the scraper
     # read the right jobs from the right companies.
     with (out_dir / f"opco-jobs-all-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=["company", "title", "location", "url", "posted",
-                                           "in_scope", "column_d", "company_linkedin"])
+        w = csv.DictWriter(fh, fieldnames=["company", "segment", "title", "location", "url", "posted",
+                                           "in_scope", "category", "column_d", "company_linkedin"])
         w.writeheader()
         for n, c in sorted(results.items()):
-            in_scope = {r["id"] for r in c.get("filtered", [])}
+            in_scope = {r["id"]: r["category"] for r in c.get("filtered", [])}
             for r in c.get("roles", []):
-                w.writerow({"company": n, "title": r.get("title", ""), "location": r.get("location", ""),
+                w.writerow({"company": n, "segment": c.get("segment", ""),
+                            "title": r.get("title", ""), "location": r.get("location", ""),
                             "url": r.get("url", ""), "posted": r.get("posted", ""),
                             "in_scope": "yes" if r.get("id") in in_scope else "no",
+                            "category": in_scope.get(r.get("id"), ""),
                             "column_d": c.get("column_d", ""),
                             "company_linkedin": c.get("company_linkedin", "")})
 
     with (out_dir / f"opco-jobs-{run_date}.csv").open("w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=["company", "category", "title", "location", "url",
+        w = csv.DictWriter(fh, fieldnames=["company", "segment", "category", "title", "location", "url",
                                            "posted", "status", "company_linkedin"])
         w.writeheader()
         for r in open_roles:
@@ -810,6 +960,7 @@ def main() -> int:
 
     remove_legacy_state()
     role_filter = RoleFilter(config)
+    role_filter.assign(companies)
     baseline = Baseline()
     first_run = not baseline.data
 
@@ -835,6 +986,7 @@ def main() -> int:
             result = {"column_d": company.careers_url, "column_d_from": company.careers_from,
                       "system": "", "board": "", "note": "", "status": "failed",
                       "reason": plain_error(exc), "roles": [], "filtered": [], "total": 0}
+        result["segment"] = role_filter.segment_of(company.name)
         results[company.name] = result
         log.info("[%2d/%d] %-34s %-11s %-11s %d/%d", i, len(companies), company.name[:34],
                  result.get("system") or "-", result["status"],
@@ -847,7 +999,7 @@ def main() -> int:
     diff = {"new": [], "closed": []} if first_run else compute_diff(results, baseline, role_filter)
     baseline.save(results)
     try:
-        path = write_report(results, diff, baseline.run_date, first_run, Path(args.out), source)
+        path = write_report(results, diff, baseline.run_date, first_run, Path(args.out), source, role_filter)
     except Exception:  # noqa: BLE001 - always leave something readable
         log.error("report failed, writing a plain fallback\n%s", traceback.format_exc())
         out_dir = Path(args.out)

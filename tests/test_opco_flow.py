@@ -185,3 +185,92 @@ def test_careers_page_that_is_down_keeps_last_weeks_roles_or_asks_for_a_link():
     assert seen_before["status"] == "stale" and len(seen_before["filtered"]) == 1
     never_seen = read("Acme", "https://www.acme.test/careers", _baseline({}), **down)
     assert never_seen["status"] == "needs-link" and "doesn't load" in never_seen["reason"]
+
+
+# --------------------------------------------------------------------------
+# The property operations lens: the real opco_config.yml, checked on real titles.
+# --------------------------------------------------------------------------
+
+def _lens():
+    import yaml
+    f = O.RoleFilter(yaml.safe_load((ROOT / "opco_config.yml").read_text()))
+    L = lambda name, seg: O.Company(name=name, segment=seg)   # noqa: E731
+    f.assign([L("Evernest", "SFR Property Management"), L("Blank Co", ""), L("BH", "Multifamily Property Management"),
+              L("Lamar", "Outdoor Advertising REIT"), L("Flock Homes", "SFR 1031 Exchange Platform"),
+              L("Doorstead", "Guaranteed-Rent Property Management"), L("Atria", "Senior Living Property Management")])
+    return f
+
+
+def test_companies_are_placed_by_the_sheets_industry_segment():
+    f = _lens()
+    assert [f.segment_of(n) for n in ("Evernest", "Flock Homes", "Doorstead")] == ["scattered_site"] * 3
+    assert f.segment_of("BH") == "multifamily"
+    assert f.segment_of("Lamar") == "other" and f.segment_of("Atria") == "other"
+    assert f.segment_of("Blank Co") == "scattered_site" and f.segment_assumed == ["Blank Co"]   # blank goes to the tab's focus, and is reported
+
+
+def test_scattered_site_operators_get_the_operator_lens():
+    f = _lens()
+    want = {
+        "Senior Property Manager": "operations",
+        "Operations Manager - Nashville, TN": "operations",
+        "Director of Customer Experience": "operations",
+        "Manager, Resident Experience (Delinquency & Eviction Specialist)": "operations",
+        "Portfolio Asset Manager": "asset_management",
+        "Analyst, SFR Asset Management": "asset_management",
+        "Corporate Development Associate - Nationwide, US": "asset_management",
+        "Supervisor, Maintenance Dispatch, Dallas, TX": "maintenance_construction",
+        "Renovations Project Manager (Ohio, Field-Based)": "maintenance_construction",
+        "Sr. Manager Construction Operations": "maintenance_construction",
+        "Director of Property Accounting": "finance",
+        "Business Development Manager": "growth",
+        "Head of Engineering": "executive",
+        "Full Stack Software Engineer": "technology",
+        "VP of Maintenance": "executive",
+    }
+    assert {t: f.categorize(t, "Evernest") for t in want} == want
+
+
+def test_site_level_and_hourly_roles_stay_out():
+    f = _lens()
+    out = ["Maintenance Technician", "Community Maintenance Tech - Charlotte, North Carolina", "Assistant Property Manager",
+           "Leasing Agent", "Showing Agent - Rental Property Showings", "Maintenance Coordinator", "Property Accountant",
+           "Utility Specialist - Single Family Rental Property Operations", "Senior Legal Operations Manager",
+           "1099 Real Estate Advisor", "Future Opening: Business Development Representative", "Property Accounting Intern",
+           "Copia - Técnico de mantenimiento", "Handyman - Kansas City Metro", "Community Manager, BTR"]
+    assert [t for t in out if f.categorize(t, "Evernest")] == []
+
+
+def test_multifamily_is_corporate_and_leadership_only():
+    f = _lens()
+    assert f.categorize("Regional Manager - DFW", "BH") == "operations"
+    assert f.categorize("Acquisitions Manager", "BH") == "asset_management"
+    assert f.categorize("Operations Manager", "BH") is None and f.categorize("Maintenance Supervisor", "BH") is None
+    assert f.categorize("Operations Manager", "Evernest") == "operations"          # same title, scattered-site operator
+
+
+def test_other_real_estate_reports_leadership_and_asset_management_only():
+    f = _lens()
+    assert f.categorize("Sales Account Executive", "Lamar") is None
+    assert f.categorize("Software Engineer", "Lamar") is None
+    assert f.categorize("Vice President, Commercial Asset Management", "Lamar") == "executive"
+    assert f.categorize("Hotel Asset Management Associate", "Lamar") == "asset_management"
+
+
+def test_brief_is_grouped_by_segment(tmp_path, monkeypatch):
+    monkeypatch.setattr(O, "remove_legacy_state", lambda: None)
+    csv_path, out = tmp_path / "opco.csv", tmp_path / "out"
+    csv_path.write_text(HEADER + "Acme,https://www.acme.test,NC,https://job-boards.greenhouse.io/acme,,SFR Property Management,,TRUE\n"
+                                 "Lamar,https://lamar.test,LA,https://recruiting2.ultipro.com/ACM1000ACME/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/,,Outdoor Advertising REIT,,TRUE\n"
+                                 "NoSeg,https://noseg.test,TX,,,,,FALSE\n")
+    monkeypatch.setattr(sys, "argv", ["opco_search.py", "--companies", str(csv_path), "--config", str(ROOT / "opco_config.yml"),
+                                      "--out", str(out), "--no-browser"])
+    with fakenet.serve(ROUTES):
+        assert O.main() == 0
+    latest = json.loads((out / "opco-jobs-latest.json").read_text())
+    assert [s["key"] for s in latest["segments"]] == ["scattered_site", "multifamily", "other"]
+    assert {c: v["segment"] for c, v in latest["coverage"].items()} == {"Acme": "scattered_site", "Lamar": "other", "NoSeg": "scattered_site"}
+    assert latest["roles"] and all(r["segment"] == "scattered_site" for r in latest["roles"])   # the REIT's sales roles are gone
+    brief = (out / "opco-jobs-latest.md").read_text()
+    assert brief.startswith("# Property operations job search")
+    assert "### Scattered-site & SFR operators" in brief and "Industry Segment is blank (1)" in brief and "- NoSeg" in brief

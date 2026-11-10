@@ -9,6 +9,31 @@ Two weekly searches share one set of readers.
 | Which job board | `data/ats_map.json` | whatever Column D is |
 | Remembers | `data/history.json` | `state/opco/baseline.json` |
 | Writes | `output/<date>/`, `output/newsletter/` | `out/opco-jobs-*.md/.csv/.json` |
+| Looks for | proptech talent: Leadership, GTM & Sales, Product & Engineering (`config.json` -> `role_filter`) | property operations talent (`opco_config.yml`) |
+
+## Two searches, two lenses
+
+The weekly search is the **proptech** search. The OpCo search is the **property
+operations** search, and it reads operators differently from software companies:
+
+- **Segments.** Each company on the OpCo tab is placed by its Industry Segment
+  column: *Scattered-site & SFR operators* first, then *Multifamily &
+  residential managers*, then *Other real estate* (REITs, flex space, senior
+  living). The brief, the CSVs and the JSON are grouped the same way. A blank
+  Industry Segment is treated as scattered-site and listed in the brief so it
+  can be filled in.
+- **Categories.** Leadership; Asset Management & Investments; Maintenance,
+  Turns & Construction; Technology & Data; Finance & Accounting; Growth &
+  Sales; Property Operations. Maintenance, finance and operations roles need a
+  manager-or-above word in the title, so a Director of Maintenance is in and a
+  Maintenance Technician is out.
+- **Scope by segment.** Scattered-site operators get every category.
+  Multifamily managers are corporate and leadership only (the Greystar rule).
+  Other real estate reports leadership and asset management only, which keeps a
+  billboard REIT's sales reps and a fiber REIT's engineers out of the brief.
+
+Everything read is still written to `out/opco-jobs-all-<date>.csv` with an
+`in_scope` and `category` column, so what the lens left out can be checked.
 
 ## How a company is read
 
