@@ -166,7 +166,7 @@ def load(path: str | Path) -> list[Company]:
     if not path.exists():
         raise FileNotFoundError(
             f"{path} not found. Export the master sheet to CSV and save it there "
-            f"(see people-moves/README.md)."
+            f"(see docs/people-moves.md)."
         )
 
     with path.open(newline="", encoding="utf-8-sig") as fh:
