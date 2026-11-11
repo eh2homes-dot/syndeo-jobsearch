@@ -42,20 +42,36 @@
      "event_name": "Build-to-Rent Conference",
      "url": "https://www.buildtorentconference.com/"},
 
-    {"id": "uli-meetings", "name": "ULI", "group": "uli", "priority": 2, "parser": "year_table",
+    {"id": "uli-meetings", "name": "ULI", "group": "uli", "disabled": true, "_disabled_why": "ULI returns 403 to GitHub's servers (Nov 2026). Set disabled to false to retry; until then dates go in uli-manual.", "priority": 2, "parser": "year_table",
      "_note": "ULI Spring and Fall Meetings, from the 'Future ULI Meetings' table.",
      "url": "https://fall.uli.org/future-meetings/"},
 
-    {"id": "uli-housing", "name": "ULI", "group": "uli", "priority": 2, "parser": "single_event",
+    {"id": "uli-housing", "name": "ULI", "group": "uli", "disabled": true, "_disabled_why": "ULI returns 403 to GitHub's servers (Nov 2026). Set disabled to false to retry; until then dates go in uli-manual.", "priority": 2, "parser": "single_event",
      "event_name": "ULI Housing Opportunity Conference",
      "url": "https://housingconference.uli.org/"},
 
-    {"id": "uli-events", "name": "ULI", "group": "uli", "priority": 3, "parser": "generic", "us_only": true,
+    {"id": "uli-events", "name": "ULI", "group": "uli", "disabled": true, "_disabled_why": "ULI returns 403 to GitHub's servers (Nov 2026). Set disabled to false to retry; until then dates go in uli-manual.", "priority": 3, "parser": "generic", "us_only": true,
      "_note": "ULI's national and district council events. Mostly commercial real estate, so only housing / rental / build-to-rent titles are kept (title_keywords).",
      "urls": ["https://americas.uli.org/events/", "https://uli.org/events/"],
      "title_keywords": ["housing", "residential", "rental", "\\brent", "multi.?family", "single.family", "build.to.rent",
                         "\\bbtr\\b", "apartment", "home.?build", "affordab", "workforce", "attainable", "\\bhomes?\\b",
                         "missing middle", "manufactured"]},
+
+    {"id": "uli-manual", "name": "ULI", "group": "uli", "priority": 2, "parser": "manual",
+     "_how_to_edit": "ULI blocks the scraper, so its big meetings are typed in here. Checked monthly against https://fall.uli.org/future-meetings/ and https://housingconference.uli.org/. Add housing-related district council events here too. Dates are YYYY-MM-DD; past events drop off on their own.",
+     "events": [
+       {"title": "2027 ULI Spring Meeting", "start": "2027-05-11", "end": "2027-05-13",
+        "location": "Seattle Convention Center, Summit Building, Seattle, WA", "url": "https://spring.uli.org/"},
+       {"title": "2028 ULI Spring Meeting", "start": "2028-05-01", "end": "2028-05-03",
+        "location": "Atlanta Marriott Marquis, Atlanta, GA", "url": "https://spring.uli.org/"},
+       {"title": "2028 ULI Fall Meeting", "start": "2028-10-02", "end": "2028-10-05",
+        "location": "Boston Convention and Exhibition Center, Boston, MA", "url": "https://fall.uli.org/"}
+     ]},
+
+    {"id": "narpm-manual", "name": "NARPM chapters", "group": "associations", "priority": 3, "parser": "manual",
+     "kind": "chapter",
+     "_how_to_edit": "Events from the 8 StarChapter chapter sites that block the scraper (monthly hand check). Add one entry per event: {\"title\", \"start\": \"YYYY-MM-DD\", \"time\", \"location\", \"url\", \"organizer\": \"NARPM Triangle\"}.",
+     "events": []},
 
     {"id": "narpm-calendar", "name": "NARPM", "group": "associations", "priority": 2, "parser": "generic", "may_be_empty": true,
      "_note": "NARPM's national events calendar (read through its iCal export). Often empty; new national events land here. Answers 404 to the scraper some weeks, so a 404 is logged as skipped, not broken.",

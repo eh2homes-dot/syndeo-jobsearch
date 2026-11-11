@@ -161,7 +161,17 @@ def test_btr_and_uli_sources():
     tmp = pathlib.Path(tempfile.mkdtemp())
     _sandbox(tmp)
     day = dt.date(2026, 11, 11)
-    assert E.main(["--fixtures", str(FX), "--date", day.isoformat(), "--only", "btr,uli,bisnow"]) == 0
+    # ULI's page sources are disabled live (ULI blocks GitHub); switch them back on here to keep the readers tested
+    cfg = json.loads(E.SOURCES.read_text())
+    for s in cfg["sources"]:
+        if s["id"].startswith("uli-"):
+            s.pop("disabled", None)
+    (tmp / "event_sources.json").write_text(json.dumps(cfg))
+    real_sources, E.SOURCES = E.SOURCES, tmp / "event_sources.json"
+    try:
+        assert E.main(["--fixtures", str(FX), "--date", day.isoformat(), "--only", "btr,uli,bisnow"]) == 0
+    finally:
+        E.SOURCES = real_sources
     rows = {r["title"]: r for r in list(csv.DictReader(open(tmp / "output" / day.isoformat() / "events.csv")))}
     # ULI Spring/Fall Meetings from the year table; past meetings dropped, blank cell ignored
     seattle = rows["2027 ULI Spring Meeting"]
@@ -186,7 +196,26 @@ def test_btr_and_uli_sources():
     by_url = {r["url"]: r for r in src}
     assert by_url["https://www.bisnow.com/events/build-to-rent"]["status"] == "ok"
     assert all(r["status"] == "ok" or r["status"].startswith("skipped") for r in src
-               if r["source"] in ("btr-list", "zonda-btr", "uli-meetings", "uli-housing", "uli-events")), src
+               if r["source"] in ("btr-list", "zonda-btr", "uli-meetings", "uli-housing", "uli-events", "uli-manual")), src
+    # hand-entered ULI meeting matches the scraped one: listed once
+    assert sum(t == "2027 ULI Spring Meeting" for t in rows) == 1
+
+
+def test_manual_events():
+    tmp = pathlib.Path(tempfile.mkdtemp())
+    _sandbox(tmp)
+    day = dt.date(2026, 11, 11)
+    # live config: ULI page sources disabled, hand-entered meetings still come through
+    assert E.main(["--fixtures", str(FX), "--date", day.isoformat(), "--only", "uli"]) == 0
+    rows = {r["title"]: r for r in csv.DictReader(open(tmp / "output" / day.isoformat() / "events.csv"))}
+    assert rows["2027 ULI Spring Meeting"]["source"] == "uli-manual" and rows["2027 ULI Spring Meeting"]["city"] == "Seattle"
+    assert "2028 ULI Fall Meeting" not in rows                                   # beyond the 6-month horizon for now
+    src = list(csv.DictReader(open(tmp / "output" / day.isoformat() / "events_sources.csv")))
+    assert [r["source"] for r in src] == ["uli-manual"] and src[0]["status"] == "ok"
+    # a bad date is reported, never crashes the run
+    evs, r = E.run_manual({"id": "x", "name": "X", "events": [{"title": "Oops", "start": "Dec 3"},
+                                                             {"title": "Lunch", "start": "2026-12-03", "kind": "chapter"}]}, day)
+    assert len(evs) == 1 and evs[0]["kind"] == "chapter" and r[0]["status"] == "fix needed" and "Oops" in r[0]["note"]
 
 
 def test_companies_detect_and_classify():

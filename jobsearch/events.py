@@ -748,6 +748,26 @@ def parse_year_table(html: str, base: str, today: dt.date, src: dict) -> list[di
 PARSERS = {"title_date": parse_title_date, "date_title": parse_date_title, "date_heading": parse_date_heading,
            "naa": parse_naa, "bisnow": parse_bisnow, "single_event": parse_single_event, "year_table": parse_year_table}
 
+def run_manual(src: dict, today: dt.date) -> tuple[list[dict], list[dict]]:
+    """Events typed in by hand in event_sources.json, for sites that block the scraper (ULI, StarChapter chapters).
+    Each entry: {"title", "start": "YYYY-MM-DD", "end"?, "location"?, "url"?, "organizer"?, "kind"?, "time"?}."""
+    evs, bad = [], []
+    for m in src.get("events", []):
+        try:
+            s = dt.date.fromisoformat(m["start"])
+            e = dt.date.fromisoformat(m.get("end") or m["start"])
+        except (KeyError, ValueError):
+            bad.append(m.get("title", "?"))
+            continue
+        evs.append(make_event(src["id"], m.get("organizer") or src["name"], m["title"], s, e, m.get("location", ""),
+                              m.get("url", ""), kind=m.get("kind", src.get("kind", "conference")),
+                              time=m.get("time", ""), method="manual"))
+    upcoming = sum(1 for e in evs if e["end"] >= today.isoformat())
+    note = f"hand-entered; {upcoming} upcoming" + (f"; bad date on: {', '.join(bad)}" if bad else "")
+    return evs, [{"source": src["id"], "url": "data/event_sources.json", "events": upcoming,
+                  "status": "ok" if not bad else "fix needed", "note": note}]
+
+
 NON_US = re.compile(r"\b(canada|mexico|cayman|caribbean|bahamas|puerto rico|brazil|colombia|chile|argentina|peru|"
                     r"united kingdom|ireland|germany|france|spain|japan|china|hong kong|singapore|australia|"
                     r"philippines|india|europe|asia pacific|apac|emea)\b", re.I)
@@ -1491,6 +1511,8 @@ def main(argv=None) -> int:
         try:
             if src.get("parser") == "narpm_chapters":
                 evs, r = run_narpm_chapters(fetcher, src, today, debug_dir, save=save)
+            elif src.get("parser") == "manual":
+                evs, r = run_manual(src, today)
             else:
                 runner = run_informa if src.get("parser") == "informa" else run_page_source
                 evs, r = runner(fetcher, src, today, debug_dir)
