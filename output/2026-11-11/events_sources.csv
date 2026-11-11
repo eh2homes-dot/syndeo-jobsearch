@@ -1,0 +1,12 @@
+source,status,events,note,url
+btr-list,ok,0,nothing on topic right now,https://luma.com/calendar/cal-d4arFmRhDVNRNUR
+btr-list,ok,0,nothing listed right now,https://luma.com/user/matthunsucker
+zonda-btr,ok,1,,https://www.buildtorentconference.com/
+uli-meetings,http 403,0,,https://fall.uli.org/future-meetings/
+uli-housing,http 403,0,,https://housingconference.uli.org/
+uli-events,http 403,0,,https://americas.uli.org/events/
+uli-events,http 403,0,,https://uli.org/events/
+bisnow,ok,11,,https://www.bisnow.com/events/multifamily
+bisnow,ok,2,,https://www.bisnow.com/events/property-management
+bisnow,ok,0,page says nothing listed,https://www.bisnow.com/events/technology
+bisnow,ok,0,page says nothing listed,https://www.bisnow.com/events/build-to-rent
