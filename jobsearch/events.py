@@ -1,7 +1,7 @@
 """Weekly events pull: association conferences, Bisnow, and events hosted by master-list companies.
 
     python -m jobsearch.events                        # everything
-    python -m jobsearch.events --only associations     # or bisnow, companies (comma-separated)
+    python -m jobsearch.events --only associations     # or bisnow, btr, uli, companies (comma-separated)
     python -m jobsearch.events --detect                # also look for events pages for companies not mapped yet
     python -m jobsearch.events --fixtures tests/fixtures/events --date 2026-09-28 --dry-run   # offline test
 
@@ -48,6 +48,7 @@ from .adapters import UA
 from .run import LEADS, OUT, ROOT, draft_html, load_json, save_json
 
 SOURCES = ROOT / "data" / "event_sources.json"
+ALL_GROUPS = ("associations", "bisnow", "btr", "uli", "companies")
 HISTORY = ROOT / "data" / "events.json"
 EVENTS_MAP = ROOT / "data" / "events_map.json"
 CHAPTERS_MAP = ROOT / "data" / "narpm_chapters.json"
@@ -162,11 +163,13 @@ def parse_dates(text: str, today: dt.date, default_year: int | None = None):
         s = _safe(yy, mm, int(d))
         if s:
             return s, s, bool(y or default_year)
-    m = ISO_RE.search(t)
-    if m:
+    ms = list(ISO_RE.finditer(t))
+    if ms:   # ULI writes "2026-03-16 - 2026-03-17" and "2026-12-05T19:30:00 - 2026-12-05T22:30:00America/New_York"
+        m = ms[0]
         s = _safe(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        e = _safe(int(ms[1].group(1)), int(ms[1].group(2)), int(ms[1].group(3))) if len(ms) > 1 else None
         if s:
-            return s, s, True
+            return s, (e if e and 0 <= (e - s).days <= 31 else s), True
     return None
 
 
@@ -178,8 +181,11 @@ def _infer_year(month: int, day: int, today: dt.date) -> int:
 def is_mostly_date(text: str, today: dt.date) -> bool:
     """True when a line is basically just a date (plus maybe a time/label), not a sentence with a date in it."""
     t = LABEL_PREFIX.sub("", text)
+    t = re.sub(r"(20\d{2}-\d{2}-\d{2})(?:T[\d:]+)?\s*(?:[A-Z][a-z]+/[A-Za-z_]+)?", r"\1", t)   # drop ISO times + time zone
     if len(t) > 60 or not parse_dates(t, today):
         return False
+    if ISO_RE.search(t) and not RANGE_RE.search(t) and not SINGLE_RE.search(t):
+        return len(re.sub(r"20\d{2}-\d{2}-\d{2}|[-–—\s|,]", " ", t).split()) <= 2
     rest = RANGE_RE.sub("", t) if RANGE_RE.search(t) else SINGLE_RE.sub("", NUM_RE.sub("", DMY_RE.sub("", t)))
     rest = re.sub(r"\d{1,2}(?::\d{2})?\s*(?:am|pm|a\.m\.|p\.m\.)|\d{1,2}:\d{2}|"
                   r"\b(?:am|pm|[ecmp][sd]t|et|ct|mt|pt|bst|gmt|cet|noon|eastern|central|mountain|pacific)\b|[|,\-\u2013\u2014@()]",
@@ -504,7 +510,8 @@ def parse_bisnow(html: str, base: str, today: dt.date, src: dict) -> list[dict]:
         tz = (tm.split()[-1] if tm else "").upper()
         if market in src.get("non_us_markets", []) or tz in {"BST", "GMT", "CET", "CEST", "IST", "WET"}:
             continue
-        if src.get("topics") and topic and topic not in src["topics"]:
+        _tk = lambda s: re.sub(r"[^a-z]", "", s.lower())   # "Build-To-Rent" == "Build-to-Rent"
+        if src.get("topics") and topic and _tk(topic) not in {_tk(x) for x in src["topics"]}:
             continue
         if topic in src.get("topics_needing_keywords", []) and not re.search("|".join(src.get("keywords", ["$^"])), title, re.I):
             continue
@@ -678,13 +685,83 @@ def detail_page_event(html: str, url: str, today: dt.date) -> dict | None:
     return None
 
 
+def parse_single_event(html: str, base: str, today: dt.date, src: dict) -> list[dict]:
+    """A site for one conference (e.g. buildtorentconference.com): its next edition's dates and city.
+    The title comes from "event_name" in the config, since these sites' headings are taglines."""
+    e = detail_page_event(html, base, today)
+    if e is None:   # no H1 near the dates: take the first upcoming date anywhere at the top of the page
+        toks = tokens(soup_of(html))
+        for i, tk in enumerate(toks[:200]):
+            d = parse_dates(tk["t"], today)
+            if d and d[2] and d[0] >= today and len(tk["t"]) < 160:
+                near = [tk["t"]] + [toks[k]["t"] for k in range(max(0, i - 3), min(len(toks), i + 4)) if k != i]
+                loc = next((n for n in near if len(n) < 120 and city_state(n)), "")
+                e = {"title": "", "start": d[0], "end": d[1], "location": loc, "url": base, "time": ""}
+                break
+    if e is None:
+        return []
+    loc = e["location"]
+    if loc and city_state(loc) is None:
+        loc = ""
+    if not loc:   # "Omni Frisco Hotel at The Star | Frisco, TX" style lines near the top
+        loc = next((t["t"] for t in tokens(soup_of(html))[:200] if len(t["t"]) < 120 and city_state(t["t"])), "")
+    title = src.get("event_name") or e["title"]
+    return [make_event(src["id"], src["name"], title, e["start"], e["end"], loc, src.get("event_url") or base,
+                       method="page")]
+
+
+def parse_year_table(html: str, base: str, today: dt.date, src: dict) -> list[dict]:
+    """ULI's 'Future ULI Meetings': a table, one row per year, a column per meeting (Spring / Fall); each cell reads
+    "Seattle, WA, May 11-13, Seattle Convention Center"."""
+    soup = soup_of(html)
+    out = []
+    for table in soup.find_all("table"):
+        rows = table.find_all("tr")
+        if not rows:
+            continue
+        head = [" ".join(c.get_text(" ").split()) for c in rows[0].find_all(["th", "td"])]
+        for tr in rows[1:]:
+            cells = [" ".join(c.get_text(" ").split()) for c in tr.find_all(["th", "td"])]
+            ym = re.search(r"\b(20\d{2})\b", cells[0] if cells else "")
+            if not ym:
+                continue
+            year = int(ym.group(1))
+            for col, text in enumerate(cells[1:], start=1):
+                if not text:
+                    continue
+                m = re.search(rf"{_MON}\.?\s+\d{{1,2}}(?:\s*[-–]\s*(?:{_MON}\.?\s+)?\d{{1,2}})?", text, re.I)
+                if not m:
+                    continue
+                d = parse_dates(f"{m.group(0)}, {year}", today)
+                if not d:
+                    continue
+                meeting = head[col] if col < len(head) and head[col] else "Meeting"
+                loc = text[:m.start()].strip(" ,")
+                venue = text[m.end():].strip(" ,")
+                title = f"{year} ULI {meeting}" if "uli" not in meeting.lower() else f"{year} {meeting}"
+                out.append(make_event(src["id"], src["name"], title, d[0], d[1],
+                                      ", ".join(p for p in (venue, loc) if p), src.get("event_url") or base, method="page"))
+    return out
+
+
 # ================================================================ association + Bisnow runners
 PARSERS = {"title_date": parse_title_date, "date_title": parse_date_title, "date_heading": parse_date_heading,
-           "naa": parse_naa, "bisnow": parse_bisnow}
+           "naa": parse_naa, "bisnow": parse_bisnow, "single_event": parse_single_event, "year_table": parse_year_table}
+
+NON_US = re.compile(r"\b(canada|mexico|cayman|caribbean|bahamas|puerto rico|brazil|colombia|chile|argentina|peru|"
+                    r"united kingdom|ireland|germany|france|spain|japan|china|hong kong|singapore|australia|"
+                    r"philippines|india|europe|asia pacific|apac|emea)\b", re.I)
 
 
 def apply_source_options(evs: list[dict], src: dict) -> list[dict]:
-    """Per-source settings from event_sources.json: "kind" (e.g. education) and "online": true for webinar pages."""
+    """Per-source settings from event_sources.json: "kind" (e.g. education), "online": true for webinar pages,
+    "title_keywords" (keep only matching titles, e.g. housing topics on ULI's busy calendar) and "us_only"."""
+    if src.get("title_keywords"):
+        kw = re.compile("|".join(src["title_keywords"]), re.I)
+        evs = [e for e in evs if kw.search(e["title"])]
+    if src.get("us_only"):
+        evs = [e for e in evs if not NON_US.search(f"{e['title']} {e['location']}") and
+               (e["state"] or not e["city"] or e["location"] == "Online")]
     for e in evs:
         if src.get("kind"):
             e["kind"] = src["kind"]
@@ -711,7 +788,13 @@ def run_page_source(fetcher: Fetcher, src: dict, today: dt.date, debug_dir: Path
         if not evs:
             evs = [make_event(src["id"], src["name"], e["title"], e["start"], e["end"], e["location"], e["url"] or final,
                               time=e.get("time", ""), method="json-ld") for e in jsonld_events(html, final) if e["start"]]
+        found_any = bool(evs)
         evs = apply_source_options(evs, src)
+        if not evs and (found_any or (src.get("empty_marker") and re.search(src["empty_marker"], html, re.I))):
+            # page read fine: it says it has nothing ("No events match this description"), or nothing passed the filters
+            status_rows.append({"source": src["id"], "url": url, "status": "ok", "events": 0,
+                                "note": "nothing on topic right now" if found_any else "page says nothing listed"})
+            continue
         if not evs and src.get("may_be_empty"):   # a calendar that is often empty: zero is normal, not a broken parser
             status_rows.append({"source": src["id"], "url": url, "status": "ok", "events": 0, "note": "nothing listed right now"})
             continue
@@ -1383,7 +1466,7 @@ def write_report(out_dir: Path, events: list[dict], new: list[dict], moved: list
 # ================================================================ main
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--only", default="", help="associations, bisnow, companies (comma-separated); blank = all")
+    ap.add_argument("--only", default="", help=f"{', '.join(ALL_GROUPS)} (comma-separated); blank = all")
     ap.add_argument("--detect", action="store_true", help="look for events pages for companies not mapped yet")
     ap.add_argument("--fixtures", default="")
     ap.add_argument("--date", default="")
@@ -1393,7 +1476,7 @@ def main(argv=None) -> int:
 
     today = dt.date.fromisoformat(args.date) if args.date else dt.date.today()
     cfg = load_json(SOURCES, {})
-    only = {s.strip().lower() for s in args.only.split(",") if s.strip()} or {"associations", "bisnow", "companies"}
+    only = {s.strip().lower() for s in args.only.split(",") if s.strip()} or set(ALL_GROUPS)
     fetcher = Fetcher(Path(args.fixtures) if args.fixtures else None)
     out_root = Path(tempfile.mkdtemp(prefix="events-")) if args.dry_run else OUT
     out_dir = out_root / today.isoformat()
@@ -1443,7 +1526,7 @@ def main(argv=None) -> int:
     write_csv(out_dir / "events_sources.csv", rows, ["source", "status", "events", "note", "url"])
     report = write_report(out_dir, events, new, moved, removed, rows, today)
     nl = write_newsletter(events, today, cfg, out_root, baseline, priority=priority)
-    if only >= {"associations", "bisnow", "companies"}:
+    if only >= set(ALL_GROUPS):
         write_sheet_csv(out_root / "events-latest.csv", events, today, baseline)
     if save:
         save_json(HISTORY, hist)

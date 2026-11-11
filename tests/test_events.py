@@ -157,6 +157,38 @@ def test_narpm_national_and_chapters():
     assert "## NARPM chapter events" in report and "## Courses and webinars" in report
 
 
+def test_btr_and_uli_sources():
+    tmp = pathlib.Path(tempfile.mkdtemp())
+    _sandbox(tmp)
+    day = dt.date(2026, 11, 11)
+    assert E.main(["--fixtures", str(FX), "--date", day.isoformat(), "--only", "btr,uli,bisnow"]) == 0
+    rows = {r["title"]: r for r in list(csv.DictReader(open(tmp / "output" / day.isoformat() / "events.csv")))}
+    # ULI Spring/Fall Meetings from the year table; past meetings dropped, blank cell ignored
+    seattle = rows["2027 ULI Spring Meeting"]
+    assert seattle["start"] == "2027-05-11" and seattle["end"] == "2027-05-13" and seattle["city"] == "Seattle"
+    assert "2026 ULI Fall Meeting" not in rows and not any("2027 ULI Fall" in t for t in rows)
+    # single-conference sites: name from config, city from the venue line, not the footer
+    hoc = rows["ULI Housing Opportunity Conference"]
+    assert hoc["start"] == "2027-02-22" and hoc["end"] == "2027-02-23" and hoc["city"] == "Atlanta"
+    btr = rows["Build-to-Rent Conference"]
+    assert btr["start"] == "2027-04-12" and btr["organizer"] == "Zonda" and btr["city"] == "Frisco"
+    # ULI events: housing topics only, US only, ISO date ranges
+    assert rows["ULI Atlanta: Build-to-Rent Market Outlook"]["start"] == "2026-12-10"
+    assert rows["ULI Chicago: Office-to-Residential Conversions"]["state"] == "IL"
+    assert not any("Industrial Outlook" in t or "Cayman" in t or "Orientation" in t for t in rows)
+    # the same Housing Opportunity Conference from ULI's events list is kept once
+    assert sum("Housing Opportunity Conference" in t for t in rows) == 1
+    # BTR List's Luma calendar: build-to-rent titles only
+    assert rows["BTR Dealmakers: Texas"]["start"] == "2027-03-04" and rows["BTR Dealmakers: Texas"]["state"] == "TX"
+    assert "IOS West" not in rows and "Cold Storage Summit" not in rows
+    # status: an empty Bisnow topic page and the unverified Luma profile are fine, not broken
+    src = list(csv.DictReader(open(tmp / "output" / day.isoformat() / "events_sources.csv")))
+    by_url = {r["url"]: r for r in src}
+    assert by_url["https://www.bisnow.com/events/build-to-rent"]["status"] == "ok"
+    assert all(r["status"] == "ok" or r["status"].startswith("skipped") for r in src
+               if r["source"] in ("btr-list", "zonda-btr", "uli-meetings", "uli-housing", "uli-events")), src
+
+
 def test_companies_detect_and_classify():
     tmp = pathlib.Path(tempfile.mkdtemp())
     _sandbox(tmp, [{"company": "Rently", "website": "https://www.rently.com"},
