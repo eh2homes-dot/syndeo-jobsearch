@@ -6,6 +6,10 @@ on:
     # "Check it's 4am Eastern" step below lets only the correct one through:
     - cron: "0 8 * * 0"       # 08:00 UTC = 4am EDT (roughly March to November)
     - cron: "0 9 * * 0"       # 09:00 UTC = 4am EST (roughly November to March)
+    # Tuesdays 5am Eastern: refresh run for the Origins newsletter's Tuesday-noon final edit,
+    # so roles posted since Sunday can be added before the Wednesday send.
+    - cron: "0 9 * * 2"       # 09:00 UTC = 5am EDT
+    - cron: "0 10 * * 2"      # 10:00 UTC = 5am EST
   workflow_dispatch:
     inputs:
       companies:
@@ -43,6 +47,8 @@ jobs:
           if [ "$EVENT" != "schedule" ]; then run=true      # manual runs (full or on-demand) always go
           elif [ "$FIRED" = "0 8 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
           elif [ "$FIRED" = "0 9 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          elif [ "$FIRED" = "0 9 * * 2" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 10 * * 2" ] && [ "$offset" = "-0500" ]; then run=true
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"

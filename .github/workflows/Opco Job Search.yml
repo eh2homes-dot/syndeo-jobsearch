@@ -9,12 +9,16 @@ name: OpCo Job Search
 # saving, so two times are listed (10:00 UTC = 6am EDT, 11:00 UTC = 6am EST) and
 # the guard step keeps whichever matches. Two backup times (Sunday afternoon,
 # early Monday) run only if that week's output is still missing.
+# Also runs Tuesdays at 6:00am ET, a refresh for the Origins newsletter's
+# Tuesday-noon final edit (same two-UTC-times guard, no backups).
 on:
   schedule:
     - cron: "0 10 * * 0"      # 6am EDT Sunday (main run, roughly March to November)
     - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
     - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
     - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
+    - cron: "0 10 * * 2"      # 6am EDT Tuesday (refresh run for the newsletter's final edit)
+    - cron: "0 11 * * 2"      # 6am EST Tuesday
   workflow_dispatch:
     inputs:
       only:
@@ -61,6 +65,8 @@ jobs:
           if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
           elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
           elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          elif [ "$FIRED" = "0 10 * * 2" ] && [ "$offset" = "-0400" ]; then run=true
+          elif [ "$FIRED" = "0 11 * * 2" ] && [ "$offset" = "-0500" ]; then run=true
           elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
             if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
               run=true; echo "::warning::Backup run: this week's 6am run left no output."
