@@ -476,7 +476,8 @@
     "confidence": "page",
     "detected_on": "2026-10-09",
     "evidence": "read from the job board this page loads its jobs from (greenhouse: kiavi: https://job-boards.greenhouse.io/kiavi)",
-    "slug": "kiavi"
+    "slug": "kiavi",
+    "zero_since": "2026-11-15"
   },
   "Knock CRM": {
     "confidence": "manual",
@@ -739,6 +740,14 @@
     "verified_by": "Claude",
     "verified_on": "2026-11-02"
   },
+  "Procore Technologies": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-11-15",
+    "evidence": "read from the jobs listed on the page (5 pages)",
+    "slug": "procore-technologies",
+    "url": "https://careers.procore.com/jobs/search"
+  },
   "Property Meld": {
     "ats": "generic",
     "careers_url": "https://careers.propertymeld.com/jobs",
@@ -957,6 +966,14 @@
     "detected_on": "2026-09-23",
     "evidence": "greenhouse:updater returned 1 jobs | 2026-09-24 reviewed: titles/locations match the company",
     "slug": "updater"
+  },
+  "Uptake Technologies": {
+    "ats": "page",
+    "confidence": "page",
+    "detected_on": "2026-11-15",
+    "evidence": "the page says nothing is open (\"No open roles\")",
+    "slug": "uptake-technologies",
+    "url": "https://uptake.com/careers/"
   },
   "VTS": {
     "ats": "greenhouse",

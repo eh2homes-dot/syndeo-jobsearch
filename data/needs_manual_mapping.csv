@@ -1,12 +1,11 @@
 company,careers_url,reason
-Procore Technologies,https://www.procore.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 Hemlane,https://www.hemlane.com/about-us/#careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 HouseCanary,https://www.housecanary.com/resources/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Realtor.com (Move Inc.),https://www.move.com/careers,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
-Guesty,https://www.guesty.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Guesty,https://www.guesty.com/careers/#open-positions,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Cadre,https://www.cadre.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-SquareFoot,https://www.squarefoot.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
-Agora,https://www.agorareal.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+SquareFoot,https://www.squarefoot.com/jobs/,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
+Agora,https://agorareal.com/careers/,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Robin,https://careers.kula.ai/robin,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Cecilian Partners,https://www.cecilianpartners.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 Rocket Companies,https://careers.rocket.com/us/en/search-results,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
@@ -23,7 +22,6 @@ Archer,https://www.archer.re/company/careers,"no jobs were found on the careers 
 PearlX,https://www.pearlx.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 VLTED,https://www.vlted.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Enpal,https://jobs.enpal.com,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
-Uptake Technologies,https://uptake.com/careers/,the careers page doesn't load (connection error (ConnectionError))
 Perk (formerly TravelPerk),https://www.perk.com/careers/,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Habi,https://habicareers.tuhabi.mx/vacantes,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 Flyhomes,https://flyhomes.com/jobs,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"

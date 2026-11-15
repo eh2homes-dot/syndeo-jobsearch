@@ -1,0 +1,161 @@
+company,tier,ats,slug,status,focus_open,open,new,closed,careers_url,note,linkedin,search
+AppFolio,A,ashby,appfolio,ok,25,35,4,5,https://www.appfolio.com/company/careers,,,proptech
+Yardi Systems,A,page,,"via VC board (FIRE (PropTech Talent)); own board failed:the careers page needs a browser to show its jobs, and the browser couldn't be used this run (the site refused the browser (HTTP 403))",4,8,6,2,https://careers.yardi.com/openings/,,,proptech
+Procore Technologies,B,page,procore-technologies,ok,94,135,0,0,https://careers.procore.com/jobs/search,read from the jobs listed on the page (5 pages),,proptech
+Matterport,B,,,covered by parent: CoStar Group,0,0,0,0,https://careers.costargroup.com/careers,Matterport is part of CoStar and posts on CoStar's Eightfold board (department 'Matterport'); read under CoStar Group,,proptech
+Measurabl,B,rippling,measurabljobs,ok,0,1,0,0,https://ats.rippling.com/measurabljobs/jobs,,,proptech
+Placer.ai,B,greenhouse,placerlabs,ok,15,18,4,2,https://www.placer.ai/careers,,,proptech
+Roofstock,A,greenhouse,roofstock,ok,0,12,3,0,https://www.roofstock.com/careers,,,proptech
+Doma,B,greenhouse,doma,ok,2,2,1,0,https://www.doma.com/careers,,,proptech
+Blend Labs,B,greenhouse,blend,ok,6,10,1,2,https://blend.com/careers,,,proptech
+Point,B,greenhouse,pointdigitalfinance,ok,8,12,1,3,https://www.point.com/careers,,,proptech
+Zumper,A,rippling,zumper,ok,3,3,0,0,https://www.zumper.com/careers,,,proptech
+Apartment List,A,gem,apartment-list,ok,7,8,3,0,https://www.apartmentlist.com/careers,,,proptech
+Hemlane,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.hemlane.com/about-us/#careers,,,proptech
+Pacaso,B,greenhouse,pacaso,ok,4,6,1,2,https://www.pacaso.com/careers,,,proptech
+Crexi,B,greenhouse,crexi,ok,17,17,0,0,https://www.crexi.com/careers,,,proptech
+Kiavi,A,greenhouse,kiavi,failed:dropped to 0 roles from 6 last run; treated as a read failure unless the next run agrees,0,0,0,0,https://www.kiavi.com/careers,,,proptech
+Side,B,lever,sideinc,ok,1,2,0,0,https://www.side.com/careers,,,proptech
+HouseCanary,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.housecanary.com/resources/careers,,,proptech
+HomeLight,B,greenhouse,homelight,ok,4,7,0,2,https://www.homelight.com/careers,,,proptech
+Snapdocs,B,ashby,snapdocs,ok,2,4,0,0,https://www.snapdocs.com/careers,,,proptech
+RentSpree,A,rippling,rentspree,ok,9,13,0,2,https://www.rentspree.com/careers,,,proptech
+Realtor.com (Move Inc.),B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://www.move.com/careers,,,proptech
+Auction.com,B,dayforce,auction,ok,12,57,16,17,https://www.auction.com/careers,,,proptech
+RealPage,A,icims,careers-realpagepms,ok,28,44,6,9,https://www.realpage.com/careers,,,proptech
+ResMan,A,page,resman,ok,1,3,1,0,https://myresman.com/careers,read from the jobs the page shows in a browser; found by following the page's link to its full list (https://inhabit.com/about/careers/),,proptech
+Homeward,B,greenhouse,homeward,ok,2,4,1,1,https://www.homeward.com/careers,,,proptech
+Steadily,A,ashby,steadily,ok,18,33,0,0,https://www.steadily.com/careers,,,proptech
+Closinglock,B,rippling,closinglock,ok,0,0,0,0,https://www.closinglock.com/careers,,,proptech
+CertifID,B,ashby,certifid,ok,1,1,0,0,https://www.certifid.com/careers,,,proptech
+Luxury Presence,B,lever,luxurypresence,ok,14,22,2,8,https://www.luxurypresence.com/careers,,,proptech
+GreenLite,B,,,excluded,0,0,0,0,https://www.greenlite.ai/careers,,,proptech
+Worksmith,B,page,,ok,0,0,0,0,https://www.worksmith.com/team-and-careers,"the page says nothing is open (""No open roles"")",,proptech
+Ownwell,B,greenhouse,ownwell,ok,7,13,0,0,https://www.ownwell.com/careers,,,proptech
+Ojo Labs,B,gem,lower-llc,ok,6,6,1,0,https://www.ojolabs.com/careers,,,proptech
+Opcity (Realtor.com),B,,,covered by parent: Realtor.com (Move Inc.),0,0,0,0,https://www.move.com/careers,Realtor.com (Move Inc.) itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br),,proptech
+Compass,B,greenhouse,urbancompass,ok,123,164,21,39,https://www.compass.com/careers,,,proptech
+VTS,B,greenhouse,vts,ok,9,15,1,4,https://www.vts.com/careers,,,proptech
+ButterflyMX,A,ashby,butterflymx,ok,2,8,0,0,https://www.butterflymx.com/careers,,,proptech
+Guesty,A,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.guesty.com/careers/#open-positions,,,proptech
+Rhino,A,bamboohr,rhinolabs,ok,3,4,0,0,https://careers.sayrhino.com,,,proptech
+Bilt Rewards,A,gem,bilt,ok,15,25,3,0,https://www.biltrewards.com/careers,,,proptech
+CompStak,B,lever,compstak,ok,2,3,0,0,https://www.compstak.com/careers,,,proptech
+Cadre,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.cadre.com/careers,,,proptech
+SquareFoot,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.squarefoot.com/jobs/,,,proptech
+Latch,A,lever,latch,ok,1,2,0,0,https://www.latch.com/careers,,,proptech
+Agora,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://agorareal.com/careers/,,,proptech
+Cherre,A,lever,cherre,ok,0,1,0,0,https://www.cherre.com/careers,,,proptech
+Enertiv,B,rippling,enertiv-jobs,ok,0,1,0,0,https://www.enertiv.com/careers,,,proptech
+Bowery Valuation,B,rippling,bowery-valuation,ok,0,1,0,1,https://www.boweryvaluation.com/careers,,,proptech
+Obligo,A,greenhouse,obligo,ok,5,5,0,0,https://www.myobligo.com/careers,,,proptech
+TheGuarantors,A,rippling,theguarantors-open-positions,ok,13,17,0,0,https://www.theguarantors.com/careers,,,proptech
+Funnel Leasing,A,workable,funnel-leasing,ok,2,4,0,2,https://www.funnelleasing.com/careers,,,proptech
+Convene,B,greenhouse,convene,ok,11,43,7,8,https://convene.com/careers,,,proptech
+Orchard,B,greenhouse,orchard,ok,6,36,0,0,https://www.orchard.com/careers,,,proptech
+Better.com,B,ashby,better-mortgage,ok,1,4,0,0,https://jobs.ashbyhq.com/better-mortgage,,,proptech
+Updater,A,greenhouse,updater,ok,3,4,3,0,https://www.updater.com/careers,,,proptech
+Livly,A,paylocity,65717b9a-7d08-4867-8ae9-5f3553eff988,ok,0,0,0,0,https://www.livly.io/careers,,,proptech
+Chamberlain Group,B,workday,chamberlain,ok,34,57,4,4,https://www.chamberlaingroup.com/careers,,,proptech
+Obie,A,rippling,obie,ok,0,2,0,0,https://www.obieinsurance.com/careers,,,proptech
+Avail (Realtor.com),A,,,covered by parent: Realtor.com (Move Inc.),0,0,0,0,https://www.avail.co/careers,Realtor.com (Move Inc.) itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br),,proptech
+Buildium (RealPage),A,,,covered by parent: RealPage,0,0,0,0,https://careers-realpagepms.icims.com/jobs/search?ss=1,Buildium hires through RealPage's shared job board,,proptech
+Robin,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://careers.kula.ai/robin,,,proptech
+GetCovered,A,rippling,get-covered-insurance,ok,0,4,1,0,https://getcovered.io/careers,,,proptech
+TurboTenant,A,greenhouse,turbotenant,ok,0,14,11,5,https://www.turbotenant.com/careers,,,proptech
+Homebot,B,ashby,homebot,ok,0,0,0,0,https://www.homebot.ai/careers,,,proptech
+Digible,A,greenhouse,digible,ok,3,4,1,2,https://www.digible.com/careers,,,proptech
+NetVendor,A,bamboohr,netvendor,ok,0,6,2,2,https://www.netvendor.com/careers,,,proptech
+SmartRent,A,greenhouse,smartrent,ok,8,9,3,2,https://smartrent.com/careers,,,proptech
+Offerpad,B,adp,1259f4b4-8ba3-4cf9-86d2-e957dc127478,ok,0,12,0,1,https://www.offerpad.com/careers,,,proptech
+Opendoor,B,page,,ok,24,54,6,0,https://www.opendoor.com/careers,read from the jobs listed on the page,,proptech
+PointCentral,A,,,covered by parent: Alarm.com,0,0,0,0,https://job-boards.greenhouse.io/alarmcom,pointcentral.com/careers now goes to Alarm.com's Greenhouse board; greenhouse:pointcentral is gone (2026-11-02),,proptech
+Entrata,A,lever,entrata,ok,16,25,7,6,https://www.entrata.com/careers,,,proptech
+Rentec Direct,A,page,,ok,2,2,0,0,https://www.rentecdirect.com/careers,read from structured job data on the page,,proptech
+Second Nature,A,ashby,second-nature,ok,6,6,1,0,https://www.secondnature.com/careers,,,proptech
+Home365,A,bamboohr,home365,ok,1,13,1,0,https://home365.bamboohr.com/careers,,,proptech
+Cecilian Partners,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.cecilianpartners.com/careers,,,proptech
+CoStar Group,B,eightfold,costar,ok,265,379,42,23,https://careers.costargroup.com/careers,,,proptech
+Alarm.com,B,greenhouse,alarmcom,ok,52,92,4,5,https://www.alarm.com/careers,,,proptech
+Notarize (Proof),B,lever,proof,ok,5,5,1,0,https://www.proof.com/careers,,,proptech
+Zillow Group,B,workday,zillow,ok,91,206,18,20,https://www.zillow.com/careers,,,proptech
+Redfin,B,,,covered by parent: Rocket Companies,0,0,0,0,https://careers.rocket.com/us/en/search-results?qkcompany=Redfin%20Corporation,Rocket Companies itself was not read this run (needs-link: the careers page doesn't load (HTTP 403; in a br),,proptech
+Knock CRM,A,,,covered by parent: RealPage,0,0,0,0,https://careers-realpagepms.icims.com/jobs/search?ss=1,Knock is part of RealPage (knockcrm.com links into RealPage) and hires through RealPage's board,,proptech
+Rocket Companies,B,,,needs-link: the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403)),0,0,0,0,https://careers.rocket.com/us/en/search-results,,,proptech
+Rent Manager (LCS),A,adp,b156e713-5801-4c36-bb62-a62f3bc9844f,ok,1,6,2,0,https://www.rentmanager.com/careers,,,proptech
+MRI Software,A,workday,mrisoftware,ok,31,77,9,14,https://www.mrisoftware.com/careers,,,proptech
+Density,B,greenhouse,density,failed:Greenhouse has no board named 'density' (it may have moved),0,0,0,0,https://www.density.io/careers,,,proptech
+Bright MLS,B,adp,c8cd8c14-72bd-4bb3-8c99-f7fb2a14a693,ok,2,3,0,0,https://www.brightmls.com/careers,,,proptech
+DoorLoop,A,ashby,doorloop,ok,6,7,2,1,https://www.doorloop.com/careers,,,proptech
+Envoy,B,ashby,envoy,ok,20,25,4,0,https://envoy.com/careers,,,proptech
+LeaseLock,A,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.leaselock.com/careers,,,proptech
+Flock Homes,A,greenhouse,flockhomes,ok,0,7,2,0,https://www.flockhomes.com/careers,,,property operations
+Greystar,A,workday,greystar,ok,12,84,14,13,https://greystar.wd1.myworkdayjobs.com/External,,,proptech
+Doorstead,A,breezy,doorstead,ok,0,71,4,1,https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw,,,property operations
+Belong,A,workable,belong-6,ok,0,4,0,0,https://apply.workable.com/belong-6,,,property operations
+Mynd,A,,,covered by parent: Roofstock,0,0,0,0,https://www.mynd.co/talent-and-culture,"Mynd is part of Roofstock and hires through Roofstock's Greenhouse board, which is read under Roofstock",,property operations
+Renters Warehouse,A,adp,0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da,ok,0,14,0,4,https://www.renterswarehouse.com/careers,,,property operations
+Evernest,A,lever,evernest,ok,0,12,3,2,https://www.evernest.co/careers,,,property operations
+Atlas Real Estate,A,paylocity,5e5fc082-a90b-4d93-8b73-46f77d40e081,ok,0,18,2,1,https://realatlas.com/careers/#positions,,,property operations
+PURE HomeRiver Group,A,adp,eea42ed6-3dcf-47f3-b99b-29a304948b2b,ok,0,8,3,1,https://purehomeriver.com/company/careers/,,,property operations
+Northpoint Asset Management,A,rippling,northpoint-asset-management,ok,0,1,0,0,https://ats.rippling.com/northpoint-asset-management/jobs,,,property operations
+Evergreen Residential,A,greenhouse,evergreenresidentialemployeeservicescorp,ok,0,25,4,6,https://evergreenresi.com/careers/openings/,,,property operations
+Property Meld,A,generic,property-meld,ok,4,4,0,0,https://careers.propertymeld.com/jobs,,,proptech
+Footprint,A,ashby,footprint,ok,15,16,2,0,https://jobs.ashbyhq.com/onefootprint,,,proptech
+Reffie,A,generic,reffie,ok,1,2,0,0,https://careers.reffie.me/,,,proptech
+Two Dots,A,lever,twodots,ok,3,4,0,0,https://jobs.lever.co/twodots,,,proptech
+Haven,A,generic,haven-yc,ok,1,1,0,0,https://www.ycombinator.com/companies/haven-2/jobs,,,proptech
+Nutiliti,A,linkedin,nutiliti,ok,0,0,0,0,https://builtin.com/company/nutiliti/jobs,,,proptech
+HiredHelpr,A,linkedin,hiredhelpr,ok,0,0,0,0,https://www.glassdoor.com/Jobs/HiredHelpr-Jobs-E10287326.htm,,,proptech
+Mason,A,,,unmapped,0,0,0,0,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies),,proptech
+Boom,A,linkedin,boompay,ok,6,8,1,0,https://wellfound.com/company/boom-app/jobs,,,proptech
+Lineage,A,page,lineagehq,ok,0,0,0,0,https://www.lineagehq.com/careers,"the page says nothing is open (""There are no open positions"")",,proptech
+Series Homes,A,linkedin,serieshomes,ok,0,0,0,0,https://www.serieshomes.com,,,proptech
+PropertyManagement.com,A,,,unmapped,0,0,0,0,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan,,proptech
+Accolade,B,,,needs-link: the careers page doesn't load (HTTP 429 rate limited (waited 15s); in a browser: the site refused the browser (HTTP 429)),0,0,0,0,https://www.accoladehq.com/careers,,,proptech
+Peek,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.peek.us/careers,,,proptech
+Brynson,B,page,brynson,ok,4,6,0,0,https://www.brynson.com/careers,read from the jobs listed on the page,,proptech
+Leap,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.leapeasy.com/careers,,,proptech
+HelloData,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://www.hellodata.ai/careers,,,proptech
+Tour24,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://tour24.io/careers,,,proptech
+Betterbot,B,page,betterbot,ok,0,0,0,0,https://www.betterbot.com/careers/,"the page says nothing is open (""No open positions"")",,proptech
+Leni,B,,,needs-link: the careers page doesn't load (HTTP 404; in a browser: not found),0,0,0,0,https://leni.co/careers,,,proptech
+Archer,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.archer.re/company/careers,,,proptech
+Orange Charger,B,page,orange-charger,ok,1,2,0,0,https://www.orangecharger.com/careers,read from the jobs listed on the page,,proptech
+PearlX,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.pearlx.com/careers,,,proptech
+VLTED,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.vlted.com/careers,,,proptech
+Aurora Solar,B,ashby,aurorasolar,ok,3,5,0,2,https://jobs.ashbyhq.com/aurorasolar,,,proptech
+Loft,B,teamtailor,loft,ok,5,20,4,2,https://loft.teamtailor.com/,,,proptech
+Side Inc.,B,lever,sideinc,ok,1,2,0,0,https://jobs.lever.co/sideinc,,,proptech
+Enpal,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://jobs.enpal.com,,,proptech
+Uptake Technologies,B,page,uptake-technologies,ok,0,0,0,0,https://uptake.com/careers/,"the page says nothing is open (""No open roles"")",,proptech
+ICON,B,greenhouse,iconcareers,ok,20,71,4,3,https://job-boards.greenhouse.io/iconcareers,,,proptech
+Material Bank,B,greenhouse,materialbank,ok,10,16,1,2,https://careers.materialbank.com/careers,,,proptech
+Built Technologies,B,greenhouse,getbuilt,ok,11,16,0,0,https://job-boards.greenhouse.io/getbuilt,,,proptech
+Arcadia,B,rippling,arcadiacareers,ok,15,21,1,0,https://ats.rippling.com/arcadiacareers/jobs,,,proptech
+Perk (formerly TravelPerk),B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.perk.com/careers/,,,proptech
+Sidewalk Infrastructure Partners,B,page,sidewalk-infrastructure-partners,ok,0,0,0,0,https://sidewalkinfra.com/careers,"the page says nothing is open (""No current openings"")",,proptech
+Habi,B,,,"via VC board (FIRE (PropTech Talent)); own board needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,3,3,0,https://habicareers.tuhabi.mx/vacantes,,,proptech
+Redaptive,B,workday,redaptive,ok,4,7,1,0,https://redaptive.wd12.myworkdayjobs.com/Redaptive-Careers,,,proptech
+Stegra (formerly H2 Green Steel),B,page,stegra-formerly-h2-green-steel,ok,4,21,3,3,https://career.stegra.com/jobs,read from the jobs listed on the page,,proptech
+Sun King,B,pinpoint,sunking,ok,42,186,30,1,https://sunking.pinpointhq.com/,,,proptech
+Flexe,B,greenhouse,flexe,ok,2,2,1,1,https://job-boards.greenhouse.io/flexe,,,proptech
+Lessen,B,lever,lessen,ok,4,117,3,3,https://jobs.lever.co/lessen,,,proptech
+Qualia,B,page,qualia,ok,2,2,0,0,https://www.qualia.com/jobs,read from the jobs listed on the page,,proptech
+Place,B,greenhouse,place,ok,10,19,0,4,https://place.com/corporate-careers/,,,proptech
+Turntide Technologies,B,rippling,turntide-careers,ok,0,0,0,0,https://ats.rippling.com/turntide-careers/jobs,,,proptech
+Aspen Power,B,bamboohr,aspenpower,ok,0,0,0,0,https://aspenpower.com/careers/our-culture/,,,proptech
+OpenSpace,B,greenhouse,openspace,ok,11,12,0,0,https://www.openspace.ai/careers/,,,proptech
+Willow Wealth (formerly Yieldstreet),B,rippling,yieldstreet,ok,5,7,1,0,https://ats.rippling.com/yieldstreet/jobs,,,proptech
+Mews,B,page,mews,ok,18,29,9,0,https://www.mews.com/en/careers,read from the jobs the page shows in a browser,,proptech
+Verkada,B,greenhouse,verkada,ok,251,346,24,21,https://job-boards.greenhouse.io/verkada,,,proptech
+Flyhomes,B,,,"via VC board (Fifth Wall); own board needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",4,4,0,0,https://flyhomes.com/jobs,,,proptech
+Tul,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://tul.peopleforce.io/careers,,,proptech
+AvantStay,B,workable,avantstay,ok,0,0,0,0,https://apply.workable.com/avantstay/,,,proptech
+Geolava,B,linkedin,geolava,ok,0,0,0,0,https://app.dover.com/jobs/geolava,,,proptech
+Andes STR,B,linkedin,andes-str,ok,0,0,0,0,https://www.linkedin.com/company/andes-str/jobs/,,,proptech
+HABU,B,,,"needs-link: no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead",0,0,0,0,https://www.ycombinator.com/companies/habu/jobs,,,proptech
+Zoneomics,B,linkedin,zoneomics,ok,0,0,0,0,https://www.linkedin.com/company/zoneomics/jobs/,,,proptech
+Giraffe,B,page,giraffe,ok,3,3,0,0,https://www.giraffe.build/careers,read from the jobs the page shows in a browser,,proptech
+Pirros,B,page,pirros,ok,3,5,4,0,https://www.ycombinator.com/companies/pirros/jobs,read from the jobs listed on the page,,proptech
+Acres,B,rippling,acres,ok,3,4,1,1,https://ats.rippling.com/acres/jobs,,,proptech
