@@ -1,0 +1,768 @@
+{
+  "run_date": "2026-11-15",
+  "settings": {
+    "enabled": true,
+    "window_days": 7,
+    "max_headcount": 100,
+    "max_items": 12,
+    "min_items": 6,
+    "roles_per_company": 1,
+    "cooldown_issues": 3,
+    "cooldown_exempt": [
+      "Second Nature"
+    ],
+    "us_only": true,
+    "note": "Founder-led hiring draft (jobsearch/founders.py). Separate from the Origins 'Now hiring' draft. A role posted at a company with headcount <= max_headcount (Evan 2026-10-20: 100, to include Series A) (or founder_led = TRUE) in leads/founders.csv counts as founder-led. enabled=false means `python -m jobsearch.founders` writes nothing unless --force; the Founder hiring workflow also checks the FOUNDER_HIRING repo variable. Cooldown ledger: data/founder_featured.json (separate from Origins')."
+  },
+  "items": [
+    {
+      "source": "weekly",
+      "company": "Pirros",
+      "title": "Member of Technical Staff \u2013 Product Engineering",
+      "url": "https://www.ycombinator.com/companies/pirros/jobs/Sxt60y4-member-of-technical-staff-product-engineering",
+      "location": "",
+      "first_seen": "2026-11-15",
+      "ats": "page",
+      "key": "page:pirros:/companies/pirros/jobs/Sxt60y4-member-of-technical-staff-product-engineering",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 0,
+      "role_group": "product_engineering",
+      "eligible_because": "founder_led = TRUE",
+      "headcount": "44",
+      "stage": "",
+      "founder_name": "Ari Baranian; Peter Johann",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [
+        {
+          "title": "UK Sales Lead",
+          "url": "https://www.ycombinator.com/companies/pirros/jobs/CTWq7kC-uk-sales-lead"
+        }
+      ],
+      "more_count": 1
+    },
+    {
+      "source": "vc-board",
+      "company": "Parity",
+      "domain": "",
+      "title": "Building Intelligence Engineer - New York",
+      "url": "https://parity.applytojob.com/apply/AlsNCdH9Kh/Building-Intelligence-Engineer-New-York",
+      "location": "New York, NY, USA",
+      "first_seen": "2026-11-13",
+      "ats": "getro:RET Ventures",
+      "key": "https://jobs.ret.vc/companies/paritygo-com/jobs/99734532-99734532-building-intelligence-engineer-new-york",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 2,
+      "role_group": "product_engineering",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "series_b",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [
+        {
+          "title": "Senior Deployment & Integration Engineer - New York",
+          "url": "https://parity.applytojob.com/apply/W4EBYxZu27/Senior-Deployment-Integration-Engineer-New-York"
+        }
+      ],
+      "more_count": 1
+    },
+    {
+      "source": "vc-board",
+      "company": "Cambio",
+      "domain": "",
+      "title": "Customer Success Lead",
+      "url": "https://jobs.ashbyhq.com/cambio/45f87f6d-1703-4266-bf22-397941735b9d",
+      "location": "San Francisco, CA, USA; Waterloo, ON, Canada; New York, NY, USA",
+      "first_seen": "2026-11-10",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/cambio-2-4c260278-89ce-433c-b5db-3ef62f7589c1/jobs/99400097-99400097-customer-success-lead",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 5,
+      "role_group": "gtm",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "series_a",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    },
+    {
+      "source": "weekly",
+      "company": "Rent Manager (LCS)",
+      "title": "Software Development Team Leader",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=b156e713-5801-4c36-bb62-a62f3bc9844f&ccId=19000101_000001&jobId=9200967918054_71&lang=en_US",
+      "location": "Cincinnati, OH",
+      "first_seen": "2026-11-10",
+      "ats": "adp",
+      "key": "adp:b156e713-5801-4c36-bb62-a62f3bc9844f:9200967918054_71",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 5,
+      "role_group": "product_engineering",
+      "eligible_because": "headcount 17 \u2264 100",
+      "headcount": "17",
+      "stage": "",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    },
+    {
+      "source": "weekly",
+      "company": "Boom",
+      "title": "Account Executive",
+      "url": "https://www.linkedin.com/jobs/view/4490510696/",
+      "location": "Austin, Texas Metropolitan Area",
+      "first_seen": "2026-11-12",
+      "ats": "linkedin",
+      "key": "linkedin:boompay:4490510696",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 3,
+      "role_group": "gtm",
+      "eligible_because": "headcount 96 \u2264 100",
+      "headcount": "96",
+      "stage": "",
+      "founder_name": "Rob Whiting",
+      "founder_linkedin": "https://www.linkedin.com/in/robwhiting/",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    },
+    {
+      "source": "vc-board",
+      "company": "Wheelhouse",
+      "domain": "",
+      "title": "Staff Revenue Manager (East Coast USA)",
+      "url": "https://boards.greenhouse.io/wheelhouse/jobs/4753296005",
+      "location": "United States",
+      "first_seen": "2026-11-11",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/wheelhouse/jobs/99562738-99562738-staff-revenue-manager-east-coast-usa",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 4,
+      "role_group": "gtm",
+      "eligible_because": "headcount 58 \u2264 100",
+      "headcount": "58",
+      "stage": "series_a",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    }
+  ],
+  "eligible_roles": [
+    {
+      "source": "weekly",
+      "company": "Pirros",
+      "title": "Member of Technical Staff \u2013 Product Engineering",
+      "url": "https://www.ycombinator.com/companies/pirros/jobs/Sxt60y4-member-of-technical-staff-product-engineering",
+      "location": "",
+      "first_seen": "2026-11-15",
+      "ats": "page",
+      "key": "page:pirros:/companies/pirros/jobs/Sxt60y4-member-of-technical-staff-product-engineering",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 0,
+      "role_group": "product_engineering",
+      "eligible_because": "founder_led = TRUE",
+      "headcount": "44",
+      "stage": "",
+      "founder_name": "Ari Baranian; Peter Johann",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "weekly",
+      "company": "Pirros",
+      "title": "UK Sales Lead",
+      "url": "https://www.ycombinator.com/companies/pirros/jobs/CTWq7kC-uk-sales-lead",
+      "location": "Remote (US)",
+      "first_seen": "2026-11-15",
+      "ats": "page",
+      "key": "page:pirros:/companies/pirros/jobs/CTWq7kC-uk-sales-lead",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 0,
+      "role_group": "gtm",
+      "eligible_because": "founder_led = TRUE",
+      "headcount": "44",
+      "stage": "",
+      "founder_name": "Ari Baranian; Peter Johann",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "Parity",
+      "domain": "",
+      "title": "Building Intelligence Engineer - New York",
+      "url": "https://parity.applytojob.com/apply/AlsNCdH9Kh/Building-Intelligence-Engineer-New-York",
+      "location": "New York, NY, USA",
+      "first_seen": "2026-11-13",
+      "ats": "getro:RET Ventures",
+      "key": "https://jobs.ret.vc/companies/paritygo-com/jobs/99734532-99734532-building-intelligence-engineer-new-york",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 2,
+      "role_group": "product_engineering",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "series_b",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "Parity",
+      "domain": "",
+      "title": "Senior Deployment & Integration Engineer - New York",
+      "url": "https://parity.applytojob.com/apply/W4EBYxZu27/Senior-Deployment-Integration-Engineer-New-York",
+      "location": "New York, NY, USA",
+      "first_seen": "2026-11-13",
+      "ats": "getro:RET Ventures",
+      "key": "https://jobs.ret.vc/companies/paritygo-com/jobs/99734534-99734534-senior-deployment-integration-engineer-new-york",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 2,
+      "role_group": "product_engineering",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "series_b",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "Cambio",
+      "domain": "",
+      "title": "Customer Success Lead",
+      "url": "https://jobs.ashbyhq.com/cambio/45f87f6d-1703-4266-bf22-397941735b9d",
+      "location": "San Francisco, CA, USA; Waterloo, ON, Canada; New York, NY, USA",
+      "first_seen": "2026-11-10",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/cambio-2-4c260278-89ce-433c-b5db-3ef62f7589c1/jobs/99400097-99400097-customer-success-lead",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 5,
+      "role_group": "gtm",
+      "eligible_because": "headcount 50 \u2264 100",
+      "headcount": "50",
+      "stage": "series_a",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "weekly",
+      "company": "Rent Manager (LCS)",
+      "title": "Software Development Team Leader",
+      "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=b156e713-5801-4c36-bb62-a62f3bc9844f&ccId=19000101_000001&jobId=9200967918054_71&lang=en_US",
+      "location": "Cincinnati, OH",
+      "first_seen": "2026-11-10",
+      "ats": "adp",
+      "key": "adp:b156e713-5801-4c36-bb62-a62f3bc9844f:9200967918054_71",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 2,
+      "days_open": 5,
+      "role_group": "product_engineering",
+      "eligible_because": "headcount 17 \u2264 100",
+      "headcount": "17",
+      "stage": "",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    },
+    {
+      "source": "weekly",
+      "company": "Boom",
+      "title": "Account Executive",
+      "url": "https://www.linkedin.com/jobs/view/4490510696/",
+      "location": "Austin, Texas Metropolitan Area",
+      "first_seen": "2026-11-12",
+      "ats": "linkedin",
+      "key": "linkedin:boompay:4490510696",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 3,
+      "role_group": "gtm",
+      "eligible_because": "headcount 96 \u2264 100",
+      "headcount": "96",
+      "stage": "",
+      "founder_name": "Rob Whiting",
+      "founder_linkedin": "https://www.linkedin.com/in/robwhiting/",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "Wheelhouse",
+      "domain": "",
+      "title": "Staff Revenue Manager (East Coast USA)",
+      "url": "https://boards.greenhouse.io/wheelhouse/jobs/4753296005",
+      "location": "United States",
+      "first_seen": "2026-11-11",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/wheelhouse/jobs/99562738-99562738-staff-revenue-manager-east-coast-usa",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 4,
+      "role_group": "gtm",
+      "eligible_because": "headcount 58 \u2264 100",
+      "headcount": "58",
+      "stage": "series_a",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    }
+  ],
+  "needs_review": [
+    {
+      "company": "EquipmentShare",
+      "new_roles": 37,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "District Sales Manager",
+        "District Sales Manager",
+        "District Sales Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Sun King",
+      "new_roles": 30,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Legal Counsel (Lome, Togo)",
+        "Warehouse Support - Varanasi",
+        "Area Business Manager, Mityana"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Verkada",
+      "new_roles": 19,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Channel Sales Manager, Ohio Valley",
+        "Channel Sales Manager, Ohio Valley",
+        "Strategic Account Executive, Federal Government (Australia)"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Flex",
+      "new_roles": 10,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Executive II",
+        "Head of Consumer Protection & Strategy",
+        "Senior Engineering Manager, Consumer / New Verticals"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Mews",
+      "new_roles": 9,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Region",
+        "Customer Onboarding Manager - Spain",
+        "Manager, Compensation & Incentives"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Clutter",
+      "new_roles": 7,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Business Development Director",
+        "Customer Success Representative",
+        "Desktop Engineer / Biligual"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "EliseAI",
+      "new_roles": 7,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Customer Success Specialist | Housing",
+        "GTM Product Enablement Manager | Housing",
+        "Product Operations Associate, Finance Transformation - Future Platforms | Housing"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Figure",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Principal Product Manager, Data",
+        "Product Manager",
+        "Sales Operations Analyst"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Evernest",
+      "new_roles": 3,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Maintenance Technician & Property Inspector",
+        "Investor Real Estate Specialist",
+        "Property Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Habi",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Director Comercial de Cr\u00e9dito Hipotecario",
+        "L\u00edder De Ventas Inmobiliario",
+        "Analista De Tesoreria"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Stegra (formerly H2 Green Steel)",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Environmental Engineer",
+        "Process Engineer",
+        "Lead Legal Counsel - Project Finance"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Buildots",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "*Enterprise Account Executive (General Contractors) - US Eastern or Central time zones",
+        "Performance Marketing Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Jobber",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Manager, Customer Success Technology",
+        "Senior Product Manager, New Starts"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Path Robotics",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Deployment Engineer",
+        "Mid-Market Sales Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Propra",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Executive",
+        "Marketing Lead"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Real Property Management",
+      "new_roles": 2,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager",
+        "Leasing Agent and Office Administrator"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Shortlyst",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Founding Engineer",
+        "Growth Lead, Brand Acquisition"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "TOOLBX",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Growth Marketing Manager",
+        "Growth Marketing Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "TaskEasy",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Mid Market Account Executive",
+        "Mid Market Account Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Aeroseal",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Digital Marketing Specialist"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Ampd Energy",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Business Development Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Arcadia",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Team Lead - L&D"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "BH Management Services",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Regional Accounting Supervisor"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Bridgit",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Event Marketing Manager (Contract)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Building Engines",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Director, Technology Customer Success"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Clearstory",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Mid-Market Account Executive (Specialty Contractor)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Dealpath",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Field Marketing & ABM Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Field Materials",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Customer Success"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Fifth Dimension AI",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Enterprise Account Executive - AI, US"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Flexe",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Software Development Engineer II - Pre-Reservation Team"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Fundrise",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Software Engineer II (CloudOps)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Juniper Square",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Institutional Success Architect"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Material Bank",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Principal Product Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Nesto",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Application Developer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Northpoint Asset Manamgement",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Occupier",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Business Development"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "PMI",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Parspec",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Customer Enablement Specialist, Customer Success"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Real Estate Business Analytics",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Revenue Operations"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Redaptive",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Energy Engineering Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Willow Wealth (formerly Yieldstreet)",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Information Security & IT"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "cove",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Business Development Representative"
+      ],
+      "source": "vc-board"
+    }
+  ]
+}
