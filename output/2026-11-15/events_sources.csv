@@ -1,0 +1,64 @@
+source,status,events,note,url
+nrhc,ok,2,,https://rentalhomecouncil.org/events/
+imn,ok,0,9 other IMN event sites linked,https://imn.org/
+imn,ok,1,,https://informaconnect.com/imn-sfr-west/
+imn,ok,1,,https://informaconnect.com/imn-sfr-east/
+imn,ok,1,,https://informaconnect.com/imn-sfr-pm/
+imn,ok,1,,https://informaconnect.com/imn-btr-spring/
+imn,ok,1,,https://informaconnect.com/imn-btr-fall/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-residential-ground-up-construction/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-sfr-awards/
+imn,ok,1,new IMN event,https://informaconnect.com/imn-str-winter/
+narpm,ok,3,,https://www.narpm.org/national-conferences/
+narpm-state,ok,2,,https://www.narpm.org/national-conferences/conferences/
+btr-list,ok,0,nothing on topic right now,https://luma.com/calendar/cal-d4arFmRhDVNRNUR
+btr-list,ok,0,nothing listed right now,https://luma.com/user/matthunsucker
+zonda-btr,ok,1,,https://www.buildtorentconference.com/
+uli-manual,ok,3,hand-entered; 3 upcoming,data/event_sources.json
+narpm-manual,ok,0,hand-entered; 0 upcoming,data/event_sources.json
+narpm-calendar,skipped (unverified URL not found),0,,https://www.narpm.org/events/
+narpm-courses,ok,6,,https://www.narpm.org/education/course-schedule/
+narpm-webinars,ok,2,,https://www.narpm.org/education/webinars/
+narpm-chapters,1 chapter sites that used to work failed,25,"55 chapter sites, 44 read, 14 with upcoming events; 55 chapters on the finder, 0 looked up this run",https://www.narpm.org/find/chapters/
+narpm-chapters,skipped (never reached: http 403),0,Alameda/Contra Costa Counties,https://narpmacc.org/events
+narpm-chapters,skipped (never reached: http 404),0,California State,https://narpmcalifornia.org/events
+narpm-chapters,http 404,0,Charleston,https://chsnarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Colorado Springs,https://coloradosprings.narpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Denver CO,https://denvernarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Greater Dallas,https://dallas-narpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,San Antonio,https://sanarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,San Diego,https://sdnarpm.org/events
+narpm-chapters,skipped (never reached: http 403),0,Santa Clara,https://narpmscc.com/events
+narpm-chapters,skipped (never reached: http 403),0,Sarasota Manatee,https://narpmsrq.org/events
+narpm-chapters,skipped (never reached: http 403),0,Triangle,https://trianglenarpm.org/events
+nmhc,ok,12,,https://www.nmhc.org/meetings/calendar/upcoming-meetings/
+naa,http 403,0,,https://naahq.org/events/upcoming
+bisnow,ok,10,,https://www.bisnow.com/events/multifamily
+bisnow,ok,2,,https://www.bisnow.com/events/property-management
+bisnow,ok,0,page says nothing listed,https://www.bisnow.com/events/technology
+bisnow,ok,0,page says nothing listed,https://www.bisnow.com/events/build-to-rent
+company,ok,9,Guesty,https://www.guesty.com/events/
+company,http 403,0,Yardi Systems,https://www.yardi.com/company/industry-events/
+company,ok,1,Blend Labs,https://blend.com/events/
+company,ok,2,ResMan,https://www.myresman.com/events/
+company,ok,1,Matterport,https://matterport.com/events-webinars
+company,ok,0,TurboTenant,https://www.turbotenant.com/events/
+company,ok,1,AppFolio,https://www.appfolio.com/resources/events
+company,ok,2,Notarize (Proof),https://www.proof.com/events
+company,ok,22,Zillow Group,https://www.zillow.com/homes/
+company,http 202,0,Atlas Real Estate,https://realatlas.com/event/future-by-appfolio-conference/
+company,ok,5,MRI Software,https://www.mrisoftware.com/events/
+company,ok,13,Envoy,https://envoy.com/events-webinars
+company,http 202,0,Uptake Technologies,https://uptake.com/events/
+company,ok,12,Rent Manager (LCS),https://www.rentmanager.com/events/
+company,ok,2,Brynson,https://www.brynson.com/events
+company,ok,2,Qualia,https://www.qualia.com/events/
+company,ok,1,Turntide Technologies,https://turntide.com/events/
+company,ok,1,OpenSpace,https://www.openspace.ai/webinars-and-events/
+company,ok,2,Pirros,https://www.pirros.com/events
+company,ok,0,Agora,https://agorareal.com/events/
+company,ok,0,Property Meld,https://propertymeld.com/events/
+company,ok,0,CertifID,https://www.certifid.com/resources/webinars
+company,ok,12,Verkada,https://www.verkada.com/events/
+company,ok,0,Homebot,https://homebot.ai/webinars
+company,ok,1,Digible,https://digible.com/multifamily-event-calendar/
