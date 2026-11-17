@@ -476,8 +476,7 @@
     "confidence": "page",
     "detected_on": "2026-10-09",
     "evidence": "read from the job board this page loads its jobs from (greenhouse: kiavi: https://job-boards.greenhouse.io/kiavi)",
-    "slug": "kiavi",
-    "zero_since": "2026-11-15"
+    "slug": "kiavi"
   },
   "Knock CRM": {
     "confidence": "manual",
