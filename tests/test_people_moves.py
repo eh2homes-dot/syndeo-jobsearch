@@ -310,3 +310,19 @@ def test_form_d_is_part_of_the_weekly_run():
     import run
     workflow = (ROOT / ".github/workflows/people-moves.yml").read_text()
     assert "formd" in run.ALL_SOURCES and "edgar,formd,leadership,news,trade,reqs" in workflow
+
+
+@pytest.mark.parametrize("headline, company, expected", [
+    # Misreads from the 2026-11-15 run: headline words taken for a person.
+    ("Invitation Homes Names Chief Technology Officer", "Invitation Homes", []),
+    ("Rocket Companies Appoints Datadog COO to Board", "Rocket Companies", []),
+    ("Marketing Cloud Executive Vice President and General Manager", "Rocket Companies", []),
+    # Real names still come through.
+    ("Lineage Appoints Jane Roe Chief Financial Officer", "Lineage", ["Jane Roe"]),
+    ("Bilt Rewards hires Dan Moore as SVP of Partnerships", "Bilt Rewards", ["Dan Moore"]),
+    ("FirstKey Homes Names Sarah Whitlock Chief Operating Officer", "FirstKey Homes", ["Sarah Whitlock"]),
+])
+def test_headline_words_are_not_taken_for_people(headline, company, expected):
+    from lib.people import extract_from_text
+    names = [p.name for p in extract_from_text(headline, exclude={company})]
+    assert names == expected

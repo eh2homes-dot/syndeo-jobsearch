@@ -99,6 +99,12 @@ _TITLE_TOKENS = {
 def _trim_name(name: str) -> str:
     """Drop leading/trailing tokens that belong to a title, not a name."""
     parts = name.split()
+    # Everything from the first title word on belongs to the title
+    # ("Roe Chief Financial" -> "Roe").
+    for i, tok in enumerate(parts):
+        if i > 0 and tok.lower().strip(".,") in _TITLE_TOKENS:
+            parts = parts[:i]
+            break
     while parts and parts[-1].lower().strip(".,") in _TITLE_TOKENS:
         parts.pop()
     while parts and parts[0].lower().strip(".,") in _TITLE_TOKENS:
@@ -106,10 +112,24 @@ def _trim_name(name: str) -> str:
     return " ".join(parts)
 
 
+# Headline verbs and company words that the capitalised-words regex picks up in
+# title-case headlines ("Invitation Homes Names Chief Technology Officer",
+# "Rocket Companies Appoints Datadog COO"). No person's name contains them.
+_NON_NAME_TOKENS = {
+    "names", "named", "appoints", "appointed", "hires", "hired", "joins", "joined",
+    "promotes", "promoted", "taps", "tapped", "welcomes", "adds", "elevates",
+    "announces", "selects", "picks", "launches", "expands", "unveils",
+    "homes", "group", "capital", "partners", "properties", "realty", "residential",
+    "companies", "holdings", "communities", "rentals", "marketing", "digital", "cloud",
+}
+
+
 def _looks_like_person(name: str) -> bool:
     low = name.lower().strip()
     # A real name needs at least a first and last.
     if len(name.split()) < 2:
+        return False
+    if any(tok.strip(".,'’") in _NON_NAME_TOKENS for tok in low.split()):
         return False
     if low in _NAME_STOPWORDS:
         return False
@@ -148,11 +168,18 @@ def extract_from_text(text: str, exclude: set[str] | None = None) -> list[Person
         title_start = tm.start() - lo
 
         best: tuple[int, str] | None = None
-        for nm in _NAME_RE.finditer(window):
+        # Try a name starting at every capitalised word, not just the
+        # non-overlapping matches: in "Lineage Appoints Jane Roe Chief ..." the
+        # first match swallows "Jane" and the real name is never seen.
+        starts = (_NAME_RE.match(window, w.start()) for w in re.finditer(r"\b[A-Z]", window))
+        for nm in (m for m in starts if m):
             candidate = _trim_name(nm.group(1).strip())
             if not _looks_like_person(candidate):
                 continue
-            if candidate.lower() in exclude:
+            # The company name, or a run of words that starts with it
+            # ("Invitation Homes Names"), is never the person.
+            cl = candidate.lower()
+            if cl in exclude or any(e and e in cl for e in exclude):
                 continue
             # Distance from the name to the title span.
             if nm.end() <= title_start:

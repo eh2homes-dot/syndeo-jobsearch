@@ -2,6 +2,9 @@ name: People Moves
 
 # Sundays at 6:00am ET, with Sunday-afternoon and early-Monday backups that run
 # only if that week's output is still missing (see the guard step).
+# Light refresh runs (news, trade press and SEC filings only, last 4 days) on
+# Tuesday 7am ET and Friday 3pm ET, so the Tuesday final edit and the Friday
+# first draft of the newsletter see moves announced since the last run.
 #
 # GitHub cron is UTC and does not observe daylight saving, so a single UTC time
 # drifts by an hour twice a year. Two schedules are declared (10:00 UTC = 6am
@@ -13,6 +16,10 @@ on:
     - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
     - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
     - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
+    - cron: "0 11 * * 2"      # light refresh: 7am EDT Tuesday (after the Tuesday OpCo run)
+    - cron: "0 12 * * 2"      # light refresh: 7am EST Tuesday
+    - cron: "0 19 * * 5"      # light refresh: 3pm EDT Friday (before the Friday first draft)
+    - cron: "0 20 * * 5"      # light refresh: 3pm EST Friday
   workflow_dispatch:
     inputs:
       backfill:
@@ -63,23 +70,27 @@ jobs:
           sunday=$(date -d "$today -$(TZ=America/New_York date +%w) days" +%F)   # this week's Sunday
           latest=$(find . -path ./.git -prune -o -type f -name 'people-moves-20*.json' -print | sed -E 's/.*people-moves-([0-9-]{10})\.json/\1/' | sort | tail -1)
           echo "Latest People Moves output: ${latest:-none} (this week's Sunday: $sunday)"
+          light=false
           if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
           elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
           elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
+          elif { [ "$FIRED" = "0 11 * * 2" ] || [ "$FIRED" = "0 19 * * 5" ]; } && [ "$offset" = "-0400" ]; then run=true; light=true
+          elif { [ "$FIRED" = "0 12 * * 2" ] || [ "$FIRED" = "0 20 * * 5" ]; } && [ "$offset" = "-0500" ]; then run=true; light=true
           elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
             if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
               run=true; echo "::warning::Backup run: this week's 6am run left no output."
             else run=false; fi
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
-          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
+          echo "light=$light" >> "$GITHUB_OUTPUT"
+          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run, light=$light"
 
       # The OpCo search runs at the same 6am slot and its results feed the job
       # signals. On scheduled runs, wait (up to 40 minutes) for this week's OpCo
       # results to land on the branch, then pull them, so the signals don't run
       # a week behind. Manual runs use whatever is there.
       - name: Wait for this week's OpCo results
-        if: steps.guard.outputs.run == 'true' && github.event_name == 'schedule'
+        if: steps.guard.outputs.run == 'true' && steps.guard.outputs.light != 'true' && github.event_name == 'schedule'
         run: |
           today=$(date -u +%F)
           for i in $(seq 1 40); do
@@ -175,6 +186,10 @@ jobs:
             python discover_leadership.py
           elif [ "${{ inputs.backfill }}" = "true" ]; then
             python run.py --backfill --backfill-days 120
+          elif [ "${{ steps.guard.outputs.light }}" = "true" ]; then
+            # Light refresh: only sources that report announcements, last 4 days.
+            # Leadership pages and closed reqs stay weekly (Sunday).
+            python run.py --sources "edgar,formd,news,trade" --lookback-days 4
           else
             python run.py \
               --sources "${{ inputs.sources || 'edgar,formd,leadership,news,trade,reqs' }}" \
