@@ -1,21 +1,35 @@
 name: Capture Leadership Pages
 
-# Manual only. Saves every candidate leadership / team page (plain download and
-# browser-rendered) as a run artifact for building and testing the name reader.
-# Changes nothing in the repo.
+# Manual only.
+#   capture:  saves every candidate leadership / team page (plain download and
+#             browser-rendered) to the leadership-capture branch, for building
+#             and testing the name reader. Changes nothing on main.
+#   baseline: reads every watched leadership page with the current reader and
+#             commits only the page snapshots (state/leadership/), so the next
+#             weekly run reports changes instead of recording first baselines.
+#             Doesn't touch this week's People Moves brief.
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: "capture or baseline"
+        type: choice
+        options: [capture, baseline]
+        default: capture
       only:
-        description: "Comma-separated company names (blank = all)"
+        description: "capture: comma-separated company names (blank = all)"
         required: false
         default: ""
 
 permissions:
   contents: write
 
+concurrency:
+  group: people-moves
+  cancel-in-progress: false
+
 jobs:
-  capture:
+  run:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -26,11 +40,14 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m playwright install --with-deps chromium
+
       - name: Capture pages
+        if: inputs.mode == 'capture'
         run: python tools/capture_leadership.py --only "${{ inputs.only }}"
       # Pushed to a throwaway branch (not an artifact) so it can be pulled with
       # plain git. The branch holds only the capture and is replaced each run.
       - name: Push the capture to the leadership-capture branch
+        if: inputs.mode == 'capture'
         run: |
           tar czf /tmp/capture.tgz capture
           cd /tmp && rm -rf cap && mkdir cap && cd cap && git init -q -b leadership-capture
@@ -40,3 +57,24 @@ jobs:
           git add capture.tgz && git commit -q -m "Leadership page capture $(date -u +%F)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" leadership-capture
 
+      - name: Record leadership page baselines
+        if: inputs.mode == 'baseline'
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          python run.py --sources leadership --out /tmp/pm-check --lookback-days 1 2>&1 | tee /tmp/baseline.log
+          echo "## Leadership baselines" >> "$GITHUB_STEP_SUMMARY"
+          grep -E "baseline recorded|skipping|Leadership:" /tmp/baseline.log | sed 's/^/    /' >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Commit the snapshots only
+        if: inputs.mode == 'baseline'
+        run: |
+          git config user.name "syndeo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/leadership
+          if git diff --staged --quiet; then echo "No snapshot changes."; exit 0; fi
+          git commit -q -m "Leadership page baselines: $(date -u +%F)"
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 15
+          done
+          exit 1

@@ -39,6 +39,7 @@ from bs4 import BeautifulSoup  # noqa: E402
 
 from lib.http import get  # noqa: E402
 from lib.people import extract_from_html  # noqa: E402
+from lib.team_page import NOT_TEAM_PATH, page_score  # noqa: E402
 from lib import companies as companies_lib  # noqa: E402
 import run as people_moves  # noqa: E402
 
@@ -98,7 +99,7 @@ def _candidates(root: str) -> tuple[list[str], bool]:
             href = urljoin(base, a["href"].strip()).split("#")[0].rstrip("/")
             if not href.startswith("http") or not _same_site(href, root):
                 continue
-            if _SKIP.search(href):
+            if _SKIP.search(href) or NOT_TEAM_PATH.search(urlparse(href).path):
                 continue
             score = _hint_score(href, a.get_text(" ", strip=True))
             if score:
@@ -150,8 +151,14 @@ def discover(row: dict, min_people: int) -> dict:
                 browser_people = extract_from_html(html)
                 if len(browser_people) > len(people):
                     people = browser_people
-        key = (len(people), _hint_score(final), final, people)
-        if best is None or key[:2] > best[:2]:
+        # Team-page URLs beat product pages, then more leaders win. A product
+        # page full of customer quotes used to win on raw name count.
+        pairs = [(p.name, p.title) for p in people]
+        score = page_score(final, pairs)
+        if score[0] == 0:
+            continue
+        key = (len(people), _hint_score(final), final, people, score)
+        if best is None or (key[4], key[1]) > (best[4], best[1]):
             best = key
         # A clearly-named leadership page with enough people: stop looking.
         if len(people) >= min_people and _hint_score(final) >= 40:
@@ -160,7 +167,7 @@ def discover(row: dict, min_people: int) -> dict:
     result["candidates_checked"] = checked
     if best is None:
         result["status"] = "no team page found" if home_ok else "site unreachable"
-    elif best[0] >= min_people:
+    elif best[0] >= min_people and best[4][1] >= 2:
         result.update(
             status="found", leadership_url=best[2], people_found=best[0],
             sample_people="; ".join(f"{p.name} ({p.title})" for p in best[3][:3]),

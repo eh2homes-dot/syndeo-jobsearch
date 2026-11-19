@@ -28,17 +28,53 @@ log = logging.getLogger(__name__)
 # redesign, not fifteen simultaneous departures. Guard against reporting that.
 MIN_PLAUSIBLE = 2
 MAX_CHURN_RATIO = 0.6
+# A plain download that lists fewer than this many people is read again in the
+# headless browser; team grids often load the rest with scripts.
+BROWSER_BELOW = 3
+# Leadership pages get their own browser and budget, so a slow week on job
+# boards can't starve them (the shared one stops at 150 pages / 20 minutes).
+BROWSER_PAGES = 200
+BROWSER_MINUTES = 40
+
+_browser = None
+
+
+def _get_browser():
+    global _browser
+    if _browser is None:
+        from jobsearch.browser import Browser
+        _browser = Browser(max_pages=BROWSER_PAGES, max_seconds=BROWSER_MINUTES * 60)
+    return _browser
+
+
+def _close_browser():
+    global _browser
+    if _browser is not None:
+        try:
+            _browser.close()
+        except Exception:  # noqa: BLE001
+            pass
+        _browser = None
+
+
+def is_leadership_change(*titles: str) -> bool:
+    """A change worth reporting: at least one of the titles involved is above
+    staff level. Staff names stay in the snapshot so the page reads the same
+    week to week, but a leasing manager joining isn't a leadership move."""
+    from lib.team_page import STAFF_TITLE
+    return any(t and not STAFF_TITLE.search(t) for t in titles)
 
 
 def _rendered_html(url: str) -> str:
     """The page as a visitor sees it, after its scripts run. Blank if the
     headless browser isn't installed or the page won't load in it."""
     try:
-        from jobsearch.browser import shared, BrowserUnavailable
+        from jobsearch.browser import BrowserUnavailable
+        browser = _get_browser()
     except Exception:  # noqa: BLE001 - the browser is optional
         return ""
     try:
-        page = shared().render(url)
+        page = browser.render(url)
     except BrowserUnavailable as exc:
         log.info("    browser couldn't read %s: %s", url, exc)
         return ""
@@ -55,7 +91,7 @@ def _read_people(company) -> tuple[str, list]:
     r = get(company.leadership_url)
     html = r.text if r else ""
     people = extract_from_html(html) if html else []
-    if len(people) >= MIN_PLAUSIBLE:
+    if len(people) >= BROWSER_BELOW:
         return html, people
     rendered = _rendered_html(company.leadership_url)
     if rendered:
@@ -78,11 +114,7 @@ def collect(companies, seen=None) -> list[Move]:
             except Exception as exc:  # noqa: BLE001 - one bad page must not stop the rest
                 log.warning("  %s: leadership check failed (%s)", company.name, exc)
     finally:
-        try:
-            from jobsearch.browser import close_shared
-            close_shared()
-        except Exception:  # noqa: BLE001
-            pass
+        _close_browser()
 
     log.info("Leadership: %d moves", len(moves))
     return moves
@@ -133,6 +165,10 @@ def _check(company) -> list[Move]:
             page_hash(html),
         )
         return moves
+
+    added = [p for p in added if is_leadership_change(p.title)]
+    removed = [p for p in removed if is_leadership_change(p.title)]
+    retitled = [(o, n) for o, n in retitled if is_leadership_change(o.title, n.title)]
 
     for person in added:
         moves.append(

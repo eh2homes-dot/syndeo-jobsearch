@@ -196,7 +196,23 @@ def extract_from_text(text: str, exclude: set[str] | None = None) -> list[Person
 
 
 def extract_from_html(html: str) -> list[Person]:
-    """Extract people from a leadership / team / about page."""
+    """Extract people from a leadership / team / about page.
+
+    Reads the page as a sequence of lines and pairs each personal name with the
+    title beside it (lib/team_page.py). The older container-based reader is kept
+    as extract_from_html_legacy for comparison; it took marketing copy and
+    customer quotes for people ("Cookies These (partner)").
+    """
+    from lib.team_page import extract_team
+    people: dict[str, Person] = {}
+    for name, title in extract_team(html):
+        p = Person(name, _clean_title(title))
+        people.setdefault(p.key(), p)
+    return sorted(people.values(), key=lambda p: p.name)
+
+
+def extract_from_html_legacy(html: str) -> list[Person]:
+    """The pre-November 2026 reader. Not used by the weekly scan."""
     soup = BeautifulSoup(html, "lxml")
 
     for tag in soup(["script", "style", "noscript", "nav", "footer", "header"]):

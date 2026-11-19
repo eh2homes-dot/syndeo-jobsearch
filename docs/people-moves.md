@@ -110,9 +110,20 @@ workflow to `actions/cache`.
 - **Feed URLs rot.** Run `python run.py --check-feeds` after any edit to
   `config/feeds.yml`, and once a quarter regardless. Anything reported DEAD
   should be found again or disabled rather than left to fail silently.
-- **JavaScript-rendered team pages parse as empty.** The leadership source skips
-  any page yielding fewer than 2 people and logs a warning. Those companies need
-  a different URL, or accept that news and trade press are their only coverage.
+- **How team pages are read.** `lib/team_page.py` reads a page as lines of text
+  in reading order and pairs each personal name with the job title beside it, so
+  long bio cards and script-loaded grids work. Pages listing fewer than 3 people
+  in a plain download are read again in the headless browser (leadership pages
+  have their own browser budget). Staff-level titles (managers, coordinators)
+  stay in the snapshot but changes to them aren't reported.
+- **Finding or fixing leadership URLs.** Run the *Capture Leadership Pages*
+  workflow (mode `capture`) to save every candidate page to the
+  `leadership-capture` branch, pick URLs with `lib.team_page.page_score` (team
+  pages beat product pages full of customer quotes), then run it in mode
+  `baseline` so the next weekly scan reports changes straight away.
+- **Some sites block GitHub's servers** (403 on every page, even in the browser:
+  CoStar, Rocket, Kite Realty, Yardi, Picerne in Nov 2026). Their leadership
+  changes come from SEC filings and news only.
 - **Page redesigns look like mass turnover.** If more than 60% of a page's names
   change at once, the run treats it as a redesign, re-baselines, and reports
   nothing. Tune `MAX_CHURN_RATIO` in `sources/leadership.py` if that fires too
