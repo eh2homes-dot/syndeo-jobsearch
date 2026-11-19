@@ -11,6 +11,9 @@ on:
         required: false
         default: ""
 
+permissions:
+  contents: write
+
 jobs:
   capture:
     runs-on: ubuntu-latest
@@ -25,8 +28,15 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - name: Capture pages
         run: python tools/capture_leadership.py --only "${{ inputs.only }}"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: leadership-capture
-          path: capture/
-          retention-days: 14
+      # Pushed to a throwaway branch (not an artifact) so it can be pulled with
+      # plain git. The branch holds only the capture and is replaced each run.
+      - name: Push the capture to the leadership-capture branch
+        run: |
+          tar czf /tmp/capture.tgz capture
+          cd /tmp && rm -rf cap && mkdir cap && cd cap && git init -q -b leadership-capture
+          cp /tmp/capture.tgz .
+          git config user.name "syndeo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add capture.tgz && git commit -q -m "Leadership page capture $(date -u +%F)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" leadership-capture
+
