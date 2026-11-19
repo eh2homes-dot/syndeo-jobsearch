@@ -115,7 +115,29 @@ def _read_profiles(company) -> tuple[str, list]:
     from lib.sitemap import page_urls
 
     prefix = company.leadership_url[: -len(PROFILE_SUFFIX)].rstrip("/") + "/"
-    pages = page_urls(prefix, keep=lambda u: u.startswith(prefix) and "/" not in u[len(prefix):].strip("/"))
+    def is_profile(u: str) -> bool:
+        rest = u[len(prefix):].strip("/") if u.startswith(prefix) else ""
+        return bool(rest) and "/" not in rest
+
+    pages = set(page_urls(prefix, keep=is_profile))
+    # Sitemaps often leave team pages out: also take profile links from the
+    # roster's index page and the homepage, as the browser shows them.
+    from urllib.parse import urljoin, urlparse
+    from bs4 import BeautifulSoup
+    index = prefix.rstrip("/")
+    home = f"{urlparse(index).scheme}://{urlparse(index).netloc}"
+    for page_url in (index, home):
+        html = ""
+        r = get(page_url, timeout=20, retries=1)
+        if r is not None:
+            html = r.text
+        if not any(is_profile(urljoin(page_url, a["href"]).split("#")[0].split("?")[0])
+                   for a in BeautifulSoup(html or "", "lxml").find_all("a", href=True)):
+            html = _rendered_html(page_url) or html
+        for a in BeautifulSoup(html or "", "lxml").find_all("a", href=True):
+            u = urljoin(page_url, a["href"].strip()).split("#")[0].split("?")[0].rstrip("/")
+            if is_profile(u):
+                pages.add(u)
     pages = sorted(pages)[:MAX_PROFILES]
     people: list[Person] = []
     for url in pages:

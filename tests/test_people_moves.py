@@ -350,11 +350,18 @@ def test_leadership_reads_one_profile_page_per_leader(monkeypatch):
         return None
     monkeypatch.setattr(sitemap, "get", fake_get)
     monkeypatch.setattr(leadership, "get", fake_get)
+    monkeypatch.setattr(leadership, "_rendered_html", lambda url: "")
     company = C.Company(name="Acme", leadership_url="https://acme.test/leadership/*")
     _, people = leadership._read_people(company)
     # Each profile contributes its own person only, not names it mentions.
     assert sorted(p.name for p in people) == ["Jane Smith", "Robert Jones"]
     assert leadership.page_link(company) == "https://acme.test/leadership"
+
+    # A roster the sitemap leaves out is found from the index page's links.
+    profiles["https://acme.test/leadership"] = '<a href="/leadership/ann-cho">Ann Cho</a>'
+    profiles["https://acme.test/leadership/ann-cho"] = "<h1>Ann Cho</h1><p>Chief Operating Officer</p>"
+    _, people = leadership._read_people(company)
+    assert "Ann Cho" in {p.name for p in people}
 
 
 def test_leadership_reads_a_recent_archive_copy_only(monkeypatch):
