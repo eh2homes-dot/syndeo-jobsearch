@@ -8,13 +8,17 @@ name: Capture Leadership Pages
 #             commits only the page snapshots (state/leadership/), so the next
 #             weekly run reports changes instead of recording first baselines.
 #             Doesn't touch this week's People Moves brief.
+#   probe:    looks for a readable leadership page for every watched company
+#             without one (sitemaps, homepage links) and checks Internet Archive
+#             coverage for pages the scan can't read; results go to the
+#             leadership-probe branch. Changes nothing on main.
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "capture or baseline"
+        description: "capture, baseline or probe"
         type: choice
-        options: [capture, baseline]
+        options: [capture, baseline, probe]
         default: capture
       only:
         description: "capture: comma-separated company names (blank = all)"
@@ -56,6 +60,20 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add capture.tgz && git commit -q -m "Leadership page capture $(date -u +%F)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" leadership-capture
+
+      - name: Probe for missing leadership pages
+        if: inputs.mode == 'probe'
+        run: python tools/probe_leadership.py --only "${{ inputs.only }}"
+      - name: Push the probe to the leadership-probe branch
+        if: inputs.mode == 'probe'
+        run: |
+          tar czf /tmp/probe.tgz probe
+          cd /tmp && rm -rf pr && mkdir pr && cd pr && git init -q -b leadership-probe
+          cp /tmp/probe.tgz .
+          git config user.name "syndeo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add probe.tgz && git commit -q -m "Leadership page probe $(date -u +%F)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" leadership-probe
 
       - name: Record leadership page baselines
         if: inputs.mode == 'baseline'
