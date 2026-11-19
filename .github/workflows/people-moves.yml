@@ -1,27 +1,38 @@
 name: People Moves
 
-# Sundays at 6:00am ET, with Sunday-afternoon and early-Monday backups that run
-# only if that week's output is still missing (see the guard step).
-# Light refresh runs (news, trade press and SEC filings only, last 4 days) on
-# Tuesday 7am ET and Friday 3pm ET, so the Tuesday final edit and the Friday
-# first draft of the newsletter see moves announced since the last run.
-#
-# GitHub cron is UTC and does not observe daylight saving, so a single UTC time
-# drifts by an hour twice a year. Two schedules are declared (10:00 UTC = 6am
-# EDT, 11:00 UTC = 6am EST) and the guard step exits on whichever one is not
-# actually 6am in New York. One real run per Sunday, all year.
+# When it runs (Nov 2026, the on-time chain):
+#   Sunday   full scan, right after the OpCo search finishes (the Supabase
+#            scheduler starts the weekly job search at 4:05am ET; OpCo follows it,
+#            and this follows OpCo)
+#   Tuesday  light refresh (every source, last 4 days for news and filings),
+#            the same way after the Tuesday 5:05am job search and OpCo
+#   Friday   light refresh, started by the Supabase scheduler at 3:05pm ET
+# The schedules below are backups for when a chained start doesn't come; the
+# guard step lets one run per day through. GitHub ignores daylight saving, so
+# each backup time is listed in both UTC offsets.
 on:
   schedule:
-    - cron: "0 10 * * 0"      # 6am EDT Sunday (main run, roughly March to November)
-    - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
+    - cron: "0 10 * * 0"      # backup: 6am EDT Sunday
+    - cron: "0 11 * * 0"      # backup: 6am EST Sunday
     - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
     - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
-    - cron: "0 11 * * 2"      # light refresh (all sources): 7am EDT Tuesday (after the Tuesday OpCo run)
-    - cron: "0 12 * * 2"      # light refresh: 7am EST Tuesday
-    - cron: "0 19 * * 5"      # light refresh (all sources): 3pm EDT Friday (before the Friday first draft)
-    - cron: "0 20 * * 5"      # light refresh: 3pm EST Friday
+    - cron: "0 11 * * 2"      # backup light refresh: 7am EDT Tuesday
+    - cron: "0 12 * * 2"      # backup light refresh: 7am EST Tuesday
+    - cron: "0 19 * * 5"      # backup light refresh: 3pm EDT Friday
+    - cron: "0 20 * * 5"      # backup light refresh: 3pm EST Friday
+  # ON-TIME CHAIN (Nov 2026): Sunday and Tuesday, starts as soon as the OpCo
+  # search finishes (which follows the weekly job search, which the Supabase
+  # scheduler starts on time). Friday: the Supabase scheduler starts it at 3:05pm
+  # ET (kick=true). The schedules above are backups.
+  workflow_run:
+    workflows: ["OpCo Job Search"]
+    types: [completed]
   workflow_dispatch:
     inputs:
+      kick:
+        description: "Set by the Supabase scheduler (on-time start). Runs only if today's scheduled run hasn't happened yet. Leave off for a manual run."
+        type: boolean
+        default: false
       backfill:
         description: "Run the one-off Wayback baseline instead of a weekly scan"
         type: boolean
@@ -53,37 +64,37 @@ jobs:
       # Checkout comes first (it is cheap) so the guard can see the latest output.
       - uses: actions/checkout@v4
 
-      # Decide by WHICH schedule fired, never by the clock: GitHub often starts
-      # scheduled runs hours late, and a clock check then skips the week.
-      #  - Sunday 6am slots: the one matching the current daylight-saving side runs.
-      #  - Backup slots (Sunday afternoon, early Monday): run only if this week's
-      #    People Moves output is still missing, i.e. GitHub dropped or failed the 6am run.
-      #    The Monday backup lands before the browser pass and the newsletter build.
+      # Every automatic start (after OpCo, the Friday on-time start, or a backup
+      # schedule) goes through this guard, by Eastern weekday:
+      #  - Sunday: the full weekly scan, if today's output isn't in yet.
+      #  - Monday: backup full scan, only if this week's Sunday scan never ran.
+      #  - Tuesday and Friday: the light refresh, if today's output isn't in yet.
+      #  - Any other day: stop.
+      # Whichever start comes first does the run; the rest stop here.
       - name: Decide whether this trigger should run
         id: guard
         env:
           EVENT: ${{ github.event_name }}
-          FIRED: ${{ github.event.schedule }}
+          KICK: ${{ github.event.inputs.kick }}
         run: |
-          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
-          today=$(TZ=America/New_York date +%F)
-          sunday=$(date -d "$today -$(TZ=America/New_York date +%w) days" +%F)   # this week's Sunday
+          today=$(date -u +%F)                         # output files are named by the runner's date
+          dow=$(TZ=America/New_York date +%w)
+          sunday=$(date -d "$(TZ=America/New_York date +%F) -$dow days" +%F)   # this week's Sunday
           latest=$(find . -path ./.git -prune -o -type f -name 'people-moves-20*.json' -print | sed -E 's/.*people-moves-([0-9-]{10})\.json/\1/' | sort | tail -1)
-          echo "Latest People Moves output: ${latest:-none} (this week's Sunday: $sunday)"
+          echo "Latest People Moves output: ${latest:-none} (today $today, this week's Sunday: $sunday)"
           light=false
-          if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
-          elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
-          elif { [ "$FIRED" = "0 11 * * 2" ] || [ "$FIRED" = "0 19 * * 5" ]; } && [ "$offset" = "-0400" ]; then run=true; light=true
-          elif { [ "$FIRED" = "0 12 * * 2" ] || [ "$FIRED" = "0 20 * * 5" ]; } && [ "$offset" = "-0500" ]; then run=true; light=true
-          elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$KICK" != "true" ]; then run=true   # manual runs always go
+          elif [ "$latest" = "$today" ]; then run=false; echo "Today's scan already ran."
+          elif [ "$dow" = "0" ]; then run=true
+          elif [ "$dow" = "1" ]; then
             if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
-              run=true; echo "::warning::Backup run: this week's 6am run left no output."
+              run=true; echo "::warning::Backup run: this week's Sunday scan left no output."
             else run=false; fi
+          elif [ "$dow" = "2" ] || [ "$dow" = "5" ]; then run=true; light=true
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
           echo "light=$light" >> "$GITHUB_OUTPUT"
-          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run, light=$light"
+          echo "event $EVENT, kick ${KICK:-false}, Eastern weekday $dow -> run=$run, light=$light"
 
       # The OpCo search runs at the same 6am slot and its results feed the job
       # signals. On scheduled runs, wait (up to 40 minutes) for this week's OpCo

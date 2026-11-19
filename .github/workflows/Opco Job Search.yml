@@ -5,13 +5,17 @@ name: OpCo Job Search
 # weekly brief. Column D is the only input. A careers page is read through the
 # job board it loads; nothing is guessed from a company's name.
 #
-# Runs Sundays at 6:00am ET. GitHub's schedule runs on UTC with no daylight
-# saving, so two times are listed (10:00 UTC = 6am EDT, 11:00 UTC = 6am EST) and
-# the guard step keeps whichever matches. Two backup times (Sunday afternoon,
-# early Monday) run only if that week's output is still missing.
-# Also runs Tuesdays at 6:00am ET, a refresh for the Origins newsletter's
-# Tuesday-noon final edit (same two-UTC-times guard, no backups).
+# Runs right after the weekly job search finishes, on Sundays and Tuesdays
+# (workflow_run trigger below), so it starts on time and in order. The
+# schedules are backups: Sunday and Tuesday 6am ET (two UTC times each, as
+# GitHub ignores daylight saving) and two catch-up times (Sunday afternoon,
+# early Monday). Whichever start comes first runs; the guard stops the rest.
 on:
+  # ON-TIME CHAIN (Nov 2026): starts as soon as the weekly job search finishes
+  # (which the Supabase scheduler starts on time). The schedules below are backups.
+  workflow_run:
+    workflows: ["Weekly job search"]
+    types: [completed]
   schedule:
     - cron: "0 10 * * 0"      # 6am EDT Sunday (main run, roughly March to November)
     - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
@@ -51,29 +55,31 @@ jobs:
       #  - Backup slots (Sunday afternoon, early Monday): run only if this week's
       #    OpCo output is still missing, i.e. GitHub dropped or failed the 6am run.
       #    The Monday backup lands before the browser pass and the newsletter build.
+      # Every automatic start (after the weekly search, or a backup schedule):
+      #  - Sunday or Tuesday (Eastern): run if today's OpCo results aren't in yet.
+      #  - Monday: backup, run only if this week's Sunday results never landed.
+      #  - Any other day: stop (a manual weekly search on a Thursday doesn't start OpCo).
+      # Whichever start comes first does the run; the rest stop here.
       - name: Decide whether this trigger should run
         id: guard
         env:
           EVENT: ${{ github.event_name }}
-          FIRED: ${{ github.event.schedule }}
         run: |
-          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
           today=$(TZ=America/New_York date +%F)
-          sunday=$(date -d "$today -$(TZ=America/New_York date +%w) days" +%F)   # this week's Sunday
+          dow=$(TZ=America/New_York date +%w)
+          sunday=$(date -d "$today -$dow days" +%F)   # this week's Sunday
           latest=$(python3 -c "import json,glob;p=sorted(glob.glob('**/out/opco-jobs-latest.json',recursive=True));print(json.load(open(p[0])).get('run_date','') if p else '')" 2>/dev/null)
-          echo "Latest OpCo output: ${latest:-none} (this week's Sunday: $sunday)"
-          if [ "$EVENT" != "schedule" ]; then run=true     # manual runs always go
-          elif [ "$FIRED" = "0 10 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "0 11 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
-          elif [ "$FIRED" = "0 10 * * 2" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "0 11 * * 2" ] && [ "$offset" = "-0500" ]; then run=true
-          elif [ "$FIRED" = "17 18 * * 0" ] || [ "$FIRED" = "17 8 * * 1" ]; then
+          echo "Latest OpCo output: ${latest:-none} (today $today, this week's Sunday $sunday)"
+          if [ "$EVENT" = "workflow_dispatch" ]; then run=true     # manual runs always go
+          elif [ "$dow" = "0" ] || [ "$dow" = "2" ]; then
+            if [ "${latest:0:10}" = "$today" ]; then run=false; echo "Today's OpCo results are already in."; else run=true; fi
+          elif [ "$dow" = "1" ]; then
             if [ -z "$latest" ] || [[ "$latest" < "$sunday" ]]; then
-              run=true; echo "::warning::Backup run: this week's 6am run left no output."
+              run=true; echo "::warning::Backup run: this week's Sunday run left no output."
             else run=false; fi
           else run=false; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
-          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
+          echo "event $EVENT, Eastern weekday $dow -> run=$run"
 
       - name: Find the script, its config and the company list
         if: steps.guard.outputs.run == 'true'

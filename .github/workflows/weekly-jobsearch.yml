@@ -1,9 +1,10 @@
 name: Weekly job search
 on:
   schedule:
-    # Sundays 4:00am Eastern (full run of all companies), finishing before "Recently hired" at 6am.
-    # GitHub schedules run in UTC with no daylight saving, so both UTC times are listed and the
-    # "Check it's 4am Eastern" step below lets only the correct one through:
+    # BACKUPS ONLY: the on-time start comes from the Supabase scheduler (see the
+    # guard step). Sundays 4am Eastern (full run) and Tuesdays 5am; both UTC times
+    # are listed because GitHub ignores daylight saving. The guard runs whichever
+    # start comes first, once per day.
     - cron: "0 8 * * 0"       # 08:00 UTC = 4am EDT (roughly March to November)
     - cron: "0 9 * * 0"       # 09:00 UTC = 4am EST (roughly November to March)
     # Tuesdays 5am Eastern: refresh run for the Origins newsletter's Tuesday-noon final edit,
@@ -12,6 +13,10 @@ on:
     - cron: "0 10 * * 2"      # 10:00 UTC = 5am EST
   workflow_dispatch:
     inputs:
+      kick:
+        description: "Set by the Supabase scheduler (on-time start). Runs only if today's scheduled run hasn't happened yet. Leave off for a manual run."
+        type: boolean
+        default: false
       companies:
         description: "On-demand: company names, comma-separated (e.g. zillow, entrata, greystar). Leave blank for a full run."
         default: ""
@@ -30,6 +35,12 @@ on:
 permissions:
   contents: write
 
+# A second start (GitHub's late schedule after the on-time Supabase start, or
+# the reverse) waits for the first, then sees today's output and stops.
+concurrency:
+  group: weekly-jobsearch
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -37,23 +48,29 @@ jobs:
     outputs:
       run: ${{ steps.et.outputs.run }}
     steps:
-      - name: Check it's 4am Eastern
+      # Checkout first (cheap) so the guard can see whether today's run already happened.
+      - uses: actions/checkout@v5
+      # ON-TIME CHAIN (Nov 2026). GitHub starts scheduled runs hours late (Nov 17:
+      # the 5am Tuesday run started 1:09pm), so the Supabase scheduler starts this
+      # workflow on time (Sun 4:05am, Tue 5:05am ET, input kick=true) and the OpCo
+      # search and People Moves follow it by workflow_run. The schedules above stay
+      # as backups. Every automatic start runs only on a Sunday or Tuesday (Eastern)
+      # and only if today's output isn't in the repo yet, so whichever start comes
+      # first does the run and the others stop here.
+      - name: Decide whether this start should run
         id: et
         env:
           EVENT: ${{ github.event_name }}
-          FIRED: ${{ github.event.schedule }}
+          KICK: ${{ github.event.inputs.kick }}
         run: |
-          offset=$(TZ=America/New_York date +%z)          # -0400 in daylight time, -0500 in standard time
-          if [ "$EVENT" != "schedule" ]; then run=true      # manual runs (full or on-demand) always go
-          elif [ "$FIRED" = "0 8 * * 0" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "0 9 * * 0" ] && [ "$offset" = "-0500" ]; then run=true
-          elif [ "$FIRED" = "0 9 * * 2" ] && [ "$offset" = "-0400" ]; then run=true
-          elif [ "$FIRED" = "0 10 * * 2" ] && [ "$offset" = "-0500" ]; then run=true
-          else run=false; fi
+          today=$(date -u +%F)                              # output/<date>/ is named by the runner's date
+          dow=$(TZ=America/New_York date +%w)
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$KICK" != "true" ]; then run=true   # manual runs always go
+          elif [ "$dow" != "0" ] && [ "$dow" != "2" ]; then run=false
+          elif [ -f "output/$today/all_open_roles.csv" ]; then run=false; echo "Today's search already ran (output/$today)."
+          else run=true; fi
           echo "run=$run" >> "$GITHUB_OUTPUT"
-          echo "Eastern offset $offset, schedule '$FIRED' -> run=$run"
-      - uses: actions/checkout@v5
-        if: steps.et.outputs.run == 'true'
+          echo "event $EVENT, kick ${KICK:-false}, Eastern weekday $dow -> run=$run"
       - uses: actions/setup-python@v6
         if: steps.et.outputs.run == 'true'
         with: { python-version: "3.12" }
