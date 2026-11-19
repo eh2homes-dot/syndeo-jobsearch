@@ -1,0 +1,32 @@
+name: Capture Leadership Pages
+
+# Manual only. Saves every candidate leadership / team page (plain download and
+# browser-rendered) as a run artifact for building and testing the name reader.
+# Changes nothing in the repo.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma-separated company names (blank = all)"
+        required: false
+        default: ""
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Capture pages
+        run: python tools/capture_leadership.py --only "${{ inputs.only }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: leadership-capture
+          path: capture/
+          retention-days: 14
