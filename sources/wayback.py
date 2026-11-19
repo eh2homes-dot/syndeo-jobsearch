@@ -64,7 +64,11 @@ def _closest_snapshot(url: str, days_back: int) -> tuple[str, str] | None:
 
 def collect(companies, days_back: int = 120, seen=None) -> list[Move]:
     moves: list[Move] = []
-    targets = [c for c in companies if c.leadership_url]
+    # Profile rosters (".../*") and Archive-only pages ("archive:...") aren't
+    # single live pages to backfill.
+    targets = [c for c in companies if c.leadership_url
+               and not c.leadership_url.startswith("archive:")
+               and not c.leadership_url.endswith("/*")]
     log.info(
         "Wayback backfill: %d pages, looking ~%d days back (this is slow)",
         len(targets), days_back,

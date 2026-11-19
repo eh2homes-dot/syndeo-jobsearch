@@ -16,6 +16,7 @@ not an announcement.
 from __future__ import annotations
 
 import logging
+import os
 
 from lib.http import get
 from lib.move import Move, PROBABLE, ARRIVAL, DEPARTURE, PROMOTION
@@ -84,7 +85,92 @@ def _rendered_html(url: str) -> str:
     return "\n".join(html for _, html in page.frames)
 
 
+# Two special forms of the Leadership URL in config/companies.csv:
+#   https://site.com/leadership/*  one profile page per leader; the roster is
+#                                  every page under that path in the sitemap
+#   archive:https://site.com/team  the site refuses automated readers; read the
+#                                  newest copy the Internet Archive already holds
+#                                  (never asks the Archive to fetch it for us)
+PROFILE_SUFFIX = "/*"
+ARCHIVE_PREFIX = "archive:"
+MAX_PROFILES = 60
+ARCHIVE_MAX_AGE_DAYS = 45
+CDX = "https://web.archive.org/cdx/search/cdx"
+
+
+def page_link(company) -> str:
+    """The URL to show a reader for this company's leadership source."""
+    url = company.leadership_url or ""
+    if url.startswith(ARCHIVE_PREFIX):
+        return getattr(company, "_archive_copy", "") or url[len(ARCHIVE_PREFIX):]
+    if url.endswith(PROFILE_SUFFIX):
+        return url[: -len(PROFILE_SUFFIX)]
+    return url
+
+
+def _read_profiles(company) -> tuple[str, list]:
+    """Leaders listed one per page: the roster is the sitemap's pages under the
+    prefix, each read for the person's name and title."""
+    import re as _re
+    from lib.sitemap import page_urls
+
+    prefix = company.leadership_url[: -len(PROFILE_SUFFIX)].rstrip("/") + "/"
+    pages = page_urls(prefix, keep=lambda u: u.startswith(prefix) and "/" not in u[len(prefix):].strip("/"))
+    pages = sorted(pages)[:MAX_PROFILES]
+    people: list[Person] = []
+    for url in pages:
+        r = get(url, timeout=20, retries=1)
+        if r is None:
+            continue
+        found = extract_from_html(r.text)
+        # The profile's own person: the one whose name matches the page's slug.
+        slug_words = set(_re.findall(r"[a-z]+", url.rsplit("/", 1)[-1].lower()))
+        match = [p for p in found if set(_re.findall(r"[a-z]+", p.name.lower())) & slug_words]
+        if match:
+            people.append(match[0])
+    summary = "\n".join(sorted(f"{p.name}|{p.title}" for p in people))
+    log.info("  %s: %d profile pages, %d read", company.name, len(pages), len(people))
+    return summary, people
+
+
+def _read_archive(company) -> tuple[str, list]:
+    """The newest Internet Archive copy of the page, if it's recent enough."""
+    import json as _json
+    from datetime import datetime, timezone
+
+    url = company.leadership_url[len(ARCHIVE_PREFIX):]
+    r = get(f"{CDX}?url={url}&output=json&fl=timestamp&filter=statuscode:200&limit=-1",
+            timeout=30, retries=2)
+    try:
+        rows = _json.loads(r.text)[1:] if r is not None else []
+    except ValueError:
+        rows = []
+    if not rows:
+        log.warning("  %s: no Internet Archive copy of %s", company.name, url)
+        return "", []
+    ts = rows[-1][0]
+    age = (datetime.now(timezone.utc) - datetime.strptime(ts[:8], "%Y%m%d").replace(tzinfo=timezone.utc)).days
+    if age > ARCHIVE_MAX_AGE_DAYS:
+        log.warning("  %s: newest Archive copy is %d days old, skipping", company.name, age)
+        return "", []
+    s = get(f"https://web.archive.org/web/{ts}id_/{url}", timeout=30, retries=2)
+    if s is None:
+        return "", []
+    company._archive_copy = f"https://web.archive.org/web/{ts}/{url}"
+    people = extract_from_html(s.text)
+    log.info("  %s: read the Archive copy from %s (%d people)", company.name, ts[:8], len(people))
+    return s.text, people
+
+
 def _read_people(company) -> tuple[str, list]:
+    if company.leadership_url.endswith(PROFILE_SUFFIX):
+        return _read_profiles(company)
+    if company.leadership_url.startswith(ARCHIVE_PREFIX):
+        return _read_archive(company)
+    return _read_page(company)
+
+
+def _read_page(company) -> tuple[str, list]:
     """Download the leadership page; if the plain download lists too few people
     (the names load with scripts, or the site refuses plain downloads), read it
     again in the headless browser. Returns (html, people)."""
@@ -105,6 +191,10 @@ def _read_people(company) -> tuple[str, list]:
 def collect(companies, seen=None) -> list[Move]:
     moves: list[Move] = []
     targets = [c for c in companies if c.leadership_url]
+    if os.environ.get("LEADERSHIP_NEW_ONLY") == "1":
+        # Baseline mode: record pages seen for the first time and leave the rest
+        # alone, so changes since their last read still reach the weekly report.
+        targets = [c for c in targets if not load_snapshot(c.slug).get("people")]
     log.info("Leadership: checking %d pages", len(targets))
 
     try:
@@ -126,7 +216,7 @@ def _check(company) -> list[Move]:
     if len(current) < MIN_PLAUSIBLE:
         log.warning(
             "  %s: only %d people parsed from %s, skipping (even in the browser)",
-            company.name, len(current), company.leadership_url,
+            company.name, len(current), page_link(company),
         )
         return moves
 
@@ -137,7 +227,7 @@ def _check(company) -> list[Move]:
     if not prior_people:
         save_snapshot(
             company.slug,
-            company.leadership_url,
+            page_link(company),
             [p.to_dict() for p in current],
             page_hash(html),
         )
@@ -160,7 +250,7 @@ def _check(company) -> list[Move]:
         )
         save_snapshot(
             company.slug,
-            company.leadership_url,
+            page_link(company),
             [p.to_dict() for p in current],
             page_hash(html),
         )
@@ -180,7 +270,7 @@ def _check(company) -> list[Move]:
                 person=person.name,
                 title=person.title,
                 summary=f"New name on {company.name}'s team page.",
-                url=company.leadership_url,
+                url=page_link(company),
                 score=priority_score(person.title) + 10,
             )
         )
@@ -195,7 +285,7 @@ def _check(company) -> list[Move]:
                 person=person.name,
                 title=person.title,
                 summary=f"Name removed from {company.name}'s team page.",
-                url=company.leadership_url,
+                url=page_link(company),
                 score=priority_score(person.title),
             )
         )
@@ -211,14 +301,14 @@ def _check(company) -> list[Move]:
                 title=new.title,
                 previous_title=old.title,
                 summary=f"Title change at {company.name}.",
-                url=company.leadership_url,
+                url=page_link(company),
                 score=priority_score(new.title) + 5,
             )
         )
 
     save_snapshot(
         company.slug,
-        company.leadership_url,
+        page_link(company),
         [p.to_dict() for p in current],
         page_hash(html),
     )

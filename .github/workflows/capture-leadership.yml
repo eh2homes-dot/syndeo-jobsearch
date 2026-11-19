@@ -4,7 +4,7 @@ name: Capture Leadership Pages
 #   capture:  saves every candidate leadership / team page (plain download and
 #             browser-rendered) to the leadership-capture branch, for building
 #             and testing the name reader. Changes nothing on main.
-#   baseline: reads every watched leadership page with the current reader and
+#   baseline: reads every watched leadership page that has no snapshot yet and
 #             commits only the page snapshots (state/leadership/), so the next
 #             weekly run reports changes instead of recording first baselines.
 #             Doesn't touch this week's People Moves brief.
@@ -79,6 +79,7 @@ jobs:
         if: inputs.mode == 'baseline'
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          LEADERSHIP_NEW_ONLY: "1"
         run: |
           python run.py --sources leadership --out /tmp/pm-check --lookback-days 1 2>&1 | tee /tmp/baseline.log
           echo "## Leadership baselines" >> "$GITHUB_STEP_SUMMARY"

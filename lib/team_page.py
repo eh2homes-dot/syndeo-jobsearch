@@ -183,18 +183,54 @@ def clean_title(text: str) -> str | None:
 
 
 def _lines(soup: BeautifulSoup) -> list[str]:
-    """Visible text as separate lines, in reading order. Each text node is a
-    line; inline wrappers are not merged, which keeps "Jane Doe" and "CEO"
-    apart even when they share a parent."""
-    out: list[str] = []
+    """Visible text as separate lines, in reading order (see _nodes)."""
+    return [text for text, _ in _nodes(soup)]
+
+
+def _nodes(soup: BeautifulSoup) -> list[tuple[str, NavigableString]]:
+    """(line, text node) for the visible text, in reading order. Each text
+    node is a line; inline wrappers are not merged, which keeps "Jane Doe" and
+    "CEO" apart even when they share a parent. A first and last name split
+    into two nodes ("Derek" / "Ramsey") are joined back into one line."""
+    out: list[tuple[str, NavigableString]] = []
     for node in soup.descendants:
         if type(node) is NavigableString:  # not comments, doctypes or CDATA
             if node.parent is not None and node.parent.name in _DROP_TAGS:
                 continue
             s = re.sub(r"\s+", " ", str(node)).strip()
             if s and s not in ("|", "-", "•", "·", ",", "&nbsp;"):
-                out.append(s)
-    return out
+                out.append((s, node))
+    merged: list[tuple[str, NavigableString]] = []
+    i = 0
+    while i < len(out):
+        text, node = out[i]
+        if i + 1 < len(out) and " " not in text and " " not in out[i + 1][0]:
+            joined = f"{text} {out[i + 1][0]}"
+            if clean_name(joined) and not clean_title(text) and not clean_title(out[i + 1][0]):
+                merged.append((joined, node))
+                i += 2
+                continue
+        merged.append((text, node))
+        i += 1
+    return merged
+
+
+def _ancestors(node) -> list:
+    chain, p = [], node.parent
+    while p is not None:
+        chain.append(p)
+        p = p.parent
+    return chain
+
+
+def _closeness(a, b) -> int:
+    """Depth of the deepest element holding both nodes: higher = same card."""
+    pa = _ancestors(a)
+    ids = {id(x) for x in _ancestors(b)}
+    for depth_from_a, el in enumerate(pa):
+        if id(el) in ids:
+            return len(pa) - depth_from_a
+    return 0
 
 
 def _split_inline(line: str) -> tuple[str, str] | None:
@@ -249,32 +285,39 @@ def extract_team(html: str) -> list[tuple[str, str]]:
     people = _json_ld(soup)
     for tag in soup(_DROP_TAGS):
         tag.decompose()
-    lines = _lines(soup)
+    nodes = _nodes(soup)
+    lines = [t for t, _ in nodes]
     used: set[int] = set()
     for i, line in enumerate(lines):
         if i in used:
             continue
         name = clean_name(line)
         if name:
-            # Title after the name (the usual card), skipping a blank-ish line
-            # or two such as a pronoun or a credential.
+            # Candidate titles: the first title line after the name (within 3
+            # lines, before the next name) and the line just before it. When
+            # both exist, the one sharing the name's card wins; a tie goes to
+            # the title after the name, the usual layout.
+            after = None
             for j in range(i + 1, min(i + 4, len(lines))):
-                if j in used:
+                if j in used or clean_name(lines[j]):
                     break
-                if clean_name(lines[j]):
-                    break  # the next person starts before any title
-                title = clean_title(lines[j])
-                if title:
-                    people.append((name, title))
-                    used.update((i, j))
+                t = clean_title(lines[j])
+                if t:
+                    after = (j, t)
                     break
-            else:
-                # Title before the name ("CEO" / "Jane Doe").
-                if i > 0 and i - 1 not in used:
-                    title = clean_title(lines[i - 1])
-                    if title and not (i > 1 and clean_name(lines[i - 2])):
-                        people.append((name, title))
-                        used.update((i - 1, i))
+            before = None
+            if i > 0 and i - 1 not in used:
+                t = clean_title(lines[i - 1])
+                if t:
+                    before = (i - 1, t)
+            pick = after or before
+            if after and before:
+                ca = _closeness(nodes[i][1], nodes[after[0]][1])
+                cb = _closeness(nodes[i][1], nodes[before[0]][1])
+                pick = before if cb > ca else after
+            if pick:
+                people.append((name, pick[1]))
+                used.update((i, pick[0]))
             continue
         pair = _split_inline(line)
         if pair:

@@ -326,3 +326,77 @@ def test_headline_words_are_not_taken_for_people(headline, company, expected):
     from lib.people import extract_from_text
     names = [p.name for p in extract_from_text(headline, exclude={company})]
     assert names == expected
+
+
+def test_leadership_reads_one_profile_page_per_leader(monkeypatch):
+    """Entrata-style sites: the roster is the sitemap's pages under the prefix."""
+    from sources import leadership
+    import lib.sitemap as sitemap
+    sitemap_xml = """<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url><loc>https://acme.test/leadership/jane-smith</loc></url>
+      <url><loc>https://acme.test/leadership/robert-jones</loc></url>
+      <url><loc>https://acme.test/leadership/robert-jones/speaking</loc></url>
+      <url><loc>https://acme.test/blog/hello</loc></url></urlset>"""
+    profiles = {
+        "https://acme.test/leadership/jane-smith": "<h1>Jane Smith</h1><p>Chief Executive Officer</p><p>Maria Garcia</p><p>CFO</p>",
+        "https://acme.test/leadership/robert-jones": "<h1>Robert Jones</h1><p>Chief Financial Officer</p>",
+    }
+
+    def fake_get(url, **kw):
+        if url.endswith("/sitemap.xml"):
+            return SimpleNamespace(text=sitemap_xml, content=sitemap_xml.encode())
+        if url in profiles:
+            return SimpleNamespace(text=profiles[url])
+        return None
+    monkeypatch.setattr(sitemap, "get", fake_get)
+    monkeypatch.setattr(leadership, "get", fake_get)
+    company = C.Company(name="Acme", leadership_url="https://acme.test/leadership/*")
+    _, people = leadership._read_people(company)
+    # Each profile contributes its own person only, not names it mentions.
+    assert sorted(p.name for p in people) == ["Jane Smith", "Robert Jones"]
+    assert leadership.page_link(company) == "https://acme.test/leadership"
+
+
+def test_leadership_reads_a_recent_archive_copy_only(monkeypatch):
+    """Sites that refuse automated readers: the newest Archive copy, if recent."""
+    from datetime import datetime, timedelta, timezone
+    from sources import leadership
+    fresh = (datetime.now(timezone.utc) - timedelta(days=10)).strftime("%Y%m%d%H%M%S")
+    stale = (datetime.now(timezone.utc) - timedelta(days=120)).strftime("%Y%m%d%H%M%S")
+    calls = []
+
+    def fake_get(url, ts=fresh, **kw):
+        calls.append(url)
+        if "cdx/search" in url:
+            return SimpleNamespace(text=f'[["timestamp"],["{ts}"]]')
+        if "web.archive.org/web/" in url:
+            return SimpleNamespace(text=_TEAM)
+        raise AssertionError(f"must not fetch the live site: {url}")
+    monkeypatch.setattr(leadership, "get", fake_get)
+    company = C.Company(name="Acme", leadership_url="archive:https://acme.test/team")
+    _, people = leadership._read_people(company)
+    assert len(people) == 3
+    assert leadership.page_link(company) == f"https://web.archive.org/web/{fresh}/https://acme.test/team"
+    assert not any("/save/" in u for u in calls)            # never asks the Archive to fetch
+
+    monkeypatch.setattr(leadership, "get", lambda url, **kw: fake_get(url, ts=stale))
+    _, people = leadership._read_people(C.Company(name="Old", leadership_url="archive:https://old.test/team"))
+    assert people == []                                       # too old to trust
+
+
+def test_staff_level_changes_are_not_reported(monkeypatch):
+    from sources import leadership
+    leaders = ("<li>Jane Smith, Chief Executive Officer</li><li>Ann Cho, Chief Financial Officer</li>"
+               "<li>Raj Patel, Chief Operating Officer</li><li>Lena Ortiz, VP of Marketing</li>"
+               "<li>Omar Haddad, General Counsel</li><li>Grace Kim, VP of Sales</li>"
+               "<li>Peter Novak, Chief Technology Officer</li>")
+    first = f"<ul>{leaders}<li>Tom Lee, Leasing Manager</li></ul>"
+    second = f"<ul>{leaders}<li>Bo Park, Leasing Manager</li></ul>"
+    third = f"<ul>{leaders}<li>Bo Park, Leasing Manager</li><li>Nina Rossi, VP of Operations</li></ul>"
+    pages = iter([first, second, third])
+    monkeypatch.setattr(leadership, "_read_people", lambda c: (lambda h: (h, leadership.extract_from_html(h)))(next(pages)))
+    company = C.Company(name="Staffco", leadership_url="https://staff.test/team")
+    assert leadership.collect([company]) == []    # baseline
+    assert leadership.collect([company]) == []    # only a leasing manager changed
+    moves = leadership.collect([company])         # a VP joins
+    assert [m.person for m in moves] == ["Nina Rossi"]
