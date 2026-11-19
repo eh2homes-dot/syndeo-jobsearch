@@ -16,9 +16,9 @@ on:
     - cron: "0 11 * * 0"      # 6am EST Sunday (main run, roughly November to March)
     - cron: "17 18 * * 0"     # backup: Sunday ~2pm ET, only if the 6am run left no output
     - cron: "17 8 * * 1"      # backup: Monday ~4am ET, only if still nothing this week
-    - cron: "0 11 * * 2"      # light refresh + leadership pages: 7am EDT Tuesday (after the Tuesday OpCo run)
+    - cron: "0 11 * * 2"      # light refresh (all sources): 7am EDT Tuesday (after the Tuesday OpCo run)
     - cron: "0 12 * * 2"      # light refresh: 7am EST Tuesday
-    - cron: "0 19 * * 5"      # light refresh + leadership pages: 3pm EDT Friday (before the Friday first draft)
+    - cron: "0 19 * * 5"      # light refresh (all sources): 3pm EDT Friday (before the Friday first draft)
     - cron: "0 20 * * 5"      # light refresh: 3pm EST Friday
   workflow_dispatch:
     inputs:
@@ -187,10 +187,12 @@ jobs:
           elif [ "${{ inputs.backfill }}" = "true" ]; then
             python run.py --backfill --backfill-days 120
           elif [ "${{ steps.guard.outputs.light }}" = "true" ]; then
-            # Light refresh: announcements from the last 4 days plus the
-            # leadership pages (a change since the last read is reported once,
-            # then the snapshot moves on). Closed reqs stay weekly (Sunday).
-            python run.py --sources "edgar,formd,leadership,news,trade" --lookback-days 4
+            # Light refresh: announcements from the last 4 days, plus the
+            # leadership pages and the job-board signals (each change since the
+            # last read is reported once, then the saved state moves on). The
+            # job searches run Sunday and Tuesday, so Friday's job-board check
+            # finds nothing new unless a search ran since Tuesday.
+            python run.py --sources "edgar,formd,leadership,news,trade,reqs" --lookback-days 4
           else
             python run.py \
               --sources "${{ inputs.sources || 'edgar,formd,leadership,news,trade,reqs' }}" \

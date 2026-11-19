@@ -37,6 +37,12 @@ from lib.state import STATE_DIR, _read_json, _write_json
 log = logging.getLogger(__name__)
 
 PREVIOUS_PATH = STATE_DIR / "previous_reqs.json"
+# Dated copies of past job lists, so the cluster signal can look back a full
+# week even though the scan runs Sunday, Tuesday and Friday.
+HISTORY_PATH = STATE_DIR / "reqs_history.json"
+HISTORY_DAYS = 21
+CLUSTER_WINDOW_DAYS = 6      # compare against the newest list at least this old
+CLUSTER_QUIET_DAYS = 7       # report a company+function cluster at most once a week
 
 _COMPANY_KEYS = ("company", "company_name", "employer", "org", "organization")
 _TITLE_KEYS = ("title", "role", "job_title", "position", "name")
@@ -110,6 +116,11 @@ def _load_all(spec: str) -> dict[str, set[str]]:
     return merged
 
 
+def _today():
+    from datetime import date
+    return date.today()
+
+
 def _function_of(title: str) -> str | None:
     m = PRIORITY_FUNCTIONS.search(title or "")
     return m.group(0).lower() if m else None
@@ -125,7 +136,18 @@ def collect(companies, jobs_file: str | None = None, seen=None) -> list[Move]:
         log.warning("job-search output was empty or missing (%s); skipping inference signals", spec)
         return []
 
+    from datetime import timedelta
+    today = _today()
     previous = {k: set(v) for k, v in _read_json(PREVIOUS_PATH, {}).items()}
+    history = _read_json(HISTORY_PATH, {"lists": {}, "clusters": {}})
+    lists = history.get("lists", {})
+    reported = history.get("clusters", {})
+    # Cluster baseline: the newest list from at least a week ago, else the
+    # oldest one we have, else the previous run's.
+    cutoff = (today - timedelta(days=CLUSTER_WINDOW_DAYS)).isoformat()
+    older = sorted(d for d in lists if d <= cutoff)
+    base_day = older[-1] if older else (min(lists) if lists else "")
+    baseline = {k: set(v) for k, v in lists.get(base_day, {}).items()} if base_day else previous
     known = {c.name.lower(): c for c in companies}
     moves: list[Move] = []
 
@@ -137,40 +159,46 @@ def collect(companies, jobs_file: str | None = None, seen=None) -> list[Move]:
             # No reqs at all now: a freeze or a scrape failure, not a hire.
             if not now_titles:
                 continue
-            if not closed:
-                continue
 
             display = known.get(company_name.lower())
             label = display.name if display else company_name
             senior = [t for t in closed if PRIORITY_FUNCTIONS.search(t)]
             headline = sorted(senior or closed)[:3]
 
-            moves.append(
-                Move(
-                    company=label,
-                    source="Job board (req closed)",
-                    confidence=INFERRED,
-                    kind=ARRIVAL,
-                    summary=(
-                        f"{label} closed {len(closed)} role"
-                        f"{'s' if len(closed) != 1 else ''} while still hiring "
-                        f"({len(now_titles)} open): {', '.join(headline)}"
-                        f"{'…' if len(closed) > 3 else ''}. Likely filled."
-                    ),
-                    url=display.careers_url if display else "",
-                    score=12 + min(len(closed), 5) * 2,
+            if closed:
+                moves.append(
+                    Move(
+                        company=label,
+                        source="Job board (req closed)",
+                        confidence=INFERRED,
+                        kind=ARRIVAL,
+                        summary=(
+                            f"{label} closed {len(closed)} role"
+                            f"{'s' if len(closed) != 1 else ''} while still hiring "
+                            f"({len(now_titles)} open): {', '.join(headline)}"
+                            f"{'…' if len(closed) > 3 else ''}. Likely filled."
+                        ),
+                        url=display.careers_url if display else "",
+                        score=12 + min(len(closed), 5) * 2,
+                    )
                 )
-            )
 
-            # Cluster signal: several new reqs in one function at once.
-            new_titles = now_titles - prev_titles
+            # Cluster signal: several new reqs in one function within about a
+            # week (against the week-old list, so Sunday/Tuesday/Friday runs
+            # don't split one hiring push into batches too small to notice).
+            new_titles = now_titles - baseline.get(company_name, prev_titles)
             by_function: dict[str, int] = {}
             for t in new_titles:
                 fn = _function_of(t)
                 if fn:
                     by_function[fn] = by_function.get(fn, 0) + 1
             for fn, count in by_function.items():
+                key = f"{company_name.lower()}|{fn}"
+                last = reported.get(key, "")
+                if last and last > (today - timedelta(days=CLUSTER_QUIET_DAYS)).isoformat():
+                    continue
                 if count >= CLUSTER_THRESHOLD:
+                    reported[key] = today.isoformat()
                     moves.append(
                         Move(
                             company=label,
@@ -188,5 +216,11 @@ def collect(companies, jobs_file: str | None = None, seen=None) -> list[Move]:
                     )
 
     _write_json(PREVIOUS_PATH, {k: sorted(v) for k, v in current.items()})
+    lists[today.isoformat()] = {k: sorted(v) for k, v in current.items()}
+    keep = (today - timedelta(days=HISTORY_DAYS)).isoformat()
+    _write_json(HISTORY_PATH, {
+        "lists": {d: v for d, v in lists.items() if d >= keep},
+        "clusters": {k: d for k, d in reported.items() if d >= keep},
+    })
     log.info("Req signals: %d moves", len(moves))
     return moves

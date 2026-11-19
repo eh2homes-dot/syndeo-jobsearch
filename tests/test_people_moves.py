@@ -19,6 +19,7 @@ def _scratch_people_state(tmp_path, monkeypatch):
     monkeypatch.setattr(state_lib, "STATE_DIR", st)
     monkeypatch.setattr(state_lib, "SEEN_PATH", st / "seen.json")
     monkeypatch.setattr(req_signals, "PREVIOUS_PATH", st / "previous_reqs.json")
+    monkeypatch.setattr(req_signals, "HISTORY_PATH", st / "reqs_history.json")
     if hasattr(state_lib, "SNAPSHOT_DIR"):
         monkeypatch.setattr(state_lib, "SNAPSHOT_DIR", st / "leadership")
     yield
@@ -407,3 +408,23 @@ def test_staff_level_changes_are_not_reported(monkeypatch):
     assert leadership.collect([company]) == []    # only a leasing manager changed
     moves = leadership.collect([company])         # a VP joins
     assert [m.person for m in moves] == ["Nina Rossi"]
+
+
+def test_team_building_signal_looks_back_a_week_across_runs(tmp_path, monkeypatch):
+    """Sunday/Tuesday/Friday runs: new openings add up over the week, and a
+    cluster is reported once, not again at the next run."""
+    from datetime import date
+    from sources import req_signals
+    companies = [C.Company(name="Acme Homes", careers_url="https://acme.test/jobs")]
+
+    def run(day, titles, tag):
+        monkeypatch.setattr(req_signals, "_today", lambda: date(2026, 11, day))
+        f = _csv(tmp_path / f"roles_{tag}.csv", [{"company": "Acme Homes", "title": t, "url": ""} for t in titles])
+        return [m for m in req_signals.collect(companies, jobs_file=str(f)) if m.source == "Job board (req cluster)"]
+
+    base = ["Office Manager", "Analyst"]
+    assert run(15, base, "sun") == []                                              # baseline
+    assert run(17, base + ["Sales Director", "Sales Manager"], "tue") == []        # 2 new: not yet a cluster
+    fri = run(20, base + ["Sales Director", "Sales Manager", "Sales Lead"], "fri")  # 3 new since Sunday
+    assert len(fri) == 1 and "3 new sales roles" in fri[0].summary
+    assert run(22, base + ["Sales Director", "Sales Manager", "Sales Lead", "Sales VP"], "sun2") == []  # reported Friday
