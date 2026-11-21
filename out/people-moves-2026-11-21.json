@@ -1,0 +1,36 @@
+{
+  "run_date": "2026-11-21",
+  "count": 2,
+  "moves": [
+    {
+      "company": "Compass",
+      "source": "HousingWire People Movers",
+      "confidence": "confirmed",
+      "kind": "arrival",
+      "category": "people",
+      "person": "Keller Williams",
+      "title": "CEO",
+      "previous_title": null,
+      "summary": "Deals, hires, and 2027 trend signals across real estate brokerages",
+      "url": "https://www.housingwire.com/articles/brokerage-deals-hires-trends/",
+      "observed": "2026-11-21",
+      "published": "2026-11-20",
+      "score": 12
+    },
+    {
+      "company": "Place",
+      "source": "Google News",
+      "confidence": "probable",
+      "kind": "arrival",
+      "category": "people",
+      "person": null,
+      "title": null,
+      "previous_title": null,
+      "summary": "The Children's Place Hires Adviser To Sell 509 Store Leases, Distribution Center - Bisnow",
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNMldoa1VQbDgyUkpqcFFJa195enI5NFlmdk1TWkt2Q1FWUEpjNnB5V3BrN3RLX1d4T2phdmpBVWxXWWlxQlVrUnVLZllzNW9FeW5qdXZnWUV0Ml9oRkg5ZzJfMjVNdmFReGpDeG9vLXU3X05LTWpkcEJYSG1FcVNSTXNkM1RSNExHZGI4clJuOGs5Y01pZGxPZnpFZlo1a3RHelAxN3JQb3ZtVW1OQkhNWWx4WEZMT1MwTGpCcXRVVkpCemh4bThndzhmVTJvNHFzSm5uZUhSaWtwTVI1Sld4OUR3?oc=5",
+      "observed": "2026-11-21",
+      "published": "2026-11-20",
+      "score": 13
+    }
+  ]
+}
