@@ -1,0 +1,621 @@
+{
+  "run_date": "2026-11-22",
+  "settings": {
+    "enabled": true,
+    "window_days": 7,
+    "max_headcount": 100,
+    "max_items": 12,
+    "min_items": 6,
+    "roles_per_company": 1,
+    "cooldown_issues": 3,
+    "cooldown_exempt": [
+      "Second Nature"
+    ],
+    "us_only": true,
+    "note": "Founder-led hiring draft (jobsearch/founders.py). Separate from the Origins 'Now hiring' draft. A role posted at a company with headcount <= max_headcount (Evan 2026-10-20: 100, to include Series A) (or founder_led = TRUE) in leads/founders.csv counts as founder-led. enabled=false means `python -m jobsearch.founders` writes nothing unless --force; the Founder hiring workflow also checks the FOUNDER_HIRING repo variable. Cooldown ledger: data/founder_featured.json (separate from Origins')."
+  },
+  "items": [
+    {
+      "source": "weekly",
+      "company": "Property Meld",
+      "title": "Director of Marketing",
+      "url": "https://careers.propertymeld.com/jobs/741081-director-of-marketing",
+      "location": "",
+      "first_seen": "2026-11-22",
+      "ats": "generic",
+      "key": "generic:property-meld:https://careers.propertymeld.com/jobs/741081-director-of-marketing",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 3,
+      "s_size": 1,
+      "days_open": 0,
+      "role_group": "gtm",
+      "eligible_because": "headcount 77 \u2264 100",
+      "headcount": "77",
+      "stage": "",
+      "founder_name": "Ray Hespen",
+      "founder_linkedin": "https://www.linkedin.com/in/rayhespen/",
+      "founder_x": "",
+      "more_roles": [
+        {
+          "title": "Business Development Representative",
+          "url": "https://careers.propertymeld.com/jobs/741071-business-development-representative"
+        },
+        {
+          "title": "Customer Success Manager",
+          "url": "https://careers.propertymeld.com/jobs/741076-customer-success-manager"
+        }
+      ],
+      "more_count": 2
+    },
+    {
+      "source": "vc-board",
+      "company": "AltoVita",
+      "domain": "",
+      "title": "Marketing Manager [Remote]",
+      "url": "https://www.careers-page.com/kravluxe/job/W3985V46",
+      "location": "Dubai - United Arab Emirates",
+      "first_seen": "2026-11-17",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/altovita/jobs/100045330-100045330-marketing-manager-remote",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 5,
+      "role_group": "gtm",
+      "eligible_because": "headcount 96 \u2264 100",
+      "headcount": "96",
+      "stage": "series_a",
+      "founder_name": "Vivi Himmel",
+      "founder_linkedin": "https://www.linkedin.com/in/vivi-himmel/",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    },
+    {
+      "source": "vc-board",
+      "company": "Assignar",
+      "domain": "",
+      "title": "Business Development Representative",
+      "url": "https://assignar.breezy.hr/p/ae3b0648151a-business-development-representative",
+      "location": "Denver, CO, USA",
+      "first_seen": "2026-11-16",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/assignar-2/jobs/99952377-99952377-business-development-representative",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 6,
+      "role_group": "gtm",
+      "eligible_because": "headcount 61 \u2264 100",
+      "headcount": "61",
+      "stage": "other",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": "",
+      "more_roles": [],
+      "more_count": 0
+    }
+  ],
+  "eligible_roles": [
+    {
+      "source": "weekly",
+      "company": "Property Meld",
+      "title": "Director of Marketing",
+      "url": "https://careers.propertymeld.com/jobs/741081-director-of-marketing",
+      "location": "",
+      "first_seen": "2026-11-22",
+      "ats": "generic",
+      "key": "generic:property-meld:https://careers.propertymeld.com/jobs/741081-director-of-marketing",
+      "score": 9,
+      "s_fresh": 5,
+      "s_role": 3,
+      "s_size": 1,
+      "days_open": 0,
+      "role_group": "gtm",
+      "eligible_because": "headcount 77 \u2264 100",
+      "headcount": "77",
+      "stage": "",
+      "founder_name": "Ray Hespen",
+      "founder_linkedin": "https://www.linkedin.com/in/rayhespen/",
+      "founder_x": ""
+    },
+    {
+      "source": "weekly",
+      "company": "Property Meld",
+      "title": "Business Development Representative",
+      "url": "https://careers.propertymeld.com/jobs/741071-business-development-representative",
+      "location": "",
+      "first_seen": "2026-11-22",
+      "ats": "generic",
+      "key": "generic:property-meld:https://careers.propertymeld.com/jobs/741071-business-development-representative",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 0,
+      "role_group": "gtm",
+      "eligible_because": "headcount 77 \u2264 100",
+      "headcount": "77",
+      "stage": "",
+      "founder_name": "Ray Hespen",
+      "founder_linkedin": "https://www.linkedin.com/in/rayhespen/",
+      "founder_x": ""
+    },
+    {
+      "source": "weekly",
+      "company": "Property Meld",
+      "title": "Customer Success Manager",
+      "url": "https://careers.propertymeld.com/jobs/741076-customer-success-manager",
+      "location": "",
+      "first_seen": "2026-11-22",
+      "ats": "generic",
+      "key": "generic:property-meld:https://careers.propertymeld.com/jobs/741076-customer-success-manager",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 0,
+      "role_group": "gtm",
+      "eligible_because": "headcount 77 \u2264 100",
+      "headcount": "77",
+      "stage": "",
+      "founder_name": "Ray Hespen",
+      "founder_linkedin": "https://www.linkedin.com/in/rayhespen/",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "AltoVita",
+      "domain": "",
+      "title": "Marketing Manager [Remote]",
+      "url": "https://www.careers-page.com/kravluxe/job/W3985V46",
+      "location": "Dubai - United Arab Emirates",
+      "first_seen": "2026-11-17",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/altovita/jobs/100045330-100045330-marketing-manager-remote",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 5,
+      "role_group": "gtm",
+      "eligible_because": "headcount 96 \u2264 100",
+      "headcount": "96",
+      "stage": "series_a",
+      "founder_name": "Vivi Himmel",
+      "founder_linkedin": "https://www.linkedin.com/in/vivi-himmel/",
+      "founder_x": ""
+    },
+    {
+      "source": "vc-board",
+      "company": "Assignar",
+      "domain": "",
+      "title": "Business Development Representative",
+      "url": "https://assignar.breezy.hr/p/ae3b0648151a-business-development-representative",
+      "location": "Denver, CO, USA",
+      "first_seen": "2026-11-16",
+      "ats": "getro:Fifth Wall",
+      "key": "https://jobs.fifthwall.com/companies/assignar-2/jobs/99952377-99952377-business-development-representative",
+      "score": 8,
+      "s_fresh": 5,
+      "s_role": 2,
+      "s_size": 1,
+      "days_open": 6,
+      "role_group": "gtm",
+      "eligible_because": "headcount 61 \u2264 100",
+      "headcount": "61",
+      "stage": "other",
+      "founder_name": "",
+      "founder_linkedin": "",
+      "founder_x": ""
+    }
+  ],
+  "needs_review": [
+    {
+      "company": "Sun King",
+      "new_roles": 57,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Regional Mentor",
+        "Phone Business Manager - West-Inland Zone",
+        "Area Phone Business Manager, Lokoja (Kogi State)"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "EquipmentShare",
+      "new_roles": 39,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Corporate Sales Associate",
+        "District Sales Manager",
+        "District Sales Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Verkada",
+      "new_roles": 22,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Manager - Imaging Systems",
+        "Enterprise Account Executive, Brazil",
+        "Physical Security Operations, Senior Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Mews",
+      "new_roles": 18,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Region",
+        "GTM Operations Leader",
+        "GTM Operations Leader"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Flex",
+      "new_roles": 16,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Executive II",
+        "Director, Customer Success, Tools & Technology",
+        "Director, Customer Success, Tools & Technology"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Stegra (formerly H2 Green Steel)",
+      "new_roles": 9,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Process Engineer",
+        "Lead Legal Counsel - Project Finance",
+        "Personaladministrat\u00f6r"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Clutter",
+      "new_roles": 8,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Manager Sales",
+        "Business Development Executive",
+        "Business Development Executive"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Arcadia",
+      "new_roles": 5,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Director, Customer Success",
+        "Team Lead - L&D",
+        "Director, Business Operations"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Habi",
+      "new_roles": 5,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Abogado Jr.",
+        "L\u00edder De Ventas",
+        "Analista De Tesoreria"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "AMH (American Homes 4 Rent)",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Construction Project Manager I",
+        "Leasing Agent",
+        "Software Engineer II"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Juniper Square",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Director, Security Engineering",
+        "Senior Security Engineer, Vulnerability Management (India)",
+        "Staff Security Engineer, Detection & Response (India)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Nesto",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "D\u00e9veloppeur(euse) Frontend Senior",
+        "Engineering Manager - AI Stream",
+        "Product Designer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Progress Residential",
+      "new_roles": 4,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Sr. Software Engineer",
+        "Acquisitions Associate - BTR",
+        "Website Engineer"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Metropolis",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Security Engineer, Product & Application Security",
+        "Senior Security Engineer, Product & Application Security",
+        "Staff Machine Learning Engineer, Growth"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Parspec",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Executive: Distributors",
+        "Software Engineer - 1 (Backend)",
+        "Software Engineer - 2 (Backend)"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Path Robotics",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Legal",
+        "Machine Learning Engineer, Robotics",
+        "Robotics Software Engineer, Systems Integration"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "PermitFlow",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Product Operations",
+        "Revenue Strategy Manager",
+        "Senior Revenue Operations Analyst, Marketing Ops"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Re-Leased",
+      "new_roles": 3,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Engineering Manager",
+        "Senior Software Engineer",
+        "Senior Software Engineer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Doxel",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Full Stack Software Engineer, India",
+        "Software Engineer Frontend, India"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Figure",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Customer Success Associate",
+        "Senior Product Manager, Asset Onboarding & DART"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Invitation Homes",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Engineer IV, Software - On-site",
+        "Supervisor, Maintenance- $1,500 Sign On Bonus Included"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Jobber",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Product Marketing Manager, Fintech",
+        "Senior Product Manager, Customer Experience"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "OpenSpace",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Deal Desk Analyst",
+        "Deal Desk Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "PMI",
+      "new_roles": 2,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager",
+        "President of Multi Family Property Management"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Valon Technologies",
+      "new_roles": 2,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Product Designer II, I/O",
+        "Senior Product Designer, Escrow"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Bluebeam, Inc.",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Customer Success Manager - Allplan - France"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Clearstory",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Revenue Operations"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Evernest",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Hardhat Robotics",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Robotics Engineer"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Hometree",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Kin Insurance",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Product Marketing Manager - Growth"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "LulaFit",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Venue Sales Manager"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Maket",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Account Executive"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "OfficeRnD",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Senior Full Stack Developer with Node.js"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "PetScreening",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Revenue Strategy Analyst"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Place",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Title Specialist"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Qualia",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Information Security Engineer"
+      ],
+      "source": "weekly"
+    },
+    {
+      "company": "Real Property Management",
+      "new_roles": 1,
+      "reason": "no headcount on file",
+      "sample_titles": [
+        "Property Manager Supervisor"
+      ],
+      "source": "opco"
+    },
+    {
+      "company": "Trust & Will",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Director of Product Engineering"
+      ],
+      "source": "vc-board"
+    },
+    {
+      "company": "Willow Wealth (formerly Yieldstreet)",
+      "new_roles": 1,
+      "reason": "not in leads/founders.csv",
+      "sample_titles": [
+        "Head of Information Security & IT"
+      ],
+      "source": "weekly"
+    }
+  ]
+}
