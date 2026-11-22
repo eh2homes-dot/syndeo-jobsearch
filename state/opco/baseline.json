@@ -1,13 +1,197 @@
 {
   "AMH (American Homes 4 Rent)": {
     "board": "page::{\"url\": \"https://www.amh.com/careersearch\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "wd-amh-JR102433",
+        "location": "Irving, TX",
+        "posted": "Posted 2 Days Ago",
+        "title": "Regional Field Operations Manager",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Property-Operations-Manager_JR102433"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102338",
+        "location": "Las Vegas, NV",
+        "posted": "Posted 2 Days Ago",
+        "title": "Regional Field Operations Manager",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Property-Operations-Manager_JR102338-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102417",
+        "location": "Las Vegas, NV",
+        "posted": "Posted 2 Days Ago",
+        "title": "Leasing Specialist",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Leasing-Specialist_JR102417"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102378",
+        "location": "Las Vegas, NV",
+        "posted": "Posted 2 Days Ago",
+        "title": "Leasing Supervisor",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Leasing-Supervisor_JR102378-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102451",
+        "location": "Reno, NV",
+        "posted": "Posted 2 Days Ago",
+        "title": "Construction Project Manager I",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Reno-NV/Construction-Project-Manager-I_JR102451"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102450",
+        "location": "Mason, OH",
+        "posted": "Posted 3 Days Ago",
+        "title": "Leasing Agent",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Mason-OH/Leasing-Agent_JR102450"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102441",
+        "location": "Irving, TX",
+        "posted": "Posted 3 Days Ago",
+        "title": "Resident Maintenance Specialist",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Resident-Maintenance-Specialist_JR102441-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102435",
+        "location": "Houston, TX",
+        "posted": "Posted 3 Days Ago",
+        "title": "Field Technician Turn",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Houston-TX/Field-Technician-Turn_JR102435-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102293",
+        "location": "Charleston, SC",
+        "posted": "Posted 3 Days Ago",
+        "title": "Field Technician Turn",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Field-Technician-Turn_JR102293"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102419",
+        "location": "Nashville, TN",
+        "posted": "Posted 3 Days Ago",
+        "title": "Field Technician Turn",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Nashville-TN/Field-Technician-Turn_JR102419"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102397",
+        "location": "Charleston, SC",
+        "posted": "Posted 3 Days Ago",
+        "title": "Field Technician Turn",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Field-Technician-Turn_JR102397"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102445",
+        "location": "Las Vegas, NV",
+        "posted": "Posted 4 Days Ago",
+        "title": "Acquisitions and Dispositions Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Acquisitions-and-Dispositions-Intern_JR102445-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102407",
+        "location": "Atlanta, GA",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Resident-Manager-Intern_JR102407-1"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102430",
+        "location": "Irving, TX",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Resident-Management-Intern_JR102430"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102411",
+        "location": "Houston, TX",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Houston-TX/Resident-Management-Intern_JR102411"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102418",
+        "location": "Schaumburg, IL",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Schaumburg-IL/Resident-Management-Intern_JR102418"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102409",
+        "location": "Atlanta, GA",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Resident-Management-Intern_JR102409"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102410",
+        "location": "Orlando, FL",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Orlando-FL/Resident-Management-Intern_JR102410"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102413",
+        "location": "Nashville, TN",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Nashville-TN/Resident-Management-Intern_JR102413"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102422",
+        "location": "Indianapolis, IN",
+        "posted": "Posted 4 Days Ago",
+        "title": "Resident Management Intern",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Indianapolis-IN/Resident-Management-Intern_JR102422"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102447",
+        "location": "Draper, UT",
+        "posted": "Posted 4 Days Ago",
+        "title": "Software Engineer II",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Draper-UT/Software-Engineer-II_JR102447"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102446",
+        "location": "Draper, UT",
+        "posted": "Posted 4 Days Ago",
+        "title": "Product Engineering Architect",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Draper-UT/Product-Engineering-Architect_JR102446"
+      },
+      {
+        "department": "",
+        "id": "wd-amh-JR102290",
+        "location": "Las Vegas, NV",
+        "posted": "Posted 5 Days Ago",
+        "title": "Corporate Instructional Designer",
+        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Learning-Solutions-Designer_JR102290"
+      },
       {
         "department": "",
         "id": "wd-amh-JR102432",
         "location": "Las Vegas, NV",
-        "posted": "Posted Today",
+        "posted": "Posted 5 Days Ago",
         "title": "Asset Management Intern",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Asset-Management-Intern_JR102432"
       },
@@ -15,7 +199,7 @@
         "department": "",
         "id": "wd-amh-JR102443",
         "location": "Westerville, OH",
-        "posted": "Posted Today",
+        "posted": "Posted 5 Days Ago",
         "title": "Field Technician Turn",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Westerville-OH/Field-Technician-Turn_JR102443"
       },
@@ -23,7 +207,7 @@
         "department": "",
         "id": "wd-amh-JR102331",
         "location": "Nashville, TN",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Resident Maintenance Specialist",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Nashville-TN/Resident-Maintenance-Specialist_JR102331"
       },
@@ -31,7 +215,7 @@
         "department": "",
         "id": "wd-amh-JR102439",
         "location": "Mason, OH",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Resident Maintenance Specialist",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Mason-OH/Resident-Maintenance-Specialist_JR102439"
       },
@@ -39,47 +223,23 @@
         "department": "",
         "id": "wd-amh-JR102104",
         "location": "Phoenix, AZ",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Leasing Agent",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Phoenix-AZ/Leasing-Agent_JR102104"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102186",
-        "location": "Tampa, FL",
-        "posted": "Posted Yesterday",
-        "title": "Market HOA Coordinator",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Tampa-FL/Market-HOA-Coordinator_JR102186"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102225",
-        "location": "Orlando, FL",
-        "posted": "Posted Yesterday",
-        "title": "Resident Maintenance Specialist",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Orlando-FL/Resident-Maintenance-Specialist_JR102225"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102402",
         "location": "3 Locations",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Leasing Agent",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Orlando-FL/Leasing-Agent_JR102402"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102417",
-        "location": "Las Vegas, NV",
-        "posted": "Posted Yesterday",
-        "title": "Leasing Specialist",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Leasing-Specialist_JR102417"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102228",
         "location": "Atlanta, GA",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Leasing Agent",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Leasing-Agent_JR102228"
       },
@@ -87,7 +247,7 @@
         "department": "",
         "id": "wd-amh-JR102296",
         "location": "Orlando, FL",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Leasing HOA Coordinator",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Orlando-FL/Leasing-HOA-Coordinator_JR102296"
       },
@@ -95,7 +255,7 @@
         "department": "",
         "id": "wd-amh-JR102442",
         "location": "Tampa, FL",
-        "posted": "Posted Yesterday",
+        "posted": "Posted 6 Days Ago",
         "title": "Director, Property Management",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Tampa-FL/Director--Property-Management_JR102442"
       },
@@ -103,7 +263,7 @@
         "department": "",
         "id": "wd-amh-JR101497",
         "location": "Las Vegas, NV",
-        "posted": "Posted 4 Days Ago",
+        "posted": "Posted 9 Days Ago",
         "title": "Pricing Manager",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Revenue-Manager_JR101497-1"
       },
@@ -111,7 +271,7 @@
         "department": "",
         "id": "wd-amh-JR102082",
         "location": "2 Locations",
-        "posted": "Posted 4 Days Ago",
+        "posted": "Posted 9 Days Ago",
         "title": "Senior Cloud Engineer",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Senior-Cloud-Engineer_JR102082"
       },
@@ -119,7 +279,7 @@
         "department": "",
         "id": "wd-amh-JR102145",
         "location": "6 Locations",
-        "posted": "Posted 4 Days Ago",
+        "posted": "Posted 9 Days Ago",
         "title": "Senior Data Engineer",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Senior-Data-Engineer_JR102145"
       },
@@ -127,39 +287,23 @@
         "department": "",
         "id": "wd-amh-JR102307",
         "location": "Las Vegas, NV",
-        "posted": "Posted 4 Days Ago",
+        "posted": "Posted 9 Days Ago",
         "title": "Senior Security Engineer",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Senior-Security-Engineer_JR102307"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102433",
-        "location": "Irving, TX",
-        "posted": "Posted 4 Days Ago",
-        "title": "Regional Field Operations Manager",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Property-Operations-Manager_JR102433"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102168",
         "location": "Calabasas, CA",
-        "posted": "Posted 4 Days Ago",
+        "posted": "Posted 9 Days Ago",
         "title": "Senior Financial Analyst",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Calabasas-CA/Senior-Financial-Analyst_JR102168"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102257",
-        "location": "Charleston, SC",
-        "posted": "Posted 4 Days Ago",
-        "title": "Field Technician Community",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Field-Technician-Community_JR102257"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102309",
         "location": "Las Vegas, NV",
-        "posted": "Posted 5 Days Ago",
+        "posted": "Posted 10 Days Ago",
         "title": "Security Engineer",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Security-Engineer_JR102309"
       },
@@ -167,47 +311,15 @@
         "department": "",
         "id": "wd-amh-JR102423",
         "location": "Las Vegas, NV",
-        "posted": "Posted 6 Days Ago",
+        "posted": "Posted 11 Days Ago",
         "title": "HR Administration Intern",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/HR-Administration-Intern_JR102423-1"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102430",
-        "location": "Irving, TX",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Resident-Management-Intern_JR102430"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102422",
-        "location": "Indianapolis, IN",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Indianapolis-IN/Resident-Management-Intern_JR102422"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102413",
-        "location": "Nashville, TN",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Nashville-TN/Resident-Management-Intern_JR102413"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102410",
-        "location": "Orlando, FL",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Orlando-FL/Resident-Management-Intern_JR102410"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102429",
         "location": "Las Vegas, NV",
-        "posted": "Posted 6 Days Ago",
+        "posted": "Posted 11 Days Ago",
         "title": "Recruiting Intern",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Recruiting-Intern_JR102429"
       },
@@ -215,95 +327,31 @@
         "department": "",
         "id": "wd-amh-JR102408",
         "location": "Calabasas, CA",
-        "posted": "Posted 6 Days Ago",
+        "posted": "Posted 11 Days Ago",
         "title": "Accounts Payable Intern",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Calabasas-CA/Accounts-Payable-Intern_JR102408"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102418",
-        "location": "Schaumburg, IL",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Schaumburg-IL/Resident-Management-Intern_JR102418"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102407",
-        "location": "Atlanta, GA",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Resident-Manager-Intern_JR102407-1"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102409",
-        "location": "Atlanta, GA",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Resident-Management-Intern_JR102409"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102411",
-        "location": "Houston, TX",
-        "posted": "Posted 6 Days Ago",
-        "title": "Resident Management Intern",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Houston-TX/Resident-Management-Intern_JR102411"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102338",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 6 Days Ago",
-        "title": "Regional Field Operations Manager",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Property-Operations-Manager_JR102338-1"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR101825",
         "location": "Phoenix, AZ",
-        "posted": "Posted 7 Days Ago",
+        "posted": "Posted 12 Days Ago",
         "title": "Resident Coordinator",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Phoenix-AZ/Resident-Manager_JR101825"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102293",
-        "location": "Charleston, SC",
-        "posted": "Posted 8 Days Ago",
-        "title": "Field Technician Turn",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Field-Technician-Turn_JR102293"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102428",
         "location": "Las Vegas, NV",
-        "posted": "Posted 8 Days Ago",
+        "posted": "Posted 13 Days Ago",
         "title": "Internal Collections Representative",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Internal-Collections-Representative_JR102428"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102419",
-        "location": "Nashville, TN",
-        "posted": "Posted 8 Days Ago",
-        "title": "Field Technician Turn",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Nashville-TN/Field-Technician-Turn_JR102419"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102378",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 11 Days Ago",
-        "title": "Leasing Supervisor",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Leasing-Supervisor_JR102378-1"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102406",
         "location": "Las Vegas, NV",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "Acquisitions and Dispositions Analyst",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Acquisitions-and-Dispositions-Analyst_JR102406"
       },
@@ -311,39 +359,15 @@
         "department": "",
         "id": "wd-amh-JR102396",
         "location": "Tampa, FL",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "Administrative Assistant",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Tampa-FL/Administrative-Assistant_JR102396"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102398",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 11 Days Ago",
-        "title": "Utility Coordinator",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Utility-Coordinator_JR102398"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102397",
-        "location": "Charleston, SC",
-        "posted": "Posted 11 Days Ago",
-        "title": "Field Technician Turn",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Field-Technician-Turn_JR102397"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102393",
-        "location": "Indianapolis, IN",
-        "posted": "Posted 11 Days Ago",
-        "title": "Field Technician Turn",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Indianapolis-IN/Field-Technician-Turn_JR102393"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102412",
         "location": "Charlotte, NC",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "District Manager",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charlotte-NC/District-Manager_JR102412"
       },
@@ -351,7 +375,7 @@
         "department": "",
         "id": "wd-amh-JR102384",
         "location": "Las Vegas, NV",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "Applications Manager II",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Applications-Manager-II_JR102384-1"
       },
@@ -359,7 +383,7 @@
         "department": "",
         "id": "wd-amh-JR102386",
         "location": "Atlanta, GA",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "Administrative Assistant",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Atlanta-GA/Administrative-Assistant_JR102386-1"
       },
@@ -367,7 +391,7 @@
         "department": "",
         "id": "wd-amh-JR102374",
         "location": "Schaumburg, IL",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "District Maintenance Manager",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Schaumburg-IL/District-Maintenance-Manager_JR102374"
       },
@@ -375,23 +399,15 @@
         "department": "",
         "id": "wd-amh-JR102377",
         "location": "Charlotte, NC",
-        "posted": "Posted 11 Days Ago",
+        "posted": "Posted 16 Days Ago",
         "title": "Field Technician Turn",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charlotte-NC/Field-Technician-Turn_JR102377"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102372",
-        "location": "Seattle, WA",
-        "posted": "Posted 11 Days Ago",
-        "title": "Field Technician Turn",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Seattle-WA/Field-Technician-Turn_JR102372"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102326",
         "location": "Crystal Lake, IL",
-        "posted": "Posted 13 Days Ago",
+        "posted": "Posted 18 Days Ago",
         "title": "Field Technician Maintenance",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Crystal-Lake-IL/Field-Technician-Maintenance_JR102326"
       },
@@ -399,7 +415,7 @@
         "department": "",
         "id": "wd-amh-JR102364",
         "location": "Las Vegas, NV",
-        "posted": "Posted 13 Days Ago",
+        "posted": "Posted 18 Days Ago",
         "title": "Utility Coordinator",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Utilities-Coordinator_JR102364"
       },
@@ -407,7 +423,7 @@
         "department": "",
         "id": "wd-amh-JR101770",
         "location": "Las Vegas, NV",
-        "posted": "Posted 14 Days Ago",
+        "posted": "Posted 19 Days Ago",
         "title": "Applications Engineer - Identity",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Systems-Analyst-II_JR101770"
       },
@@ -415,23 +431,15 @@
         "department": "",
         "id": "wd-amh-JR102360",
         "location": "Las Vegas, NV",
-        "posted": "Posted 15 Days Ago",
+        "posted": "Posted 20 Days Ago",
         "title": "Senior Manager, Cloud Engineering",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Senior-Manager--Cloud-Engineering_JR102360"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102290",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 18 Days Ago",
-        "title": "Learning Solutions Designer",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Learning-Solutions-Designer_JR102290"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102299",
         "location": "Austin, TX",
-        "posted": "Posted 19 Days Ago",
+        "posted": "Posted 24 Days Ago",
         "title": "Field Technician Maintenance",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Austin-TX/Field-Technician-Maintenance_JR102299"
       },
@@ -439,7 +447,7 @@
         "department": "",
         "id": "wd-amh-JR102232",
         "location": "Murray, UT",
-        "posted": "Posted 21 Days Ago",
+        "posted": "Posted 26 Days Ago",
         "title": "Director, Land Development",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Murray-UT/Director--Land-Development_JR102232"
       },
@@ -447,7 +455,7 @@
         "department": "",
         "id": "wd-amh-JR102181",
         "location": "Irving, TX",
-        "posted": "Posted 21 Days Ago",
+        "posted": "Posted 26 Days Ago",
         "title": "Market Construction Manager - Rehab",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/Market-Construction-Manager---Rehab_JR102181"
       },
@@ -455,7 +463,7 @@
         "department": "",
         "id": "wd-amh-JR101602",
         "location": "Phoenix, AZ",
-        "posted": "Posted 21 Days Ago",
+        "posted": "Posted 26 Days Ago",
         "title": "Resident Maintenance Manager - Occupied Operations",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Phoenix-AZ/Resident-Maintenance-Manager_JR101602"
       },
@@ -463,39 +471,23 @@
         "department": "",
         "id": "wd-amh-JR102227",
         "location": "Phoenix, AZ",
-        "posted": "Posted 21 Days Ago",
+        "posted": "Posted 26 Days Ago",
         "title": "Land Acquisition Analyst",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Phoenix-AZ/Land-Acquisition-Analyst_JR102227"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102354",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 26 Days Ago",
-        "title": "Field Scheduler",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Field-Scheduler_JR102354"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102223",
         "location": "Calabasas, CA",
-        "posted": "Posted 26 Days Ago",
+        "posted": "Posted 30+ Days Ago",
         "title": "Staff Accountant II",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Calabasas-CA/Staff-Accountant-II_JR102223"
       },
       {
         "department": "",
-        "id": "wd-amh-JR102224",
-        "location": "Calabasas, CA",
-        "posted": "Posted 26 Days Ago",
-        "title": "Staff Accountant",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Calabasas-CA/Staff-Accountant_JR102224-1"
-      },
-      {
-        "department": "",
         "id": "wd-amh-JR102336",
         "location": "Irving, TX",
-        "posted": "Posted 27 Days Ago",
+        "posted": "Posted 30+ Days Ago",
         "title": "District Maintenance Manager",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Irving-TX/District-Maintenance-Manager_JR102336"
       },
@@ -503,33 +495,9 @@
         "department": "",
         "id": "wd-amh-JR102333",
         "location": "Westerville, OH",
-        "posted": "Posted 29 Days Ago",
+        "posted": "Posted 30+ Days Ago",
         "title": "Administrative Assistant",
         "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Westerville-OH/Administrative-Assistant_JR102333"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102332",
-        "location": "Charleston, SC",
-        "posted": "Posted 30+ Days Ago",
-        "title": "Resident Maintenance Specialist",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Charleston-SC/Resident-Maintenance-Specialist_JR102332"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102113",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 30+ Days Ago",
-        "title": "VP - National Leasing",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/VP---National-Leasing_JR102113"
-      },
-      {
-        "department": "",
-        "id": "wd-amh-JR102308",
-        "location": "Las Vegas, NV",
-        "posted": "Posted 30+ Days Ago",
-        "title": "Systems Administrator - HCM",
-        "url": "https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Systems-Administrator---HCM_JR102308"
       },
       {
         "department": "",
@@ -584,7 +552,7 @@
   },
   "Alexander & Baldwin": {
     "board": "dayforce:abhi:{\"board\": \"CANDIDATEPORTAL\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -599,8 +567,24 @@
   },
   "Atlas Real Estate": {
     "board": "page::{\"url\": \"https://realatlas.com/careers/#positions\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "Property Management",
+        "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4580384",
+        "location": "Phoenix",
+        "posted": "2026-11-20",
+        "title": "Bilingual Leasing Specialist",
+        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4580384"
+      },
+      {
+        "department": "",
+        "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4356600",
+        "location": "Denver, CO",
+        "posted": "2026-11-17",
+        "title": "Assistant Portfolio Manager",
+        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4356600"
+      },
       {
         "department": "",
         "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4658831",
@@ -616,22 +600,6 @@
         "posted": "2026-11-12",
         "title": "Business Development Manager",
         "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392106"
-      },
-      {
-        "department": "",
-        "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4356600",
-        "location": "Denver, CO",
-        "posted": "2026-11-03",
-        "title": "Assistant Portfolio Manager",
-        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4356600"
-      },
-      {
-        "department": "Property Management",
-        "id": "paylocity-5e5fc082-a90b-4d93-8b73-46f77d40e081-4580384",
-        "location": "Phoenix, AZ",
-        "posted": "2026-11-02",
-        "title": "Leasing Specialist",
-        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4580384"
       },
       {
         "department": "",
@@ -1773,7 +1741,7 @@
   },
   "Belong": {
     "board": "workable:belong-6:{}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "Finance & Legal",
@@ -1810,10 +1778,89 @@
     ],
     "via": ""
   },
+  "Bridge Investment Group (Bridge Homes)": {
+    "board": "page::{\"url\": \"https://www.bridgeig.com/careers/\"}",
+    "fetched_on": "2026-11-22",
+    "roles": [
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104949",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 5 Days Ago",
+        "title": "Legal Operations Manager",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Analyst---Paralegal_JR104949"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104978",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 6 Days Ago",
+        "title": "Analyst - Fund Accountant",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Analyst---Fund-Accountant_JR104978"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104973",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 10 Days Ago",
+        "title": "Director - Asset Management",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Director---Asset-Management_JR104973"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104972",
+        "location": "Atlanta, Georgia",
+        "posted": "Posted 16 Days Ago",
+        "title": "Senior Accountant",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Atlanta-Georgia/Senior-Accountant_JR104972"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104970",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 25 Days Ago",
+        "title": "Associate - Investment Management",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Associate---Asset-Management_JR104970"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104956",
+        "location": "Salt Lake City, Utah",
+        "posted": "Posted 30+ Days Ago",
+        "title": "Tax Counsel, Real Estate",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Utah/Tax-Counsel--Real-Estate_JR104956"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104958",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 30+ Days Ago",
+        "title": "Impact Manager of Workforce & Affordable Housing",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Impact-Manager-of-Workforce---Affordable-Housing_JR104958"
+      },
+      {
+        "department": "",
+        "id": "wd-bridgeigp-JR104853",
+        "location": "Salt Lake City Office, Sandy, Utah",
+        "posted": "Posted 30+ Days Ago",
+        "title": "Asset Manager",
+        "url": "https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Asset-Manager_JR104853"
+      }
+    ],
+    "via": "workday:bridgeigp:{\"host\": \"bridgeigp.wd1.myworkdayjobs.com\", \"site\": \"BIGC\"}"
+  },
   "Doorstead": {
     "board": "page::{\"url\": \"https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "Field Ops",
+        "id": "bz-3ad7ea767bce",
+        "location": "Santa Cruz, CA",
+        "posted": "2026-11-20",
+        "title": "Field Associate - Property Showings & Evaluations",
+        "url": "https://doorstead.breezy.hr/p/3ad7ea767bce-field-associate-property-showings-evaluations"
+      },
       {
         "department": "Field Ops",
         "id": "bz-e3908296caa6",
@@ -1824,43 +1871,11 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-5f4c7b2d6fbb",
-        "location": "Charleston, SC",
+        "id": "bz-9da347415ef7",
+        "location": "Norfolk, VA",
         "posted": "2026-10-28",
         "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/5f4c7b2d6fbb-field-associate-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-032515c48932",
-        "location": "Columbia, SC",
-        "posted": "2026-10-28",
-        "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/032515c48932-field-associate-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-df783cd078a5",
-        "location": "Greenville, SC",
-        "posted": "2026-10-28",
-        "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/df783cd078a5-field-associate-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-95970688c202",
-        "location": "Irvine, CA",
-        "posted": "2026-10-28",
-        "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/95970688c202-field-associate-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-7495bd216a75",
-        "location": "Fresno, CA",
-        "posted": "2026-10-28",
-        "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/7495bd216a75-field-associate-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/9da347415ef7-field-associate-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -1872,11 +1887,43 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-9da347415ef7",
-        "location": "Norfolk, VA",
+        "id": "bz-7495bd216a75",
+        "location": "Fresno, CA",
         "posted": "2026-10-28",
         "title": "Field Associate - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/9da347415ef7-field-associate-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/7495bd216a75-field-associate-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-df783cd078a5",
+        "location": "Greenville, SC",
+        "posted": "2026-10-28",
+        "title": "Field Associate - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/df783cd078a5-field-associate-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-032515c48932",
+        "location": "Columbia, SC",
+        "posted": "2026-10-28",
+        "title": "Field Associate - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/032515c48932-field-associate-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-5f4c7b2d6fbb",
+        "location": "Charleston, SC",
+        "posted": "2026-10-28",
+        "title": "Field Associate - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/5f4c7b2d6fbb-field-associate-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-95970688c202",
+        "location": "Irvine, CA",
+        "posted": "2026-10-28",
+        "title": "Field Associate - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/95970688c202-field-associate-rental-property-showings"
       },
       {
         "department": "Maintenance Operations",
@@ -2008,19 +2055,35 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-1994e7e73e85",
-        "location": "Charlotte, NC",
+        "id": "bz-5e88163a60a0",
+        "location": "Columbus, OH",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/1994e7e73e85-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/5e88163a60a0-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
-        "id": "bz-1b93b447dc8a",
-        "location": "Miami, FL",
+        "id": "bz-e80853a2371b",
+        "location": "Cincinnati, OH",
+        "posted": "2026-11-16",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/e80853a2371b-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-8b7f55087e0e",
+        "location": "Cleveland, OH",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/1b93b447dc8a-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/8b7f55087e0e-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-4cb13c42195a",
+        "location": "San Francisco, CA",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/4cb13c42195a-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2037,14 +2100,6 @@
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
         "url": "https://doorstead.breezy.hr/p/cab059201d00-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-2514e23c28f7",
-        "location": "Fort Lauderdale, FL",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/2514e23c28f7-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2072,35 +2127,19 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-b3db9a456742",
-        "location": "Jacksonville, FL",
+        "id": "bz-f3f161a857c7",
+        "location": "Suffolk, VA",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/b3db9a456742-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/f3f161a857c7-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
-        "id": "bz-4cb13c42195a",
-        "location": "San Francisco, CA",
+        "id": "bz-ef255ecfda97",
+        "location": "Greensboro, NC",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/4cb13c42195a-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-8b7f55087e0e",
-        "location": "Cleveland, OH",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/8b7f55087e0e-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-5e88163a60a0",
-        "location": "Columbus, OH",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/5e88163a60a0-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/ef255ecfda97-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2128,6 +2167,14 @@
       },
       {
         "department": "Field Ops",
+        "id": "bz-b3db9a456742",
+        "location": "Jacksonville, FL",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/b3db9a456742-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
         "id": "bz-ada987fdda17",
         "location": "Oakland, CA",
         "posted": "2026-10-28",
@@ -2152,43 +2199,11 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-99c791579ca8",
-        "location": "Long Beach, CA",
+        "id": "bz-1994e7e73e85",
+        "location": "Charlotte, NC",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/99c791579ca8-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-e80853a2371b",
-        "location": "Cincinnati, OH",
-        "posted": "2026-11-16",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/e80853a2371b-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-ef255ecfda97",
-        "location": "Greensboro, NC",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/ef255ecfda97-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-88d3d73a1193",
-        "location": "Raleigh, NC",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/88d3d73a1193-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-2629541d8d70",
-        "location": "Bakersfield, CA",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/2629541d8d70-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/1994e7e73e85-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2200,59 +2215,11 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-d500c2444e4a",
-        "location": "Fort Myers, FL",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/d500c2444e4a-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-83a7ef853e83",
-        "location": "Naples, FL",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/83a7ef853e83-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-53e38aeba2d8",
-        "location": "Durham, NC",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/53e38aeba2d8-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-e2e414ae82e7",
-        "location": "Hampton Roads, VA",
-        "posted": "2026-11-11",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/e2e414ae82e7-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-99e6cfe9c830",
-        "location": "Newport News, VA",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/99e6cfe9c830-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
         "id": "bz-912c6a640ab1",
         "location": "Tampa, FL",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
         "url": "https://doorstead.breezy.hr/p/912c6a640ab1-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-f3f161a857c7",
-        "location": "Suffolk, VA",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/f3f161a857c7-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2264,11 +2231,11 @@
       },
       {
         "department": "Field Ops",
-        "id": "bz-f14ddf3d197f",
-        "location": "Antioch, CA",
+        "id": "bz-99c791579ca8",
+        "location": "Long Beach, CA",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/f14ddf3d197f-showing-agent-rental-property-showings"
+        "url": "https://doorstead.breezy.hr/p/99c791579ca8-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2288,11 +2255,27 @@
       },
       {
         "department": "Field Ops",
+        "id": "bz-99e6cfe9c830",
+        "location": "Newport News, VA",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/99e6cfe9c830-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
         "id": "bz-f698465f599c",
         "location": "Boca Raton, FL",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
         "url": "https://doorstead.breezy.hr/p/f698465f599c-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-e2e414ae82e7",
+        "location": "Hampton Roads, VA",
+        "posted": "2026-11-11",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/e2e414ae82e7-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2312,6 +2295,46 @@
       },
       {
         "department": "Field Ops",
+        "id": "bz-53e38aeba2d8",
+        "location": "Durham, NC",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/53e38aeba2d8-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-83a7ef853e83",
+        "location": "Naples, FL",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/83a7ef853e83-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-d500c2444e4a",
+        "location": "Fort Myers, FL",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/d500c2444e4a-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-2514e23c28f7",
+        "location": "Fort Lauderdale, FL",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/2514e23c28f7-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-48a7fc743e72",
+        "location": "Charleston, SC",
+        "posted": "2026-11-20",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/48a7fc743e72-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
         "id": "bz-4d5c7ec5c96d",
         "location": "Greenville, SC",
         "posted": "2026-10-28",
@@ -2320,19 +2343,27 @@
       },
       {
         "department": "Field Ops",
+        "id": "bz-2629541d8d70",
+        "location": "Bakersfield, CA",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/2629541d8d70-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-88d3d73a1193",
+        "location": "Raleigh, NC",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/88d3d73a1193-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
         "id": "bz-fa31a9e3b3a8",
         "location": "Burlington, NC",
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
         "url": "https://doorstead.breezy.hr/p/fa31a9e3b3a8-showing-agent-rental-property-showings"
-      },
-      {
-        "department": "Field Ops",
-        "id": "bz-32a13c7db08f",
-        "location": "Charleston, SC",
-        "posted": "2026-10-28",
-        "title": "Showing Agent - Rental Property Showings",
-        "url": "https://doorstead.breezy.hr/p/32a13c7db08f-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2357,6 +2388,22 @@
         "posted": "2026-10-28",
         "title": "Showing Agent - Rental Property Showings",
         "url": "https://doorstead.breezy.hr/p/6fed5784a9db-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-f14ddf3d197f",
+        "location": "Antioch, CA",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/f14ddf3d197f-showing-agent-rental-property-showings"
+      },
+      {
+        "department": "Field Ops",
+        "id": "bz-1b93b447dc8a",
+        "location": "Miami, FL",
+        "posted": "2026-10-28",
+        "title": "Showing Agent - Rental Property Showings",
+        "url": "https://doorstead.breezy.hr/p/1b93b447dc8a-showing-agent-rental-property-showings"
       },
       {
         "department": "Field Ops",
@@ -2395,7 +2442,7 @@
   },
   "EPR Properties": {
     "board": "bamboohr:eprproperties:{}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "Lease Operations",
@@ -2410,7 +2457,7 @@
   },
   "EastGroup Properties": {
     "board": "paycom::{\"host\": \"phx.us-west.paycomonline.net\", \"key\": \"FF95F1D079994D46C22FCB801D0A2C8F\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -2433,7 +2480,7 @@
   },
   "Evergreen Residential": {
     "board": "page::{\"url\": \"https://evergreenresi.com/careers/openings/\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -2610,21 +2657,13 @@
         "posted": "2026-10-21",
         "title": "Revenue Management Associate, Build-to-Rent Communities",
         "url": "https://evergreenresi.com/careers/openings/?gh_jid=4745954005"
-      },
-      {
-        "department": "",
-        "id": "gh-4701128005",
-        "location": "Dallas, TX",
-        "posted": "2026-05-29",
-        "title": "Senior Accountant",
-        "url": "https://evergreenresi.com/careers/openings/?gh_jid=4701128005"
       }
     ],
     "via": "greenhouse:evergreenresidentialemployeeservicescorp:{}"
   },
   "Evernest Property Management": {
     "board": "page::{\"url\": \"https://www.evernest.co/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "Property Managers",
@@ -2727,7 +2766,7 @@
   },
   "Flock Homes": {
     "board": "page::{\"url\": \"https://www.flockhomes.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -13405,7 +13444,7 @@
   },
   "Highwoods Properties": {
     "board": "page::{\"url\": \"https://www.highwoods.com/careers\"}",
-    "fetched_on": "2026-11-15",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -13444,16 +13483,8 @@
   },
   "Home365": {
     "board": "bamboohr:home365:{}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
-      {
-        "department": "Operations",
-        "id": "bh-88",
-        "location": "",
-        "posted": "",
-        "title": "Field Agent - Contractor ( Spring Valley, Anthem AZ)",
-        "url": "https://home365.bamboohr.com/careers/88"
-      },
       {
         "department": "Operations",
         "id": "bh-145",
@@ -13472,35 +13503,11 @@
       },
       {
         "department": "Operations",
-        "id": "bh-185",
-        "location": "",
-        "posted": "",
-        "title": "Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Scranton",
-        "url": "https://home365.bamboohr.com/careers/185"
-      },
-      {
-        "department": "Operations",
-        "id": "bh-186",
-        "location": "",
-        "posted": "",
-        "title": "Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Virginia",
-        "url": "https://home365.bamboohr.com/careers/186"
-      },
-      {
-        "department": "Operations",
         "id": "bh-187",
         "location": "",
         "posted": "",
         "title": "Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Spring Valley/Anthem AZ)",
         "url": "https://home365.bamboohr.com/careers/187"
-      },
-      {
-        "department": "Operations",
-        "id": "bh-194",
-        "location": "",
-        "posted": "",
-        "title": "Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Lancaster, York, and Harrisburg",
-        "url": "https://home365.bamboohr.com/careers/194"
       },
       {
         "department": "Operations",
@@ -13547,15 +13554,23 @@
         "id": "bh-218",
         "location": "",
         "posted": "",
-        "title": "Customer Success Manager",
+        "title": "Customer Success Manager - Phoenix",
         "url": "https://home365.bamboohr.com/careers/218"
+      },
+      {
+        "department": "Operations",
+        "id": "bh-219",
+        "location": "",
+        "posted": "",
+        "title": "Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Phoenix",
+        "url": "https://home365.bamboohr.com/careers/219"
       }
     ],
     "via": ""
   },
   "Industrious": {
     "board": "page::{\"url\": \"https://www.industriousoffice.com/careers#open-positions\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "Unit Ops",
@@ -13871,6 +13886,22 @@
       },
       {
         "department": "Unit Ops",
+        "id": "ab-49f1f7a8-f66c-4318-bca2-aaffa4ec971a",
+        "location": "San Francisco - 950 Tower Lane (Foster City)",
+        "posted": "2026-11-17",
+        "title": "Member Experience Manager - Foster City",
+        "url": "https://jobs.ashbyhq.com/industrious/49f1f7a8-f66c-4318-bca2-aaffa4ec971a"
+      },
+      {
+        "department": "Unit Ops",
+        "id": "ab-65b930bb-49b5-4f6a-844c-816a173174f4",
+        "location": "Palo Alto - 1881 Page Mill Rd (Page Mill)",
+        "posted": "2026-11-17",
+        "title": "Member Experience Manager - San Jose",
+        "url": "https://jobs.ashbyhq.com/industrious/65b930bb-49b5-4f6a-844c-816a173174f4"
+      },
+      {
+        "department": "Unit Ops",
         "id": "ab-f341f27e-37d5-410e-8dd6-d28c6077f1f9",
         "location": "Austin - 924 E 7th St",
         "posted": "2026-08-07",
@@ -13887,11 +13918,11 @@
       },
       {
         "department": "Experience by Industrious (Roles employed by CBRE)",
-        "id": "ab-604bb520-7510-42cc-8642-a046d4dc249d",
-        "location": "New York City",
-        "posted": "2026-08-20",
+        "id": "ab-4cd294b0-7728-4d3b-96f3-9451702ebab1",
+        "location": "San Francisco",
+        "posted": "2026-11-20",
         "title": "Community Manager",
-        "url": "https://jobs.ashbyhq.com/industrious/604bb520-7510-42cc-8642-a046d4dc249d"
+        "url": "https://jobs.ashbyhq.com/industrious/4cd294b0-7728-4d3b-96f3-9451702ebab1"
       },
       {
         "department": "Unit Ops",
@@ -13902,10 +13933,18 @@
         "url": "https://jobs.ashbyhq.com/industrious/dd7e3ab0-8330-4896-82c4-2f55497f447e"
       },
       {
+        "department": "Unit Ops",
+        "id": "ab-1af44623-b277-45c7-9157-8c7aba717013",
+        "location": "San Francisco - 950 Tower Lane (Foster City)",
+        "posted": "2026-11-17",
+        "title": "Member Experience Manager - San Mateo",
+        "url": "https://jobs.ashbyhq.com/industrious/1af44623-b277-45c7-9157-8c7aba717013"
+      },
+      {
         "department": "All Departments",
         "id": "ab-04849166-225c-4330-822a-297776431f83",
         "location": "NYC - 12 E 49th St (Tower 49)",
-        "posted": "2026-09-11",
+        "posted": "2026-11-18",
         "title": "Senior Backend Engineer",
         "url": "https://jobs.ashbyhq.com/industrious/04849166-225c-4330-822a-297776431f83"
       },
@@ -13924,14 +13963,6 @@
         "posted": "2026-09-24",
         "title": "Member Experience Manager - Atlanta",
         "url": "https://jobs.ashbyhq.com/industrious/afdd4a4a-8ffa-419b-a78c-e6bb1008c9d5"
-      },
-      {
-        "department": "Unit Ops",
-        "id": "ab-a5836b40-baaf-4ac4-a00d-bf89ebdf8bbc",
-        "location": "San Francisco - 950 Tower Lane (Foster City)",
-        "posted": "2026-10-21",
-        "title": "Member Experience Manager - Foster City",
-        "url": "https://jobs.ashbyhq.com/industrious/a5836b40-baaf-4ac4-a00d-bf89ebdf8bbc"
       },
       {
         "department": "All Departments",
@@ -14030,14 +14061,6 @@
         "url": "https://jobs.ashbyhq.com/industrious/0717efa6-fd3f-405d-b896-fb7afd78abff"
       },
       {
-        "department": "Experience by Industrious (Roles employed by CBRE)",
-        "id": "ab-7f5a5c3a-d29d-4d4f-8c7a-378b3ab5c70b",
-        "location": "San Francisco",
-        "posted": "2026-10-22",
-        "title": "Hospitality Associate",
-        "url": "https://jobs.ashbyhq.com/industrious/7f5a5c3a-d29d-4d4f-8c7a-378b3ab5c70b"
-      },
-      {
         "department": "Unit Ops",
         "id": "ab-88f12b67-4272-453c-a285-0bafb836040d",
         "location": "Carmel - 880 West Monon Green Blvd (Carmel City Center)",
@@ -14087,14 +14110,6 @@
       },
       {
         "department": "Unit Ops",
-        "id": "ab-a9faa728-b006-4f94-bd1b-ab8f85bd56fc",
-        "location": "Bellevue - 500 108th Ave NE",
-        "posted": "2026-11-02",
-        "title": "Member Experience Associate - Bellevue",
-        "url": "https://jobs.ashbyhq.com/industrious/a9faa728-b006-4f94-bd1b-ab8f85bd56fc"
-      },
-      {
-        "department": "Unit Ops",
         "id": "ab-05b78f49-e2f3-477e-95a5-0dfc826f8e67",
         "location": "New York City",
         "posted": "2026-11-03",
@@ -14108,6 +14123,14 @@
         "posted": "2026-11-03",
         "title": "Portfolio Experience Director",
         "url": "https://jobs.ashbyhq.com/industrious/af38694a-3403-4771-8ac6-bb5ce6945f63"
+      },
+      {
+        "department": "Unit Ops",
+        "id": "ab-dfde070e-d2c9-4d0e-8da2-d4cf8641b906",
+        "location": "Atlanta - 675 Ponce de Leon Ave NE (Ponce City Market)",
+        "posted": "2026-11-18",
+        "title": "General Manager",
+        "url": "https://jobs.ashbyhq.com/industrious/dfde070e-d2c9-4d0e-8da2-d4cf8641b906"
       },
       {
         "department": "Unit Ops",
@@ -14138,31 +14161,79 @@
   },
   "Invitation Homes": {
     "board": "page::{\"url\": \"https://careers.invitationhomes.com/jobs\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
-        "id": "op-/maintenance-technician-ii/job/P1-7704866-0",
+        "id": "op-/engineer-iv-software-on-site/job/P1-7688069-0",
         "location": "",
         "posted": "",
-        "title": "Maintenance Technician II",
-        "url": "https://careers.invitationhomes.com/maintenance-technician-ii/job/P1-7704866-0"
+        "title": "Engineer IV, Software - On-site",
+        "url": "https://careers.invitationhomes.com/engineer-iv-software-on-site/job/P1-7688069-0"
       },
       {
         "department": "",
-        "id": "op-/customer-service-representative-pm/job/P1-7704864-0",
+        "id": "op-/maintenance-technician-ii-preferred-in-land-o-lake-odessa-lutz-or-wesley-chapel/job/P1-7748836-0",
         "location": "",
         "posted": "",
-        "title": "Customer Service Representative - PM",
-        "url": "https://careers.invitationhomes.com/customer-service-representative-pm/job/P1-7704864-0"
+        "title": "Maintenance Technician II - Preferred in Land O Lake, Odessa, Lutz, or Wesley Chapel",
+        "url": "https://careers.invitationhomes.com/maintenance-technician-ii-preferred-in-land-o-lake-odessa-lutz-or-wesley-chapel/job/P1-7748836-0"
       },
       {
         "department": "",
-        "id": "op-/leasing-specialist/job/P1-7694535-0",
+        "id": "op-/intern-field-asset-management/job/P1-7741424-0",
         "location": "",
         "posted": "",
-        "title": "Leasing Specialist",
-        "url": "https://careers.invitationhomes.com/leasing-specialist/job/P1-7694535-0"
+        "title": "Intern, Field Asset Management",
+        "url": "https://careers.invitationhomes.com/intern-field-asset-management/job/P1-7741424-0"
+      },
+      {
+        "department": "",
+        "id": "op-/assistant-portfolio-manager/job/P1-7741425-0",
+        "location": "",
+        "posted": "",
+        "title": "Assistant Portfolio Manager",
+        "url": "https://careers.invitationhomes.com/assistant-portfolio-manager/job/P1-7741425-0"
+      },
+      {
+        "department": "",
+        "id": "op-/sr-director-data-products/job/P1-7732770-0",
+        "location": "",
+        "posted": "",
+        "title": "Sr. Director, Data Products",
+        "url": "https://careers.invitationhomes.com/sr-director-data-products/job/P1-7732770-0"
+      },
+      {
+        "department": "",
+        "id": "op-/maintenance-technician-ii-preferred-in-katy-tx-area/job/P1-7704866-0",
+        "location": "",
+        "posted": "",
+        "title": "Maintenance Technician II - Preferred in Katy TX Area",
+        "url": "https://careers.invitationhomes.com/maintenance-technician-ii-preferred-in-katy-tx-area/job/P1-7704866-0"
+      },
+      {
+        "department": "",
+        "id": "op-/maintenance-technician-ii-preferred-in-cypress-klein-or-woodlands-area/job/P1-7704865-0",
+        "location": "",
+        "posted": "",
+        "title": "Maintenance Technician II - Preferred in Cypress, Klein or Woodlands Area",
+        "url": "https://careers.invitationhomes.com/maintenance-technician-ii-preferred-in-cypress-klein-or-woodlands-area/job/P1-7704865-0"
+      },
+      {
+        "department": "",
+        "id": "op-/customer-service-representative-property-management/job/P1-7719600-0",
+        "location": "",
+        "posted": "",
+        "title": "Customer Service Representative - Property Management",
+        "url": "https://careers.invitationhomes.com/customer-service-representative-property-management/job/P1-7719600-0"
+      },
+      {
+        "department": "",
+        "id": "op-/customer-service-representative-property-management/job/P1-7704864-0",
+        "location": "",
+        "posted": "",
+        "title": "Customer Service Representative - Property Management",
+        "url": "https://careers.invitationhomes.com/customer-service-representative-property-management/job/P1-7704864-0"
       },
       {
         "department": "",
@@ -14182,19 +14253,11 @@
       },
       {
         "department": "",
-        "id": "op-/superintendent-preferred-in-port-charlotte-punta-gorda-or-north-port-area/job/P1-7688070-0",
+        "id": "op-/supervisor-maintenance-1500-sign-on-bonus-included/job/P1-7677915-0",
         "location": "",
         "posted": "",
-        "title": "Superintendent - Preferred in Port Charlotte, Punta Gorda or North Port Area",
-        "url": "https://careers.invitationhomes.com/superintendent-preferred-in-port-charlotte-punta-gorda-or-north-port-area/job/P1-7688070-0"
-      },
-      {
-        "department": "",
-        "id": "op-/supervisor-maintenance/job/P1-7677915-0",
-        "location": "",
-        "posted": "",
-        "title": "Supervisor, Maintenance",
-        "url": "https://careers.invitationhomes.com/supervisor-maintenance/job/P1-7677915-0"
+        "title": "Supervisor, Maintenance- $1,500 Sign On Bonus Included",
+        "url": "https://careers.invitationhomes.com/supervisor-maintenance-1500-sign-on-bonus-included/job/P1-7677915-0"
       },
       {
         "department": "",
@@ -14243,14 +14306,6 @@
         "posted": "",
         "title": "VP, Data Science",
         "url": "https://careers.invitationhomes.com/vp-data-science/job/P1-6635896-0"
-      },
-      {
-        "department": "",
-        "id": "op-/superintendent/job/P1-7637512-0",
-        "location": "",
-        "posted": "",
-        "title": "Superintendent",
-        "url": "https://careers.invitationhomes.com/superintendent/job/P1-7637512-0"
       },
       {
         "department": "",
@@ -14334,14 +14389,6 @@
       },
       {
         "department": "",
-        "id": "op-/renewal-specialist/job/P1-7554921-0",
-        "location": "",
-        "posted": "",
-        "title": "Renewal Specialist",
-        "url": "https://careers.invitationhomes.com/renewal-specialist/job/P1-7554921-0"
-      },
-      {
-        "department": "",
         "id": "op-/maintenance-technician-ii-preferred-in-denton-aubrey-corinth-krum-or-pounder-area/job/P1-6284389-0",
         "location": "",
         "posted": "",
@@ -14414,22 +14461,6 @@
       },
       {
         "department": "",
-        "id": "op-/national-manager-rehab-turn/job/P1-7202092-0",
-        "location": "",
-        "posted": "",
-        "title": "National Manager, Rehab & Turn",
-        "url": "https://careers.invitationhomes.com/national-manager-rehab-turn/job/P1-7202092-0"
-      },
-      {
-        "department": "",
-        "id": "op-/regional-technology-analyst/job/P1-7185413-0",
-        "location": "",
-        "posted": "",
-        "title": "Regional Technology Analyst",
-        "url": "https://careers.invitationhomes.com/regional-technology-analyst/job/P1-7185413-0"
-      },
-      {
-        "department": "",
         "id": "op-/maintenance-technician-ii/job/P1-6284393-0",
         "location": "",
         "posted": "",
@@ -14494,14 +14525,6 @@
       },
       {
         "department": "",
-        "id": "op-/resident-recovery-specialist/job/P1-6706056-0",
-        "location": "",
-        "posted": "",
-        "title": "Resident Recovery Specialist",
-        "url": "https://careers.invitationhomes.com/resident-recovery-specialist/job/P1-6706056-0"
-      },
-      {
-        "department": "",
         "id": "op-/superintendent/job/P1-6559169-0",
         "location": "",
         "posted": "",
@@ -14510,11 +14533,11 @@
       },
       {
         "department": "",
-        "id": "op-/maintenance-technician-ii/job/P1-6559168-0",
+        "id": "op-/maintenance-technician-ii-1500-sign-on-included/job/P1-6559168-0",
         "location": "",
         "posted": "",
-        "title": "Maintenance Technician II",
-        "url": "https://careers.invitationhomes.com/maintenance-technician-ii/job/P1-6559168-0"
+        "title": "Maintenance Technician II- $1,500 Sign-On Included",
+        "url": "https://careers.invitationhomes.com/maintenance-technician-ii-1500-sign-on-included/job/P1-6559168-0"
       },
       {
         "department": "",
@@ -14569,12 +14592,12 @@
   },
   "Kasa Living": {
     "board": "page::{\"url\": \"https://kasa.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
         "id": "gh-8199597003",
-        "location": "Nashville, Tennessee",
+        "location": "Chicago, Illinois",
         "posted": "2026-11-10",
         "title": "Area General Manager",
         "url": "https://job-boards.greenhouse.io/kasa/jobs/8199597003"
@@ -14637,6 +14660,14 @@
       },
       {
         "department": "",
+        "id": "gh-8207416003",
+        "location": "St. Petersburg, Florida",
+        "posted": "2026-11-19",
+        "title": "Hospitality Operations Associate",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8207416003"
+      },
+      {
+        "department": "",
         "id": "gh-8041792003",
         "location": "Dallas, Texas",
         "posted": "2026-10-23",
@@ -14650,14 +14681,6 @@
         "posted": "2026-09-03",
         "title": "National Sales Manager",
         "url": "https://job-boards.greenhouse.io/kasa/jobs/7978069003"
-      },
-      {
-        "department": "",
-        "id": "gh-8205897003",
-        "location": "Savannah, Georgia",
-        "posted": "2026-11-17",
-        "title": "Navigator",
-        "url": "https://job-boards.greenhouse.io/kasa/jobs/8205897003"
       },
       {
         "department": "",
@@ -14693,14 +14716,6 @@
       },
       {
         "department": "",
-        "id": "gh-8035870003",
-        "location": "Denver, Colorado",
-        "posted": "2026-10-16",
-        "title": "Property Operations Lead",
-        "url": "https://job-boards.greenhouse.io/kasa/jobs/8035870003"
-      },
-      {
-        "department": "",
         "id": "gh-7793147003",
         "location": "Austin, Texas",
         "posted": "2026-07-07",
@@ -14717,6 +14732,22 @@
       },
       {
         "department": "",
+        "id": "gh-8205897003",
+        "location": "Savannah, Georgia",
+        "posted": "2026-11-17",
+        "title": "Property Operations Lead",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8205897003"
+      },
+      {
+        "department": "",
+        "id": "gh-8035870003",
+        "location": "Denver, Colorado",
+        "posted": "2026-10-16",
+        "title": "Property Operations Lead",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8035870003"
+      },
+      {
+        "department": "",
         "id": "gh-7776262003",
         "location": "Remote",
         "posted": "2026-06-17",
@@ -14725,11 +14756,11 @@
       },
       {
         "department": "",
-        "id": "gh-7985822003",
+        "id": "gh-8208735003",
         "location": "Remote (United States)",
-        "posted": "2026-09-08",
+        "posted": "2026-11-18",
         "title": "Regional Sales Manager - West",
-        "url": "https://job-boards.greenhouse.io/kasa/jobs/7985822003"
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8208735003"
       },
       {
         "department": "",
@@ -14749,19 +14780,19 @@
       },
       {
         "department": "",
-        "id": "gh-8035562003",
-        "location": "Denver, Colorado",
-        "posted": "2026-10-16",
-        "title": "Senior Operations Manager",
-        "url": "https://job-boards.greenhouse.io/kasa/jobs/8035562003"
-      },
-      {
-        "department": "",
         "id": "gh-8200325003",
         "location": "St.Petersburg, Florida",
         "posted": "2026-11-11",
         "title": "Senior Operations Manager",
         "url": "https://job-boards.greenhouse.io/kasa/jobs/8200325003"
+      },
+      {
+        "department": "",
+        "id": "gh-8035562003",
+        "location": "Denver, Colorado",
+        "posted": "2026-10-16",
+        "title": "Senior Operations Manager",
+        "url": "https://job-boards.greenhouse.io/kasa/jobs/8035562003"
       },
       {
         "department": "",
@@ -14776,7 +14807,7 @@
   },
   "Kite Realty Group Trust": {
     "board": "paycom-classic::{\"host\": \"www.paycomonline.net\", \"key\": \"830A4F280E9131389F42C8C69858D6F6\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -14785,22 +14816,6 @@
         "posted": "",
         "title": "Tenant Improvement Project Manager",
         "url": "https://www.paycomonline.net/v4/ats/web.php/portal/830A4F280E9131389F42C8C69858D6F6/jobs/219330"
-      },
-      {
-        "department": "",
-        "id": "op-/v4/ats/web.php/portal/830A4F280E9131389F42C8C69858D6F6/jobs/220711",
-        "location": "Indianapolis (Corporate Office) - Indianapolis, IN 46204",
-        "posted": "",
-        "title": "Summer Intern - Employee Experience",
-        "url": "https://www.paycomonline.net/v4/ats/web.php/portal/830A4F280E9131389F42C8C69858D6F6/jobs/220711"
-      },
-      {
-        "department": "",
-        "id": "op-/v4/ats/web.php/portal/830A4F280E9131389F42C8C69858D6F6/jobs/222337",
-        "location": "Indianapolis (Corporate Office) - Indianapolis, IN 46204",
-        "posted": "",
-        "title": "Summer Intern - Application Development",
-        "url": "https://www.paycomonline.net/v4/ats/web.php/portal/830A4F280E9131389F42C8C69858D6F6/jobs/222337"
       },
       {
         "department": "",
@@ -14847,15 +14862,111 @@
   },
   "Lamar Advertising Company": {
     "board": "ukg:LAM1000LAC:{\"board\": \"82898216-ca7a-4621-b01b-bf3410c919b2\", \"host\": \"recruiting2.ultipro.com\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
-        "id": "uk-24481e17-01f4-4251-8bac-f249a42d7eac",
-        "location": "Greensboro, NC",
-        "posted": "2026-11-16",
+        "id": "uk-5ad1e138-4a86-4536-9eb9-8f9a5a9f1dc9",
+        "location": "BUFFALO, NY",
+        "posted": "2026-11-20",
+        "title": "Office Manager",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=5ad1e138-4a86-4536-9eb9-8f9a5a9f1dc9"
+      },
+      {
+        "department": "",
+        "id": "uk-e014eee8-0870-48ef-bdba-814b085f1a95",
+        "location": "BUFFALO, NY",
+        "posted": "2026-11-20",
+        "title": "Construction - Billboard Installer",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=e014eee8-0870-48ef-bdba-814b085f1a95"
+      },
+      {
+        "department": "",
+        "id": "uk-a16fca66-749e-4824-95b0-6aa1ba7b1013",
+        "location": "Austin, TX",
+        "posted": "2026-11-19",
+        "title": "Logos Field Inspector",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=a16fca66-749e-4824-95b0-6aa1ba7b1013"
+      },
+      {
+        "department": "",
+        "id": "uk-3beff40b-0bb8-4dca-bd8f-6d33c717b669",
+        "location": "VICTORIA, TX",
+        "posted": "2026-11-19",
         "title": "Sales Account Executive",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=24481e17-01f4-4251-8bac-f249a42d7eac"
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=3beff40b-0bb8-4dca-bd8f-6d33c717b669"
+      },
+      {
+        "department": "",
+        "id": "uk-9ef1bdb5-ff4c-43cd-a9db-b30c24668de8",
+        "location": "MEMPHIS, TN",
+        "posted": "2026-11-19",
+        "title": "Construction - Billboard Installer",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9ef1bdb5-ff4c-43cd-a9db-b30c24668de8"
+      },
+      {
+        "department": "",
+        "id": "uk-93e98fc4-bfec-489c-94be-d3b11d5302fa",
+        "location": "NASHVILLE, TN",
+        "posted": "2026-11-18",
+        "title": "Sales Account Executive",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=93e98fc4-bfec-489c-94be-d3b11d5302fa"
+      },
+      {
+        "department": "",
+        "id": "uk-11e999f0-f123-4e87-a164-7afdfb79e75a",
+        "location": "Austin, TX",
+        "posted": "2026-11-18",
+        "title": "Logos Field Technician",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=11e999f0-f123-4e87-a164-7afdfb79e75a"
+      },
+      {
+        "department": "",
+        "id": "uk-72c488dc-726c-4b71-965a-cfaa0df99be4",
+        "location": "LAS VEGAS, NV",
+        "posted": "2026-11-18",
+        "title": "Administrative Specialist",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=72c488dc-726c-4b71-965a-cfaa0df99be4"
+      },
+      {
+        "department": "",
+        "id": "uk-92f22d62-a952-416d-a7b3-fcb50939635d",
+        "location": "Collinsville, IL",
+        "posted": "2026-11-18",
+        "title": "Sales Account Executive",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=92f22d62-a952-416d-a7b3-fcb50939635d"
+      },
+      {
+        "department": "",
+        "id": "uk-1a05dd41-a689-46db-8e2c-e24fa1d7a8ba",
+        "location": "PENSACOLA, FL",
+        "posted": "2026-11-18",
+        "title": "Sales Account Executive",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=1a05dd41-a689-46db-8e2c-e24fa1d7a8ba"
+      },
+      {
+        "department": "",
+        "id": "uk-df8d605e-9642-44fc-9fb0-330cf93d2db9",
+        "location": "Valdosta, GA",
+        "posted": "2026-11-17",
+        "title": "Inside Sales Account Manager",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=df8d605e-9642-44fc-9fb0-330cf93d2db9"
+      },
+      {
+        "department": "",
+        "id": "uk-76e4e5fe-a0e8-4835-b698-3d7cc162a4ff",
+        "location": "GRANITE FALLS, NC",
+        "posted": "2026-11-17",
+        "title": "Sales Manager",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=76e4e5fe-a0e8-4835-b698-3d7cc162a4ff"
+      },
+      {
+        "department": "",
+        "id": "uk-c5638e5d-d345-4a8b-a2b0-60bb54a3b6fd",
+        "location": "BATON ROUGE, LA",
+        "posted": "2026-11-17",
+        "title": "Income Tax Accountant II",
+        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c5638e5d-d345-4a8b-a2b0-60bb54a3b6fd"
       },
       {
         "department": "",
@@ -15147,30 +15258,6 @@
       },
       {
         "department": "",
-        "id": "uk-27d4e935-f652-46bd-be39-72baafe78b3b",
-        "location": "BATON ROUGE, LA",
-        "posted": "2026-10-26",
-        "title": "Market Research Analyst",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=27d4e935-f652-46bd-be39-72baafe78b3b"
-      },
-      {
-        "department": "",
-        "id": "uk-a3ee4043-4f3c-4c23-a425-8dd43d72aa42",
-        "location": "BRUNSWICK, GA",
-        "posted": "2026-10-21",
-        "title": "Sales Account Executive",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=a3ee4043-4f3c-4c23-a425-8dd43d72aa42"
-      },
-      {
-        "department": "",
-        "id": "uk-9c20a0c9-e735-4ebc-83bb-302067b789ea",
-        "location": "SAVANNAH, GA",
-        "posted": "2026-10-21",
-        "title": "Sales Account Executive",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=9c20a0c9-e735-4ebc-83bb-302067b789ea"
-      },
-      {
-        "department": "",
         "id": "uk-3d74da43-6375-4d54-842b-7dbe9112b03e",
         "location": "EAST PROVIDENCE, RI",
         "posted": "2026-10-20",
@@ -15216,14 +15303,6 @@
         "posted": "2026-10-06",
         "title": "Construction - Billboard Installer",
         "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=b1c616ec-cc57-4a16-b93e-2be8ba40156e"
-      },
-      {
-        "department": "",
-        "id": "uk-bc2c613f-a524-4e44-84bd-64d2ec0c4bcd",
-        "location": "Cheyenne, WY",
-        "posted": "2026-10-06",
-        "title": "Billboard Construction Crew Member",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=bc2c613f-a524-4e44-84bd-64d2ec0c4bcd"
       },
       {
         "department": "",
@@ -15299,14 +15378,6 @@
       },
       {
         "department": "",
-        "id": "uk-c4eb336f-e52c-41b3-895c-1341b657048f",
-        "location": "Asheville, NC",
-        "posted": "2026-09-30",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=c4eb336f-e52c-41b3-895c-1341b657048f"
-      },
-      {
-        "department": "",
         "id": "uk-7dc003aa-c13c-414a-99d3-0e38af461d81",
         "location": "TEMPLE, TX",
         "posted": "2026-09-29",
@@ -15339,14 +15410,6 @@
       },
       {
         "department": "",
-        "id": "uk-744d0993-82cf-4389-bbff-4bbfde931667",
-        "location": "Athens, GA",
-        "posted": "2026-09-21",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=744d0993-82cf-4389-bbff-4bbfde931667"
-      },
-      {
-        "department": "",
         "id": "uk-efe3513a-0426-4581-9dc3-f371d40aad3d",
         "location": "SHREVEPORT, LA",
         "posted": "2026-09-17",
@@ -15360,14 +15423,6 @@
         "posted": "2026-09-16",
         "title": "Construction - Billboard Installer",
         "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=7901438b-620e-418a-af6d-9cd44f9c39cd"
-      },
-      {
-        "department": "",
-        "id": "uk-5bffc0b7-001d-4521-a678-a96888048e2d",
-        "location": "BRYAN, TX",
-        "posted": "2026-09-16",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=5bffc0b7-001d-4521-a678-a96888048e2d"
       },
       {
         "department": "",
@@ -15451,22 +15506,6 @@
       },
       {
         "department": "",
-        "id": "uk-2c1222a2-6059-405e-b585-2dba575cc56e",
-        "location": "Asheville, NC",
-        "posted": "2026-09-03",
-        "title": "Sales Account Executive",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2c1222a2-6059-405e-b585-2dba575cc56e"
-      },
-      {
-        "department": "",
-        "id": "uk-5a20b665-8d74-4575-a4ae-71dfc21f30f4",
-        "location": "PITTSBURGH, PA",
-        "posted": "2026-09-03",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=5a20b665-8d74-4575-a4ae-71dfc21f30f4"
-      },
-      {
-        "department": "",
         "id": "uk-74ab27fd-73e8-4e0b-ac0f-3e715b5b09af",
         "location": "DUNCANSVILLE, PA",
         "posted": "2026-09-02",
@@ -15499,27 +15538,11 @@
       },
       {
         "department": "",
-        "id": "uk-dc9d6a97-725c-4471-b404-4279578bd525",
-        "location": "MONTGOMERY, AL",
-        "posted": "2026-08-20",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=dc9d6a97-725c-4471-b404-4279578bd525"
-      },
-      {
-        "department": "",
         "id": "uk-e6d7597f-dbb9-40b9-bfe5-73d8e2824739",
         "location": "MIDLAND, TX",
         "posted": "2026-08-17",
         "title": "Sales Account Executive",
         "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=e6d7597f-dbb9-40b9-bfe5-73d8e2824739"
-      },
-      {
-        "department": "",
-        "id": "uk-f6b695ee-e7ad-42d7-8a77-f9ed0ea5aeef",
-        "location": "OSAGE BEACH, MO",
-        "posted": "2026-07-28",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=f6b695ee-e7ad-42d7-8a77-f9ed0ea5aeef"
       },
       {
         "department": "",
@@ -15539,14 +15562,6 @@
       },
       {
         "department": "",
-        "id": "uk-2ea0954e-97b1-4624-b83d-61f1c52c9096",
-        "location": "Morrisville, NC",
-        "posted": "2026-06-22",
-        "title": "Airport Advertising Manager",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=2ea0954e-97b1-4624-b83d-61f1c52c9096"
-      },
-      {
-        "department": "",
         "id": "uk-ba03f6a5-5840-4d8f-85df-e14c33f82601",
         "location": "TULSA, OK",
         "posted": "2026-06-18",
@@ -15560,14 +15575,6 @@
         "posted": "2026-06-18",
         "title": "Graphic Designer",
         "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=43264cf3-c644-4d67-bf41-c3c01b450234"
-      },
-      {
-        "department": "",
-        "id": "uk-3615b4cc-19a9-4773-b2f2-9160e8140011",
-        "location": "LATHAM, NY",
-        "posted": "2026-05-04",
-        "title": "Construction - Billboard Installer",
-        "url": "https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/OpportunityDetail?opportunityId=3615b4cc-19a9-4773-b2f2-9160e8140011"
       },
       {
         "department": "",
@@ -16132,7 +16139,7 @@
   },
   "Medical Properties Trust": {
     "board": "page::{\"url\": \"https://www.medicalpropertiestrust.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -16163,7 +16170,7 @@
   },
   "Mynd": {
     "board": "page::{\"url\": \"https://www.mynd.co/talent-and-culture\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -16183,6 +16190,14 @@
       },
       {
         "department": "",
+        "id": "gh-8950775002",
+        "location": "Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States",
+        "posted": "2026-11-19",
+        "title": "Cash Accountant",
+        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8950775002"
+      },
+      {
+        "department": "",
         "id": "gh-8936265002",
         "location": "Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States",
         "posted": "2026-11-10",
@@ -16191,11 +16206,11 @@
       },
       {
         "department": "",
-        "id": "gh-8944939002",
-        "location": "Atlanta, Georgia, United States",
-        "posted": "2026-11-16",
+        "id": "gh-8925106002",
+        "location": "Columbus, Ohio, United States",
+        "posted": "2026-11-02",
         "title": "Maintenance Technician",
-        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8944939002"
+        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8925106002"
       },
       {
         "department": "",
@@ -16207,11 +16222,19 @@
       },
       {
         "department": "",
-        "id": "gh-8925106002",
-        "location": "Columbus, Ohio, United States",
-        "posted": "2026-11-02",
+        "id": "gh-8944939002",
+        "location": "Atlanta, Georgia, United States",
+        "posted": "2026-11-16",
         "title": "Maintenance Technician",
-        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8925106002"
+        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8944939002"
+      },
+      {
+        "department": "",
+        "id": "gh-8944968002",
+        "location": "Tampa, Florida, United States",
+        "posted": "2026-11-18",
+        "title": "Maintenance Technician",
+        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8944968002"
       },
       {
         "department": "",
@@ -16228,30 +16251,6 @@
         "posted": "2026-10-28",
         "title": "Pricing and Procurement Manager",
         "url": "https://job-boards.greenhouse.io/roofstock/jobs/8920162002"
-      },
-      {
-        "department": "",
-        "id": "gh-8886002002",
-        "location": "Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States",
-        "posted": "2026-10-13",
-        "title": "Property Accountant, Institutional",
-        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8886002002"
-      },
-      {
-        "department": "",
-        "id": "gh-8901148002",
-        "location": "Bay Area, CA",
-        "posted": "2026-10-19",
-        "title": "Senior Legal Operations Manager",
-        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8901148002"
-      },
-      {
-        "department": "",
-        "id": "gh-8686159002",
-        "location": "Dallas, Texas, United States",
-        "posted": "2026-09-23",
-        "title": "Senior Legal Operations Manager",
-        "url": "https://job-boards.greenhouse.io/roofstock/jobs/8686159002"
       },
       {
         "department": "",
@@ -16274,13 +16273,30 @@
   },
   "Northpoint Asset Manamgement": {
     "board": "rippling:northpoint-asset-management:{}",
-    "fetched_on": "2026-11-17",
-    "roles": [],
+    "fetched_on": "2026-11-22",
+    "roles": [
+      {
+        "department": "Property Management",
+        "id": "rippling-northpoint-asset-management-4268ddc0-eae6-4626-9753-835a4f704ab0",
+        "location": "Remote (Dallas, Texas, US)",
+        "posted": "",
+        "title": "Property Manager - Dallas",
+        "url": "https://ats.rippling.com/northpoint-asset-management/jobs/4268ddc0-eae6-4626-9753-835a4f704ab0"
+      },
+      {
+        "department": "Property Management",
+        "id": "rippling-northpoint-asset-management-516bb2bf-37ca-47db-938b-f460833ce166",
+        "location": "Remote (Tyler, Texas, US)",
+        "posted": "",
+        "title": "Property Manager - Tyler",
+        "url": "https://ats.rippling.com/northpoint-asset-management/jobs/516bb2bf-37ca-47db-938b-f460833ce166"
+      }
+    ],
     "via": ""
   },
   "Oakbrook Corporation": {
     "board": "isolved:oakbrookcorp:{}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -16297,6 +16313,14 @@
         "posted": "",
         "title": "Commercial Building Maintenance",
         "url": "https://oakbrookcorp.isolvedhire.com/jobs/1864647"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/1893118",
+        "location": "",
+        "posted": "",
+        "title": "Lease-Up Manager",
+        "url": "https://oakbrookcorp.isolvedhire.com/jobs/1893118"
       },
       {
         "department": "",
@@ -16348,6 +16372,14 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/1907742",
+        "location": "",
+        "posted": "",
+        "title": "Maintenance Technician - 8Twenty Park",
+        "url": "https://oakbrookcorp.isolvedhire.com/jobs/1907742"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/1865743",
         "location": "",
         "posted": "",
@@ -16356,27 +16388,43 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/1908013",
+        "location": "",
+        "posted": "",
+        "title": "Property Manager",
+        "url": "https://oakbrookcorp.isolvedhire.com/jobs/1908013"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/1906660",
         "location": "",
         "posted": "",
         "title": "Property Manager",
         "url": "https://oakbrookcorp.isolvedhire.com/jobs/1906660"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/1893118",
-        "location": "",
-        "posted": "",
-        "title": "Property Manager",
-        "url": "https://oakbrookcorp.isolvedhire.com/jobs/1893118"
       }
     ],
     "via": ""
   },
   "PMI": {
     "board": "page::{\"url\": \"https://www.propertymanagementinc.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "op-/jobs/3705216",
+        "location": "",
+        "posted": "",
+        "title": "Property Manager",
+        "url": "https://property-mangement-inc-careers.careerplug.com/jobs/3705216?embed=1"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/3487621",
+        "location": "",
+        "posted": "",
+        "title": "President of Multi Family Property Management",
+        "url": "https://property-mangement-inc-careers.careerplug.com/jobs/3487621?embed=1"
+      },
       {
         "department": "",
         "id": "op-/jobs/3694539",
@@ -16600,29 +16648,13 @@
         "posted": "",
         "title": "Onsite Maintenance Groundskeeper/Porter",
         "url": "https://property-mangement-inc-careers.careerplug.com/jobs/3161768?embed=1"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/1777212",
-        "location": "",
-        "posted": "",
-        "title": "Maintenance Tech",
-        "url": "https://property-mangement-inc-careers.careerplug.com/jobs/1777212?embed=1"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/1138112",
-        "location": "",
-        "posted": "",
-        "title": "Property Manager",
-        "url": "https://property-mangement-inc-careers.careerplug.com/jobs/1138112?embed=1"
       }
     ],
     "via": ""
   },
   "PURE Homeriver Group": {
     "board": "page::{\"url\": \"https://purehomeriver.com/company/careers/\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -16690,30 +16722,69 @@
       },
       {
         "department": "",
-        "id": "adp-9201977953466_1",
-        "location": "Remote",
-        "posted": "2026-10-02",
-        "title": "Inside Client Advisor II",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2&jobId=9201977953466_1&lang=en_US"
-      },
-      {
-        "department": "",
         "id": "adp-9201968794377_1",
         "location": "Los Gatos, CA",
         "posted": "2026-09-15",
         "title": "Operations Manager - Los Gatos, CA",
         "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2&jobId=9201968794377_1&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201943683018_1",
-        "location": "Summerville, SC",
-        "posted": "2026-07-28",
-        "title": "Field Support Specialist - Charleston, SC",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2&jobId=9201943683018_1&lang=en_US"
       }
     ],
     "via": "adp:eea42ed6-3dcf-47f3-b99b-29a304948b2b:{\"cc\": \"9200441095595_2\"}"
+  },
+  "Pacific Oak Residential (now Second Avenue)": {
+    "board": "page::{\"url\": \"https://www.secondavenue.com/careers\"}",
+    "fetched_on": "2026-11-22",
+    "roles": [
+      {
+        "department": "",
+        "id": "adp-9201806289185_3",
+        "location": "Tampa, FL",
+        "posted": "2026-11-17",
+        "title": "Renovations, Turns, and Maintenance Coordinator",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201806289185_3&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201802770160_6",
+        "location": "US",
+        "posted": "2026-11-07",
+        "title": "Licensed Leasing Agent - 1099",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201802770160_6&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201801871104_6",
+        "location": "Tampa, FL",
+        "posted": "2026-11-05",
+        "title": "Manager - Resident Retention",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201801871104_6&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201793304499_1",
+        "location": "Tampa, FL",
+        "posted": "2026-10-07",
+        "title": "Resident Experience Specialist - Property Management",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201793304499_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201790343699_1",
+        "location": "Tampa, FL",
+        "posted": "2026-09-26",
+        "title": "Community Compliance Specialist - Property Management",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201790343699_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201789684690_1",
+        "location": "Tampa, FL",
+        "posted": "2026-09-23",
+        "title": "Senior Manager - Community Compliance",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331&jobId=9201789684690_1&lang=en_US"
+      }
+    ],
+    "via": "adp:d52252f7-9594-4db3-b2c3-bd73d8f571d5:{\"cc\": \"1586553165248305_23331\"}"
   },
   "Picerne Real Estate Group": {
     "board": "page::{\"url\": \"https://www.picerne.com/careers\"}",
@@ -17002,10 +17073,49 @@
     ],
     "via": "jazzhr:picerne:{}"
   },
+  "Pretium Partners": {
+    "board": "page::{\"url\": \"https://pretium.com/careers/\"}",
+    "fetched_on": "2026-11-22",
+    "roles": [
+      {
+        "department": "",
+        "id": "gh-8858269002",
+        "location": "New York, New York and/or Charlotte, North Carolina",
+        "posted": "2026-09-30",
+        "title": "New Origination Trader - Analyst",
+        "url": "https://job-boards.greenhouse.io/pretiumpartnersllc/jobs/8858269002"
+      },
+      {
+        "department": "",
+        "id": "gh-8604506002",
+        "location": "Miami, Fl",
+        "posted": "2026-09-30",
+        "title": "Office Coordinator/ Executive Assistant (Miami) - Pretium Enterprise Services",
+        "url": "https://job-boards.greenhouse.io/pretiumpartnersllc/jobs/8604506002"
+      },
+      {
+        "department": "",
+        "id": "gh-8885923002",
+        "location": "New York, New York",
+        "posted": "2026-10-14",
+        "title": "Real Estate Equity - Associate",
+        "url": "https://job-boards.greenhouse.io/pretiumpartnersllc/jobs/8885923002"
+      }
+    ],
+    "via": "greenhouse:pretiumpartnersllc:{}"
+  },
   "Progress Residential": {
     "board": "page::{\"url\": \"https://jobs.rentprogress.com/jobs\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "op-/sr-software-engineer/job/00A0C89BC8F1729C1C31BC79134BCC2A",
+        "location": "",
+        "posted": "",
+        "title": "Sr. Software Engineer",
+        "url": "https://jobs.rentprogress.com/sr-software-engineer/job/00A0C89BC8F1729C1C31BC79134BCC2A"
+      },
       {
         "department": "",
         "id": "op-/service-manager/job/00A4EBEE41920DF43DA4D61ED8FAF032",
@@ -17016,11 +17126,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/0C367DE16A6C45E2D786D5181B8BB890",
+        "id": "op-/service-technician-iii-hvac-phoenix/job/0C367DE16A6C45E2D786D5181B8BB890",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/0C367DE16A6C45E2D786D5181B8BB890"
+        "title": "Service Technician III - HVAC - (Phoenix)",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-phoenix/job/0C367DE16A6C45E2D786D5181B8BB890"
       },
       {
         "department": "",
@@ -17048,6 +17158,22 @@
       },
       {
         "department": "",
+        "id": "op-/field-operations-specialist/job/163F527452FCF87341386C27943D4978",
+        "location": "",
+        "posted": "",
+        "title": "Field Operations Specialist",
+        "url": "https://jobs.rentprogress.com/field-operations-specialist/job/163F527452FCF87341386C27943D4978"
+      },
+      {
+        "department": "",
+        "id": "op-/acquisitions-associate-btr/job/1BD4EAB557DA47BA19C881EDEC513F9E",
+        "location": "",
+        "posted": "",
+        "title": "Acquisitions Associate - BTR",
+        "url": "https://jobs.rentprogress.com/acquisitions-associate-btr/job/1BD4EAB557DA47BA19C881EDEC513F9E"
+      },
+      {
+        "department": "",
         "id": "op-/construction-superintendent-lc/job/1CE7E723A71F640B41C41A325F683555",
         "location": "",
         "posted": "",
@@ -17056,11 +17182,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-manager/job/211A653FAAAB391DFFE2AC2AFE3AFBA9",
+        "id": "op-/service-manager-las-vegas/job/211A653FAAAB391DFFE2AC2AFE3AFBA9",
         "location": "",
         "posted": "",
-        "title": "Service Manager",
-        "url": "https://jobs.rentprogress.com/service-manager/job/211A653FAAAB391DFFE2AC2AFE3AFBA9"
+        "title": "Service Manager (Las Vegas)",
+        "url": "https://jobs.rentprogress.com/service-manager-las-vegas/job/211A653FAAAB391DFFE2AC2AFE3AFBA9"
       },
       {
         "department": "",
@@ -17072,11 +17198,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/258FF318626C01984DD692F3DD618BF0",
+        "id": "op-/service-technician-iii-hvac-sarasota-fl/job/2A210CEB426616156B647B4854C67438",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/258FF318626C01984DD692F3DD618BF0"
+        "title": "Service Technician III - HVAC (Sarasota, FL)",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-sarasota-fl/job/2A210CEB426616156B647B4854C67438"
       },
       {
         "department": "",
@@ -17096,27 +17222,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac-laveen-avondale-buckeye-good-year-mesa-san-tan-valley-queen-creek-chandler-gilbert/job/3C8AD11FC22D092D359C268CA9E69A7C",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC (Laveen, Avondale, Buckeye, Good Year, Mesa, San Tan Valley, Queen Creek, Chandler, Gilbert)",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-laveen-avondale-buckeye-good-year-mesa-san-tan-valley-queen-creek-chandler-gilbert/job/3C8AD11FC22D092D359C268CA9E69A7C"
-      },
-      {
-        "department": "",
         "id": "op-/service-technician-iii-hvac/job/41BD809C0AACDB62E43C74A00AA0DECF",
         "location": "",
         "posted": "",
         "title": "Service Technician III - HVAC",
         "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/41BD809C0AACDB62E43C74A00AA0DECF"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac-dallas-addison/job/4405BAFBBEE6FCB6894B03BBF2F29468",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC (Dallas/Addison)",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-dallas-addison/job/4405BAFBBEE6FCB6894B03BBF2F29468"
       },
       {
         "department": "",
@@ -17136,11 +17246,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/50D89C66DF337E97BC68AFBE249584DD",
+        "id": "op-/service-technician-iii-hvac-tampa/job/50D89C66DF337E97BC68AFBE249584DD",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/50D89C66DF337E97BC68AFBE249584DD"
+        "title": "Service Technician III - HVAC Tampa",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-tampa/job/50D89C66DF337E97BC68AFBE249584DD"
       },
       {
         "department": "",
@@ -17224,19 +17334,19 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/6BB6EA89063338351D031377BBCAF035",
+        "id": "op-/service-technician-iii-hvac-west-side-of-atlanta/job/6BB6EA89063338351D031377BBCAF035",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/6BB6EA89063338351D031377BBCAF035"
+        "title": "Service Technician III - HVAC (West side of Atlanta)",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-west-side-of-atlanta/job/6BB6EA89063338351D031377BBCAF035"
       },
       {
         "department": "",
-        "id": "op-/service-technician-ii-hvac/job/6D9358E0FB91912E581BB902264C18DB",
+        "id": "op-/service-technician-ii-hvac-miami-fl/job/6D9358E0FB91912E581BB902264C18DB",
         "location": "",
         "posted": "",
-        "title": "Service Technician II - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-ii-hvac/job/6D9358E0FB91912E581BB902264C18DB"
+        "title": "Service Technician II - HVAC- Miami, FL",
+        "url": "https://jobs.rentprogress.com/service-technician-ii-hvac-miami-fl/job/6D9358E0FB91912E581BB902264C18DB"
       },
       {
         "department": "",
@@ -17296,11 +17406,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/83D0F1DB845D11BB3E7DF950D862B3E6",
+        "id": "op-/service-technician-iii-hvac-phoenix-az/job/83D0F1DB845D11BB3E7DF950D862B3E6",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/83D0F1DB845D11BB3E7DF950D862B3E6"
+        "title": "Service Technician III - HVAC- Phoenix, AZ",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-phoenix-az/job/83D0F1DB845D11BB3E7DF950D862B3E6"
       },
       {
         "department": "",
@@ -17320,6 +17430,14 @@
       },
       {
         "department": "",
+        "id": "op-/home-finding-consultant/job/8812A741928F362D574A53CE59A1C8FA",
+        "location": "",
+        "posted": "",
+        "title": "Home Finding Consultant",
+        "url": "https://jobs.rentprogress.com/home-finding-consultant/job/8812A741928F362D574A53CE59A1C8FA"
+      },
+      {
+        "department": "",
         "id": "op-/service-manager/job/898869797F5C62B9D91765A3ECBC1638",
         "location": "",
         "posted": "",
@@ -17333,22 +17451,6 @@
         "posted": "",
         "title": "Service Maintenance Director",
         "url": "https://jobs.rentprogress.com/service-maintenance-director/job/8A3CC8945F6BE3BA5F0D347722EF6FA2"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac-dallas-ft-worth-lewisville/job/8CC32D9BA8FC868B49FF40C8552B289D",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC (Dallas/Ft Worth/Lewisville)",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-dallas-ft-worth-lewisville/job/8CC32D9BA8FC868B49FF40C8552B289D"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac-epa/job/8D3438C4BB0BB1067F021E80C0B2B7E9",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC (EPA)",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-epa/job/8D3438C4BB0BB1067F021E80C0B2B7E9"
       },
       {
         "department": "",
@@ -17376,27 +17478,11 @@
       },
       {
         "department": "",
-        "id": "op-/bilingual-home-finding-specialist/job/B65C68D5C7CA2D1C9AD9A9F1D7EE8CBF",
+        "id": "op-/service-technician-iii-hvac-west-side-of-atlanta/job/BF1FF8DA1A900C0B76E001BB8775CD6C",
         "location": "",
         "posted": "",
-        "title": "Bilingual Home Finding Specialist",
-        "url": "https://jobs.rentprogress.com/bilingual-home-finding-specialist/job/B65C68D5C7CA2D1C9AD9A9F1D7EE8CBF"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac/job/B6C40FD6D289D36185100D3835C1D260",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/B6C40FD6D289D36185100D3835C1D260"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac/job/BF1FF8DA1A900C0B76E001BB8775CD6C",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/BF1FF8DA1A900C0B76E001BB8775CD6C"
+        "title": "Service Technician III - HVAC (West Side of Atlanta)",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-west-side-of-atlanta/job/BF1FF8DA1A900C0B76E001BB8775CD6C"
       },
       {
         "department": "",
@@ -17416,19 +17502,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-manager/job/C617A7F69A9E2F42FFFA78D93AB61A49",
+        "id": "op-/service-technician-iii-hvac-las-vegas/job/C89F04B88FB9A82CCB2272EF8F648B99",
         "location": "",
         "posted": "",
-        "title": "Service Manager",
-        "url": "https://jobs.rentprogress.com/service-manager/job/C617A7F69A9E2F42FFFA78D93AB61A49"
-      },
-      {
-        "department": "",
-        "id": "op-/service-technician-iii-hvac/job/C87806F2084A8F5E1B31CA64407A0C95",
-        "location": "",
-        "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/C87806F2084A8F5E1B31CA64407A0C95"
+        "title": "Service Technician III - HVAC (Las Vegas)",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-las-vegas/job/C89F04B88FB9A82CCB2272EF8F648B99"
       },
       {
         "department": "",
@@ -17440,6 +17518,30 @@
       },
       {
         "department": "",
+        "id": "op-/service-technician-iii-hvac/job/D8F8AE34515595F2010EB6910F394EA9",
+        "location": "",
+        "posted": "",
+        "title": "Service Technician III - HVAC",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/D8F8AE34515595F2010EB6910F394EA9"
+      },
+      {
+        "department": "",
+        "id": "op-/service-manager/job/DAA0AB9F760845947466F9413AA598A7",
+        "location": "",
+        "posted": "",
+        "title": "Service Manager",
+        "url": "https://jobs.rentprogress.com/service-manager/job/DAA0AB9F760845947466F9413AA598A7"
+      },
+      {
+        "department": "",
+        "id": "op-/website-engineer/job/DBEA92A3071D60F8BF452143315B0AA3",
+        "location": "",
+        "posted": "",
+        "title": "Website Engineer",
+        "url": "https://jobs.rentprogress.com/website-engineer/job/DBEA92A3071D60F8BF452143315B0AA3"
+      },
+      {
+        "department": "",
         "id": "op-/senior-platform-optimization-analyst/job/DD390CC5C91CBE0FAA4778E1980F28BA",
         "location": "",
         "posted": "",
@@ -17448,11 +17550,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-manager/job/DD8D63A27BA5252A90DA87E94DFBC934",
+        "id": "op-/service-manager-phoenix/job/DD8D63A27BA5252A90DA87E94DFBC934",
         "location": "",
         "posted": "",
-        "title": "Service Manager",
-        "url": "https://jobs.rentprogress.com/service-manager/job/DD8D63A27BA5252A90DA87E94DFBC934"
+        "title": "Service Manager (Phoenix)",
+        "url": "https://jobs.rentprogress.com/service-manager-phoenix/job/DD8D63A27BA5252A90DA87E94DFBC934"
       },
       {
         "department": "",
@@ -17472,11 +17574,11 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/E07BF4EA11E26A2CBA08916D41F3B068",
+        "id": "op-/service-technician-iii-hvac-dallas/job/E07BF4EA11E26A2CBA08916D41F3B068",
         "location": "",
         "posted": "",
-        "title": "Service Technician III HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/E07BF4EA11E26A2CBA08916D41F3B068"
+        "title": "Service Technician III HVAC Dallas",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-dallas/job/E07BF4EA11E26A2CBA08916D41F3B068"
       },
       {
         "department": "",
@@ -17488,19 +17590,19 @@
       },
       {
         "department": "",
-        "id": "op-/service-manager/job/E56CB407A4A7ED323F514041973E2BFA",
+        "id": "op-/service-manager-central-florida/job/E56CB407A4A7ED323F514041973E2BFA",
         "location": "",
         "posted": "",
-        "title": "Service Manager",
-        "url": "https://jobs.rentprogress.com/service-manager/job/E56CB407A4A7ED323F514041973E2BFA"
+        "title": "Service Manager Central Florida",
+        "url": "https://jobs.rentprogress.com/service-manager-central-florida/job/E56CB407A4A7ED323F514041973E2BFA"
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/E93FFDA580A831CCB84286088E0D7A0F",
+        "id": "op-/service-technician-iii-hvac-miami-fl/job/E93FFDA580A831CCB84286088E0D7A0F",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/E93FFDA580A831CCB84286088E0D7A0F"
+        "title": "Service Technician III - HVAC- Miami, FL",
+        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac-miami-fl/job/E93FFDA580A831CCB84286088E0D7A0F"
       },
       {
         "department": "",
@@ -17509,6 +17611,22 @@
         "posted": "",
         "title": "Business Solutions Strategist",
         "url": "https://jobs.rentprogress.com/business-solutions-strategist/job/EC40DEB46F978CBAF312B424982D4DD8"
+      },
+      {
+        "department": "",
+        "id": "op-/resident-accounts-specialist/job/EC6A58E5E76EB05B073B05B01B57CD0B",
+        "location": "",
+        "posted": "",
+        "title": "Resident Accounts Specialist",
+        "url": "https://jobs.rentprogress.com/resident-accounts-specialist/job/EC6A58E5E76EB05B073B05B01B57CD0B"
+      },
+      {
+        "department": "",
+        "id": "op-/field-operations-specialist/job/F11CC972BD245CD9EE9764578EAEA7C6",
+        "location": "",
+        "posted": "",
+        "title": "Field Operations Specialist",
+        "url": "https://jobs.rentprogress.com/field-operations-specialist/job/F11CC972BD245CD9EE9764578EAEA7C6"
       },
       {
         "department": "",
@@ -17528,19 +17646,82 @@
       },
       {
         "department": "",
-        "id": "op-/service-technician-iii-hvac/job/FD6DE7A8EDD529BDCB2F9A97B713E0ED",
+        "id": "op-/mobile-app-developer/job/F9124FAF86BCF7647B16BA92C15B2D3D",
         "location": "",
         "posted": "",
-        "title": "Service Technician III - HVAC",
-        "url": "https://jobs.rentprogress.com/service-technician-iii-hvac/job/FD6DE7A8EDD529BDCB2F9A97B713E0ED"
+        "title": "Mobile App Developer",
+        "url": "https://jobs.rentprogress.com/mobile-app-developer/job/F9124FAF86BCF7647B16BA92C15B2D3D"
       }
     ],
     "via": ""
   },
+  "Quinn Residences": {
+    "board": "page::{\"url\": \"https://live-quinn.com/job/\"}",
+    "fetched_on": "2026-11-22",
+    "roles": [
+      {
+        "department": "",
+        "id": "adp-9201589452913_1",
+        "location": "Gainesville, GA",
+        "posted": "2026-11-20",
+        "title": "Maintenance Technician",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3&jobId=9201589452913_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201634555519_1",
+        "location": "Greenville, SC",
+        "posted": "2026-10-29",
+        "title": "Leasing Manager",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3&jobId=9201634555519_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201623172979_1",
+        "location": "Bluffton, SC",
+        "posted": "2026-10-09",
+        "title": "Portfolio Manager",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3&jobId=9201623172979_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201580760333_1",
+        "location": "Charlotte, NC",
+        "posted": "2026-08-04",
+        "title": "Field Service Supervisor",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3&jobId=9201580760333_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201571075739_1",
+        "location": "Charlotte, NC",
+        "posted": "2026-07-15",
+        "title": "Portfolio Manager",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3&jobId=9201571075739_1&lang=en_US"
+      }
+    ],
+    "via": "adp:e84a05b2-c751-4d20-9e0b-a6ad11149a48:{\"cc\": \"9201292526264_3\"}"
+  },
   "Real Property Management": {
     "board": "page::{\"url\": \"https://jobs.realpropertymgt.com/jobs\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "op-/es/copia-director-general/job/F5BE6ABA9DBF7B2F68983664F3604FE2",
+        "location": "",
+        "posted": "",
+        "title": "Copia - Director General",
+        "url": "https://jobs.realpropertymgt.com/es/copia-director-general/job/F5BE6ABA9DBF7B2F68983664F3604FE2"
+      },
+      {
+        "department": "",
+        "id": "op-/property-manager-supervisor/job/AEE9776EFA8AF673B21BBD4E01737B13",
+        "location": "",
+        "posted": "",
+        "title": "Property Manager Supervisor",
+        "url": "https://jobs.realpropertymgt.com/property-manager-supervisor/job/AEE9776EFA8AF673B21BBD4E01737B13"
+      },
       {
         "department": "",
         "id": "op-/es/administrador-de-fincas/job/DE6163B0CA4A06D95D3A9DBD26231409",
@@ -17834,7 +18015,7 @@
   },
   "Redstone": {
     "board": "page::{\"url\": \"https://www.redstonevt.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -17851,30 +18032,22 @@
         "posted": "2026-10-07",
         "title": "Redstone Maintenance Technician - $2,500 Sign On Bonus",
         "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4566987"
-      },
-      {
-        "department": "",
-        "id": "paylocity-48034f13-35cd-42bc-a80e-1480b6ae5d26-4496795",
-        "location": "Burlington, VT",
-        "posted": "2026-09-11",
-        "title": "Maintenance Scheduler - Residential Properties",
-        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4496795"
-      },
-      {
-        "department": "",
-        "id": "paylocity-48034f13-35cd-42bc-a80e-1480b6ae5d26-4441915",
-        "location": "Burlington, VT",
-        "posted": "2026-08-21",
-        "title": "Maintenance Scheduler",
-        "url": "https://recruiting.paylocity.com/Recruiting/Jobs/Details/4441915"
       }
     ],
     "via": "paylocity:48034f13-35cd-42bc-a80e-1480b6ae5d26:{}"
   },
   "Renters Warehouse": {
     "board": "page::{\"url\": \"https://www.renterswarehouse.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "adp-93875607_5",
+        "location": "Minneapolis, MN",
+        "posted": "2026-11-18",
+        "title": "Inside Sales Representative",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=93875607_5&lang=en_US"
+      },
       {
         "department": "",
         "id": "adp-88885686_22",
@@ -17890,22 +18063,6 @@
         "posted": "2026-11-05",
         "title": "Area Maintenance Technician",
         "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=88885812_7&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-88005050_50",
-        "location": "Lakewood, CO",
-        "posted": "2026-11-05",
-        "title": "Leasing Field Coordinator",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=88005050_50&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-88014437_521",
-        "location": "Minneapolis, MN",
-        "posted": "2026-11-05",
-        "title": "Leasing Agent",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=88014437_521&lang=en_US"
       },
       {
         "department": "",
@@ -17992,16 +18149,8 @@
   },
   "Starwood Property Trust": {
     "board": "page::{\"url\": \"https://www.starwoodcapital.com/careers\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
-      {
-        "department": "",
-        "id": "jobvite-starwoodcapitalgroup-o17TAfwl",
-        "location": "Greenwich, Connecticut",
-        "posted": "",
-        "title": "2027 Management Company Accounting Summer Intern",
-        "url": "https://jobs.jobvite.com/starwoodcapitalgroup/job/o17TAfwl"
-      },
       {
         "department": "",
         "id": "jobvite-starwoodcapitalgroup-ownHAfwU",
@@ -18036,22 +18185,6 @@
       },
       {
         "department": "",
-        "id": "jobvite-starwoodcapitalgroup-okzWAfw9",
-        "location": "New York, New York",
-        "posted": "",
-        "title": "2027 Agentic Engineering Intern",
-        "url": "https://jobs.jobvite.com/starwoodcapitalgroup/job/okzWAfw9"
-      },
-      {
-        "department": "",
-        "id": "jobvite-starwoodcapitalgroup-olEYAfwh",
-        "location": "New York, New York",
-        "posted": "",
-        "title": "2027 Data Summer Intern",
-        "url": "https://jobs.jobvite.com/starwoodcapitalgroup/job/olEYAfwh"
-      },
-      {
-        "department": "",
         "id": "jobvite-starwoodcapitalgroup-oezXAfw4",
         "location": "New York, New York",
         "posted": "",
@@ -18063,7 +18196,7 @@
   },
   "The Lund Company": {
     "board": "page::{\"url\": \"https://lundco.com/join-our-team/\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
       {
         "department": "",
@@ -18293,8 +18426,80 @@
   },
   "Uniti Group": {
     "board": "page::{\"url\": \"https://careers.uniti.com/\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "op-/jobs/35764-glen-rose-tx",
+        "location": "Uniti | Glen Rose, TX, US (Onsite) | Req # 8063 | Full-Time",
+        "posted": "",
+        "title": "Buried Drop Tech",
+        "url": "https://careers.uniti.com/jobs/35764-glen-rose-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35742-kittanning-pa",
+        "location": "Uniti | Kittanning, PA, US (Onsite) | Req # 8059 | Full-Time",
+        "posted": "",
+        "title": "Business Systems Technician",
+        "url": "https://careers.uniti.com/jobs/35742-kittanning-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35746-rural-hall-nc",
+        "location": "Uniti | Rural Hall, NC, US (Onsite) | Req # 8002 | Full-Time",
+        "posted": "",
+        "title": "Construction-Line Worker",
+        "url": "https://careers.uniti.com/jobs/35746-rural-hall-nc"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35748-kenton-oh",
+        "location": "Uniti | Kenton, OH, US (Onsite) | Req # 7703 | Full-Time",
+        "posted": "",
+        "title": "Buried Drop Tech",
+        "url": "https://careers.uniti.com/jobs/35748-kenton-oh"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35734",
+        "location": "Uniti | United States (Virtual) | Req # 8056 | Full-Time",
+        "posted": "",
+        "title": "Uniti Fiber - Manager-Sales Enablement",
+        "url": "https://careers.uniti.com/jobs/35734"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35719-nebraska-city-ne",
+        "location": "",
+        "posted": "",
+        "title": "Buried Drop Tech",
+        "url": "https://careers.uniti.com/jobs/35719-nebraska-city-ne"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35738-fl",
+        "location": "Uniti | FL, US (Onsite) | Req # 8057 | Full-Time",
+        "posted": "",
+        "title": "Uniti Fiber - Field Marketing Manager",
+        "url": "https://careers.uniti.com/jobs/35738-fl"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35664",
+        "location": "Uniti | United States (Virtual) | Req # 8036 | Full-Time",
+        "posted": "",
+        "title": "Network Analyst NOC",
+        "url": "https://careers.uniti.com/jobs/35664"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35659-wadesboro-nc",
+        "location": "Uniti | Wadesboro, NC, US (Onsite) | Req # 7984 | Full-Time",
+        "posted": "",
+        "title": "Buried Drop Technician-FO",
+        "url": "https://careers.uniti.com/jobs/35659-wadesboro-nc"
+      },
       {
         "department": "",
         "id": "op-/jobs/35643-dawson-ga",
@@ -18305,11 +18510,59 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/35649-nash-tx",
-        "location": "Uniti | Nash, TX, US (Onsite) | Req # 7648 | Full-Time",
+        "id": "op-/jobs/35645",
+        "location": "Uniti | United States (Virtual) | Req # 8037 | Full-Time",
         "posted": "",
-        "title": "Buried Drop Tech",
-        "url": "https://careers.uniti.com/jobs/35649-nash-tx"
+        "title": "HR Employment Counsel",
+        "url": "https://careers.uniti.com/jobs/35645"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35618-killeen-tx",
+        "location": "Uniti | Killeen, TX, US (Onsite) | Req # 8039 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/35618-killeen-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35618-waco-tx",
+        "location": "Uniti | Waco, TX, US (Onsite) | Req # 8039 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/35618-waco-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35618-temple-tx",
+        "location": "Uniti | Temple, TX, US (Onsite) | Req # 8039 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/35618-temple-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35630-lexington-nc",
+        "location": "Uniti | Lexington, NC, US (Onsite) | Req # 8025 | Full-Time",
+        "posted": "",
+        "title": "Lead Specialist -Consumer Direct Sales",
+        "url": "https://careers.uniti.com/jobs/35630-lexington-nc"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35654-cordova-tn",
+        "location": "Uniti | Cordova, TN, US (Onsite) | Req # 7844 | Full-Time",
+        "posted": "",
+        "title": "Network Technician Field Operations",
+        "url": "https://careers.uniti.com/jobs/35654-cordova-tn"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35654-memphis-tn",
+        "location": "Uniti | Memphis, TN, US (Onsite) | Req # 7844 | Full-Time",
+        "posted": "",
+        "title": "Network Technician Field Operations",
+        "url": "https://careers.uniti.com/jobs/35654-memphis-tn"
       },
       {
         "department": "",
@@ -18334,30 +18587,6 @@
         "posted": "",
         "title": "Director-Sales Engineering",
         "url": "https://careers.uniti.com/jobs/35624-il"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35645",
-        "location": "Uniti | United States (Virtual) | Req # 8037 | Full-Time",
-        "posted": "",
-        "title": "HR Employment Counsel",
-        "url": "https://careers.uniti.com/jobs/35645"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35618-waco-tx",
-        "location": "Uniti | Waco, TX, US (Onsite) | Req # 8039 | Full-Time",
-        "posted": "",
-        "title": "Field Account Executive I (Hybrid)",
-        "url": "https://careers.uniti.com/jobs/35618-waco-tx"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35630-lexington-nc",
-        "location": "Uniti | Lexington, NC, US (Onsite) | Req # 8025 | Full-Time",
-        "posted": "",
-        "title": "Lead Specialist -Consumer Direct Sales",
-        "url": "https://careers.uniti.com/jobs/35630-lexington-nc"
       },
       {
         "department": "",
@@ -18398,14 +18627,6 @@
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/35522-pa"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35531-harrison-ar",
-        "location": "Uniti | Harrison, AR, US (Onsite) | Req # 7974 | Full-Time",
-        "posted": "",
-        "title": "Construction-Line Worker",
-        "url": "https://careers.uniti.com/jobs/35531-harrison-ar"
       },
       {
         "department": "",
@@ -18665,19 +18886,27 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/35435-brownfield-tx",
-        "location": "Uniti | Brownfield, TX, US (Onsite) | Req # 8007 | Full-Time",
-        "posted": "",
-        "title": "Buried Drop Tech",
-        "url": "https://careers.uniti.com/jobs/35435-brownfield-tx"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/35446-des-moines-ia",
         "location": "Uniti | Des Moines, IA, US (Onsite) | Req # 8010 | Full-Time",
         "posted": "",
         "title": "Field Account Executive II (Hybrid)",
         "url": "https://careers.uniti.com/jobs/35446-des-moines-ia"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35446-ames-ia",
+        "location": "Uniti | Ames, IA, US (Onsite) | Req # 8010 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive II (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/35446-ames-ia"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35446-marshalltown-ia",
+        "location": "",
+        "posted": "",
+        "title": "Field Account Executive II (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/35446-marshalltown-ia"
       },
       {
         "department": "",
@@ -18849,22 +19078,6 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/35244-little-rock-ar",
-        "location": "",
-        "posted": "",
-        "title": "Engineer III",
-        "url": "https://careers.uniti.com/jobs/35244-little-rock-ar"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35244-harrison-ar",
-        "location": "Uniti | Harrison, AR, US (Onsite) | Req # 7964 | Full-Time",
-        "posted": "",
-        "title": "Engineer III",
-        "url": "https://careers.uniti.com/jobs/35244-harrison-ar"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/35248-interlachen-fl",
         "location": "",
         "posted": "",
@@ -18873,27 +19086,11 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/35051-elyria-oh",
-        "location": "Uniti | Elyria, OH, US (Onsite) | Req # 7937 | Full-Time",
-        "posted": "",
-        "title": "Construction Tech-Line Worker",
-        "url": "https://careers.uniti.com/jobs/35051-elyria-oh"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/35194-omaha-ne",
         "location": "Uniti | Omaha, NE, US (Onsite) | Req # 7960 | Full-Time",
         "posted": "",
         "title": "Account Executive I",
         "url": "https://careers.uniti.com/jobs/35194-omaha-ne"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35209-folkston-ga",
-        "location": "Uniti | Folkston, GA, US (Onsite) | Req # 7953 | Full-Time",
-        "posted": "",
-        "title": "Customer Service Tech I",
-        "url": "https://careers.uniti.com/jobs/35209-folkston-ga"
       },
       {
         "department": "",
@@ -18926,6 +19123,22 @@
         "posted": "",
         "title": "Field Account Executive (Hybrid)",
         "url": "https://careers.uniti.com/jobs/35215-gainesville-fl"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35219-kittanning-pa",
+        "location": "Uniti | Kittanning, PA, US (Onsite) | Req # 7961 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive",
+        "url": "https://careers.uniti.com/jobs/35219-kittanning-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/35219-brockway-pa",
+        "location": "Uniti | Brockway, PA, US (Onsite) | Req # 7961 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive",
+        "url": "https://careers.uniti.com/jobs/35219-brockway-pa"
       },
       {
         "department": "",
@@ -18969,27 +19182,11 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/35151-jamestown-ny",
-        "location": "Uniti | Jamestown, NY, US (Onsite) | Req # 7710 | Full-Time",
-        "posted": "",
-        "title": "Buried Drop Tech",
-        "url": "https://careers.uniti.com/jobs/35151-jamestown-ny"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/35055-ashtabula-oh",
         "location": "Uniti | Ashtabula, OH, US (Onsite) | Req # 7939 | Full-Time",
         "posted": "",
         "title": "Construction Tech-Line Worker",
         "url": "https://careers.uniti.com/jobs/35055-ashtabula-oh"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/35153-jamestown-ny",
-        "location": "Uniti | Jamestown, NY, US (Onsite) | Req # 7710 | Full-Time",
-        "posted": "",
-        "title": "Buried Drop Tech",
-        "url": "https://careers.uniti.com/jobs/35153-jamestown-ny"
       },
       {
         "department": "",
@@ -19193,11 +19390,35 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34768-trinity-tx",
+        "location": "Uniti | Trinity, TX, US (Onsite) | Req # 7865 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34768-trinity-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34768-crockett-tx",
+        "location": "Uniti | Crockett, TX, US (Onsite) | Req # 7865 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34768-crockett-tx"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34779-kerrville-tx",
         "location": "Uniti | Kerrville, TX, US (Onsite) | Req # 7866 | Full-Time",
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/34779-kerrville-tx"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34799-adel-ga",
+        "location": "Uniti | Adel, GA, US (Onsite) | Req # 7868 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34799-adel-ga"
       },
       {
         "department": "",
@@ -19209,11 +19430,43 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34799-nashville-ga",
+        "location": "Uniti | Nashville, GA, US (Onsite) | Req # 7868 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34799-nashville-ga"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34799-sparks-ga",
+        "location": "Uniti | Sparks, GA, US (Onsite) | Req # 7868 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34799-sparks-ga"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34807-milledgeville-ga",
         "location": "",
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/34807-milledgeville-ga"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34807-eatonton-ga",
+        "location": "Uniti | Eatonton, GA, US (Onsite) | Req # 7869 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34807-eatonton-ga"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34807-ethridge-ga",
+        "location": "Uniti | Ethridge, GA, US (Onsite) | Req # 7869 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34807-ethridge-ga"
       },
       {
         "department": "",
@@ -19233,11 +19486,83 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34820-syracuse-ny",
+        "location": "Uniti | Syracuse, NY, US (Onsite) | Req # 7875 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34820-syracuse-ny"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34820-marcellus-ny",
+        "location": "Uniti | Marcellus, NY, US (Onsite) | Req # 7875 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34820-marcellus-ny"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34820-manlius-ny",
+        "location": "Uniti | Manlius, NY, US (Onsite) | Req # 7875 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34820-manlius-ny"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34820-pennellville-ny",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34820-pennellville-ny"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34832-ridgway-pa",
         "location": "Uniti | Ridgway, PA, US (Onsite) | Req # 7874 | Full-Time",
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/34832-ridgway-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34832-brockway-pa",
+        "location": "Uniti | Brockway, PA, US (Onsite) | Req # 7874 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34832-brockway-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34832-clarion-pa",
+        "location": "Uniti | Clarion, PA, US (Onsite) | Req # 7874 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34832-clarion-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34832-dubois-pa",
+        "location": "Uniti | DuBois, PA, US (Onsite) | Req # 7874 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34832-dubois-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34832-johnsonburg-pa",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34832-johnsonburg-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34832-port-matilda-pa",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34832-port-matilda-pa"
       },
       {
         "department": "",
@@ -19249,11 +19574,35 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34844-rural-hall-nc",
+        "location": "Uniti | Rural Hall, NC, US (Onsite) | Req # 7872 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34844-rural-hall-nc"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34844-lexington-nc",
         "location": "Uniti | Lexington, NC, US (Onsite) | Req # 7872 | Full-Time",
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/34844-lexington-nc"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34844-lewisville-nc",
+        "location": "Uniti | Lewisville, NC, US (Onsite) | Req # 7872 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34844-lewisville-nc"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34844-winston-salem-nc",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34844-winston-salem-nc"
       },
       {
         "department": "",
@@ -19265,11 +19614,35 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34850-lewisburg-pa",
+        "location": "Uniti | Lewisburg, PA, US (Onsite) | Req # 7892 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34850-lewisburg-pa"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34850-lansford-pa",
         "location": "Uniti | Lansford, PA, US (Onsite) | Req # 7892 | Full-Time",
         "posted": "",
         "title": "Outside Sales Representative",
         "url": "https://careers.uniti.com/jobs/34850-lansford-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34850-mifflinburg-pa",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34850-mifflinburg-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34850-new-columbia-pa",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34850-new-columbia-pa"
       },
       {
         "department": "",
@@ -19289,6 +19662,22 @@
       },
       {
         "department": "",
+        "id": "op-/jobs/34813-summerville-ga",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34813-summerville-ga"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34813-dalton-ga",
+        "location": "Uniti | Dalton, GA, US (Onsite) | Req # 7876 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34813-dalton-ga"
+      },
+      {
+        "department": "",
         "id": "op-/jobs/34826-jamestown-ny",
         "location": "Uniti | Jamestown, NY, US (Onsite) | Req # 7895 | Full-Time",
         "posted": "",
@@ -19297,11 +19686,27 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/34716-richmond-tx",
-        "location": "Uniti | Richmond, TX, US (Onsite) | Req # 7858 | Full-Time",
+        "id": "op-/jobs/34826-lakewood-ny",
+        "location": "Uniti | Lakewood, NY, US (Onsite) | Req # 7895 | Full-Time",
         "posted": "",
-        "title": "Construction Tech-Splicer",
-        "url": "https://careers.uniti.com/jobs/34716-richmond-tx"
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34826-lakewood-ny"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34826-frewsburg-ny",
+        "location": "Uniti | Frewsburg, NY, US (Onsite) | Req # 7895 | Full-Time",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34826-frewsburg-ny"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34826-bemus-point-ny",
+        "location": "",
+        "posted": "",
+        "title": "Outside Sales Representative",
+        "url": "https://careers.uniti.com/jobs/34826-bemus-point-ny"
       },
       {
         "department": "",
@@ -19310,6 +19715,30 @@
         "posted": "",
         "title": "Buried Drop Tech",
         "url": "https://careers.uniti.com/jobs/34615-brookville-pa"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34708-newark-oh",
+        "location": "Uniti | Newark, OH, US (Onsite) | Req # 7856 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/34708-newark-oh"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34708-columbus-oh",
+        "location": "Uniti | Columbus, OH, US (Onsite) | Req # 7856 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/34708-columbus-oh"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/34708-heath-oh",
+        "location": "Uniti | Heath, OH, US (Onsite) | Req # 7856 | Full-Time",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/34708-heath-oh"
       },
       {
         "department": "",
@@ -19401,14 +19830,6 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/34617-manchester-ia",
-        "location": "Uniti | Manchester, IA, US (Onsite) | Req # 7533 | Full-Time",
-        "posted": "",
-        "title": "Material Coordinator",
-        "url": "https://careers.uniti.com/jobs/34617-manchester-ia"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/34434-mobile-al",
         "location": "Uniti | Mobile, AL, US (Onsite) | Req # 7766 | Full-Time",
         "posted": "",
@@ -19462,14 +19883,6 @@
         "posted": "",
         "title": "Buried Drop Tech",
         "url": "https://careers.uniti.com/jobs/34382-hilliard-fl"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/34292-kittanning-pa",
-        "location": "Uniti | Kittanning, PA, US (Onsite) | Req # 7754 | Full-Time",
-        "posted": "",
-        "title": "Customer Service-Technician",
-        "url": "https://careers.uniti.com/jobs/34292-kittanning-pa"
       },
       {
         "department": "",
@@ -19529,38 +19942,6 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/33751-little-rock-ar",
-        "location": "",
-        "posted": "",
-        "title": "IT Tech Support",
-        "url": "https://careers.uniti.com/jobs/33751-little-rock-ar"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/33751-dalton-ga",
-        "location": "Uniti | Dalton, GA, US (Onsite) | Req # 7614 | Full-Time",
-        "posted": "",
-        "title": "IT Tech Support",
-        "url": "https://careers.uniti.com/jobs/33751-dalton-ga"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/33751-mobile-al",
-        "location": "Uniti | Mobile, AL, US (Onsite) | Req # 7614 | Full-Time",
-        "posted": "",
-        "title": "IT Tech Support",
-        "url": "https://careers.uniti.com/jobs/33751-mobile-al"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/33730-ny",
-        "location": "Uniti | NY, US (Onsite) | Req # 7346 | Full-Time",
-        "posted": "",
-        "title": "Assoc Principal-Digital Exp",
-        "url": "https://careers.uniti.com/jobs/33730-ny"
-      },
-      {
-        "department": "",
         "id": "op-/jobs/33701-lexington-ky",
         "location": "Uniti | Lexington, KY, US (Onsite) | Req # 7637 | Full-Time",
         "posted": "",
@@ -19569,19 +19950,35 @@
       },
       {
         "department": "",
-        "id": "op-/jobs/33582-london-ky",
-        "location": "Uniti | London, KY, US (Onsite) | Req # 7624 | Full-Time",
+        "id": "op-/jobs/33701-elizabethtown-ky",
+        "location": "",
         "posted": "",
         "title": "Field Account Executive I (Hybrid)",
-        "url": "https://careers.uniti.com/jobs/33582-london-ky"
+        "url": "https://careers.uniti.com/jobs/33701-elizabethtown-ky"
       },
       {
         "department": "",
-        "id": "op-/jobs/33567-ms",
-        "location": "Uniti | MS, US (Onsite) | Req # 7449 | Full-Time",
+        "id": "op-/jobs/33701-frankfort-ky",
+        "location": "Uniti | Frankfort, KY, US (Onsite) | Req # 7637 | Full-Time",
         "posted": "",
-        "title": "Outside Plant Engineer",
-        "url": "https://careers.uniti.com/jobs/33567-ms"
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/33701-frankfort-ky"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/33701-bowling-green-ky",
+        "location": "",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/33701-bowling-green-ky"
+      },
+      {
+        "department": "",
+        "id": "op-/jobs/33701-nicholasville-ky",
+        "location": "",
+        "posted": "",
+        "title": "Field Account Executive I (Hybrid)",
+        "url": "https://careers.uniti.com/jobs/33701-nicholasville-ky"
       },
       {
         "department": "",
@@ -19614,14 +20011,6 @@
         "posted": "",
         "title": "Buried Drop Tech",
         "url": "https://careers.uniti.com/jobs/33059-hudson-oh"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/32247-lexington-ky",
-        "location": "Uniti | Lexington, KY, US (Onsite) | Req # 7333 | Full-Time",
-        "posted": "",
-        "title": "Manager Field Sales",
-        "url": "https://careers.uniti.com/jobs/32247-lexington-ky"
       },
       {
         "department": "",
@@ -19662,22 +20051,78 @@
         "posted": "",
         "title": "Channel Manager",
         "url": "https://careers.uniti.com/jobs/31613-nc"
-      },
-      {
-        "department": "",
-        "id": "op-/jobs/31209-savannah-ga",
-        "location": "Uniti | Savannah, GA, US (Onsite) | Req # 7084 | Full-Time",
-        "posted": "",
-        "title": "Sales Director Uniti Fiber",
-        "url": "https://careers.uniti.com/jobs/31209-savannah-ga"
       }
     ],
     "via": ""
   },
   "Veris Residential": {
     "board": "page::{\"url\": \"https://www.rhoresidential.com/careers/#careers-positions\"}",
-    "fetched_on": "2026-11-17",
+    "fetched_on": "2026-11-22",
     "roles": [
+      {
+        "department": "",
+        "id": "adp-9201527081096_78",
+        "location": "Raritan, NJ",
+        "posted": "2026-11-21",
+        "title": "Porter",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081096_78&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201527081096_41",
+        "location": "Raritan, NJ",
+        "posted": "2026-11-21",
+        "title": "Maintenance Technician",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081096_41&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201527081098_4",
+        "location": "Roseland, NJ",
+        "posted": "2026-11-21",
+        "title": "Maintenance Manager",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081098_4&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201527081092_40",
+        "location": "Roseland, NJ",
+        "posted": "2026-11-21",
+        "title": "Floating Maintenance Technician",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081092_40&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201527081096_2",
+        "location": "West New York, NJ",
+        "posted": "2026-11-21",
+        "title": "Leasing Specialist",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081096_2&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201527081092_1",
+        "location": "Roseland, NJ",
+        "posted": "2026-11-21",
+        "title": "Leasing Specialist",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201527081092_1&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201524410984_120",
+        "location": "Montvale, NJ",
+        "posted": "2026-11-18",
+        "title": "Operations Manager",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201524410984_120&lang=en_US"
+      },
+      {
+        "department": "",
+        "id": "adp-9201523488468_6",
+        "location": "Jersey City, NJ",
+        "posted": "2026-11-18",
+        "title": "Maintenance Technician",
+        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201523488468_6&lang=en_US"
+      },
       {
         "department": "",
         "id": "adp-9201524410984_80",
@@ -19749,46 +20194,6 @@
         "posted": "2026-10-29",
         "title": "Leasing Specialist",
         "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512915960_75&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201512924519_49",
-        "location": "Montvale, NJ",
-        "posted": "2026-10-29",
-        "title": "Operations Manager",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512924519_49&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201512915960_38",
-        "location": "Jersey City, NJ",
-        "posted": "2026-10-29",
-        "title": "Maintenance Technician",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512915960_38&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201512916022_9",
-        "location": "Roseland, NJ",
-        "posted": "2026-10-29",
-        "title": "Floating Maintenance Manager",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512916022_9&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201512924519_1",
-        "location": "Roseland, NJ",
-        "posted": "2026-10-29",
-        "title": "Floating Director Operations",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512924519_1&lang=en_US"
-      },
-      {
-        "department": "",
-        "id": "adp-9201512915960_1",
-        "location": "East Boston, MA",
-        "posted": "2026-10-29",
-        "title": "Maintenance Technician",
-        "url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003&jobId=9201512915960_1&lang=en_US"
       },
       {
         "department": "",
