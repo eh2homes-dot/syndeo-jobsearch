@@ -11,6 +11,7 @@ Cecilian Partners,https://www.cecilianpartners.com/careers,the careers page does
 Rocket Companies,https://careers.rocket.com/us/en/search-results,the careers page doesn't load (HTTP 403; in a browser: the site refused the browser (HTTP 403))
 LeaseLock,https://www.leaselock.com/careers,the careers page doesn't load (HTTP 404; in a browser: not found)
 Mason,https://www.thisismason.com,on hold: no job board; LinkedIn page for thisismason.com unknown - need URL from Evan (many unrelated 'Mason' companies)
+Lineage,https://www.lineagehq.com/careers,"no jobs were found on the careers page, even after running its scripts - if the company is hiring, use the job board's link instead"
 PropertyManagement.com,https://www.propertymanagement.com/careers,on hold: company identity unconfirmed 2026-09-24 - waiting on Evan
 Accolade,https://www.accoladehq.com/careers,the careers page doesn't load (HTTP 429 rate limited (waited 15s); in a browser: the site refused the browser (HTTP 429))
 Peek,https://www.peek.us/careers,the careers page doesn't load (HTTP 404; in a browser: not found)

@@ -1,0 +1,36 @@
+## Now hiring
+
+_95 new leadership, GTM & sales, and product & engineering roles this week at 22 companies across proptech and scattered site rental operations._
+
+**GTM & Sales**
+
+- **Property Meld**: [Director of Marketing](https://careers.propertymeld.com/jobs/741081-director-of-marketing), [Customer Success Manager](https://careers.propertymeld.com/jobs/741076-customer-success-manager)
+- **Arcadia**: [Senior Director, Customer Success](https://ats.rippling.com/arcadiacareers/jobs/300be7be-f48e-464d-83e4-99db9b8fa957)
+- **Flyhomes**: [Wholesale Sales Manager](https://jobs.fifthwall.com/companies/flyhomes/jobs/100309707-100309707-wholesale-sales-manager)
+- **Sun King**: [After Sales Manager, West & Central Africa](https://sunking.pinpointhq.com/en/postings/29e1b169-d61b-420c-b343-0d0a6972f2fe)
+- **Pirros**: [Business Development Representative](https://www.ycombinator.com/companies/pirros/jobs/xjIutmu-business-development-representative)
+- **Point**: [Sales Manager](https://point.com/hiring?gh_jid=8956860002)
+- **Alarm.com**: [Marketing Associate](https://job-boards.greenhouse.io/alarmcom/jobs/8938442002)
+- **Envoy**: [Mid Market Customer Success Manager](https://jobs.ashbyhq.com/Envoy/da709253-d2f0-400d-ae6c-0b92432e3cfc), [Scale Customer Success Manager](https://jobs.ashbyhq.com/Envoy/55d31732-187d-484f-af7f-f6caae91a92f)
+
+**Product & Engineering**
+
+- **Pirros**: [Member of Technical Staff – Product Engineer](https://www.ycombinator.com/companies/pirros/jobs/Sxt60y4-member-of-technical-staff-product-engineer), [Forward Deployment Architect – AEC](https://www.ycombinator.com/companies/pirros/jobs/466u2HW-forward-deployment-architect-aec)
+- **Loft**: [Senior AI Engineer](https://loft.teamtailor.com/jobs/6596760-senior-ai-engineer), [Software Engineer | Back-End | Remote Work](https://loft.teamtailor.com/jobs/7014637-software-engineer-back-end-remote-work)
+- **Zillow Group**: [Director, Software Engineering, Big Data](https://proptechtalent.org/companies/zillow/jobs/100498062-100498062-director-software-engineering-big-data), [Principal Product Manager, Workflow Automation](https://proptechtalent.org/companies/zillow/jobs/100130076-100130076-principal-product-manager-workflow-automation)
+- **Point**: [Senior Analytics Engineer - Marketing](https://point.com/hiring?gh_jid=8945862002), [Senior Data Scientist - Marketing](https://point.com/hiring?gh_jid=8952385002)
+- **Compass**: [Director, Security Engineering](https://www.compass.com/careers?gh_jid=8393009), [Senior Staff Technical Program Manager](https://www.compass.com/careers?gh_jid=8406241)
+
+**Seats filled**
+
+_Senior roles that came down this week - a likely sign of a hire._
+
+- **VP, Product**, Second Nature
+- **Director of Business Development, Listings/Digital Solutions - Zonda - Jacksonville, FL**, CoStar Group
+- **Director of Business Development, Listings/Digital Solutions - Zonda - Minneapolis, MN**, CoStar Group
+- **Director, Enterprise Communications**, Compass
+- **Director of Agent Growth**, Orchard
+- **Director of Agent Growth**, Orchard
+- **Director of Agent Growth**, Orchard
+- **Director of Agent Growth**, Orchard
+- **Product Marketing Director**, RealPage
