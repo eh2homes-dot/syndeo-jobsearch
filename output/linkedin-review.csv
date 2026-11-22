@@ -60,7 +60,9 @@ add to list,Better.com,https://www.linkedin.com/company/betterdotcom/,,homepage 
 add to list,Betterbot,https://www.linkedin.com/company/betterbot/,,homepage (the site describes itself),,https://betterbot.com,Weekly,2026-11-15
 add to list,Bilt Rewards,https://www.linkedin.com/company/biltrewards/,,homepage footer,,https://www.biltrewards.com,Weekly,2026-11-15
 add to list,Blend Labs,https://www.linkedin.com/company/blend-/,,homepage (the site describes itself),,https://www.blend.com,Weekly,2026-11-15
+add to list,Bluerock Homes Trust,https://www.linkedin.com/company/bluerock-real-estate/,,homepage footer,,https://bluerock.com/bluerock-homes-trust/,OpCo,2026-11-22
 add to list,Boom,https://www.linkedin.com/company/boom-pay/,,homepage footer,,https://www.boompay.app,Weekly,2026-11-15
+add to list,Bridge Investment Group (Bridge Homes),https://www.linkedin.com/company/bridge-investment-group-holdings/,,homepage (the site describes itself),,https://www.bridgeig.com/,OpCo,2026-11-22
 add to list,Bright MLS,https://www.linkedin.com/company/brightmls/,,homepage (the site describes itself),,https://www.brightmls.com,Weekly,2026-11-15
 add to list,Brynson,https://www.linkedin.com/company/brynson/,,homepage (the site describes itself),,https://www.brynson.com,Weekly,2026-11-15
 add to list,Buildium (RealPage),https://www.linkedin.com/company/buildium-llc/,,homepage footer,,https://www.buildium.com,Weekly,2026-11-15
@@ -133,9 +135,11 @@ add to list,Pirros,https://www.linkedin.com/company/pirros/,,homepage (the site 
 add to list,Place,https://www.linkedin.com/company/placeinc/,,homepage footer,,https://place.com,Weekly,2026-11-15
 add to list,Placer.ai,https://www.linkedin.com/company/placer/,,homepage (the site describes itself),,https://www.placer.ai,Weekly,2026-11-15
 add to list,PointCentral,https://www.linkedin.com/company/pointcentral/,,homepage (the site describes itself),,https://www.pointcentral.com,Weekly,2026-11-15
+add to list,Pretium Partners,https://www.linkedin.com/company/pretium-partners-llc/,,homepage (the site describes itself),,https://pretium.com/,OpCo,2026-11-22
 add to list,Procore Technologies,https://www.linkedin.com/company/procore-technologies/,,homepage (the site describes itself),,https://www.procore.com,Weekly,2026-11-15
 add to list,Property Meld,https://www.linkedin.com/company/property-meld/,,homepage footer,,https://propertymeld.com,Weekly,2026-11-15
 add to list,PropertyManagement.com,https://www.linkedin.com/company/propertymanagement-com/,,homepage (the site describes itself),,https://www.propertymanagement.com,Weekly,2026-11-15
+add to list,Quinn Residences,https://www.linkedin.com/company/quinn-residences/,,homepage footer,,https://live-quinn.com/,OpCo,2026-11-22
 add to list,Redstone,https://www.linkedin.com/company/redstone-commercial-group/,,homepage (the site describes itself),,https://www.redstonevt.com,OpCo,2026-11-15
 add to list,Rentec Direct,https://www.linkedin.com/company/rentec-direct/,,homepage (the site describes itself),,https://www.rentecdirect.com,Weekly,2026-11-15
 add to list,RentSpree,https://www.linkedin.com/company/rentspree/,,homepage (the site describes itself),,https://www.rentspree.com,Weekly,2026-11-15
@@ -158,17 +162,18 @@ add to list,Tul,https://www.linkedin.com/company/soytul/,,homepage footer,,https
 add to list,Turntide Technologies,https://www.linkedin.com/company/turntide/,,homepage (the site describes itself),,https://turntide.com,Weekly,2026-11-15
 add to list,Two Dots,https://www.linkedin.com/company/two-dots-financial/,,homepage (the site describes itself),,https://www.twodots.com,Weekly,2026-11-15
 add to list,Uniti Group,https://www.linkedin.com/company/uniti-fiber/,,homepage footer,,https://www.uniti.com,OpCo,2026-11-15
+add to list,Urban Moment Development,https://www.linkedin.com/company/urban-moment/,,homepage footer,,https://urbanmoment.com/,OpCo,2026-11-22
 add to list,Veris Residential,https://www.linkedin.com/company/verisresidential/,,homepage footer,,https://www.verisresidential.com,OpCo,2026-11-15
 add to list,WeWork,https://www.linkedin.com/company/wework/,,homepage (the site describes itself),,https://www.wework.com,OpCo,2026-11-15
 add to list,Zoneomics,https://www.linkedin.com/company/zoneomics/,,homepage header,,https://www.zoneomics.com,Weekly,2026-11-15
-couldn't check,Accolade,,homepage: HTTP 429 rate limited (waited 10s); careers page: HTTP 429 rate limited (waited 10s),,,https://www.accoladehq.com,Weekly,2026-11-15
-couldn't check,Evergreen Live,,no website or careers page in the list,,,,OpCo,2026-11-15
-couldn't check,Key Renter Property Managment,,careers page: HTTP 520,,,,OpCo,2026-11-15
-couldn't check,NARPM (National Association of Residential Property Managers) Job Board,,no website or careers page in the list,,,,OpCo,2026-11-15
-couldn't check,Realtor.com (Move Inc.),,homepage: HTTP 429 rate limited (waited 10s); careers page: HTTP 403,,,https://www.realtor.com,Weekly,2026-11-15
-couldn't check,Redfin,,homepage: HTTP 405; careers page: HTTP 403,,,https://www.redfin.com,Weekly,2026-11-15
-couldn't check,Rocket Companies,,homepage: HTTP 403; careers page: HTTP 403,,,https://www.rocketcompanies.com,Weekly,2026-11-15
-couldn't check,VTS,,homepage: HTTP 403 bot protection (Cloudflare); careers page: HTTP 403 bot protection (Cloudflare),,,https://www.vts.com,Weekly,2026-11-15
+couldn't check,Accolade,,homepage: HTTP 429 rate limited (waited 10s); careers page: HTTP 429 rate limited (waited 10s),,,https://www.accoladehq.com,Weekly,2026-11-22
+couldn't check,Evergreen Live,,no website or careers page in the list,,,,OpCo,2026-11-22
+couldn't check,Key Renter Property Managment,,careers page: HTTP 520,,,,OpCo,2026-11-22
+couldn't check,NARPM (National Association of Residential Property Managers) Job Board,,no website or careers page in the list,,,,OpCo,2026-11-22
+couldn't check,Realtor.com (Move Inc.),,homepage: HTTP 429 rate limited (waited 10s); careers page: HTTP 403,,,https://www.realtor.com,Weekly,2026-11-22
+couldn't check,Redfin,,homepage: HTTP 405; careers page: HTTP 403,,,https://www.redfin.com,Weekly,2026-11-22
+couldn't check,Rocket Companies,,homepage: HTTP 403; careers page: HTTP 403,,,https://www.rocketcompanies.com,Weekly,2026-11-22
+couldn't check,VTS,,homepage: HTTP 403 bot protection (Cloudflare); careers page: HTTP 403 bot protection (Cloudflare),,,https://www.vts.com,Weekly,2026-11-22
 not found,Alexander & Baldwin,,,,,https://www.alexanderbaldwin.com,OpCo,2026-11-15
 not found,Atria Senior Living,,,,,https://www.atriaseniorliving.com,OpCo,2026-11-15
 not found,Cadre,,,,,https://www.cadre.com,Weekly,2026-11-15
@@ -178,19 +183,24 @@ not found,Doma,,,,,https://www.doma.com,Weekly,2026-11-15
 not found,FirstKey Homes,,,,,https://www.firstkeyhomes.com,OpCo,2026-11-15
 not found,Footprint,,,,,https://www.onefootprint.com,Weekly,2026-11-15
 not found,GetCovered,,,,,https://getcovered.io,Weekly,2026-11-15
+not found,HALO Strategies,,,,,https://haloprogram.com/,OpCo,2026-11-22
 not found,HelloData,,,,,https://www.hellodata.ai,Weekly,2026-11-15
 not found,HiredHelpr,,,,,https://www.hiredhelpr.com,Weekly,2026-11-15
+not found,Mesa Residential,,,,,https://www.mesaresi.com/,OpCo,2026-11-22
 not found,Mountain Property Management,,,,,https://jacksonholeproperties.net,OpCo,2026-11-15
 not found,Northpoint Asset Manamgement,,,,,,OpCo,2026-11-15
 not found,Nutiliti,,,,,https://www.nutiliti.com,Weekly,2026-11-15
 not found,Oakbrook Corporation,,,,,https://www.oakbrookcorp.com,OpCo,2026-11-15
 not found,Obie,,,,,https://www.obieinsurance.com,Weekly,2026-11-15
+not found,One Stop Housing,,,,,https://onestophousing.com/,OpCo,2026-11-22
+not found,Pacific Oak Residential (now Second Avenue),,,,,https://www.secondavenue.com/,OpCo,2026-11-22
 not found,Picerne Real Estate Group,,,,,https://www.picerne.com,OpCo,2026-11-15
 not found,PURE HomeRiver Group,,,,,https://purehomeriver.com,Weekly + OpCo,2026-11-15
 not found,Reffie,,,,,https://reffie.com,Weekly,2026-11-15
 not found,Rhome Property Management,,,,,,OpCo,2026-11-15
 not found,Sidewalk Infrastructure Partners,,,,,https://www.sidewalkinfra.com,Weekly,2026-11-15
 not found,Updater,,,,,https://www.updater.com,Weekly,2026-11-15
+not found,VineBrook Homes Trust,,,,,https://vinebrookhomes.com/,OpCo,2026-11-22
 not found,VLTED,,,,,https://www.vlted.com,Weekly,2026-11-15
 not found,Willow Wealth (formerly Yieldstreet),,,,,https://www.yieldstreet.com,Weekly,2026-11-15
 not found,Worksmith,,,,,https://www.worksmith.com,Weekly,2026-11-15

@@ -3,7 +3,7 @@
     "company": "Accolade",
     "website": "https://www.accoladehq.com",
     "careers_url": "https://www.accoladehq.com/careers",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -337,6 +337,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "bluerockhomestrust": {
+    "company": "Bluerock Homes Trust",
+    "website": "https://bluerock.com/bluerock-homes-trust/",
+    "careers_url": "https://bluerock.com/company/careers-and-opportunities/",
+    "checked": "2026-11-22",
+    "url": "https://www.linkedin.com/company/bluerock-real-estate/",
+    "kind": "company",
+    "found_on": "homepage footer",
+    "page": "https://bluerock.com/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-22"
+  },
   "boom": {
     "company": "Boom",
     "website": "https://www.boompay.app",
@@ -368,6 +382,20 @@
     ],
     "error": "",
     "first_found": "2026-11-15"
+  },
+  "bridgeinvestmentgroup": {
+    "company": "Bridge Investment Group (Bridge Homes)",
+    "website": "https://www.bridgeig.com/",
+    "careers_url": "https://www.bridgeig.com/careers/",
+    "checked": "2026-11-22",
+    "url": "https://www.linkedin.com/company/bridge-investment-group-holdings/",
+    "kind": "company",
+    "found_on": "homepage (the site describes itself)",
+    "page": "https://www.bridgeig.com/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-22"
   },
   "brightmls": {
     "company": "Bright MLS",
@@ -791,7 +819,7 @@
     "company": "Evergreen Live",
     "website": "",
     "careers_url": "",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -1054,6 +1082,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "halostrategies": {
+    "company": "HALO Strategies",
+    "website": "https://haloprogram.com/",
+    "careers_url": "",
+    "checked": "2026-11-22",
+    "url": "",
+    "kind": "",
+    "found_on": "",
+    "page": "",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": ""
+  },
   "haven": {
     "company": "Haven",
     "website": "https://www.usehaven.ai",
@@ -1260,7 +1302,7 @@
     "company": "Key Renter Property Managment",
     "website": "",
     "careers_url": "https://keyrenter.com/",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -1562,6 +1604,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "mesaresidential": {
+    "company": "Mesa Residential",
+    "website": "https://www.mesaresi.com/",
+    "careers_url": "",
+    "checked": "2026-11-22",
+    "url": "",
+    "kind": "",
+    "found_on": "",
+    "page": "",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": ""
+  },
   "mews": {
     "company": "Mews",
     "website": "https://www.mews.com",
@@ -1622,7 +1678,7 @@
     "company": "NARPM (National Association of Residential Property Managers) Job Board",
     "website": "",
     "careers_url": "",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -1776,6 +1832,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "onestophousing": {
+    "company": "One Stop Housing",
+    "website": "https://onestophousing.com/",
+    "careers_url": "https://onestophousing.com/join-our-crew",
+    "checked": "2026-11-22",
+    "url": "",
+    "kind": "",
+    "found_on": "",
+    "page": "",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": ""
+  },
   "opcity": {
     "company": "Opcity (Realtor.com)",
     "website": "https://www.opcity.com",
@@ -1879,6 +1949,20 @@
     "checks": [],
     "error": "",
     "first_found": "2026-11-15"
+  },
+  "pacificoakresidential": {
+    "company": "Pacific Oak Residential (now Second Avenue)",
+    "website": "https://www.secondavenue.com/",
+    "careers_url": "https://www.secondavenue.com/careers",
+    "checked": "2026-11-22",
+    "url": "",
+    "kind": "",
+    "found_on": "",
+    "page": "",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": ""
   },
   "pearlx": {
     "company": "PearlX",
@@ -2033,6 +2117,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "pretiumpartners": {
+    "company": "Pretium Partners",
+    "website": "https://pretium.com/",
+    "careers_url": "https://pretium.com/careers/",
+    "checked": "2026-11-22",
+    "url": "https://www.linkedin.com/company/pretium-partners-llc/",
+    "kind": "company",
+    "found_on": "homepage (the site describes itself)",
+    "page": "https://pretium.com/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-22"
+  },
   "procoretechnologies": {
     "company": "Procore Technologies",
     "website": "https://www.procore.com",
@@ -2121,6 +2219,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "quinnresidences": {
+    "company": "Quinn Residences",
+    "website": "https://live-quinn.com/",
+    "careers_url": "https://live-quinn.com/job/",
+    "checked": "2026-11-22",
+    "url": "https://www.linkedin.com/company/quinn-residences/",
+    "kind": "company",
+    "found_on": "homepage footer",
+    "page": "https://live-quinn.com/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-22"
+  },
   "realpage": {
     "company": "RealPage",
     "website": "https://www.realpage.com",
@@ -2155,7 +2267,7 @@
     "company": "Realtor.com (Move Inc.)",
     "website": "https://www.realtor.com",
     "careers_url": "https://www.move.com/careers",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -2187,7 +2299,7 @@
     "company": "Redfin",
     "website": "https://www.redfin.com",
     "careers_url": "https://careers.rocket.com/us/en/search-results?qkcompany=Redfin%20Corporation",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -2347,7 +2459,7 @@
     "company": "Rocket Companies",
     "website": "https://www.rocketcompanies.com",
     "careers_url": "https://careers.rocket.com/us/en/search-results",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
@@ -2706,6 +2818,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "urbanmomentdevelopment": {
+    "company": "Urban Moment Development",
+    "website": "https://urbanmoment.com/",
+    "careers_url": "",
+    "checked": "2026-11-22",
+    "url": "https://www.linkedin.com/company/urban-moment/",
+    "kind": "company",
+    "found_on": "homepage footer",
+    "page": "https://urbanmoment.com/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-22"
+  },
   "verisresidential": {
     "company": "Veris Residential",
     "website": "https://www.verisresidential.com",
@@ -2738,6 +2864,20 @@
     "error": "",
     "first_found": "2026-11-15"
   },
+  "vinebrookhomestrust": {
+    "company": "VineBrook Homes Trust",
+    "website": "https://vinebrookhomes.com/",
+    "careers_url": "",
+    "checked": "2026-11-22",
+    "url": "",
+    "kind": "",
+    "found_on": "",
+    "page": "",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": ""
+  },
   "vlted": {
     "company": "VLTED",
     "website": "https://www.vlted.com",
@@ -2756,7 +2896,7 @@
     "company": "VTS",
     "website": "https://www.vts.com",
     "careers_url": "https://www.vts.com/careers",
-    "checked": "2026-11-15",
+    "checked": "2026-11-22",
     "url": "",
     "kind": "",
     "found_on": "",
