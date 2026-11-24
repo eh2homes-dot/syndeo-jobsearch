@@ -1,12 +1,12 @@
-# Property operations job search — week of 2026-11-22
+# Property operations job search — week of 2026-11-24
 
-176 matching roles across 28 companies. 42 of 57 companies read from their Column D.
+174 matching roles across 27 companies. 41 of 59 companies read from their Column D.
 
 | Segment | Companies on the list | Hiring in scope | Matching roles | New | Closed |
 |---|---|---|---|---|---|
-| Scattered-site & SFR operators | 32 | 21 | 149 | 16 | 9 |
+| Scattered-site & SFR operators | 33 | 20 | 147 | 4 | 3 |
 | Multifamily & residential managers | 9 | 4 | 17 | 0 | 0 |
-| Other real estate (REITs, flex space, senior living) | 16 | 3 | 10 | 1 | 0 |
+| Other real estate (REITs, flex space, senior living) | 17 | 3 | 10 | 0 | 0 |
 
 Company list read from: **live Google Sheet (OpCo tab)**.
 
@@ -14,59 +14,52 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 
 ## Needs your attention
 
-### Needs a job-board link in Column D (15)
+### Needs a job-board link in Column D (18)
 
 *Fix: open the company's careers page, click any job, and paste the address it lands on into Column D (drop the part that names the specific job). If the jobs are listed on the company's own page, that page's address works too.*
 
 - **Atria Senior Living** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 - **Bluerock Homes Trust** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
+- **Bridge Investment Group (Bridge Homes)** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 - **Cohen-Esrey Communities** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 - **Easterly Government Properties** — the Column D page points at a job board that isn't there: trinethire:576888-easterly-government-properties (the trinethire job board opened, but no postings were recognised on it and it doesn't say there are none - its layout may have changed)
 - **Evergreen Live** — Column D is empty
 - **FirstKey Homes** — Column D points at a job board that isn't there: Greenhouse has no board named 'firstkeyhomes' (it may have moved)
 - **HALO Strategies** — Column D is empty
-- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 520)
+- **Harbert Management Corporation** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
+- **Key Renter Property Managment** — the Column D page doesn't load (HTTP 202)
 - **Mesa Residential** — Column D is empty
 - **Mountain Property Management** — the Column D page doesn't load (HTTP 404; in a browser: not found)
 - **NARPM (National Association of Residential Property Managers) Job Board** — Column D is empty
 - **One Stop Housing** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
+- **ResiHome** — Column D is empty
 - **Rhome Property Management** — no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead
 - **Urban Moment Development** — Column D is empty
 - **VineBrook Homes Trust** — Column D is empty
 
-### Failed this week (7)
+### Failed this week (10)
 
 *Reading went wrong. Last week's roles are carried forward where there were any, and these are left out of new/closed so a failure never reads as a hire.*
 
-- **BH Management Services** — the job board behind the Column D page didn't answer: workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s))
+- **AMH (American Homes 4 Rent)** — the job board behind the Column D page didn't answer: workday:amh (HTTP 429 rate limited (waited 15s)); workday:amh (HTTP 429 rate limited (waited 15s))
+- **Atlas Real Estate** — the Column D page doesn't load (HTTP 202)
+- **BH Management Services** — the job board behind the Column D page didn't answer: workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s)); workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s))
 - **Greystar** — HTTP 429 rate limited (waited 15s)
+- **Highwoods Properties** — the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CERT_DATE_INVALID at https://www.highwoods.com/careers))
 - **Main Street Renewal** — HTTP 429 rate limited (waited 15s)
 - **Maymont Homes** — HTTP 429 rate limited (waited 15s)
 - **Picerne Real Estate Group** — the Column D page doesn't load (HTTP 403 bot protection (Cloudflare); in a browser: the site refused the browser (HTTP 403))
 - **Tricon Residential** — HTTP 429 rate limited (waited 15s)
 - **WeWork** — HTTP 429 rate limited (waited 15s)
 
-### Confirm these are the right companies — once (4)
-
-*First time each of these Column D links was read. Open the link and check the jobs belong to this company. If one is wrong, fix its Column D; nothing else is needed. Each is listed only once, and again only if its Column D changes.*
-
-- **Bridge Investment Group (Bridge Homes)** — [www.bridgeig.com/careers/](https://www.bridgeig.com/careers/) · 8 jobs, e.g. Legal Operations Manager (Salt Lake City Office, Sandy, Utah); Analyst - Fund Accountant (Salt Lake City Office, Sandy, Utah); Director - Asset Management (Salt Lake City Office, Sandy, Utah)
-- **Pacific Oak Residential (now Second Avenue)** — [www.secondavenue.com/careers](https://www.secondavenue.com/careers) · 6 jobs, e.g. Renovations, Turns, and Maintenance Coordinator (Tampa, FL); Licensed Leasing Agent - 1099 (US); Manager - Resident Retention (Tampa, FL)
-- **Pretium Partners** — [pretium.com/careers/](https://pretium.com/careers/) · 3 jobs, e.g. New Origination Trader - Analyst (New York, New York and/or Charlotte, North Carolina); Office Coordinator/ Executive Assistant (Miami) - Pretium Enterprise Services (Miami, Fl); Real Estate Equity - Associate (New York, New York)
-- **Quinn Residences** — [live-quinn.com/job/](https://live-quinn.com/job/) · 5 jobs, e.g. Maintenance Technician (Gainesville, GA); Leasing Manager (Greenville, SC); Portfolio Manager (Bluffton, SC)
-
-### Read through the page's job board — paste these into Column D (19)
+### Read through the page's job board — paste these into Column D (15)
 
 *Column D is a careers page, and the jobs were read from the job board that page loads. That works, but the board's own link is the sturdier thing to keep in Column D: it keeps working if the careers page is redesigned.*
 
-- **AMH (American Homes 4 Rent)** — workday: amh: https://amh.wd12.myworkdayjobs.com/External_Careers
-- **Atlas Real Estate** — paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081: https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081
-- **Bridge Investment Group (Bridge Homes)** — workday: bridgeigp: https://bridgeigp.wd1.myworkdayjobs.com/BIGC
 - **Doorstead** — breezy: jobs.doorstead.com: https://jobs.doorstead.com
 - **Evergreen Residential** — greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp
 - **Evernest Property Management** — lever: evernest: https://jobs.lever.co/evernest
 - **Flock Homes** — greenhouse: flockhomes: https://job-boards.greenhouse.io/flockhomes
-- **Highwoods Properties** — ukg: HIG1001HIW: https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/
 - **Industrious** — ashby: industrious: https://jobs.ashbyhq.com/industrious
 - **Kasa Living** — greenhouse: kasa: https://job-boards.greenhouse.io/kasa
 - **Mynd** — greenhouse: roofstock: https://job-boards.greenhouse.io/roofstock
@@ -89,54 +82,32 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 
 - Atlas Real Estate, Evergreen Live, Evergreen Residential, Evernest Property Management, Key Renter Property Managment, NARPM (National Association of Residential Property Managers) Job Board, Northpoint Asset Manamgement, PMI, PURE Homeriver Group, Real Property Management, Rhome Property Management
 
-## New this week (17)
+## New this week (4)
 
-### Scattered-site & SFR operators (16)
+### Scattered-site & SFR operators (4)
 
-- **AMH (American Homes 4 Rent)** · Maintenance, Turns & Construction · [Construction Project Manager I](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Reno-NV/Construction-Project-Manager-I_JR102451) — Reno, NV
-- **AMH (American Homes 4 Rent)** · Leasing · [Leasing Agent](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Mason-OH/Leasing-Agent_JR102450) — Mason, OH
-- **AMH (American Homes 4 Rent)** · Technology & Data · [Product Engineering Architect](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Draper-UT/Product-Engineering-Architect_JR102446) — Draper, UT
-- **AMH (American Homes 4 Rent)** · Technology & Data · [Software Engineer II](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Draper-UT/Software-Engineer-II_JR102447) — Draper, UT
-- **Invitation Homes** · Technology & Data · [Engineer IV, Software - On-site](https://careers.invitationhomes.com/engineer-iv-software-on-site/job/P1-7688069-0)
-- **Invitation Homes** · Maintenance, Turns & Construction · [Supervisor, Maintenance- $1,500 Sign On Bonus Included](https://careers.invitationhomes.com/supervisor-maintenance-1500-sign-on-bonus-included/job/P1-7677915-0)
-- **Northpoint Asset Manamgement** · Property Management · [Property Manager - Dallas](https://ats.rippling.com/northpoint-asset-management/jobs/4268ddc0-eae6-4626-9753-835a4f704ab0) — Remote (Dallas, Texas, US)
-- **Northpoint Asset Manamgement** · Property Management · [Property Manager - Tyler](https://ats.rippling.com/northpoint-asset-management/jobs/516bb2bf-37ca-47db-938b-f460833ce166) — Remote (Tyler, Texas, US)
-- **PMI** · Leadership · [President of Multi Family Property Management](https://property-mangement-inc-careers.careerplug.com/jobs/3487621?embed=1)
-- **PMI** · Property Management · [Property Manager](https://property-mangement-inc-careers.careerplug.com/jobs/3705216?embed=1)
-- **Progress Residential** · Asset Management & Investments · [Acquisitions Associate - BTR](https://jobs.rentprogress.com/acquisitions-associate-btr/job/1BD4EAB557DA47BA19C881EDEC513F9E)
-- **Progress Residential** · Technology & Data · [Mobile App Developer](https://jobs.rentprogress.com/mobile-app-developer/job/F9124FAF86BCF7647B16BA92C15B2D3D)
-- **Progress Residential** · Technology & Data · [Sr. Software Engineer](https://jobs.rentprogress.com/sr-software-engineer/job/00A0C89BC8F1729C1C31BC79134BCC2A)
-- **Progress Residential** · Technology & Data · [Website Engineer](https://jobs.rentprogress.com/website-engineer/job/DBEA92A3071D60F8BF452143315B0AA3)
-- **Real Property Management** · Property Management · [Property Manager Supervisor](https://jobs.realpropertymgt.com/property-manager-supervisor/job/AEE9776EFA8AF673B21BBD4E01737B13)
-- **Renters Warehouse** · Growth & Sales · [Inside Sales Representative](https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da&jobId=93875607_5&lang=en_US) — Minneapolis, MN
-
-### Other real estate (REITs, flex space, senior living) (1)
-
-- **Industrious** · Leadership · [General Manager](https://jobs.ashbyhq.com/industrious/dfde070e-d2c9-4d0e-8da2-d4cf8641b906) — Atlanta - 675 Ponce de Leon Ave NE (Ponce City Market)
+- **Evernest Property Management** · Operations · [Operations Manager](https://jobs.lever.co/evernest/d68dc95a-750c-4d62-b59a-2d960bfac45f) — Columbus, OH
+- **Evernest Property Management** · Property Management · [Senior Property Manager](https://jobs.lever.co/evernest/d74dc727-7840-4c05-abbe-c73f37ab8eed) — Columbus, OH
+- **Invitation Homes** · Technology & Data · [Principal Product Manager](https://careers.invitationhomes.com/principal-product-manager/job/P1-7632705-0)
+- **Invitation Homes** · Technology & Data · [Software Engineer IV - Yardi - On-Site](https://careers.invitationhomes.com/software-engineer-iv-yardi-on-site/job/P1-7758505-0)
 
 
-## Recently closed (9)
+## Recently closed (3)
 
 *Open last week, gone now — the "recently hired" signal. Closed usually means filled, but can mean pulled. Companies that failed this week are left out.*
 
-### Scattered-site & SFR operators (9)
+### Scattered-site & SFR operators (3)
 
-- **AMH (American Homes 4 Rent)** · VP - National Leasing — Las Vegas, NV
-- **Invitation Homes** · Leasing Specialist
-- **Invitation Homes** · National Manager, Rehab & Turn
-- **Invitation Homes** · Regional Technology Analyst
-- **Invitation Homes** · Renewal Specialist
-- **Invitation Homes** · Supervisor, Maintenance
-- **PMI** · Property Manager
-- **PURE Homeriver Group** · Inside Client Advisor II — Remote
-- **Renters Warehouse** · Leasing Agent — Minneapolis, MN
+- **Evernest Property Management** · Property Manager — Houston, TX
+- **Invitation Homes** · Leasing Manager
+- **Mynd** · Manager, Resident Experience (Delinquency & Eviction Specialist) — Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States
 
 
 ## All open roles
 
-### Scattered-site & SFR operators (149)
+### Scattered-site & SFR operators (147)
 
-#### AMH (American Homes 4 Rent) (30)
+#### AMH (American Homes 4 Rent) (30) — *carried forward from 2026-11-22*
 - Asset Management & Investments · [Acquisitions and Dispositions Analyst](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Acquisitions-and-Dispositions-Analyst_JR102406) — Las Vegas, NV
 - Asset Management & Investments · [Land Acquisition Analyst](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Phoenix-AZ/Land-Acquisition-Analyst_JR102227) — Phoenix, AZ
 - Asset Management & Investments · [Pricing Manager](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Revenue-Manager_JR101497-1) — Las Vegas, NV
@@ -161,7 +132,7 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 - Technology & Data · [Senior Security Engineer](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Las-Vegas-NV/Senior-Security-Engineer_JR102307) — Las Vegas, NV
 - Technology & Data · [Software Engineer II](https://amh.wd12.myworkdayjobs.com/External_Careers/job/Draper-UT/Software-Engineer-II_JR102447) — Draper, UT
 
-#### Atlas Real Estate (7)
+#### Atlas Real Estate (7) — *carried forward from 2026-11-22*
 - Growth & Sales · [Business Development Manager](https://recruiting.paylocity.com/Recruiting/Jobs/Details/4392106) **(4 openings)** — Atlanta, GA, Kansas City, KS, Kansas City, MO, Las Vegas, NV
 - Leasing · [Bilingual Leasing Specialist](https://recruiting.paylocity.com/Recruiting/Jobs/Details/4580384) — Phoenix
 - Leasing · [Leasing Specialist](https://recruiting.paylocity.com/Recruiting/Jobs/Details/4123059) — Denver, CO
@@ -171,11 +142,6 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 - Finance & Accounting · [Accounting Lead](https://apply.workable.com/belong-6/j/6846974E31/) — Buenos Aires, Buenos Aires, Argentina
 - Operations · [Director of Customer Experience](https://apply.workable.com/belong-6/j/CEFAE828D9/) — Buenos Aires, Buenos Aires, Argentina
 - Operations · [Operations Manager](https://apply.workable.com/belong-6/j/2A0393C9C5/) — Buenos Aires, Buenos Aires, Argentina
-
-#### Bridge Investment Group (Bridge Homes) (3)
-- Asset Management & Investments · [Asset Manager](https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Asset-Manager_JR104853) — Salt Lake City Office, Sandy, Utah
-- Asset Management & Investments · [Associate - Investment Management](https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Associate---Asset-Management_JR104970) — Salt Lake City Office, Sandy, Utah
-- Asset Management & Investments · [Director - Asset Management](https://bridgeigp.wd1.myworkdayjobs.com/BIGC/job/Salt-Lake-City-Office-Sandy-Utah/Director---Asset-Management_JR104973) — Salt Lake City Office, Sandy, Utah
 
 #### Evergreen Residential (8)
 - Asset Management & Investments · [Analyst, SFR Asset Management](https://evergreenresi.com/careers/openings/?gh_jid=4754018005) — Dallas, TX
@@ -187,10 +153,11 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 - Maintenance, Turns & Construction · [Project Manager Construction - Pensacola, Florida](https://evergreenresi.com/careers/openings/?gh_jid=4742151005) — Pensacola, Florida
 - Technology & Data · [Director, IT Operations](https://evergreenresi.com/careers/openings/?gh_jid=4749549005) — Dallas, TX
 
-#### Evernest Property Management (5)
+#### Evernest Property Management (6)
 - Finance & Accounting · [Director of Property Accounting](https://jobs.lever.co/evernest/015b61b0-72ac-454f-81c6-9ac646c03386) **(2 openings)** — Mexico, United States
-- Property Management · [Property Manager](https://jobs.lever.co/evernest/b1118901-64e8-4d67-95dd-262f3da4630f) **(2 openings)** — Columbus, OH, Houston, TX
-- Property Management · [Senior Property Manager](https://jobs.lever.co/evernest/e257e12b-da5b-4af7-98fd-02f38c4c9f66) — Baltimore, MD
+- Operations · [Operations Manager](https://jobs.lever.co/evernest/d68dc95a-750c-4d62-b59a-2d960bfac45f) — Columbus, OH
+- Property Management · [Property Manager](https://jobs.lever.co/evernest/ee8e9229-f5f0-48a9-9c20-4c4c6616beb2) — Columbus, OH
+- Property Management · [Senior Property Manager](https://jobs.lever.co/evernest/d74dc727-7840-4c05-abbe-c73f37ab8eed) **(2 openings)** — Baltimore, MD, Columbus, OH
 
 #### Flock Homes (5)
 - Asset Management & Investments · [Asset Manager](https://job-boards.greenhouse.io/flockhomes/jobs/4753835005) — Denver
@@ -202,15 +169,16 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 #### Home365 (1)
 - Growth & Sales · [Customer Success Manager - Phoenix](https://home365.bamboohr.com/careers/218)
 
-#### Invitation Homes (12)
+#### Invitation Homes (13)
 - Asset Management & Investments · [Analyst, Asset Management](https://careers.invitationhomes.com/analyst-asset-management/job/P1-7202091-0)
 - Leadership · [VP, Data Science](https://careers.invitationhomes.com/vp-data-science/job/P1-6635896-0)
-- Leasing · [Leasing Manager](https://careers.invitationhomes.com/leasing-manager/job/P1-7637510-0)
 - Leasing · [Leasing Specialist](https://careers.invitationhomes.com/leasing-specialist/job/P1-7660263-0) **(4 openings)**
 - Maintenance, Turns & Construction · [Manager, Rehab & Turn](https://careers.invitationhomes.com/manager-rehab-turn/job/P1-7605360-0) **(2 openings)**
 - Maintenance, Turns & Construction · [Supervisor, Maintenance- $1,500 Sign On Bonus Included](https://careers.invitationhomes.com/supervisor-maintenance-1500-sign-on-bonus-included/job/P1-7677915-0)
 - Technology & Data · [Engineer IV, Software - On-site](https://careers.invitationhomes.com/engineer-iv-software-on-site/job/P1-7688069-0)
 - Technology & Data · [Manager, Engineering](https://careers.invitationhomes.com/manager-engineering/job/P1-7186374-0)
+- Technology & Data · [Principal Product Manager](https://careers.invitationhomes.com/principal-product-manager/job/P1-7632705-0)
+- Technology & Data · [Software Engineer IV - Yardi - On-Site](https://careers.invitationhomes.com/software-engineer-iv-yardi-on-site/job/P1-7758505-0)
 
 #### Main Street Renewal (4) — *carried forward from 2026-11-17*
 - Asset Management & Investments · [Analyst – Transactions Management](https://amherstgroup.wd1.myworkdayjobs.com/Amherst_Holdings_Careers/job/India/Analyst---Transactions-Management_R9150-1) — India
@@ -227,11 +195,10 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 - Property Management · [Regional Director](https://brookfield.wd5.myworkdayjobs.com/maymonthomes/job/Charleston-South-Carolina/Regional-Director_R2053480) — 4 Locations
 - Technology & Data · [Data Scientist](https://brookfield.wd5.myworkdayjobs.com/maymonthomes/job/Charleston-South-Carolina/Data-Scientist_R2053337) — Charleston, South Carolina
 
-#### Mynd (4)
+#### Mynd (3)
 - Asset Management & Investments · [Asset Manager](https://job-boards.greenhouse.io/roofstock/jobs/8558888002) — Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Las Vegas, Nevada, United States; Oakland, California, United States; Phoenix, Arizona, United States
 - Maintenance, Turns & Construction · [Pricing and Procurement Manager](https://job-boards.greenhouse.io/roofstock/jobs/8920162002) — Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States
 - Maintenance, Turns & Construction · [Team Lead, Maintenance](https://job-boards.greenhouse.io/roofstock/jobs/8936811002) — Dallas, Texas, United States
-- Property Management · [Manager, Resident Experience (Delinquency & Eviction Specialist)](https://job-boards.greenhouse.io/roofstock/jobs/8926090002) — Atlanta, Georgia, United States; Charlotte, North Carolina, United States; Dallas, Texas, United States; Houston, Texas, United States; Las Vegas, Nevada, United States; Phoenix, Arizona, United States; Tampa, Florida, United States
 
 #### Northpoint Asset Manamgement (2)
 - Property Management · [Property Manager - Dallas](https://ats.rippling.com/northpoint-asset-management/jobs/4268ddc0-eae6-4626-9753-835a4f704ab0) — Remote (Dallas, Texas, US)
@@ -346,43 +313,42 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 
 | Company | Segment | Column D | System | Status | Roles (all / matching) | Note |
 |---|---|---|---|---|---|---|
-| AMH (American Homes 4 Rent) | Scattered-site & SFR operators | [www.amh.com/careersearch](https://www.amh.com/careersearch) | page | ok | 68 / 30 | read from the job board this page embeds (workday: amh: https://amh.wd12.myworkdayjobs.com/External_Careers) |
 | Alexander & Baldwin | Other real estate (REITs, flex space, senior living) | [jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL](https://jobs.dayforcehcm.com/abhi/CANDIDATEPORTAL) | dayforce | ok | 1 / 0 |  |
-| Atlas Real Estate | Scattered-site & SFR operators | [realatlas.com/careers/#positions](https://realatlas.com/careers/#positions) | page | ok | 18 / 7 | read from the job board this page loads its jobs from (paylocity: 5e5fc082-a90b-4d93-8b73-46f77d40e081: https://recruiting.paylocity.com/recruiting/jobs/All/5e5fc082-a90b-4d93-8b73-46f77d40e081) |
 | Belong | Scattered-site & SFR operators | [apply.workable.com/belong-6](https://apply.workable.com/belong-6) | workable | ok | 4 / 3 |  |
-| Bridge Investment Group (Bridge Homes) | Scattered-site & SFR operators | [www.bridgeig.com/careers/](https://www.bridgeig.com/careers/) | page | ok | 8 / 3 | read from the job board this page links to (workday: bridgeigp: https://bridgeigp.wd1.myworkdayjobs.com/BIGC) |
 | Doorstead | Scattered-site & SFR operators | [jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI](https://jobs.doorstead.com/?_gl=1*1eutnse*_gcl_au*MTI1MTQ3NTIzMC4xNzkxMzE1NzYx*_ga*NTAwNTE0ODI1LjE3OTEzMTU3NjE.*_ga_3D97ER7HGT*czE3OTEzMTU3NjEkbzEkZzAkdDE3OTEzMTU3NjEkajYwJGwwJGgw) | page | ok | 73 / 0 | read from the job board this page loads its jobs from (breezy: jobs.doorstead.com: https://jobs.doorstead.com) |
 | EPR Properties | Other real estate (REITs, flex space, senior living) | [eprproperties.bamboohr.com/careers](https://eprproperties.bamboohr.com/careers) | bamboohr | ok | 1 / 0 |  |
 | EastGroup Properties | Other real estate (REITs, flex space, senior living) | [phx.us-west.paycomonline.net/v4/ats/web.php/p](https://phx.us-west.paycomonline.net/v4/ats/web.php/portal/FF95F1D079994D46C22FCB801D0A2C8F/career-page) | paycom | ok | 2 / 0 | read by opening the paycom job board in a browser |
-| Evergreen Residential | Scattered-site & SFR operators | [evergreenresi.com/careers/openings/](https://evergreenresi.com/careers/openings/) | page | ok | 22 / 8 | read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp) |
-| Evernest Property Management | Scattered-site & SFR operators | [www.evernest.co/careers](https://www.evernest.co/careers) | page | ok | 12 / 5 | read from the job board this page loads its jobs from (lever: evernest: https://jobs.lever.co/evernest) |
+| Evergreen Residential | Scattered-site & SFR operators | [evergreenresi.com/careers/openings/](https://evergreenresi.com/careers/openings/) | page | ok | 23 / 8 | read from the job board this page embeds (greenhouse: evergreenresidentialemployeeservicescorp: https://job-boards.greenhouse.io/evergreenresidentialemployeeservicescorp) |
+| Evernest Property Management | Scattered-site & SFR operators | [www.evernest.co/careers](https://www.evernest.co/careers) | page | ok | 16 / 6 | read from the job board this page loads its jobs from (lever: evernest: https://jobs.lever.co/evernest) |
 | Flock Homes | Scattered-site & SFR operators | [www.flockhomes.com/careers](https://www.flockhomes.com/careers) | page | ok | 7 / 5 | read from the job board this page loads its jobs from (greenhouse: flockhomes: https://job-boards.greenhouse.io/flockhomes) |
-| Highwoods Properties | Other real estate (REITs, flex space, senior living) | [www.highwoods.com/careers](https://www.highwoods.com/careers) | page | ok | 4 / 0 | read from the job board this page links to (ukg: HIG1001HIW: https://recruiting.ultipro.com/HIG1001HIW/JobBoard/cf2a3a89-ceb7-4bb7-aa13-3167c6417621/) |
 | Home365 | Scattered-site & SFR operators | [home365.bamboohr.com/careers](https://home365.bamboohr.com/careers) | bamboohr | ok | 10 / 1 |  |
 | Industrious | Other real estate (REITs, flex space, senior living) | [www.industriousoffice.com/careers#open-positi](https://www.industriousoffice.com/careers#open-positions) | page | ok | 73 / 3 | read from the job board this page loads its jobs from (ashby: industrious: https://jobs.ashbyhq.com/industrious) |
-| Invitation Homes | Scattered-site & SFR operators | [careers.invitationhomes.com/jobs](https://careers.invitationhomes.com/jobs) | page | ok | 53 / 12 | read from the jobs listed on the page (6 pages) |
-| Kasa Living | Other real estate (REITs, flex space, senior living) | [kasa.com/careers](https://kasa.com/careers) | page | ok | 26 / 3 | read from the job board this page uses (greenhouse: kasa: https://job-boards.greenhouse.io/kasa) |
+| Invitation Homes | Scattered-site & SFR operators | [careers.invitationhomes.com/jobs](https://careers.invitationhomes.com/jobs) | page | ok | 54 / 13 | read from the jobs listed on the page (6 pages) |
+| Kasa Living | Other real estate (REITs, flex space, senior living) | [kasa.com/careers](https://kasa.com/careers) | page | ok | 28 / 3 | read from the job board this page uses (greenhouse: kasa: https://job-boards.greenhouse.io/kasa) |
 | Kite Realty Group Trust | Other real estate (REITs, flex space, senior living) | [www.paycomonline.net/v4/ats/web.php/jobs?clie](https://www.paycomonline.net/v4/ats/web.php/jobs?clientkey=830A4F280E9131389F42C8C69858D6F6) | paycom-classic | ok | 6 / 0 | read by opening the paycom-classic job board in a browser |
-| Lamar Advertising Company | Other real estate (REITs, flex space, senior living) | [recruiting2.ultipro.com/LAM1000LAC/JobBoard/8](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/?q=&o=postedDateDesc) | ukg | ok | 91 / 0 |  |
+| Lamar Advertising Company | Other real estate (REITs, flex space, senior living) | [recruiting2.ultipro.com/LAM1000LAC/JobBoard/8](https://recruiting2.ultipro.com/LAM1000LAC/JobBoard/82898216-ca7a-4621-b01b-bf3410c919b2/?q=&o=postedDateDesc) | ukg | ok | 88 / 0 |  |
 | Medical Properties Trust | Other real estate (REITs, flex space, senior living) | [www.medicalpropertiestrust.com/careers](https://www.medicalpropertiestrust.com/careers) | page | ok | 3 / 0 | read from the jobs listed on the page |
-| Mynd | Scattered-site & SFR operators | [www.mynd.co/talent-and-culture](https://www.mynd.co/talent-and-culture) | page | ok | 12 / 4 | read from the job board this page links to (greenhouse: roofstock: https://job-boards.greenhouse.io/roofstock) |
+| Mynd | Scattered-site & SFR operators | [www.mynd.co/talent-and-culture](https://www.mynd.co/talent-and-culture) | page | ok | 10 / 3 | read from the job board this page links to (greenhouse: roofstock: https://job-boards.greenhouse.io/roofstock) |
 | Northpoint Asset Manamgement | Scattered-site & SFR operators | [ats.rippling.com/northpoint-asset-management/](https://ats.rippling.com/northpoint-asset-management/jobs) | rippling | ok | 2 / 2 |  |
 | Oakbrook Corporation | Multifamily & residential managers | [oakbrookcorp.isolvedhire.com/jobs/](https://oakbrookcorp.isolvedhire.com/jobs/) | isolved | ok | 13 / 0 | read by opening the isolved job board in a browser |
 | PMI | Scattered-site & SFR operators | [www.propertymanagementinc.com/careers](https://www.propertymanagementinc.com/careers) | page | ok | 30 / 9 | read from the jobs the page shows in a browser |
 | PURE Homeriver Group | Scattered-site & SFR operators | [purehomeriver.com/company/careers/](https://purehomeriver.com/company/careers/) | page | ok | 9 / 5 | read from the job board this page links to (adp: eea42ed6-3dcf-47f3-b99b-29a304948b2b: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=eea42ed6-3dcf-47f3-b99b-29a304948b2b&ccId=9200441095595_2) |
 | Pacific Oak Residential (now Second Avenue) | Scattered-site & SFR operators | [www.secondavenue.com/careers](https://www.secondavenue.com/careers) | page | ok | 6 / 1 | read from the job board this page links to (adp: d52252f7-9594-4db3-b2c3-bd73d8f571d5: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=d52252f7-9594-4db3-b2c3-bd73d8f571d5&ccId=1586553165248305_23331) |
-| Pretium Partners | Scattered-site & SFR operators | [pretium.com/careers/](https://pretium.com/careers/) | page | ok | 3 / 0 | read from the job board this page links to (greenhouse: pretiumpartnersllc: https://job-boards.greenhouse.io/pretiumpartnersllc) |
+| Pretium Partners | Scattered-site & SFR operators | [pretium.com/careers/](https://pretium.com/careers/) | page | ok | 2 / 0 | read from the job board this page links to (greenhouse: pretiumpartnersllc: https://job-boards.greenhouse.io/pretiumpartnersllc) |
 | Progress Residential | Scattered-site & SFR operators | [jobs.rentprogress.com/jobs](https://jobs.rentprogress.com/jobs) | page | ok | 68 / 11 | read from the jobs listed on the page (7 pages) |
 | Quinn Residences | Scattered-site & SFR operators | [live-quinn.com/job/](https://live-quinn.com/job/) | page | ok | 5 / 4 | read from the job board this page loads its jobs from (adp: e84a05b2-c751-4d20-9e0b-a6ad11149a48: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=e84a05b2-c751-4d20-9e0b-a6ad11149a48&ccId=9201292526264_3) |
-| Real Property Management | Scattered-site & SFR operators | [jobs.realpropertymgt.com/jobs](https://jobs.realpropertymgt.com/jobs) | page | ok | 38 / 8 | read from the jobs listed on the page (4 pages) |
+| Real Property Management | Scattered-site & SFR operators | [jobs.realpropertymgt.com/jobs](https://jobs.realpropertymgt.com/jobs) | page | ok | 28 / 8 | read from the jobs listed on the page (3 pages) |
 | Redstone | Multifamily & residential managers | [www.redstonevt.com/careers](https://www.redstonevt.com/careers) | page | ok | 2 / 0 | the link now redirects to recruiting.paylocity.com - worth updating; read from the job board this page loads its jobs from (paylocity: 48034f13-35cd-42bc-a80e-1480b6ae5d26: https://recruiting.paylocity.com/recruiting/jobs/All/48034f13-35cd-42bc-a80e-1480b6ae5d26) |
-| Renters Warehouse | Scattered-site & SFR operators | [www.renterswarehouse.com/careers](https://www.renterswarehouse.com/careers) | page | ok | 13 / 9 | read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da) |
+| Renters Warehouse | Scattered-site & SFR operators | [www.renterswarehouse.com/careers](https://www.renterswarehouse.com/careers) | page | ok | 12 / 9 | read from the job board this page uses (adp: 0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=0b4acaac-5cd6-4597-9e3b-0cc4e2eba1da) |
 | Starwood Property Trust | Other real estate (REITs, flex space, senior living) | [www.starwoodcapital.com/careers](https://www.starwoodcapital.com/careers) | page | ok | 5 / 4 | read from the job board this page loads its jobs from (jobvite: starwoodcapitalgroup: https://jobs.jobvite.com/starwoodcapitalgroup/jobs); found by following the page's link to its full list (https://www.starwoodcapital.com/careers/open-positions/) |
 | The Lund Company | Multifamily & residential managers | [lundco.com/join-our-team/](https://lundco.com/join-our-team/) | page | ok | 2 / 1 | read from the jobs the page shows in a browser |
 | Uniti Group | Other real estate (REITs, flex space, senior living) | [careers.uniti.com/](https://careers.uniti.com/) | page | ok | 203 / 0 | read from the jobs the page shows in a browser (14 pages of results) |
 | Veris Residential | Multifamily & residential managers | [www.rhoresidential.com/careers/#careers-posit](https://www.rhoresidential.com/careers/#careers-positions) | page | ok | 18 / 2 | read from the job board this page loads its jobs from (adp: 28860e2c-1615-47c9-9444-c35ba9f7d7d1: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=28860e2c-1615-47c9-9444-c35ba9f7d7d1&ccId=19000101_000003) |
-| BH Management Services | Multifamily & residential managers | [livebh.com/careers/job-search/](https://livebh.com/careers/job-search/) | page | stale | 127 / 3 | the job board behind the Column D page didn't answer: workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s)) |
+| AMH (American Homes 4 Rent) | Scattered-site & SFR operators | [www.amh.com/careersearch](https://www.amh.com/careersearch) | page | stale | 68 / 30 | the job board behind the Column D page didn't answer: workday:amh (HTTP 429 rate limited (waited 15s)); workday:amh (HTTP 429 rate limited (waited 15s)) |
+| Atlas Real Estate | Scattered-site & SFR operators | [realatlas.com/careers/#positions](https://realatlas.com/careers/#positions) | page | stale | 18 / 7 | the Column D page doesn't load (HTTP 202) |
+| BH Management Services | Multifamily & residential managers | [livebh.com/careers/job-search/](https://livebh.com/careers/job-search/) | page | stale | 127 / 3 | the job board behind the Column D page didn't answer: workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s)); workday:pretiumenterpriseservices (HTTP 429 rate limited (waited 15s)) |
 | Greystar | Multifamily & residential managers | [greystar.wd1.myworkdayjobs.com/External](https://greystar.wd1.myworkdayjobs.com/External) | workday | stale | 1326 / 11 | HTTP 429 rate limited (waited 15s) |
+| Highwoods Properties | Other real estate (REITs, flex space, senior living) | [www.highwoods.com/careers](https://www.highwoods.com/careers) | page | stale | 4 / 0 | the Column D page doesn't load (connection error (SSLError); in a browser: the page didn't load in the browser (Error: Page.goto: net::ERR_CERT_DATE_INVALID at https://www.highwoods.com/careers)) |
 | Main Street Renewal | Scattered-site & SFR operators | [amherstgroup.wd1.myworkdayjobs.com/Amherst_Ho](https://amherstgroup.wd1.myworkdayjobs.com/Amherst_Holdings_Careers) | workday | stale | 38 / 4 | HTTP 429 rate limited (waited 15s) |
 | Maymont Homes | Scattered-site & SFR operators | [brookfield.wd5.myworkdayjobs.com/maymonthomes](https://brookfield.wd5.myworkdayjobs.com/maymonthomes) | workday | stale | 28 / 9 | HTTP 429 rate limited (waited 15s) |
 | Picerne Real Estate Group | Multifamily & residential managers | [www.picerne.com/careers](https://www.picerne.com/careers) | page | stale | 35 / 0 | the Column D page doesn't load (HTTP 403 bot protection (Cloudflare); in a browser: the site refused the browser (HTTP 403)) |
@@ -390,18 +356,21 @@ Company list read from: **live Google Sheet (OpCo tab)**.
 | WeWork | Other real estate (REITs, flex space, senior living) | [wework.wd1.myworkdayjobs.com/WeWork](https://wework.wd1.myworkdayjobs.com/WeWork) | workday | stale | 74 / 0 | HTTP 429 rate limited (waited 15s) |
 | Atria Senior Living | Other real estate (REITs, flex space, senior living) | [www.atriaseniorliving.com/careers](https://www.atriaseniorliving.com/careers) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 | Bluerock Homes Trust | Scattered-site & SFR operators | [bluerock.com/company/careers-and-opportunitie](https://bluerock.com/company/careers-and-opportunities/) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
+| Bridge Investment Group (Bridge Homes) | Scattered-site & SFR operators | [www.bridgeig.com/careers/](https://www.bridgeig.com/careers/) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 | Cohen-Esrey Communities | Multifamily & residential managers | [www.cohenesrey.com/careers.html](https://www.cohenesrey.com/careers.html) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 | Easterly Government Properties | Other real estate (REITs, flex space, senior living) | [easterlyreit.com/careers](https://easterlyreit.com/careers) | page | needs-link | 0 / 0 | the Column D page points at a job board that isn't there: trinethire:576888-easterly-government-properties (the trinethire job board opened, but no postings were recognised on it and it doesn't say there are none - its layout may have changed) |
 | Evergreen Live | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | FirstKey Homes | Scattered-site & SFR operators | [job-boards.greenhouse.io/firstkeyhomes](https://job-boards.greenhouse.io/firstkeyhomes) | greenhouse | needs-link | 0 / 0 | Column D points at a job board that isn't there: Greenhouse has no board named 'firstkeyhomes' (it may have moved) |
 | HALO Strategies | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
-| Key Renter Property Managment | Scattered-site & SFR operators | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 520) |
+| Harbert Management Corporation | Other real estate (REITs, flex space, senior living) | [www.harbert.net/about-us/careers](https://www.harbert.net/about-us/careers) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
+| Key Renter Property Managment | Scattered-site & SFR operators | [keyrenter.com/](https://keyrenter.com/) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 202) |
 | Mesa Residential | Other real estate (REITs, flex space, senior living) | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | Mountain Property Management | Multifamily & residential managers | [jacksonholeproperties.net/careers](https://jacksonholeproperties.net/careers) | page | needs-link | 0 / 0 | the Column D page doesn't load (HTTP 404; in a browser: not found) |
 | NARPM (National Association of Residential Property Managers) Job Board | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | One Stop Housing | Other real estate (REITs, flex space, senior living) | [onestophousing.com/join-our-crew](https://onestophousing.com/join-our-crew) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
+| ResiHome | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | Rhome Property Management | Scattered-site & SFR operators | [www.rhomepm.com/employment](https://www.rhomepm.com/employment) | page | needs-link | 0 / 0 | no jobs were found on the Column D page, even after running its scripts - if the company is hiring, use the job board's link instead |
 | Urban Moment Development | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
 | VineBrook Homes Trust | Scattered-site & SFR operators | — empty | — | needs-link | 0 / 0 | Column D is empty |
 
-**Status:** ok 35, stale 7, needs-link 15
+**Status:** ok 31, stale 10, needs-link 18
