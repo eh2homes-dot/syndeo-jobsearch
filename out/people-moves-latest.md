@@ -1,128 +1,114 @@
-# People Moves — week of 2026-11-22
+# People Moves — week of 2026-11-24
 
-54 items across 46 companies.
+47 items across 40 companies.
 
 > Every item below needs its link opened and checked before it goes in the newsletter. Nothing here is publication-ready as written.
 
-## Probable (3)
+## Confirmed (3)
+
+*Filed or announced by the company. Safe to name the person.*
+
+- ↘ **Effective Date** — founder and at **Procore Technologies**
+  Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers. On November 18, 2026, Kevin O’Connor notified Procore Technologies, Inc. (the “Company”) of his decision to voluntarily resign as a m — [SEC 8-K Item 5.02, 2026-11-23](https://www.sec.gov/Archives/edgar/data/1611052/000119312526472330/d341357d8k.htm)
+- ↘ **Benjamin C. Singer** — Chief Legal Officer at **Procore Technologies**
+  Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers. On November 18, 2026, Kevin O’Connor notified Procore Technologies, Inc. (the “Company”) of his decision to voluntarily resign as a m — [SEC 8-K Item 5.02, 2026-11-23](https://www.sec.gov/Archives/edgar/data/1611052/000119312526472330/d341357d8k.htm)
+- ↗ **Former EnerNOC** — CEO at **Redaptive**
+  Redaptive Appoints Former EnerNOC CEO Tim Healy to Board of Directors - citybiz — [Google News, 2026-11-23](https://news.google.com/rss/articles/CBMirAFBVV95cUxOUWdjYnFyU1pRQkJyaW1oMXlmMkRyM2J4UHRlLW9NZW1ZWDVqUWpUR1drQjFRVWFoM2ZfZmY2Q3B4Z3dzN2E1X0h6NHl6S2FxdWNDS292R3lLMVJiWnVNWVlHak5ORWdXRHFLb2p3X1U4NHpDSzBfbHJtRm5PdUhZWEVybTd6NG00Y3BmRWFRbGNBbm9YYzFPSVV1QUFwd1EzS1IwYUhFM2VZWmRx?oc=5)
+
+## Probable (10)
 
 *A team page changed or a headline implies it. Verify on LinkedIn before naming anyone.*
 
-- ↗ Pearce Real Estate welcomes Hudson to the Edgehill Team at the New Haven office - NEREJ
-  [Google News, 2026-11-20](https://news.google.com/rss/articles/CBMingFBVV95cUxNMVJoTE8zWnV0WjVMbHZ2elpPMzlBRV9FQWpYU05WVWZQRzVJSEJGOWJoNjNKcXB6YldxU0R3ZlZoZnB0ZkVzb2dYSFNmV0tpVm9WWFdtYlloM0wtYTUzOGtnQnNVTnVDQ2JkNXZ2ajV1d2llN2xaTU41OXlCNDVOLW9mYkYyVXR5RWFtTGdRTUN0U3hWNjFwMTBVN1RJZw?oc=5)
-- ↗ Sun King Names Chika Nnadozie Global Marketing Leader - Wisevoter
-  [Google News, 2026-11-21](https://news.google.com/rss/articles/CBMimAFBVV95cUxPc2pkc2d6TmNNTzNVbUtWZnV1czJucGhzMUNFajIzU1A2UmdjbjJKUS1Ec1Bkdks2cUJYMnBNVmlveEdvRHlJRTJCVlM5Vk5BY25hS2hUZ043THFZMXE5cjBFOVNRNkZGM1lkWFhDNVNLM3ZMMkdJTFRHOFhCaEtxMTl3UF84ODBXbWtCU1NmcjFQckd6NUtnNw?oc=5)
-- ↗ Sun King Appoints Chika Nnadozie To Lead PAYG Phones In 2026 - Brand Spur
-  [Google News, 2026-11-21](https://news.google.com/rss/articles/CBMie0FVX3lxTE01TzhVNzN3YlIwbGF0RTRmOFhDYmlHZFo1ZHUtallLMHp0allCU1QxZGVmZ1NVLXZoQU81N1RhbGhKX1c1aXc1TGFPSXFzVFEzZERkX1poY1FuZU1rRDBxZ1JPcTRSYWxWNU5hZWhfTGpfSEYwOG55cUlkNNIBgAFBVV95cUxPQ0YtdDhkWHNYbG52anFEZ1FfOFFtQ1BWMGNjZURhU2piSjNMWkxTUkxmdmpGTDRUenhZVzZDcUYwa05LT213UkFkREZzRjNQZkYzdFNENmlVbWFfWTQwdmZSMXU4bHVFV1JFVmNiTGNBdmNDOXk5TXNIMWpDLTlIVQ?oc=5)
+- ↘ **Adrian Peña** — Associate Vice President at **Bowery Valuation**
+  Name removed from Bowery Valuation's team page. — [Leadership page](https://www.boweryvaluation.com/our-team)
+- ↗ **George Neble** — VP, Sales at **Robin**
+  New name on Robin's team page. — [Leadership page](https://robinpowered.com/about)
+- ↗ **Dennis Schuh** — Global Head of Real Estate Debt at **Starwood Property Trust** (previously Chief Originations Officer)
+  Title change at Starwood Property Trust. — [Leadership page](https://www.starwoodpropertytrust.com/team/)
+- ↗ Harbert hires new head of U.S. real estate - Alternatives Watch
+  [Google News, 2026-11-20](https://news.google.com/rss/articles/CBMikAFBVV95cUxOSXNURjlmY01RNmlNRFBzM3lvT2t1anBFblB5VktjM3FVMlVDV0lMOGJiV29oY1BYRGl1aUlzaXIwdV90Z2tYV2ZSMmJHUFhSSldoMHhfYnc5VkNWc0g5bFpyRHV0TFRwZmpyY1lDVS00MUMwS3lnTFN5ckFKMndrVmVfZzNrV0s0c0xqRXR5UWo?oc=5)
+- ↗ Invitation Homes names DiLello and Tierney as executive vice presidents - scanx.trade
+  [Google News, 2026-11-22](https://news.google.com/rss/articles/CBMixwFBVV95cUxQSmdqc212MnU5b3o0UzdHazlmNlNvblZUQ1NQMDdvVVcyQTUxaVNDa1g4X0R4VVNoMWVoZXBhdmVIM2R0MWx2RFM5YlVsMDF4cWdxLVRsVENHZ0NuTXhIdFZqUTNlQ20wUTcwNC1zUk1LRDVFZHIxejN3dk15MFctS0xvNTh5Y3QwaWpxRWgzekczVWd0OXJvVHRabDZlb3hBLXFfaTVzUF90Y2E2VXlBTEZNQUdRYTF6OWEwQ1hBd2RwNnM0NC1z?oc=5)
+- ↗ Redaptive Appoints Tim Healy to Board of Directors - PropTech Connect
+  [Google News, 2026-11-23](https://news.google.com/rss/articles/CBMihgFBVV95cUxNNTA4VVhTQ0RIQkkxU01uaFA2bGowakNjUFhHeThjLW5rNGg0S0RrbVY2UUpscEFTR2RMcmdaWW1scENjN0xnR0FLUFVfRUJkNHlQTThMQ0M5TFN4MjBDVUlKSVlXRjIyNVJOXzVpajk5M2ZLNFJsandoQW9pZ3JzSjBNVFRDQQ?oc=5)
+- ↗ Redaptive appoints former EnerNOC CEO to board - Investing.com
+  [Google News, 2026-11-23](https://news.google.com/rss/articles/CBMipgFBVV95cUxNeU5xZzVOd3l3LWFOV3lnYjlzZWNUM0VKcm1NTVZramJncERHWHpmdGJfMUZ4S0pHRUxkV1lZNVFHNXBqUHRiU1dobGZZWkhoNC1MV1VCQUlOcVNIcWZDazBVYW1OS19mdkdFckhIcmE4cS1sbldCeGdKdjEwb1pfRXBtVE9HY1VGT0ZGZUtMTXdhemJZOGNQUkZVTVVxN0l3UXFHZXZ3?oc=5)
+- ↗ Redaptive Appoints Tim Healy to Board of Directors - PR Newswire
+  [Google News, 2026-11-23](https://news.google.com/rss/articles/CBMiqgFBVV95cUxNZGIydlFaRExySFRkVWxURTF3TnoydkZXZ0dUZk5FaFhYdDl5S2tnTTRQc0lpUEk1M3d4TTNNS0xPT2ZBYTR2UW9rNllhU2V1c05OUGVYcGlQQ09JQVVrYmhBaGJtODVGb0RjcUc4UXc4NExuN3lWMHQtMFYyN3RYX0g5RzJVdjRpSnZXZWNNSTRkMi1pclk1RGNjZVJSTmR2NG5URi1ZOTFndw?oc=5)
+- ↗ **Kelly Walker** — VP, People at **CertifID**
+  New name on CertifID's team page. — [Leadership page](https://www.certifid.com/company/company)
+- ↗ **Paul Stine** — VP, Strategic Accounts at **CertifID**
+  New name on CertifID's team page. — [Leadership page](https://www.certifid.com/company/company)
 
-## Inferred (50)
+## Inferred (34)
 
 *Derived from job board activity. Describe the company, name nobody.*
 
-- ↗ Alarm.com closed 6 roles while still hiring (77 open): Revenue Operations Manager…. Likely filled.
-  [Job board (req closed)](https://www.alarm.com/careers)
-- ↗ Convene closed 6 roles while still hiring (38 open): Sales Executive, Corporate and Social Events…. Likely filled.
-  [Job board (req closed)](https://convene.com/careers)
-- ↗ CoStar Group closed 19 roles while still hiring (371 open): Director of Business Development, Listings/Digital Solutions - Zonda - Jacksonville, FL, Director of Business Development, Listings/Digital Solutions - Zonda - Minneapolis, MN, Field Sales Account Executive - Matterport - Los Angeles, CA…. Likely filled.
+- ↗ CoStar Group closed 7 roles while still hiring (382 open): Business Development Consultant, Yorkshire Patch - Leeds, Bradford, Harrogate & Darlington, Manager, Brand Marketing - CoStar Real Estate Manager & Visual Lease - Atlanta, GA, Sales Associate, Apartments.com - San Antonio, TX…. Likely filled.
   [Job board (req closed)](https://careers.costargroup.com/careers)
-- ↗ Home365 closed 5 roles while still hiring (10 open): Customer Success Manager, Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Lancaster, York, and Harrisburg, Real Estate Agent Partnership Opportunity (Listing & Resident Placement) Scranton…. Likely filled.
-  [Job board (req closed)](https://home365.bamboohr.com/careers)
-- ↗ Loft closed 5 roles while still hiring (20 open): Analista de Dados | Marketing Intelligence…. Likely filled.
-  [Job board (req closed)](https://loft.teamtailor.com/)
-- ↗ MRI Software closed 7 roles while still hiring (72 open): Director, Product Development - AI, Sales Development Representative (Outbound), Sales Development Representative (SDR)…. Likely filled.
-  [Job board (req closed)](https://www.mrisoftware.com/careers)
-- ↗ Procore Technologies closed 14 roles while still hiring (126 open): Engineering Manager – Workload Identity & Secrets Platform, SMB Customer Success Engineer, Senior Customer Success Engineer, Canada (Remote)…. Likely filled.
+- ↗ Procore Technologies closed 7 roles while still hiring (124 open): Principal Product Manager, Civil & Infrastructure, Principal Product Manager, Developer Platform, Senior Product Marketing Manager…. Likely filled.
   [Job board (req closed)](https://careers.procore.com/jobs/search)
-- ↗ Stegra (formerly H2 Green Steel) closed 6 roles while still hiring (21 open): Environmental Engineer, Lead Legal Counsel - Project Finance, Logistics Specialist…. Likely filled.
-  [Job board (req closed)](https://career.stegra.com/jobs)
-- ↗ Sun King closed 5 roles while still hiring (196 open): Regional Collections Manager, Regional Collections Manager- Madagascar, Sun King Store Executive, Jos (Plateau State)…. Likely filled.
+- ↗ Sun King closed 14 roles while still hiring (183 open): Country LPG Operations & LMD Lead, Global Marketing Manager - PAYG Phones…. Likely filled.
   [Job board (req closed)](https://sunking.pinpointhq.com/)
-- ↗ Verkada closed 8 roles while still hiring (319 open): Channel Sales Manager, Southern Europe, Dec 2026 Grads: Sales Development Representative (AAE), Tampa, MBA Full-Time Hire - Product Marketing, Solutions…. Likely filled.
-  [Job board (req closed)](https://job-boards.greenhouse.io/verkada)
-- ↗ Zillow Group closed 12 roles while still hiring (19 open): Marketing Specialist, Paid Social, Principal Product Manager, GenAI Media Experiences, Senior Counsel, Industry Data…. Likely filled.
-  [Job board (req closed)](https://www.zillow.com/careers)
-- ↗ Envoy closed 4 roles while still hiring (20 open): Pre Sales Solutions Engineer…. Likely filled.
-  [Job board (req closed)](https://envoy.com/careers)
-- ↗ ICON closed 4 roles while still hiring (67 open): Print Operations Technician, Product Change Manager…. Likely filled.
+- ↗ ICON closed 4 roles while still hiring (63 open): Field Inventory Manager II, Full Cycle Recruiter, Senior Safety Partner I, Construction…. Likely filled.
   [Job board (req closed)](https://job-boards.greenhouse.io/iconcareers)
-- ↗ Invitation Homes closed 4 roles while still hiring (8 open): Regional Technology Analyst…. Likely filled.
-  [Job board (req closed)](https://careers.invitationhomes.com/jobs)
-- ↗ Opendoor closed 4 roles while still hiring (38 open): Listing Partner (CA), Listing Partner — New Jersey Real Estate License Required, Pricing Analyst…. Likely filled.
+- ↗ Verkada closed 4 roles while still hiring (317 open): Regional Sales Manager, UK…. Likely filled.
+  [Job board (req closed)](https://job-boards.greenhouse.io/verkada)
+- ↗ Mews closed 3 roles while still hiring (30 open): Business Operations Leader. Likely filled.
+  [Job board (req closed)](https://www.mews.com/en/careers)
+- ↗ MRI Software closed 3 roles while still hiring (71 open): Cloud Operations Engineer - Citrix. Likely filled.
+  [Job board (req closed)](https://www.mrisoftware.com/careers)
+- ↗ Opendoor closed 3 roles while still hiring (36 open): Listing Partner — Illinois Real Estate License Required, Listing Partner — Massachusetts Real Estate License Required, Sr. Manager, SEO. Likely filled.
   [Job board (req closed)](https://www.opendoor.com/careers)
-- ↗ RealPage closed 4 roles while still hiring (40 open): Product Manager - Renter's Insurance - B2C eCommerce, Product Marketing Director…. Likely filled.
-  [Job board (req closed)](https://www.realpage.com/careers)
-- ↗ Auction.com closed 3 roles while still hiring (51 open): VP, Data Intake Operations. Likely filled.
-  [Job board (req closed)](https://www.auction.com/careers)
-- ↗ Compass closed 3 roles while still hiring (67 open): Customer Success Manager, Marketing Program Manager (@properties). Likely filled.
+- ↗ Stegra (formerly H2 Green Steel) closed 3 roles while still hiring (21 open): Daytime Manager - Warehouse & Workshop Area, People Business Partner - 1 års föräldrarvikariat, Show 4 more. Likely filled.
+  [Job board (req closed)](https://career.stegra.com/jobs)
+- ↗ AppFolio closed 2 roles while still hiring (40 open): Growth Account Executive - SMB. Likely filled.
+  [Job board (req closed)](https://www.appfolio.com/company/careers)
+- ↗ Compass closed 2 roles while still hiring (66 open): Senior Director of Performance Marketing, Strategic Growth Associate. Likely filled.
   [Job board (req closed)](https://www.compass.com/careers)
-- ↗ CoStar Group opened 3 new product roles this week. A new product leader has often already started when this happens — worth a look.
-  [Job board (req cluster)](https://careers.costargroup.com/careers)
-- ↗ CoStar Group opened 9 new business development roles this week. A new business development leader has often already started when this happens — worth a look.
-  [Job board (req cluster)](https://careers.costargroup.com/careers)
-- ↗ CoStar Group opened 5 new data roles this week. A new data leader has often already started when this happens — worth a look.
-  [Job board (req cluster)](https://careers.costargroup.com/careers)
-- ↗ Pirros closed 3 roles while still hiring (5 open): Member of Technical Staff – Product Engineering, Technical Product Specialist. Likely filled.
-  [Job board (req closed)](https://www.ycombinator.com/companies/pirros/jobs)
-- ↗ TurboTenant closed 3 roles while still hiring (9 open): Real Estate Photographer - Atlanta, GA, Real Estate Photographer - Salt Lake City, UT, Real Estate Photographer - Seattle, WA. Likely filled.
-  [Job board (req closed)](https://www.turbotenant.com/careers)
-- ↗ Verkada opened 3 new sales roles this week. A new sales leader has often already started when this happens — worth a look.
-  [Job board (req cluster)](https://job-boards.greenhouse.io/verkada)
-- ↗ Yardi Systems closed 3 roles while still hiring (3 open): Associate Marketing Specialist. Likely filled.
-  [Job board (req closed)](https://careers.yardi.com/openings/)
-- ↗ Bilt Rewards closed 2 roles while still hiring (28 open): Senior Forward Deployed Engineer, Senior Full Stack Engineer. Likely filled.
-  [Job board (req closed)](https://www.biltrewards.com/careers)
-- ↗ Built Technologies closed 2 roles while still hiring (11 open): Senior Engineering Manager, Data Platform. Likely filled.
-  [Job board (req closed)](https://job-boards.greenhouse.io/getbuilt)
-- ↗ Habi closed 2 roles while still hiring (5 open): Director Comercial de Crédito Hipotecario, Líder De Ventas Inmobiliario. Likely filled.
-  [Job board (req closed)](https://habicareers.tuhabi.mx/vacantes)
-- ↗ Orchard closed 2 roles while still hiring (6 open): Director of Agent Growth. Likely filled.
-  [Job board (req closed)](https://www.orchard.com/careers)
-- ↗ Place closed 2 roles while still hiring (18 open): Senior AWS Cloud Infrastructure Engineer, Senior Azure DevOps Engineer. Likely filled.
-  [Job board (req closed)](https://place.com/corporate-careers/)
-- ↗ PURE HomeRiver Group closed 2 roles while still hiring (9 open): Field Support Specialist - Charleston, SC, Inside Client Advisor II. Likely filled.
-  [Job board (req closed)](https://purehomeriver.com/company/careers/)
-- ↗ ResMan closed 2 roles while still hiring (2 open): Director of Technical Product - Insurance, Manager of Sales Development. Likely filled.
-  [Job board (req closed)](https://myresman.com/careers)
-- ↗ Roofstock closed 2 roles while still hiring (9 open): Senior Legal Operations Manager. Likely filled.
+- ↗ Convene closed 2 roles while still hiring (36 open): General Manager, Live Events, Part-Time Hospitality Event Server. Likely filled.
+  [Job board (req closed)](https://convene.com/careers)
+- ↗ Material Bank closed 2 roles while still hiring (13 open): Senior Event Marketing Manager. Likely filled.
+  [Job board (req closed)](https://careers.materialbank.com/careers)
+- ↗ Roofstock closed 2 roles while still hiring (7 open): Account Resolution Specialist, Manager, Resident Experience (Delinquency & Eviction Specialist). Likely filled.
   [Job board (req closed)](https://www.roofstock.com/careers)
-- ↗ AMH (American Homes 4 Rent) closed 1 role while still hiring (23 open): VP - National Leasing. Likely filled.
-  [Job board (req closed)](https://www.amh.com/careersearch)
-- ↗ Evergreen Residential closed 1 role while still hiring (19 open): Senior Accountant. Likely filled.
-  [Job board (req closed)](https://evergreenresi.com/careers/openings/)
-- ↗ Footprint closed 1 role while still hiring (15 open): Demand Generation Manager. Likely filled.
-  [Job board (req closed)](https://jobs.ashbyhq.com/onefootprint)
-- ↗ Funnel Leasing closed 1 role while still hiring (3 open): Manager, Software Engineering - Mobile Apps. Likely filled.
-  [Job board (req closed)](https://www.funnelleasing.com/careers)
-- ↗ GetCovered closed 1 role while still hiring (3 open): Strategy & Operations Lead. Likely filled.
-  [Job board (req closed)](https://getcovered.io/careers)
-- ↗ Homeward closed 1 role while still hiring (3 open): Senior Software Engineer, Back-end (LatAm). Likely filled.
+- ↗ TurboTenant closed 2 roles while still hiring (7 open): Real Estate Photographer - Augusta, GA, Real Estate Photographer - Winnabow, NC. Likely filled.
+  [Job board (req closed)](https://www.turbotenant.com/careers)
+- ↗ Alarm.com closed 1 role while still hiring (77 open): Staff Software Engineer - SRE. Likely filled.
+  [Job board (req closed)](https://www.alarm.com/careers)
+- ↗ Apartment List closed 1 role while still hiring (7 open): Senior Software Engineer II, Marketplace. Likely filled.
+  [Job board (req closed)](https://www.apartmentlist.com/careers)
+- ↗ Auction.com closed 1 role while still hiring (54 open): Associate Auction Coordinator - Williamsburg, VA (Part Time Opportunity). Likely filled.
+  [Job board (req closed)](https://www.auction.com/careers)
+- ↗ ButterflyMX closed 1 role while still hiring (7 open): Client Onboarding Specialist. Likely filled.
+  [Job board (req closed)](https://www.butterflymx.com/careers)
+- ↗ Envoy closed 1 role while still hiring (19 open): Renewals Manager. Likely filled.
+  [Job board (req closed)](https://envoy.com/careers)
+- ↗ Homeward closed 1 role while still hiring (3 open): Agent Success Manager (Field Rep). Likely filled.
   [Job board (req closed)](https://www.homeward.com/careers)
-- ↗ NetVendor closed 1 role while still hiring (6 open): Document Processor Manager. Likely filled.
-  [Job board (req closed)](https://www.netvendor.com/careers)
-- ↗ Northpoint Asset Management closed 1 role while still hiring (2 open): Property Manager. Likely filled.
-  [Job board (req closed)](https://ats.rippling.com/northpoint-asset-management/jobs)
-- ↗ Pacaso closed 1 role while still hiring (6 open): Brand and Marketing Creative Principal. Likely filled.
+- ↗ Invitation Homes closed 1 role while still hiring (9 open): Leasing Manager. Likely filled.
+  [Job board (req closed)](https://careers.invitationhomes.com/jobs)
+- ↗ Lessen closed 1 role while still hiring (16 open): Customer Escalations Representative. Likely filled.
+  [Job board (req closed)](https://jobs.lever.co/lessen)
+- ↗ Loft closed 1 role while still hiring (20 open): Software Engineer | Full Stack | Growth. Likely filled.
+  [Job board (req closed)](https://loft.teamtailor.com/)
+- ↗ Mynd closed 1 role while still hiring (3 open): Manager, Resident Experience (Delinquency & Eviction Specialist). Likely filled.
+  [Job board (req closed)](https://www.mynd.co/talent-and-culture)
+- ↗ Obligo closed 1 role while still hiring (4 open): Head of Security, IT & AI Governance. Likely filled.
+  [Job board (req closed)](https://www.myobligo.com/careers)
+- ↗ Offerpad closed 1 role while still hiring (2 open): Operations Specialist. Likely filled.
+  [Job board (req closed)](https://www.offerpad.com/careers)
+- ↗ Pacaso closed 1 role while still hiring (5 open): Contract Groundskeeper/ Porter. Likely filled.
   [Job board (req closed)](https://www.pacaso.com/careers)
-- ↗ Placer.ai closed 1 role while still hiring (17 open): Account Executive. Likely filled.
-  [Job board (req closed)](https://www.placer.ai/careers)
-- ↗ Point closed 1 role while still hiring (12 open): Senior Security Operations Analyst (Detection & Response). Likely filled.
-  [Job board (req closed)](https://www.point.com/careers)
-- ↗ PURE HomeRiver Group closed 1 role while still hiring (5 open): Inside Client Advisor II. Likely filled.
-  [Job board (req closed)](https://purehomeriver.com/company/careers/)
-- ↗ Rent Manager (LCS) closed 1 role while still hiring (6 open): Software Developer Co-op/Intern. Likely filled.
-  [Job board (req closed)](https://www.rentmanager.com/careers)
-- ↗ Renters Warehouse closed 1 role while still hiring (10 open): Leasing Field Coordinator. Likely filled.
+- ↗ RealPage closed 1 role while still hiring (39 open): Network Install Tech III (Altanta/Macon Regional Travel). Likely filled.
+  [Job board (req closed)](https://www.realpage.com/careers)
+- ↗ Renters Warehouse closed 1 role while still hiring (9 open): PROPERTY ACCOUNTANT. Likely filled.
   [Job board (req closed)](https://www.renterswarehouse.com/careers)
-- ↗ Second Nature closed 1 role while still hiring (5 open): VP, Product. Likely filled.
-  [Job board (req closed)](https://www.secondnature.com/careers)
-- ↗ Steadily closed 1 role while still hiring (31 open): Business Development Manager. Likely filled.
+- ↗ Snapdocs closed 1 role while still hiring (3 open): Principal Product Manager. Likely filled.
+  [Job board (req closed)](https://www.snapdocs.com/careers)
+- ↗ Steadily closed 1 role while still hiring (31 open): Insurance Sales Agent. Likely filled.
   [Job board (req closed)](https://www.steadily.com/careers)
-- ↗ TheGuarantors closed 1 role while still hiring (18 open): Software Engineer - Risk Solutions. Likely filled.
-  [Job board (req closed)](https://www.theguarantors.com/careers)
-
-## Funding rounds (1)
-
-*From SEC Form D filings: a company reporting money raised, or being raised, in a private offering. It is a filing, not an announcement, and the amount can be a partial close. An item that says "check it is theirs" matched on a similar name only.*
-
-- **Point Risk Retention Holdings I L.P.** filed a Form D [Pooled Investment Fund]. Similar name to **Point** and the same state; check it is theirs before using it. *(unconfirmed match)*
-  [SEC Form D, 20261120](https://www.sec.gov/Archives/edgar/data/2166133/000216613326000001/)
+- ↗ VTS closed 1 role while still hiring (14 open): Senior Content Marketing Manager. Likely filled.
+  [Job board (req closed)](https://www.vts.com/careers)
+- ↗ Willow Wealth (formerly Yieldstreet) closed 1 role while still hiring (6 open): Front End Software Engineer. Likely filled.
+  [Job board (req closed)](https://ats.rippling.com/yieldstreet/jobs)
