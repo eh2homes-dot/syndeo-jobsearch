@@ -32,6 +32,7 @@ action,company,linkedin_found,what_to_check,found_on,in_list_now,website,list,ch
 "check, then add",Redaptive,https://www.linkedin.com/company/redaptive-inc/,the site also links to https://www.linkedin.com/company/redaptive/,homepage (the site describes itself),,https://redaptive.com,Weekly,2026-11-15
 "check, then add",Rent Manager (LCS),https://www.linkedin.com/company/rent-manager-property-management-software/,the site also links to https://www.linkedin.com/showcase/rentmanager/,homepage (the site describes itself),,https://www.rentmanager.com,Weekly,2026-11-15
 "check, then add",Renters Warehouse,https://www.linkedin.com/company/renosy-us/,"page name 'renosy-us' doesn't look like Renters Warehouse: check it isn't a parent, an old name or another company",homepage (the site describes itself),,https://www.renterswarehouse.com,Weekly + OpCo,2026-11-15
+"check, then add",ResiHome,https://www.linkedin.com/company/resihome/,"found in the page code, not a visible link; the site also links to https://www.linkedin.com/company/brian-properties-inc/","homepage (in the page code, not a visible link)",,https://resihome.com/,OpCo,2026-11-24
 "check, then add",Side,https://www.linkedin.com/company/siderealestate/,same page found for Side Inc.: one of them is probably the parent's,homepage (the site describes itself),,https://www.side.com,Weekly,2026-11-15
 "check, then add",Side Inc.,https://www.linkedin.com/company/siderealestate/,same page found for Side: one of them is probably the parent's,homepage (the site describes itself),,https://www.side.com,Weekly,2026-11-15
 "check, then add",SmartRent,https://www.linkedin.com/company/smartrent.com/,the site also links to https://www.linkedin.com/company/smartrentdotcom/,homepage (the site describes itself),,https://smartrent.com,Weekly,2026-11-15
@@ -92,6 +93,7 @@ add to list,Geolava,https://www.linkedin.com/company/geolava/,,homepage (the sit
 add to list,Giraffe,https://www.linkedin.com/company/giraffebuild/,,homepage footer,,https://www.giraffe.build,Weekly,2026-11-15
 add to list,Greystar,https://www.linkedin.com/company/greystar/,,homepage footer,,https://www.greystar.com,Weekly + OpCo,2026-11-15
 add to list,Guesty,https://www.linkedin.com/company/guesty/,,homepage footer,,https://www.guesty.com,Weekly,2026-11-15
+add to list,Harbert Management Corporation,https://www.linkedin.com/company/harbert-management-corporation/,,homepage footer,,https://www.harbert.net/,OpCo,2026-11-24
 add to list,Haven,https://www.linkedin.com/company/havenai/,,homepage footer,,https://www.usehaven.ai,Weekly,2026-11-15
 add to list,Hemlane,https://www.linkedin.com/company/hemlane/,,homepage footer,,https://www.hemlane.com,Weekly,2026-11-15
 add to list,Highwoods Properties,https://www.linkedin.com/company/highwoods-properties/,,homepage footer,,https://www.highwoods.com,OpCo,2026-11-15

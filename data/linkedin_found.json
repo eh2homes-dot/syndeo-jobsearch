@@ -1096,6 +1096,20 @@
     "error": "",
     "first_found": ""
   },
+  "harbertmanagementcorporation": {
+    "company": "Harbert Management Corporation",
+    "website": "https://www.harbert.net/",
+    "careers_url": "https://www.harbert.net/about-us/careers",
+    "checked": "2026-11-24",
+    "url": "https://www.linkedin.com/company/harbert-management-corporation/",
+    "kind": "company",
+    "found_on": "homepage footer",
+    "page": "https://www.harbert.net/",
+    "others": [],
+    "checks": [],
+    "error": "",
+    "first_found": "2026-11-24"
+  },
   "haven": {
     "company": "Haven",
     "website": "https://www.usehaven.ai",
@@ -2398,6 +2412,25 @@
     "checks": [],
     "error": "",
     "first_found": "2026-11-15"
+  },
+  "resihome": {
+    "company": "ResiHome",
+    "website": "https://resihome.com/",
+    "careers_url": "",
+    "checked": "2026-11-24",
+    "url": "https://www.linkedin.com/company/resihome/",
+    "kind": "company",
+    "found_on": "homepage (in the page code, not a visible link)",
+    "page": "https://resihome.com/",
+    "others": [
+      "https://www.linkedin.com/company/brian-properties-inc/"
+    ],
+    "checks": [
+      "found in the page code, not a visible link",
+      "the site also links to https://www.linkedin.com/company/brian-properties-inc/"
+    ],
+    "error": "",
+    "first_found": "2026-11-24"
   },
   "resman": {
     "company": "ResMan",
