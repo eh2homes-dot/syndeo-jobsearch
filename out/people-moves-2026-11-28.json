@@ -1,0 +1,21 @@
+{
+  "run_date": "2026-11-28",
+  "count": 1,
+  "moves": [
+    {
+      "company": "Offerpad",
+      "source": "Leadership page",
+      "confidence": "probable",
+      "kind": "departure",
+      "category": "people",
+      "person": "Chris Carpenter",
+      "title": "Chief Operating Officer",
+      "previous_title": null,
+      "summary": "Name removed from Offerpad's team page.",
+      "url": "https://www.offerpad.com/about/",
+      "observed": "2026-11-28",
+      "published": null,
+      "score": 40
+    }
+  ]
+}
